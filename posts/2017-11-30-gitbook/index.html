@@ -79,7 +79,12 @@
 <span style="color:#8f5902;font-style:italic"># Concatenate .pdf files</span>
 pdfjoin */*.pdf
 </code></pre></div><p>This dives into each directory in turn, makes one <code>.pdf</code> per directory and gives it a title page, then joins them all together, so I end up with a book that has chapters named according to the folder the recipes were in. Not bad, but a couple of things kapt me unsatisfied. First, where a recipe is short, another recipe would get tacked onto the bottom, whereas really I would have liked a page break after each recipe. Second, the table of contents appears for each chapter, whereas I would have liked one table of contents.</p>
-<p><img src="/img/gitbook/pandoc_pdf.png" alt="Pandoc output pdf recipe"></p>
+<figure><a href="/img_full/gitbook/pandoc_pdf.png"><img
+          alt="Pandoc output pdf recipe"
+          title="Pandoc output pdf recipe"src="/img/gitbook/pandoc_pdf.png" 
+      /></a></figure>
+
+
 <p>So for a long time this little project sat at the bottom of my to do list, waiting for a better option to come along. That&rsquo;s when I found out about gitbook.</p>
 <p>I actually found out about AsciiDoc first, a friend showed me how they had been using AsciiDoc to make manuals for some software they had been writing, and was due to be distributed around their department in a few weeks. But I found that AsciiDoc works much better with the AsciiDoc markup language, whereas I already had all my recipes written in markdown, so I did some googling and quickly came up with gitbook, which seems to be built with markdown and git control in mind. It actually reminded me a lot of Jekyll in the way it works, which I use to make websites, so it was a good fit.</p>
 <p>The first thing I needed to do was install gitbook on the command line:</p>
@@ -107,7 +112,12 @@ pdfjoin */*.pdf
 <pre tabindex="0"><code>http://localhost:4000
 </code></pre><p>Gitbook.com](<a href="http://www.gitbook.com" target="_blank">http://www.gitbook.com</a>
 ) offers a fairly decent option for hosting your gitbook for free, and if you already have a Github account you can upload the gitbook as a git repo to Github, and then link that Github repo to Gitbook.com, for continuous deployment, with a URL that you can share with others. [Here is my Gitbook of recipes</p>
-<p><img src="/img/gitbook/gitbook_web.png" alt="Gitbook recipe book"></p>
+<figure><a href="/img_full/gitbook/gitbook_web.png"><img
+          alt="Gitbook recipe book"
+          title="Gitbook recipe book"src="/img/gitbook/gitbook_web.png" 
+      /></a></figure>
+
+
 
 </main>
 

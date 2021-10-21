@@ -157,7 +157,12 @@
 	<span style="color:#000">scale_fill_brewer</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">palette</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;Blues&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
 	<span style="color:#000">theme</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">legend.title</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">element_blank</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
 	<span style="color:#000">ggtitle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;I am always busy at comX&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><img src="/img/likert/question.png" alt="Bar chart of 5 point likert responses"></p>
+</code></pre></div><figure><a href="/img_full/likert/question.png"><img
+          alt="Bar chart of 5 point likert responses"
+          title="Bar chart of 5 point likert responses"src="/img/likert/question.png" 
+      /></a></figure>
+
+
 <h1 id="overall-question-comparison">Overall question comparison</h1>
 <p>To see which questions get the worst score overall I can plot them on a horizontal bar chart, ordering the bars and colouring them according to the score:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">survey_total_q</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">survey_cond_num</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
@@ -174,7 +179,12 @@
 	<span style="color:#000">scale_fill_continuous</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">low</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;#E33235&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">high</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;#2183EB&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">theme</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">legend.position</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;none&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">ylab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;`Mean Likert Score&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><img src="/img/likert/score_order.png" alt="Mean likert score"></p>
+</code></pre></div><figure><a href="/img_full/likert/score_order.png"><img
+          alt="Mean likert score"
+          title="Mean likert score"src="/img/likert/score_order.png" 
+      /></a></figure>
+
+
 <p>I can also break those bars down by which employee groups contribute most of the score for that question:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">survey_total_job</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">survey_cond_num</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
 	<span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
@@ -197,7 +207,12 @@
 				<span style="color:#000">axis.ticks.x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">element_blank</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">guides</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">guide_legend</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;Role&#34;</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">xlab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Total Likert Score&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><img src="/img/likert/stack.png" alt="Stacked likert scores"></p>
+</code></pre></div><figure><a href="/img_full/likert/stack.png"><img
+          alt="Stacked likert scores"
+          title="Stacked likert scores"src="/img/likert/stack.png" 
+      /></a></figure>
+
+
 <p>Finally, I can get a general sense of the satisfaction of each employee by seeing the total score given by that employee:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">role_total</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">survey_cond_num</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
 	<span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
@@ -212,7 +227,12 @@
 	<span style="color:#000">scale_x_discrete</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">limits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">heirarchy</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">guides</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">guide_legend</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;Role&#34;</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">scale_fill_brewer</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">palette</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Dark2&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><img src="/img/likert/total.png" alt="Total Likert score per employee type"></p>
+</code></pre></div><figure><a href="/img_full/likert/total.png"><img
+          alt="Total Likert score per employee type"
+          title="Total Likert score per employee type"src="/img/likert/total.png" 
+      /></a></figure>
+
+
 <h1 id="update-27th-oct-2017">Update 27th Oct. 2017</h1>
 <p>I ended up doing a bit  more with survey data for an undergraduate dissertation student that was looking at how gender affected thoughts towards sustainable activity within the home, and how work was partitioned in different types of household.</p>
 <p>One of the best methods we came up with for graphically representing correlations in responses to certain questions and the demographic category a person fit into was the bubble plot. I guess if you wanted to statistically analyse this data you would use a chi-squared test.</p>
@@ -231,7 +251,12 @@
 </code></pre></div><p>Then make the plot:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sust_bubble</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">age</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">sustainability_daily_think</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">geom_point</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">n</span><span style="color:#000;font-weight:bold">))</span>
-</code></pre></div><p><img src="/img/likert/bubble.png" alt="Bubble map"></p>
+</code></pre></div><figure><a href="/img_full/likert/bubble.png"><img
+          alt="Bubble map"
+          title="Bubble map"src="/img/likert/bubble.png" 
+      /></a></figure>
+
+
 <p>Another thing I managed to crack was how to make a diverging bar chart in ggplot2, so it looks similar to the ones you can make with the <a href="https://cran.r-project.org/web/packages/HH/index.html" target="_blank">HH package</a>
 .</p>
 <p>Get set up, import data etc.:</p>
@@ -303,7 +328,12 @@
 	<span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Gender&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Percentage of respondents (%)&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
 	<span style="color:#000">ggtitle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">question_lookup</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">survey_question[question_lookup</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">column_title</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;sustainability_daily_think&#34;</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span> 
-</code></pre></div><p><img src="/img/likert/div_bar.png" alt="Diverging likert responses"></p>
+</code></pre></div><figure><a href="/img_full/likert/div_bar.png"><img
+          alt="Diverging likert responses"
+          title="Diverging likert responses"src="/img/likert/div_bar.png" 
+      /></a></figure>
+
+
 
 </main>
 

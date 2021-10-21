@@ -41,7 +41,12 @@
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">convert bike.jpg -quality 90% output_1.jpg
 </code></pre><p>This produces an image of 3.3 MB.</p>
 <p>Here is a plot of the file size as the <code>-quality</code> percentage is reduced. and a table of file sizes. Note that 100% compression on the original image actually made the original image of 6.8 MB larger, to 7.8 MB.</p>
-<p><img src="/img/img_convert/plot.png" alt="Plot of comperession percentage and image size"></p>
+<figure><a href="/img_full/img_convert/plot.png"><img
+          alt="Plot of comperession percentage and image size"
+          title="Plot of comperession percentage and image size"src="/img/img_convert/plot.png" 
+      /></a></figure>
+
+
 <table>
 <thead>
 <tr>
@@ -208,7 +213,12 @@ convert bike.jpg -quality 50% -colorspace gray -dither floyd-steinberg -posteriz
 <p>There are also predefined dithering threshold maps that can be used with <code>-ordered-dither</code>:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">convert bike.jpg -quality 50% -colorspace gray -ordered-dither c7x7w output_43.jpg
 </code></pre><p>Here is a comparison of these methods:</p>
-<p><img src="/img/img_convert/plot_dith.png" alt="Plot of ordered dither method and output size"></p>
+<figure><a href="/img_full/img_convert/plot_dith.png"><img
+          alt="Plot of ordered dither method and output size"
+          title="Plot of ordered dither method and output size"src="/img/img_convert/plot_dith.png" 
+      /></a></figure>
+
+
 <table>
 <thead>
 <tr>
@@ -311,7 +321,12 @@ convert bike.jpg -quality 50% -colorspace gray -dither floyd-steinberg -posteriz
 </code></pre><p>This reduces the stripped grayscale image from 1.242 MB to 1.031 MB, a difference of 215 KB.</p>
 <p>Here is a comparison of images converted with different levels of gaussian blur.</p>
 <p>One thing I did find was that the computation time increased with the radius of the blur.</p>
-<p><img src="/img/img_convert/plot_blur.png" alt="Plot of gaussian blur and output size"></p>
+<figure><a href="/img_full/img_convert/plot_blur.png"><img
+          alt="Plot of gaussian blur and output size"
+          title="Plot of gaussian blur and output size"src="/img/img_convert/plot_blur.png" 
+      /></a></figure>
+
+
 <table>
 <thead>
 <tr>

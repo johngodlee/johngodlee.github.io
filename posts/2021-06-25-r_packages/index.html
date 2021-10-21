@@ -74,7 +74,12 @@
     <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;black&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;darkgrey&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;identity&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
   <span style="color:#000">theme_bw</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
   <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Package&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Frequency&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><img src="/img/r_packages/package_freq_bar.png" alt="Bar plot of 10 most used R packages"></p>
+</code></pre></div><figure><a href="/img_full/r_packages/package_freq_bar.png"><img
+          alt="Bar plot of 10 most used R packages"
+          title="Bar plot of 10 most used R packages"src="/img/r_packages/package_freq_bar.png" 
+      /></a></figure>
+
+
 <p>Next, I wanted to create a network graph. I wanted to visualise which packages were used the most, which packages were used in conjunction with each other, and which packages are most commonly used in conjunction.</p>
 <p>First, split the dataframe by R script, and remove scripts which only called one package.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Split by file</span>
@@ -122,7 +127,12 @@
   <span style="color:#000">color</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;#ffc780&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;vweight&#34;</span><span style="color:#000;font-weight:bold">,</span>
   <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label.size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span>
   <span style="color:#000">edge.col</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;edgecol&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><img src="/img/r_packages/packages_net_plot.png" alt="Network graph of package co-occurrence"></p>
+</code></pre></div><figure><a href="/img_full/r_packages/packages_net_plot.png"><img
+          alt="Network graph of package co-occurrence"
+          title="Network graph of package co-occurrence"src="/img/r_packages/packages_net_plot.png" 
+      /></a></figure>
+
+
 <p>I&rsquo;m not totally happy with the edge colouring, but it&rsquo;s difficult because many packages only occur together once, while a few, e.g. <code>{dplyr}</code> occur in almost every script, so there&rsquo;s a very wide range of values.</p>
 
 </main>

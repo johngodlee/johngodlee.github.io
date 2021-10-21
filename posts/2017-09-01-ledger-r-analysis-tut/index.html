@@ -92,7 +92,12 @@ ledger csv -f ~/.ledger.journal &gt; ledger.csv
 	Expenses:Bills			$ 65.51
 </code></pre><p>But it should be trivial to change the code to match your journal structure.</p>
 <h2 id="assets-over-time">Assets over time</h2>
-<p><img src="/img/ledger/assets_time_plot.png" alt="ggplot of assets over time"></p>
+<figure><a href="/img_full/ledger/assets_time_plot.png"><img
+          alt="ggplot of assets over time"
+          title="ggplot of assets over time"src="/img/ledger/assets_time_plot.png" 
+      /></a></figure>
+
+
 <p>Create a data frame only containing assets:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">assets</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ledger_cumsum</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
 	<span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Assets&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Source</span><span style="color:#000;font-weight:bold">))</span>
@@ -103,7 +108,12 @@ ledger csv -f ~/.ledger.journal &gt; ledger.csv
 	<span style="color:#000">geom_point</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Source</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">scale_x_date</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">date_breaks</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;1 week&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">date_labels</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;%W/%y&#34;</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><h2 id="viewing-a-particular-asset-in-detail-over-time">Viewing a particular asset in detail over time</h2>
-<p><img src="/img/ledger/single_asset_plot.png" alt="Detailed view of asset with transactions"></p>
+<figure><a href="/img_full/ledger/single_asset_plot.png"><img
+          alt="Detailed view of asset with transactions"
+          title="Detailed view of asset with transactions"src="/img/ledger/single_asset_plot.png" 
+      /></a></figure>
+
+
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Create data frame</span>
 <span style="color:#000">assets_bank_current</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ledger_cumsum</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
 	<span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Source</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;Assets:Checking&#34;</span><span style="color:#000;font-weight:bold">)</span>
@@ -116,8 +126,18 @@ ledger csv -f ~/.ledger.journal &gt; ledger.csv
 	<span style="color:#000">xlab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Date WW-YY&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
 	<span style="color:#000">ylab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Balance ($)&#34;</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><h2 id="bar-plots-with-breakdown-of-expenses">Bar plots with breakdown of expenses</h2>
-<p><img src="/img/ledger/bar_expenses_plot.png" alt="Bar plot of expenses"></p>
-<p><img src="/img/ledger/stack_expenses_plot.png" alt="Stacked bar plot of expenses"></p>
+<figure><a href="/img_full/ledger/bar_expenses_plot.png"><img
+          alt="Bar plot of expenses"
+          title="Bar plot of expenses"src="/img/ledger/bar_expenses_plot.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/ledger/stack_expenses_plot.png"><img
+          alt="Stacked bar plot of expenses"
+          title="Stacked bar plot of expenses"src="/img/ledger/stack_expenses_plot.png" 
+      /></a></figure>
+
+
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Create summary dataframe of expenses</span>
 <span style="color:#000">expenses_sum</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ledger_cumsum</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
 	<span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Expenses&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Source</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
@@ -137,7 +157,12 @@ ledger csv -f ~/.ledger.journal &gt; ledger.csv
 	<span style="color:#000">geom_bar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;identity&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
 	<span style="color:#000">geom_text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Percentage</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#4e9a06">&#34;% - &#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Source</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sep</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#000">position</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">position_stack</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">vjust</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">))</span>
 </code></pre></div><h2 id="last-30-days-incomeexpenses-summary">Last 30 days income/expenses summary</h2>
-<p><img src="/img/ledger/30d_summ_plot.png" alt="30 days income vs. expenses"></p>
+<figure><a href="/img_full/ledger/30d_summ_plot.png"><img
+          alt="30 days income vs. expenses"
+          title="30 days income vs. expenses"src="/img/ledger/30d_summ_plot.png" 
+      /></a></figure>
+
+
 <p>Creating this plot was fun, I had a go at using <code>ifelse()</code> arguments inside the <code>ggplot()</code> call in order to change the position of an error bar and text (which I&rsquo;ve used to show deficit) depending on whether I&rsquo;ve made a net gain or loss that month.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Create summary dataframe</span>
 <span style="color:#000">ledger_30d_summ</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ledger_cumsum</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>

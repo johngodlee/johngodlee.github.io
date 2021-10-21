@@ -33,7 +33,12 @@
 <p>Twice recently I&rsquo;ve wanted to check the proportional coverage of a dataset. For example, I have a dataset where trees are nested within plots. I wanted to check what proportion of trees within each plot had measurements in the <a href="https://www.try-db.org/" target="_blank">TRY global trait database</a>
  for leaf nitrogen per dry mass. Specifically, I wanted to check what proportion of plots had <em>at least</em> a given proportion of trees <em>or more</em> represented in TRY.</p>
 <p>I could have visualised this with a histogram, but it&rsquo;s not very visually appealing because it requires some mental gymnastics to add up each bin greater than the minimum threshold:</p>
-<p><img src="/img/ecdf/hist.png" alt="Histogram of TRY representation in plots"></p>
+<figure><a href="/img_full/ecdf/hist.png"><img
+          alt="Histogram of TRY representation in plots"
+          title="Histogram of TRY representation in plots"src="/img/ecdf/hist.png" 
+      /></a></figure>
+
+
 <p>A better method I&rsquo;ve found is an Empirical Cumulative Density Function (ECDF) plot.</p>
 <p>First I have the dataframe, where each row is a tree, with plot ID, species, and mean leaf nitrogen per dry mass for that species. If a species doesn&rsquo;t have a nitrogen measurement, it&rsquo;s recorded as NA:</p>
 <table>
@@ -104,7 +109,12 @@
 	<span style="color:#000">geom_hline</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">yintercept</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">prop_plots</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">linetype</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;red&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
 	<span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Proportion of trees&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Proportion of plots&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
 	<span style="color:#000">theme_bw</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><p><img src="/img/ecdf/ecdf.png" alt="ECDF plot, proportion of plots with proportion of trees with leaf N measurements"></p>
+</code></pre></div><figure><a href="/img_full/ecdf/ecdf.png"><img
+          alt="ECDF plot, proportion of plots with proportion of trees with leaf N measurements"
+          title="ECDF plot, proportion of plots with proportion of trees with leaf N measurements"src="/img/ecdf/ecdf.png" 
+      /></a></figure>
+
+
 <p>From the plot above it&rsquo;s easy to see that in 31% of the plots at least 80% of trees have at least one leaf nitrogen measurement in the TRY database. It&rsquo;s also easy to see the trend in the coverage. Hardly any plots have all trees covered by leaf nitrogen measurements, and it really drops off a cliff at about 98% tree coverage.</p>
 <p>The plot above is generated from a real dataset of ~1250 woodland/savanna plots in southern Africa. It&rsquo;s easy to see that trait coverage is not great in southern African species, especially given that leaf nitrogen is one of the most commonly collected traits that can tell us a lot about life history strategy and place am individual on the leaf economic spectrum. When you aggregate to genus coverage gets a bit better, but I am sceptical about how much I can trust a trait estimate that is an aggregate of species potentially found across the world. Additionally, these graphs only tell part of the story, because they only count whether a tree has at least one trait measurement in TRY. To get decent estimates of the mean of a trait like leaf nitrogen content you need LOTS of replication, preferably &gt;10,000 data points to account for all the bias that can be introduced by site, season, leaf age, tree age, leaf location on the tree, measurement error, etc.</p>
 

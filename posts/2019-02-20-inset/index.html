@@ -31,7 +31,12 @@
 
 <main>
 <p>In scientific publications, often there is a map to describe the study location. For example in Burton et al. (2013), which is the first publication I found with an inset map by searching for the key word &ldquo;inset map&rdquo;.</p>
-<p><img src="/img/inset/burton.png" alt="Example inset map"></p>
+<figure><a href="/img_full/inset/burton.png"><img
+          alt="Example inset map"
+          title="Example inset map"src="/img/inset/burton.png" 
+      /></a></figure>
+
+
 <p>I wanted to be able to make these maps directly in R, rather than manually exporting each map image and overlaying them in PowerPoint or Photoshop. The maps I make are in <code>{ggplot2}</code>, so the examples here all use ggplot2. The example involves making a map of Angola and adding some points of key cities, then adding an inset map showing the location of Angola in the world.</p>
 <p>First, load some packages:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
@@ -71,7 +76,12 @@
 		<span style="color:#000">xmin</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">18</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">xmax</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">26</span><span style="color:#000;font-weight:bold">,</span>
 		<span style="color:#000">ymin</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">-9</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ymax</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">-4</span><span style="color:#000;font-weight:bold">)</span>
 </code></pre></div><p><code>annotation_custom()</code> allows you to set the x and y location of the grob, using the coordinate system on the base plot, which in this case is decimal latitude and longitude.</p>
-<p><img src="/img/inset/map.png" alt="My inset map in R"></p>
+<figure><a href="/img_full/inset/map.png"><img
+          alt="My inset map in R"
+          title="My inset map in R"src="/img/inset/map.png" 
+      /></a></figure>
+
+
 
 </main>
 

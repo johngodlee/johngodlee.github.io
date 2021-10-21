@@ -31,7 +31,12 @@
 
 <main>
 <p>I had a <code>longtable</code> in a LaTeX document that was grouped, with <code>multirow</code> items and <code>midrule</code>s which delimited the groups. The problem was that when the table broke across two pages, the groups were split and the multirow was not repeated on the second page, making the table look very messy. For example:</p>
-<p><img src="/img/longtable_break/messy.png" alt="A messy grouped longtable"></p>
+<figure><a href="/img_full/longtable_break/messy.png"><img
+          alt="A messy grouped longtable"
+          title="A messy grouped longtable"src="/img/longtable_break/messy.png" 
+      /></a></figure>
+
+
 <p>I learned this trick from the <code>longtable</code> documentation that can be used to prevent the table breaking at certain lines. Simply use the <code>*</code> variant of <code>\\</code>, i.e. <code>\\*</code>, on all lines where the table isn&rsquo;t allowed to break, and it will only break at the end of a group. For example:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>longtable<span style="color:#204a87">}{</span>ccc<span style="color:#204a87">}</span>
 <span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{</span>A better looking table<span style="color:#204a87">}</span> <span style="color:#204a87;font-weight:bold">\\</span> 
@@ -65,7 +70,12 @@
    <span style="color:#204a87;font-weight:bold">\bottomrule</span>
 <span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>longtable<span style="color:#204a87">}</span>
 </code></pre></div><p>which produces this much prettier looking table:</p>
-<p><img src="/img/longtable_break/clean.png" alt="a cleaner grouped longtable"></p>
+<figure><a href="/img_full/longtable_break/clean.png"><img
+          alt="a cleaner grouped longtable"
+          title="a cleaner grouped longtable"src="/img/longtable_break/clean.png" 
+      /></a></figure>
+
+
 
 </main>
 

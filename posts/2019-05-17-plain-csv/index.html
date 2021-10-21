@@ -39,9 +39,19 @@
 <p>A final option which really appeals to me is using Vim to write CSV files with the help of some plugins. Obviously Vim can edit CSV files without anything extra, as they&rsquo;re just plain text, but this gets cumbersome when you have rows of different width, blank cells etc., as the columns become offset. This makes moving between the rows in the same column difficult. Luckily there is a plugin called <a href="https://github.com/chrisbra/csv.vim" target="_blank">csv.vim</a>
  which has some really nice features which make editing CSV files in Vim quite easy. Firstly, the plugin detects the column delimiter and replaces it with a <code>|</code>, which makes distinguishing column boundaries a lot easier. Also, columns are highlighted in different colours, which also improves the ability to scan the CSV down a column. You can also set Vim to highlight the current column with <code>let g:csv_highlight_column = 'y'</code>. Movement across rows and columns can be achieved with &ldquo;H,J,K,L&rdquo; which will be familiar to Vim users. The most important feature for me is the ability to visually align the columns with <code>:ArrangeColumn</code>. Below is an example of how this works:</p>
 <p>Un-arranged columns</p>
-<p><img src="/img/plain_csv/unarrange.png" alt="Unarranged CSV columns in vim"></p>
+<figure><a href="/img_full/plain_csv/unarrange.jpg"><img
+          alt="Unarranged CSV columns in vim"
+          title="Unarranged CSV columns in vim"src="/img/plain_csv/unarrange.png" 
+      /></a></figure>
+
+
 <p>Arranged columns with <code>ArrangeColumn</code></p>
-<p><img src="/img/plain_csv/arrange.png" alt="Justified CSV columns in vim"></p>
+<figure><a href="/img_full/plain_csv/arrange.jpg"><img
+          alt="Justified CSV columns in vim"
+          title="Justified CSV columns in vim"src="/img/plain_csv/arrange.png" 
+      /></a></figure>
+
+
 <p>There are a tonne of other features in <code>csv.vim</code> but most of the features related to analysis I&rsquo;d much rather do in R later on. Deleting, hiding and sorting columns could come in really useful however, so I&rsquo;ll spend some time trying to figure out the commands for that. I&rsquo;ve actually had a different CSV plugin for a while already, called <a href="https://github.com/mechatroner/rainbow_csv" target="_blank">rainbow_csv</a>
 , which helpfully colours the text in different CSV columns to help to distinguish one column for another. I&rsquo;ve since removed this plugin however, as <code>csv.vim</code> does the same thing but adds lots of other features.</p>
 

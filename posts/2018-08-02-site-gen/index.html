@@ -45,7 +45,12 @@ date: 2018-07-25
 . To convert a single markdown file I can do this:</p>
 <pre tabindex="0"><code>pandoc -f markdown -t html5 --standalone --css=site_gen.css -H site_gen.css -o site/2018-07-25-bike.html _posts/2018-07-25-bike.md
 </code></pre><p>The output markup looks like this:</p>
-<p><img src="/img/site_gen/page.png" alt="Sample page with pandoc"></p>
+<figure><a href="/img_full/site_gen/page.png"><img
+          alt="Sample page with pandoc"
+          title="Sample page with pandoc"src="/img/site_gen/page.png" 
+      /></a></figure>
+
+
 <p>To do this on a folder of markdown files I have to name some variables and put it in a for loop:</p>
 <pre tabindex="0"><code># Define location of assets
 css=&quot;site_gen.css&quot;

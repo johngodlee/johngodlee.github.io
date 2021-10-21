@@ -58,7 +58,12 @@
     sed <span style="color:#4e9a06">&#39;s/:.*//&#39;</span><span style="color:#204a87;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">)</span>
 <span style="color:#ce5c00;font-weight:bold">[</span> -n <span style="color:#4e9a06">&#34;</span><span style="color:#000">$files</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">${</span><span style="color:#000">EDITOR</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">files</span><span style="color:#000;font-weight:bold">[@
 </span></code></pre></div><p>In vim this is accomplished by <code>nnoremap &lt;Leader&gt;f :Rg&lt;CR&gt;</code>.</p>
-<p><img src="/img/fzf/f.png" alt="File contents search"></p>
+<figure><a href="/img_full/fzf/f.png"><img
+          alt="File contents search"
+          title="File contents search"src="/img/fzf/f.png" 
+      /></a></figure>
+
+
 <p>A neat extra feature I have in vim is to search from the root of a git repository:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#000">command</span><span style="color:#000;font-weight:bold">!</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#000">bang</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#000">nargs</span><span style="color:#000;font-weight:bold">=</span>* <span style="color:#000">ProjRg</span><span style="color:#a40000">
 </span><span style="color:#a40000"></span>	\ <span style="color:#000">call</span> <span style="color:#000">fzf</span>#<span style="color:#000">vim</span>#<span style="color:#000">grep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#a40000">
@@ -73,7 +78,12 @@ open <span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-wei
 </span><span style="color:#4e9a06"></span>	fzf <span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
 </span><span style="color:#4e9a06"></span>	sed <span style="color:#4e9a06">&#39;s|$|.app|&#39;</span> <span style="color:#000;font-weight:bold">|</span><span style="color:#4e9a06">\
 </span><span style="color:#4e9a06"></span>	sed <span style="color:#4e9a06">&#39;s|^|\/Applications\/|&#39;</span><span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
-</code></pre></div><p><img src="/img/fzf/fapp.png" alt="macOS application launcher"></p>
+</code></pre></div><figure><a href="/img_full/fzf/fapp.png"><img
+          alt="macOS application launcher"
+          title="macOS application launcher"src="/img/fzf/fapp.png" 
+      /></a></figure>
+
+
 
 </main>
 

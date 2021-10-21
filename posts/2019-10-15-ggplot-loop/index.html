@@ -31,7 +31,12 @@
 
 <main>
 <p>Sometimes I encounter the need to make multiple plots in a loop and then arrange them in a <code>grid.arrange()</code> panel. A recent example was when I had a bunch of ANCOVA linear models in a list, each with a different predictor variable, and I wanted to create <code>ggplot()</code> objects for each linear model in a for loop, showing the distribution of points for the predictor and response variable and slopes for a categorical grouping variable, then I wanted to put each plot into a single grid image and export it, like the image below:</p>
-<p><img src="/img/ggplot_loop/biomass.png" alt="Plots of biomass across different vegetation clusters"></p>
+<figure><a href="/img_full/ggplot_loop/biomass.png"><img
+          alt="Plots of biomass across different vegetation clusters"
+          title="Plots of biomass across different vegetation clusters"src="/img/ggplot_loop/biomass.png" 
+      /></a></figure>
+
+
 <p>The code to generate this involves creating a list for the plot objects, then filling the list with each <code>ggplot()</code> called within a for loop, where each iteration of the loop is a different linear model with a different predictor variable, then calling the list of plots with <code>do.call(&quot;grid.arrange&quot;, c(plot_list))</code> to build the grid image ready to be exported. To access the data needed for the x axis of the plot, which changes with each plot/linear model, I took the variable name from the linear model it is based on with:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">x_var</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rownames</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">summary</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">model_list[[i]]</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">coefficients</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[2]</span>
 </code></pre></div><p>This means the <code>ggplot()</code> for the scatter plots can then be called like this:</p>

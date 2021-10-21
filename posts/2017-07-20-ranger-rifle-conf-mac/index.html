@@ -31,7 +31,12 @@
 
 <main>
 <p>Ranger is a file manager for the terminal and my default file manager since I moved away from <code>Midnight Commander</code> (<code>mc</code>). Most of my work I do on a MacBook Pro and I found that opening files that weren&rsquo;t text editor compatible was difficult, pressing <!-- raw HTML omitted --> on the highlighted files merely returned an <code>open with:</code> prompt, and nothing I typed seemed to work.</p>
-<p><img src="/img/ranger/ranger_scrot.png" alt="Ranger screenshot"></p>
+<figure><a href="/img_full/ranger/ranger_scrot.png"><img
+          alt="Ranger screenshot"
+          title="Ranger screenshot"src="/img/ranger/ranger_scrot.png" 
+      /></a></figure>
+
+
 <p>I found out that <code>rifle.conf</code> is the config file which controls how Ranger opens files. It is normally found in <code>~/.config/ranger/rifle.conf</code>.</p>
 <p>The default <code>rifle.conf</code> however is dense, complex and doesn&rsquo;t play well with an ordinary mac setup.</p>
 <p>So I decided to try and strip down <code>rifle.conf</code> and rebuild it for use on macOS. If you want to skip straight to the <code>rifle.conf</code> that I use, <a href="files/rifle.conf">follow this link</a>
