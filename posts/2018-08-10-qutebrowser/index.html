@@ -32,16 +32,13 @@
 <main>
 <p>Firefox was becoming annoying and bloated, and so I decided to go back to using <a href="https://www.qutebrowser.org/index.html" target="_blank">Qutebrowser</a>
 , a project I&rsquo;d been following for a while. It&rsquo;s a minimalistic web browser, which is massively extensible and keyboard driven, with default vim-like keybindings. This is about how I&rsquo;ve set it up. Qutebrowser is configured using a python file called <code>config.py</code> which is normally found in <code>~/.qutebrowser/config.py</code>.</p>
-<p><a href="/img_full/qutebrowser/qutebrowser_example.png">&lt;img src=&#34;/img/qutebrowser/qutebrowser_example.png&#34; alt=&#34;Qutebrowser screenshot&#34;&gt;</a>
-</p>
+<p><img src="/img/qutebrowser/qutebrowser_example.png" alt="Qutebrowser screenshot"></p>
 <h1 id="the-tab-bar">The tab bar</h1>
 <p>By default, the tab bar looks like this:</p>
-<p><a href="/img_full/qutebrowser/tab_default.png">&lt;img src=&#34;/img/qutebrowser/tab_default.png&#34; alt=&#34;Default tab bar&#34;&gt;</a>
-</p>
+<p><img src="/img/qutebrowser/tab_default.png" alt="Default tab bar"></p>
 <p>It&rsquo;s pretty ugly, it doesn&rsquo;t have much padding around the text and the text is quite small.</p>
 <p>This is how I&rsquo;ve modified it:</p>
-<p><a href="/img_full/qutebrowser/tab_custom.png">&lt;img src=&#34;/img/qutebrowser/tab_custom.png&#34; alt=&#34;My tab bar&#34;&gt;</a>
-</p>
+<p><img src="/img/qutebrowser/tab_custom.png" alt="My tab bar"></p>
 <p>The relevant lines of the <code>config.py</code> are:</p>
 <pre tabindex="0"><code># Open new tabs in the background.
 c.tabs.background = True
@@ -110,11 +107,9 @@ c.colors.tabs.selected.even.fg = 'black'
 c.colors.tabs.selected.even.bg = 'darkgrey'
 </code></pre><p>Tabs are always at the top of the screen. Tabs are all <code>lightgrey</code> unless they are selected, then they become <code>darkgrey</code>, regardless of whether they are odd or even numbered. The foreground text is black and the tab indicator is black. I didn&rsquo;t like the gradient that shows on the tab indicator when a tab is loading, so it just stays black (<code>c.colors.tabs.indicator.start</code>, <code>c.colors.tabs.indicator.stop</code>). The text in the tabs is centred and a bit bigger than the default and each tab lists the number of the tab (<code>{index}</code>), the name of the webpage (<code>{title}</code>) and the top level domain (<code>{host}</code>).</p>
 <p><code>c.tabs.indicator.padding = {'bottom': 0, 'left': 0, 'right': 5, 'top': 0}</code> means that the tab indicator is positioned a minimum of 5 pixels left of any text in the tab.</p>
-<p><a href="/img_full/qutebrowser/tab_custom_annot.png">&lt;img src=&#34;/img/qutebrowser/tab_custom_annot.png&#34; alt=&#34;Annotated tab bar&#34;&gt;</a>
-</p>
+<p><img src="/img/qutebrowser/tab_custom_annot.png" alt="Annotated tab bar"></p>
 <h1 id="status-bar">Status bar</h1>
-<p><a href="/img_full/qutebrowser/status_default.png">&lt;img src=&#34;/img/qutebrowser/status_default.png&#34; alt=&#34;Default status bar&#34;&gt;</a>
-</p>
+<p><img src="/img/qutebrowser/status_default.png" alt="Default status bar"></p>
 <p>The default status bar and completion bar are super ugly, with a dark gradient background style which doesn&rsquo;t really fit with the colour scheme of the default tab bar. I want it to have a similar colour style to my custom tab bar. These are the relevant lines from the <code>config.py</code>:</p>
 <pre tabindex="0"><code># Height (in pixels or as percentage of the window) of the completion.
 c.completion.height = '30%'
@@ -199,22 +194,19 @@ c.colors.statusbar.url.success.https.fg = 'black'
 
 # Foreground color of the URL in the statusbar when there's a warning.
 c.colors.statusbar.url.warn.fg = 'black'
-</code></pre><p><a href="/img_full/qutebrowser/status_custom.png">&lt;img src=&#34;/img/qutebrowser/status_custom.png&#34; alt=&#34;My status line&#34;&gt;</a>
-</p>
+</code></pre><p><img src="/img/qutebrowser/status_custom.png" alt="My status line"></p>
 <p>The completion widget needs different colours for odd and even rows, otherwise it&rsquo;s difficult to discriminate between rows. So they alternate between a very light grey for odd rows (<code>c.colors.completion.odd.bg = '#F2F2F2'</code>) and <code>lightgrey</code> for even rows. The text is always black in the completion bar and the status bar. Warnings on the status bar take their default colours of amber and red. The completion bar headers are also light grey and the selected completion item comes up as dark grey with a black border on the top and bottom. As text is matched it becomes red. The scrollbar is visible and follows the same colour pattern as the rest of the setup.</p>
 <p>When open, the completion box takes up 30% of the screen.</p>
 <p>When you enter insert mode to enter text into a web page field, the statusbar turns blue a la vim.</p>
 <p>The statusbar has information on the current url (<code>url</code>), how far through the file you are (<code>scroll</code>), what tab is visible (<code>tabs</code>) and when a page is loading, the progress bar (<code>progress</code>).</p>
-<p><a href="/img_full/qutebrowser/status_custom_annot.png">&lt;img src=&#34;/img/qutebrowser/status_custom_annot.png&#34; alt=&#34;Annotated status bar&#34;&gt;</a>
-</p>
+<p><img src="/img/qutebrowser/status_custom_annot.png" alt="Annotated status bar"></p>
 <h1 id="fonts">Fonts</h1>
 <p>The fonts are very simple, basically everything is either <code>monospace 8pt</code> or <code>monospace 9pt</code>, e.g.</p>
 <pre tabindex="0"><code># Font used in the completion widget.
 c.fonts.completion.entry = '8pt monospace'
 </code></pre><h1 id="hints">Hints</h1>
 <p>Qutebrowser has this really nice hinting system, you press <code>f</code> and the screen is filled with all the links you could click, you then type the corresponding letter code and it follows that link. Normally the hints look like this:</p>
-<p><a href="/img_full/qutebrowser/hint_default.png">&lt;img src=&#34;/img/qutebrowser/hint_default.png&#34; alt=&#34;Default hints&#34;&gt;</a>
-</p>
+<p><img src="/img/qutebrowser/hint_default.png" alt="Default hints"></p>
 <p>The relevant bits of the <code>config.py</code> are:</p>
 <pre tabindex="0"><code># CSS border value for hints.
 c.hints.border = '2px solid black'
@@ -228,8 +220,7 @@ c.colors.hints.bg = 'black'
 # Font color for the matched part of hints.
 c.colors.hints.match.fg = 'lime'
 </code></pre><p>The hints are black with white text. Matched letters become lime green.</p>
-<p><a href="/img_full/qutebrowser/hint_custom.png">&lt;img src=&#34;/img/qutebrowser/hint_custom.png&#34; alt=&#34;My hints&#34;&gt;</a>
-</p>
+<p><img src="/img/qutebrowser/hint_custom.png" alt="My hints"></p>
 <h1 id="key-bindings">Key-bindings</h1>
 <p>I have a few keybindings that are different to the default setup, mainly to make it feel more vim-like:</p>
 <pre tabindex="0"><code># keybindings for normal mode

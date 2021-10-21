@@ -60,7 +60,7 @@ It&amp;rsquo;s a Fujitsu Siemens KB SC, a model introduced in 2006, I think, I h
       
       <guid>http://johngodlee.xyz/posts/2021-08-31-longtable_break/</guid>
       <description>I had a longtable in a LaTeX document that was grouped, with multirow items and midrules which delimited the groups. The problem was that when the table broke across two pages, the groups were split and the multirow was not repeated on the second page, making the table look very messy. For example:
-&amp;lt;img src=&amp;#34;/img/longtable_break/messy.png&amp;#34; alt=&amp;#34;A messy grouped longtable&amp;#34;&amp;gt; I learned this trick from the longtable documentation that can be used to prevent the table breaking at certain lines.</description>
+I learned this trick from the longtable documentation that can be used to prevent the table breaking at certain lines.</description>
     </item>
     
     <item>
@@ -108,7 +108,7 @@ A basic table in LaTeX, showing part of the mtcars dataset in R:
       
       <guid>http://johngodlee.xyz/posts/2021-07-31-niche/</guid>
       <description>I&amp;rsquo;ve just finished writing the background chapter for my PhD thesis. I&amp;rsquo;ve been writing about how competing species co-exist by occupying different niche space. To visualise nice complementarity, I made these schematic diagrams, which I&amp;rsquo;ve included below along with the length caption I included in the chapter.
-&amp;lt;img src=&amp;#34;/img/niche/niche_all.png&amp;#34; alt=&amp;#34;Schematic diagrams visualising niche complementarity&amp;#34;&amp;gt; Schematic diagrams demonstrating niche occupation and secondary controls on the mechanism of niche complementarity. Each density plot shows a number of species, each represented by the species functional contribution (productivity) under different environmental conditions (niche space) within the larger environmental niche volume (dashed line).</description>
+Schematic diagrams demonstrating niche occupation and secondary controls on the mechanism of niche complementarity. Each density plot shows a number of species, each represented by the species functional contribution (productivity) under different environmental conditions (niche space) within the larger environmental niche volume (dashed line).</description>
     </item>
     
     <item>
@@ -176,7 +176,7 @@ rg &amp;quot;^library(.*)$&amp;quot; -g *.R -g &#39;!Library/*&#39; &amp;gt; pac
       
       <guid>http://johngodlee.xyz/posts/2021-06-03-edta_blog/</guid>
       <description>I wrote a blog post about my experience with the Edinburgh Teaching Award, which is a professional development programme with the aim of improving teaching skills in higher education. It&amp;rsquo;s published on the Edinburgh Teaching Matters Blog, at the link below:
-Enriching the experience of a PhD tutor through active teaching – Teaching Matters blog </description>
+Enriching the experience of a PhD tutor through active teaching – Teaching Matters blog</description>
     </item>
     
     <item>

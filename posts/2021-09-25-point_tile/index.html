@@ -35,8 +35,7 @@
 , <a href="https://doi.org/10.1016/j.tree.2017.02.012" target="_blank">Clarke et al. 2014</a>
 , and <a href="https://doi.org/10.1126/science.aaf8957" target="_blank">Liang et al. 2016</a>
 ). I wanted to demonstrate how few studies have been conducted in southern Africa, with the purpose of showing the reader that this is a problem that I was going to solve in the thesis.</p>
-<p><a href="/img_full/point_tile/befr_map.png">&lt;img src=&#34;/img/point_tile/befr_map.png&#34; alt=&#34;Original map of BEFR studies&#34;&gt;</a>
-</p>
+<p><img src="/img/point_tile/befr_map.png" alt="Original map of BEFR studies"></p>
 <p>I wanted to include the map in my thesis as vector graphics, because they compress better than raster images and look crisper on the computer screen. The problem was that the .pdf output of the map from ggplot2 in R was 22.5 MB, which on its own is about as large as the rest of the thesis pdf. The reason the file was so large is because there were lots of overlapping points.</p>
 <p>I spent a long time thinking about technical ways to reduce the file size, using different exporter libraries like Cairo, or using an alternative file type, but nothing managed to maintain the quality of the original image while also reducing the file size.</p>
 <p>In the end, I decided to redesign the map to use raster tiles instead of points. A tile was counted as filled if there was at least one point found within it. Here is the code I used to convert the points to raster, in R:</p>
@@ -79,8 +78,7 @@
 <span style="color:#000">pdf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">file</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;img/befr_map.pdf&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">8</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">3.5</span><span style="color:#000;font-weight:bold">)</span>
 <span style="color:#000">map</span>
 <span style="color:#000">dev.off</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><p><a href="/img_full/point_tile/befr_map_tile.png">&lt;img src=&#34;/img/point_tile/befr_map_tile.png&#34; alt=&#34;The updated map, using geom_tile&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/point_tile/befr_map_tile.png" alt="The updated map, using geom_tile"></p>
 
 </main>
 

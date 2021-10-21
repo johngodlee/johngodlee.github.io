@@ -47,8 +47,7 @@
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">sjPlot</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">plot_model</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">model</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">type</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;re&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">vline.color</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;#A9A9A9&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dot.size</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1.5</span><span style="color:#000;font-weight:bold">,</span>  
   <span style="color:#000">show.values</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#3465a4">F</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">value.offset</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">.2</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[[1]]</span>
 </code></pre></div><p>This produces a pretty ugly plot, which compresses the x axis and makes it difficult to compare slopes.</p>
-<p><a href="/img_full/sjplot/plot_model.png">&lt;img src=&#34;/img/sjplot/plot_model.png&#34; alt=&#34;Random effects plotted using plot_model()&#34;&gt;</a>
-</p>
+<p><img src="/img/sjplot/plot_model.png" alt="Random effects plotted using plot_model()"></p>
 <p>Specifically, they wanted to plot the random effects for <code>gear</code> only, rearrange the figure to have 3 rows and 3 columns, and order the facets with intercept at the start.</p>
 <p>The code below basically simplifies the source code of <code>sjPlot:::plot_type_ranef()</code> for our specific situation.</p>
 <p>First, extract random effects for <code>gear</code>:</p>
@@ -104,8 +103,7 @@
     <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
   <span style="color:#000">scale_colour_manual</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">values</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;red&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;blue&#34;</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
   <span style="color:#000">facet_wrap</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">~</span><span style="color:#000">facet</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><a href="/img_full/sjplot/new_plot.png">&lt;img src=&#34;/img/sjplot/new_plot.png&#34; alt=&#34;New plot&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/sjplot/new_plot.png" alt="New plot"></p>
 
 </main>
 

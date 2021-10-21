@@ -33,7 +33,7 @@
 <p>I installed a minimal Ubuntu server image on a little Toshiba NB100 netbook I was given as a present and there was an annoying side effect whereby if a wireless network wasn&rsquo;t detected on boot the bootup process would wait for about 5 minutes looking for a network before moving on. This happened every single time I booted up because I preferred to only search for wireless networks manually. The answer was to edit the <code>networking.service</code> config file:</p>
 <pre tabindex="0"><code>sudo systemctl edit networking.service
 </code></pre><p>Then enter into the file:</p>
-<pre tabindex="0"><code>[Service]
+<pre tabindex="0"><code>Service
 TimeoutStartSec=20sec
 </code></pre><p>to set the timeout period when looking for wireless networks to be 20 seconds.</p>
 <p>Check the file has the correct information:</p>

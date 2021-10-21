@@ -155,16 +155,14 @@ Ref. 7: <span style="color:#204a87;font-weight:bold">\citep</span><span style="c
 <span style="color:#204a87">}</span>
 </code></pre></div><p>All these references were chosen to highlight some of the diversity of bibliographic entries I have experienced.</p>
 <p>The basic document produces a file like this:</p>
-<p><a href="/img_full/biblatex/1_basic.png">&lt;img src=&#34;/img/biblatex/1_basic.png&#34; alt=&#34;Basic LaTeX document&#34;&gt;</a>
-</p>
+<p><img src="/img/biblatex/1_basic.png" alt="Basic LaTeX document"></p>
 <p>The first thing to change is the basic reference style. Currently the references are numbered, but I prefer the author-year style, so I alter the <code>biblatex</code> options to look like this:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\usepackage</span>[natbib,
 	backend=biber,
 	style=authoryear
 	]<span style="color:#204a87">{</span>biblatex<span style="color:#204a87">}</span>
 </code></pre></div><p>which produces this document:</p>
-<p><a href="/img_full/biblatex/2_authoryear.png">&lt;img src=&#34;/img/biblatex/2_authoryear.png&#34; alt=&#34;Author-year style references&#34;&gt;</a>
-</p>
+<p><img src="/img/biblatex/2_authoryear.png" alt="Author-year style references"></p>
 <p>There are a few issues that still need to be solved, so I&rsquo;ll go through them one by one.</p>
 <p>Firstly, the number of names reported in both the citations and the reference list is not how I would like it. For example, Adole et al. (2018a) has three authors in the citation, but I would prefer one author then et al. if there are more than two authors. Also, Dinerstein et al. (2017) only has one author then et al. in the reference list, but I want to list up to 10 authors then et al., so I alter the <code>biblatex</code> options once more:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\usepackage</span>[natbib,
@@ -176,8 +174,7 @@ Ref. 7: <span style="color:#204a87;font-weight:bold">\citep</span><span style="c
 	maxbibnames=10
 	]<span style="color:#204a87">{</span>biblatex<span style="color:#204a87">}</span>
 </code></pre></div><p>This allows up to two names in the citations before et al., and if et al. is used, only the first author name is given. Also a maximum of 10 names is displayed in the reference list, but if there are fewer than 10 then all names are displayed.</p>
-<p><a href="/img_full/biblatex/3_names.png">&lt;img src=&#34;/img/biblatex/3_names.png&#34; alt=&#34;Changing the number of authors&#34;&gt;</a>
-</p>
+<p><img src="/img/biblatex/3_names.png" alt="Changing the number of authors"></p>
 <p>Next, BibLaTeX has decided that if two papers have the same author list, that the second paper can omit the author list in place of a dash. I don&rsquo;t like this, so I change the options again:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\usepackage</span>[natbib,
 	backend=biber,
@@ -191,8 +188,7 @@ Ref. 7: <span style="color:#204a87;font-weight:bold">\citep</span><span style="c
 	dashed=false
 	]<span style="color:#204a87">{</span>biblatex<span style="color:#204a87">}</span>
 </code></pre></div><p>This prints the full author list for every repeat.</p>
-<p><a href="/img_full/biblatex/4_unique.png">&lt;img src=&#34;/img/biblatex/4_unique.png&#34; alt=&#34;Always printing the full author list, even when repeated&#34;&gt;</a>
-</p>
+<p><img src="/img/biblatex/4_unique.png" alt="Always printing the full author list, even when repeated"></p>
 <p>Next, the Legendre and Legendre (1998) reference has provided the full first names for each author in the .bib file. This is valid BibTeX syntax, but BibLaTeX then defaults to printing those first names in the reference rather than the initials, which looks messy when using a mix of initials and full names. So I configure BibLaTeX to always use initials.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\usepackage</span>[natbib,
 	backend=biber,
@@ -206,12 +202,10 @@ Ref. 7: <span style="color:#204a87;font-weight:bold">\citep</span><span style="c
 	dashed=false,
 	giveninits=true
 	]<span style="color:#204a87">{</span>biblatex<span style="color:#204a87">}</span>
-</code></pre></div><p><a href="/img_full/biblatex/5_inits.png">&lt;img src=&#34;/img/biblatex/5_inits.png&#34; alt=&#34;Always use initials, even when full names provided&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/biblatex/5_inits.png" alt="Always use initials, even when full names provided"></p>
 <p>Finally, and this might be a bit nit-picky, I would prefer to use an ampersand rather than &ldquo;and&rdquo; when listing the final author name, both in the citations and the reference list, so I add this line to the document preamble:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\renewcommand*\finalnamedelim</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\addspace\&amp;\space</span><span style="color:#204a87">}</span>
-</code></pre></div><p><a href="/img_full/biblatex/6_ampers.png">&lt;img src=&#34;/img/biblatex/6_ampers.png&#34; alt=&#34;Use an ampersand for the final author&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/biblatex/6_ampers.png" alt="Use an ampersand for the final author"></p>
 
 </main>
 

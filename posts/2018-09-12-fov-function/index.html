@@ -54,8 +54,7 @@
 <span style="color:#000;font-weight:bold">}</span>
 </code></pre></div><p>The first thing the function does is convert the desired degrees field of view to radians. Then it converts the pixel diameter of the circular projected image into a radius. Then it uses an equation for projecting equisolid images onto a flat plane, i.e. the image sensor. This equation gives the number of mm from the centre of the sensor an object will appear on the sensor and therefore the flat image, given the focal length. The next step calculates R for the maximum theta of the lens, in most cases 90 degrees for a full hemispheric image. This maximum R value can be related to the pixel length of the full image to create a value of pixel circle radius per theta degree value.</p>
 <p>Here is a diagram which roughly describes the various values used in the function, though the focal length is normally just taken from the given focal length of the lens:</p>
-<p><a href="/img_full/fov_function/diagram.jpg">&lt;img src=&#34;/img/fov_function/diagram.png&#34; alt=&#34;Lens curvature diagram&#34;&gt;</a>
-</p>
+<p><img src="/img/fov_function/diagram.png" alt="Lens curvature diagram"></p>
 <p>Then, it&rsquo;s easy enough to take the value given by <code>fov_px</code> and plug it into this macro in ImageJ to crop the image to the desired pixel radius:</p>
 <pre tabindex="0"><code>circle_radius = &lt;ADJUST_TO_fov_px()_OUTPUT&gt;
 

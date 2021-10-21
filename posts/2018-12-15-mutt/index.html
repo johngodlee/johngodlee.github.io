@@ -33,20 +33,20 @@
 <p>In a long transition away from Google, I made another email account, on an email system that values privacy and doesn&rsquo;t sell information to advertisers. That means that for the moment, I now have two email accounts. Simultaneously, I thought I would give (Neo)Mutt another go as my email client, along with Offlineimap (grabbing mail), notmuch/alot (indexing mail), msmtp (sending email), pass (managing passwords), vim (writing mail), launchd (scheduling mail sync), and w3m (parsing HTML email).</p>
 <h1 id="offlineimap">Offlineimap</h1>
 <p>This is my current <code>.offlineimaprc</code>:</p>
-<pre tabindex="0"><code>[general]
+<pre tabindex="0"><code>general
 accounts = riseup, gmail 
 pythonfile = ~/.offlineimap_pass.py
 fsync = true
 
-[Account riseup]
+Account riseup
 localrepository = riseup-local
 remoterepository = riseup-remote
 
-[Repository riseup-local]
+Repository riseup-local
 type = Maildir
 localfolders = ~/.mail/riseup
 
-[Repository riseup-remote]
+Repository riseup-remote
 type = IMAP
 ssl = true 
 sslcacertfile = /usr/local/etc/openssl/cert.pem
@@ -54,11 +54,11 @@ remotehost = mail.riseup.net
 remoteuser = &lt;EMAIL ADDRESS&gt; 
 remotepasseval = GetPassRiseup() 
 
-[Account gmail]
+Account gmail
 localrepository = gmail-local
 remoterepository = gmail-remote
 
-[Repository gmail-local]
+Repository gmail-local
 type = Maildir
 localfolders = ~/.mail/gmail
 nametrans = lambda folder: re.sub('drafts', '[Google Mail].Drafts',
@@ -66,7 +66,7 @@ nametrans = lambda folder: re.sub('drafts', '[Google Mail].Drafts',
     re.sub('starred', '[Google Mail].Starred',
     re.sub('trash', '[Google Mail].Bin', folder))))
 
-[Repository gmail-remote]
+Repository gmail-remote
 maxconnections = 3
 type = Gmail
 ssl = true

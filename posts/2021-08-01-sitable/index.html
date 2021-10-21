@@ -47,13 +47,11 @@ Valiant <span style="color:#204a87">&amp;</span> 18.1 <span style="color:#204a87
    <span style="color:#204a87;font-weight:bold">\hline</span>
 <span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>tabular<span style="color:#204a87">}</span>
 <span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>table<span style="color:#204a87">}</span>
-</code></pre></div><p><a href="/img_full/sitable/basic.png">&lt;img src=&#34;/img/sitable/basic.png&#34; alt=&#34;A basic table&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/sitable/basic.png" alt="A basic table"></p>
 <p>It&rsquo;s nice to align numeric columns by decimal point, which can be achieved using the <code>S</code> column type:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>tabular<span style="color:#204a87">}{</span>lSSSSS<span style="color:#204a87">}</span>
 </code></pre></div><p>But now the columns are all off centre:</p>
-<p><a href="/img_full/sitable/s_bad.png">&lt;img src=&#34;/img/sitable/s_bad.png&#34; alt=&#34;Table with misaligned &amp;lsquo;S&amp;rsquo; columns&#34;&gt;</a>
-</p>
+<p><img src="/img/sitable/s_bad.png" alt="Table with misaligned &lsquo;S&rsquo; columns"></p>
 <p>It turns out, that the <code>table-format</code> option can be used to tell <code>siunitx</code> how many digits to expect both before and after the decimal point:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>tabular<span style="color:#204a87">}{</span>l
 	S[table-format=2.1]
@@ -61,8 +59,7 @@ Valiant <span style="color:#204a87">&amp;</span> 18.1 <span style="color:#204a87
 	S[table-format=3.0]
 	S[table-format=1.2]
 	S[table-format=2.2]<span style="color:#204a87">}</span>
-</code></pre></div><p><a href="/img_full/sitable/s_good.png">&lt;img src=&#34;/img/sitable/s_good.png&#34; alt=&#34;Table with properly aligned &amp;lsquo;S&amp;rsquo; columns&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/sitable/s_good.png" alt="Table with properly aligned &lsquo;S&rsquo; columns"></p>
 <p>I had always assumed that <code>table-format</code> referred to a version number, <code>v3.2</code> for example, and not knowing what the differences were I had avoided using the option altogether.</p>
 <p>As an addendum, while I was figuring this out I also did some experiments in exporting nice looking LaTeX tables directly from R using the <code>xtable</code> package. Here is a basic <code>xtable</code> export snippet, the resulting table, and the table rendered by LaTeX:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Packages</span>
@@ -97,8 +94,7 @@ Mazda RX4 <span style="color:#204a87">&amp;</span> 21.00 <span style="color:#204
    <span style="color:#204a87;font-weight:bold">\hline</span>
 <span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>tabular<span style="color:#204a87">}</span>
 <span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>table<span style="color:#204a87">}</span>
-</code></pre></div><p><a href="/img_full/sitable/xtable_bad.png">&lt;img src=&#34;/img/sitable/xtab_bad.png&#34; alt=&#34;standard xtable table output&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/sitable/xtab_bad.png" alt="standard xtable table output"></p>
 <p>By default, <code>xtable</code> renders all columns as right-aligned, with two decimal places after columns identified as numeric, with no caption or label. Below is an improved table, created by adding some customisations to <code>xtable</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">xtab_good</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">xtable</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat</span><span style="color:#000;font-weight:bold">,</span>
   <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;table_a&#34;</span><span style="color:#000;font-weight:bold">,</span>
@@ -147,8 +143,7 @@ Mazda RX4 <span style="color:#204a87">&amp;</span> 21.00 <span style="color:#204
    <span style="color:#204a87;font-weight:bold">\bottomrule</span>
 <span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>tabular<span style="color:#204a87">}</span>
 <span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>table<span style="color:#204a87">}</span>
-</code></pre></div><p><a href="/img_full/sitable/xtab_good.png">&lt;img src=&#34;/img/sitable/xtab_good.png&#34; alt=&#34;A better xtable&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/sitable/xtab_good.png" alt="A better xtable"></p>
 <p>The changes made:</p>
 <ul>
 <li>Adds a label - <code>label =</code></li>

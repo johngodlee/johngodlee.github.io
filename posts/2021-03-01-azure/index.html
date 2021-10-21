@@ -120,42 +120,42 @@
 	<span style="color:#000;font-weight:bold">}</span>
 <span style="color:#000;font-weight:bold">]</span>
 </code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">result_parse</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">content</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">result</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">as</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;parsed&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><pre tabindex="0"><code>[[1]]
-[[1]]$detectedLanguage
-[[1]]$detectedLanguage$language
-[1] &quot;pt&quot;
+</code></pre></div><pre tabindex="0"><code>[1]
+[1]
+[1]
+1
 
-[[1]]$detectedLanguage$score
-[1] 1
-
-
-[[1]]$translations
-[[1]]$translations[[1]]
-[[1]]$translations[[1]]$text
-[1] &quot;This is a test text. The big train had black smoke.&quot;
-
-[[1]]$translations[[1]]$to
-[1] &quot;en&quot;
+[1]
+1
 
 
+[1]
+[1]]$translations[[1]
+[1]]$translations[[1]
+1
+
+[1]]$translations[[1]
+1
 
 
-[[2]]
-[[2]]$detectedLanguage
-[[2]]$detectedLanguage$language
-[1] &quot;pt&quot;
-
-[[2]]$detectedLanguage$score
-[1] 1
 
 
-[[2]]$translations
-[[2]]$translations[[1]]
-[[2]]$translations[[1]]$text
-[1] &quot;Cardboard boxes are easy to flatten&quot;
+[2]
+[2]
+[2]
+1
 
-[[2]]$translations[[1]]$to
-[1] &quot;en&quot;
+[2]
+1
+
+
+[2]
+[2]]$translations[[1]
+[2]]$translations[[1]
+1
+
+[2]]$translations[[1]
+1
 </code></pre><p>Then it&rsquo;s trivial to convert it to whatever data structure you want, in my case I want a dataframe:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">result_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">result_parse</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
   <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>

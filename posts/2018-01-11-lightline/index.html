@@ -34,13 +34,10 @@
  and replace it with a statusline and tabline of my own design.</p>
 <h2 id="statusline-basics">Statusline basics</h2>
 <p>I&rsquo;v never had any problems with lightline in the year or so that I&rsquo;ve been using it. I&rsquo;ve never used VIM without lightline in fact. Lightline provides lots of useful information as standard, such as the file name, the cursor position in the file, the file type, and importantly, it changes colour depending on what mode you are in, <code>insert</code>, <code>visual</code>, <code>normal</code>, etc..</p>
-<p><a href="/img_full/lightline/lightline.png">&lt;img src=&#34;/img/lightline/lightline.png&#34; alt=&#34;Lightline&#34;&gt;</a>
-</p>
-<p><a href="/img_full/lightline/lightline_insert.png">&lt;img src=&#34;/img/lightline/lightline_insert.png&#34; alt=&#34;Lightline insert mode&#34;&gt;</a>
-</p>
+<p><img src="/img/lightline/lightline.png" alt="Lightline"></p>
+<p><img src="/img/lightline/lightline_insert.png" alt="Lightline insert mode"></p>
 <p>But, just having lightline do everything for me isn&rsquo;t particularly exciting. So first thing was to see what the default statusline looks like:</p>
-<p><a href="/img_full/lightline/status_basic.png">&lt;img src=&#34;/img/lightline/status_basic.png&#34; alt=&#34;Default status line&#34;&gt;</a>
-</p>
+<p><img src="/img/lightline/status_basic.png" alt="Default status line"></p>
 <p>Very boring, all you can see is the file name.</p>
 <p>Ideally, I want some useful information about my document in the statusline, namely in order from most to least wanted:</p>
 <ul>
@@ -62,8 +59,7 @@
 <p>To test it&rsquo;s actually worked, try adding some other codes:</p>
 <pre tabindex="0"><code>set statusline=%t%m%y%p%l%c
 </code></pre><p>which produces this:</p>
-<p><a href="/img_full/lightline/status_codes.png">&lt;img src=&#34;/img/lightline/status_codes.png&#34; alt=&#34;Status line with content&#34;&gt;</a>
-</p>
+<p><img src="/img/lightline/status_codes.png" alt="Status line with content"></p>
 <p>which is very ugly, and not particularly easy to read, either in the <code>vimrc</code> or in the statusline itself. First, let&rsquo;s rectify this in the <code>.vimrc</code>. I like to separate out my statusline code so that each item or group of items is on its own line. The syntax used below is similar to that used to design a prompt in the bash shell:</p>
 <pre tabindex="0"><code>set statusline=%t	&quot; file name
 set statusline+=%m	&quot; modified?
@@ -85,8 +81,7 @@ set statusline+=\ 	&quot; space
 set statusline+=%l	&quot; line number
 set statusline+=:	&quot; colon separator
 set statusline+=%c	&quot; column number
-</code></pre><p><a href="/img_full/lightline/status_space.png">&lt;img src=&#34;/img/lightline/status_space.png&#34; alt=&#34;Status line with spacing between content&#34;&gt;</a>
-</p>
+</code></pre><p><img src="/img/lightline/status_space.png" alt="Status line with spacing between content"></p>
 <p>Now. I don&rsquo;t really want the information about my position in the file on the left side, I&rsquo;d rather have it on the right side. I can switch to the right side of the statusline by adding <code>set statusline+=%=</code> before the lines you want to appear on the right side:</p>
 <pre tabindex="0"><code>set statusline=%t	&quot; file name
 set statusline+=\ 	&quot; space
@@ -102,8 +97,7 @@ set statusline+=\ 	&quot; space
 set statusline+=%l	&quot; line number
 set statusline+=:	&quot; colon separator
 set statusline+=%c	&quot; column number
-</code></pre><p><a href="/img_full/lightline/status_right.png">&lt;img src=&#34;/img/lightline/status_right.png&#34; alt=&#34;Status line split left and right&#34;&gt;</a>
-</p>
+</code></pre><p><img src="/img/lightline/status_right.png" alt="Status line split left and right"></p>
 <p>So that&rsquo;s the basics of a statusline covered I think. Now onto making our own functions</p>
 <h2 id="custom-items-and-functions-in-statusline">Custom items and functions in statusline</h2>
 <p>I didn&rsquo;t come up with the ideas presented here myself, I adapted them from online sources. Three things on my list of desired features in the statusline don&rsquo;t appear as standard codes in the help file, those things are displaying the mode I am in, changing the colour based on the mode, and the git branch.</p>
@@ -189,8 +183,7 @@ set statusline+=\ 	&quot; space
 set statusline+=%l	&quot; line number
 set statusline+=:	&quot; colon separator
 set statusline+=%c	&quot; column number
-</code></pre><p><a href="/img_full/lightline/status_git.png">&lt;img src=&#34;/img/lightline/status_git.png&#34; alt=&#34;Status line with git repository&#34;&gt;</a>
-</p>
+</code></pre><p><img src="/img/lightline/status_git.png" alt="Status line with git repository"></p>
 <h3 id="conditional-colour-changing">Conditional colour changing</h3>
 <p>For the colour changing status bar you can use another function:</p>
 <pre tabindex="0"><code>function! ChangeStatuslineColor()
@@ -222,8 +215,7 @@ set statusline+=\ 	&quot; space
 set statusline+=%l	&quot; line number
 set statusline+=:	&quot; colon separator
 set statusline+=%c	&quot; column number
-</code></pre><p><a href="/img_full/lightline/status_colour.png">&lt;img src=&#34;/img/lightline/status_colour.png&#34; alt=&#34;Status line with colour&#34;&gt;</a>
-</p>
+</code></pre><p><img src="/img/lightline/status_colour.png" alt="Status line with colour"></p>
 <p>Obviously you can change the colours to whatever you desire, using ANSI colour codes to extend the colour range, and if you have an X terminal, just change <code>cterm</code> to <code>xterm</code> and you can then use Xterm colour codes. You could also add extra <code>elseif</code> statements to add other modes. Lightline for example turns orange when in visual mode.</p>
 <h2 id="my-actual-statusline">My actual statusline</h2>
 <p>While the above has all the basic functionality, it&rsquo;s very ugly. For my real statusline I tweaked things a little bit more:</p>
@@ -296,17 +288,13 @@ set statusline+=%3.p%%	&quot; Percentage through file - min size 3
 set statusline+=\ \|\ 	&quot; Vert-line and Space
 set statusline+=%8.(%4.l:%-3.c%)	&quot; Line and column number in group
 set statusline+=\ 		&quot; Space
-</code></pre><p><a href="/img_full/lightline/status_my.png">&lt;img src=&#34;/img/lightline/status_my.png&#34; alt=&#34;My status line&#34;&gt;</a>
-</p>
-<p><a href="/img_full/lightline/status_my_insert.png">&lt;img src=&#34;/img/lightline/status_my_insert.png&#34; alt=&#34;My status line - insert mode&#34;&gt;</a>
-</p>
+</code></pre><p><img src="/img/lightline/status_my.png" alt="My status line"></p>
+<p><img src="/img/lightline/status_my_insert.png" alt="My status line - insert mode"></p>
 <h2 id="the-tabline">The tabline</h2>
 <p>Less important, but still something that lightline used to do which now I do myself is the tabline. With lightline the tabline looks like this:</p>
-<p><a href="/img_full/lightline/tab_lightline.png">&lt;img src=&#34;/img/lightline/tab_lightline.png&#34; alt=&#34;Lightline tab line&#34;&gt;</a>
-</p>
+<p><img src="/img/lightline/tab_lightline.png" alt="Lightline tab line"></p>
 <p>Setting the tabline manually isn&rsquo;t as easy as the statusline. Technically you can set the tabline using the same code as the statusline (e.g. <code>set tabline=%t</code>), but this will result in the following, regardless of how many tabs are actually open:</p>
-<p><a href="/img_full/lightline/tab_simple.png">&lt;img src=&#34;/img/lightline/tab_simple.png&#34; alt=&#34;Default tab line&#34;&gt;</a>
-</p>
+<p><img src="/img/lightline/tab_simple.png" alt="Default tab line"></p>
 <p>I don&rsquo;t entirely understand how the tabline works at the moment, so I borrowed this tabline function from <a href="http://dhruvasagar.com/2014/04/06/vim-custom-tabline" target="_blank">this website</a>
 :</p>
 <pre tabindex="0"><code>function! MyTabLine()
@@ -335,8 +323,7 @@ set statusline+=\ 		&quot; Space
 endfunction
 </code></pre><p>Then to run it:</p>
 <pre tabindex="0"><code>set tabline=%!MyTabLine()
-</code></pre><p><a href="/img_full/lightline/tab_function.png">&lt;img src=&#34;/img/lightline/tab_function.png&#34; alt=&#34;My tabline&#34;&gt;</a>
-</p>
+</code></pre><p><img src="/img/lightline/tab_function.png" alt="My tabline"></p>
 
 </main>
 

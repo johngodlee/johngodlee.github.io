@@ -232,8 +232,7 @@
   <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span>
 <span style="color:#000;font-weight:bold">}</span>
 </code></pre></div><p>The function models stem numbers reasonably consistently among plots, but tends to under-estimate the lower diameter size classes:</p>
-<p><a href="/img_full/weibull/p_plot.png">&lt;img src=&#34;/img/weibull/p_plot.png&#34; alt=&#34;Estimated diameter size classes vs. observed&#34;&gt;</a>
-</p>
+<p><img src="/img/weibull/p_plot.png" alt="Estimated diameter size classes vs. observed"></p>
 <p>In the plot each set of points connected by a line is a plot, and each point is a diameter size class, with the proportion of stems observed within that size class on the x axis, and the proportion of stems estimated by <code>diamWeibullEst()</code> on the y axis. As you can see, large diameter size classes are slightly over-estimated in their proportional abundance, and the smallest size class (5-10 cm) is consistently under-estimated. This is probably because the Weibull distribution will dip down towards zero unless the shape parameter (k) is less than 1.</p>
 
 </main>

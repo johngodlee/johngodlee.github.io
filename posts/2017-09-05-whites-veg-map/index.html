@@ -59,8 +59,7 @@
 	<span style="color:#000">coord_map</span><span style="color:#000;font-weight:bold">()</span>
 </code></pre></div><p>To investigate vegetation types I tracked down a <a href="http://omap.africanmarineatlas.org/BIOSPHERE/pages/3_terrestrial%20vegetation.htm" target="_blank">shapefile version of White&amp;rsquo;s 1983 Vegetation Map</a>
 . The map is the result of 15 years of work by UNESCO and AEFTET and was created by first compiling many existing maps, then cross-checking with extensive fieldwork and consultation with local experts.</p>
-<p><a href="/img_full/white_veg_map/veg_map.png">&lt;img src=&#34;/img/white_veg_map/veg_map.png&#34; alt=&#34;White&amp;rsquo;s map of vegetation types in Africa&#34;&gt;</a>
-</p>
+<p><img src="/img/white_veg_map/veg_map.png" alt="White&rsquo;s map of vegetation types in Africa"></p>
 <p>To create the map above I used the <code>ggplot2</code> and <code>rgdal</code> packages:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Read shapefile ----</span>
 <span style="color:#000">white_veg</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dsn</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;whitesveg&#34;</span><span style="color:#000;font-weight:bold">,</span>
@@ -116,8 +115,7 @@
 <li>&ldquo;Fortify&rdquo; shapefile for use in <code>ggplot()</code></li>
 <li>Plot using <code>ggplot()</code></li>
 </ol>
-<p><a href="https://ourcodingclub.github.io/2016/12/11/maps_tutorial.html" target="_blank">I also wrote a tutorial for the Coding Club group I&amp;rsquo;m involved with on using R as a GIS</a>
-</p>
+<p>I also wrote a tutorial for the Coding Club group I&rsquo;m involved with on using R as a GIS</p>
 
 </main>
 

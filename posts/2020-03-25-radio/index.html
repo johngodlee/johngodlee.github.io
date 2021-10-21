@@ -49,7 +49,7 @@ url=$(grep &quot;${sel}&quot; ${stations} | sed 's/,.*$//')
 vlc &quot;${url}&quot;
 </code></pre><h2 id="update-2021-04-18">Update 2021-04-18</h2>
 <p>The BBC changed their radio streaming URLs which prompted me to also change how this script worked a bit. The radio streaming URLs are now stored in a .pls file, which makes it more compatible with other music players. I&rsquo;ve included the full .pls file here because these URLs are hard to come by online:</p>
-<pre tabindex="0"><code>[playlist]
+<pre tabindex="0"><code>playlist
 NumberOfEntries=10
 
 Title1=BBC Radio 4 FM

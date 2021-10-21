@@ -32,10 +32,8 @@
 <main>
 <p>On my most recent teaching stint as a demonstrator for a 4th year undergraduate field course, myself and one of the other demonstrators experimented with estimating forest canopy structural metrics like gap fraction and Leaf Area Index (LAI) using two different photographic methods. The first was a conventional full hemipsherical fisheye lens on a DSLR camera, the second was a considerably cheaper fisheye lens converter for a smartphone.</p>
 <p>We took 10 photos with the same orientation at the same height under a stand of Ash-Birch mixed plantation. I cropped the images so each set of paired images captured approximately the same area of canopy.</p>
-<p><a href="/img_full/lai_phone/hemi_1_camera_thresh.jpg">&lt;img src=&#34;/img/lai_phone/hemi_1_camera_thresh.png&#34; alt=&#34;Thesholded photo&#34;&gt;</a>
-</p>
-<p><a href="/img_full/lai_phone/hemi_1_camera.jpg">&lt;img src=&#34;/img/lai_phone/hemi_1_camera.png&#34; alt=&#34;Original photo&#34;&gt;</a>
-</p>
+<p><img src="/img/lai_phone/hemi_1_camera_thresh.png" alt="Thesholded photo"></p>
+<p><img src="/img/lai_phone/hemi_1_camera.png" alt="Original photo"></p>
 <p>One issue was that the phone fisheye converter tended to move around on the body of the phone, leading to the edges of the fisheye frame being distorted or excluded from the phone&rsquo;s frame. This meant that to maintain consistency between the angle of view cpatured by each photo, all photos had to be cropped to approximately (DEGREES) field of view. To see whether this excess cropping affected estimations of LAI or gap fraction, I compared photos from the DSLR camera, cropped to different proportional circular crops:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">phone_px_rad</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">2460</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span>
 <span style="color:#000">camera_px_rad</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">3925</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span>
@@ -57,12 +55,9 @@
     <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
     <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Proportional crop by diameter of original image&#34;</span><span style="color:#000;font-weight:bold">,</span> 
         <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Pixel diameter of resultant image&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><a href="/img_full/lai_phone/fov_ggplot.png">&lt;img src=&#34;/img/lai_phone/fov_ggplot.png&#34; alt=&#34;Plot of field of view by diameter crop&#34;&gt;</a>
-</p>
-<p><a href="/img_full/lai_phone/phone_compare.png">&lt;img src=&#34;/img/lai_phone/phone_compare.png&#34; alt=&#34;Plot of percentage crop by mean gap fraction&#34;&gt;</a>
-</p>
-<p><a href="/img_full/lai_phone/camera_compare.png">&lt;img src=&#34;/img/lai_phone/camera_compare.png&#34; alt=&#34;Spaghetti plot of comparison between photos by camera or phone&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/lai_phone/fov_ggplot.png" alt="Plot of field of view by diameter crop"></p>
+<p><img src="/img/lai_phone/phone_compare.png" alt="Plot of percentage crop by mean gap fraction"></p>
+<p><img src="/img/lai_phone/camera_compare.png" alt="Spaghetti plot of comparison between photos by camera or phone"></p>
 
 </main>
 

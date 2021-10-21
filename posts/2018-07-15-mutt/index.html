@@ -41,21 +41,20 @@
 </dd>
 </dl>
 <pre tabindex="0"><code>brew install offlineimap
-</code></pre><p><a href="http://stevelosh.com/blog/2012/10/the-homely-mutt/" target="_blank">Steve Losh</a>
- says that <code>offlineimap</code> tends to include script breaking changes between updates, and they recommend installing an earlier version, but I used v7.2.1, which is current as of 27th Mar 2018 and it worked fine.</p>
+</code></pre><p>Steve Losh</p>
 <p><code>offlineimap</code> takes its configuration from <code>~/.offlineimaprc</code>. This is my config:</p>
-<pre tabindex="0"><code>[general]
+<pre tabindex="0"><code>general
 ui = TTY.TTYUI
 accounts = johngodlee@gmail.com 
 pythonfile = ~/.offlineimap.py
 fsync = False
 ssl = False
 
-[Account johngodlee@gmail.com]
+Account johngodlee@gmail.com
 localrepository = johngodlee-local
 remoterepository = johngodlee-remote
 
-[Repository johngodlee-local]
+Repository johngodlee-local
 type = Maildir
 localfolders = ~/.mail/johngodlee@gmail.com
 nametrans = lambda folder: {'drafts': '[Google Mail]/Drafts',
@@ -64,7 +63,7 @@ nametrans = lambda folder: {'drafts': '[Google Mail]/Drafts',
 	'trash': '[Google Mail]/Bin',
 	}.get(folder, folder)
 
-[Repository johngodlee-remote]
+Repository johngodlee-remote
 maxconnections = 3
 type = Gmail
 remoteuser = johngodlee@gmail.com
@@ -89,16 +88,16 @@ folderfilter = lambda folder: folder not in ['[Google Mail]/Bin',
 <p><code>accounts = johngodlee@gmail.com</code> is the email account to be checked.</p>
 <p><code>pythonfile = ~/.offlineimap.py</code> is a python script which <code>offlineimap</code> calls to get the password for my email account from <code>pass</code>. I&rsquo;ll go through <code>.offlineimap.py</code> later.</p>
 <p><code>fsync = False</code> just tells <code>offlineimap</code> that it doesn&rsquo;t need to make sure a full sync is completed every time, if a few emails get lost, no bother, they will just get synced next time</p>
-<pre tabindex="0"><code>[Account johngodlee@gmail.com]
+<pre tabindex="0"><code>Account johngodlee@gmail.com
 localrepository = johngodlee-local
 remoterepository = johngodlee-remote
 </code></pre><p>The section above defines the names of repositories to use for this email account.</p>
-<pre tabindex="0"><code>[Repository johngodlee-local]
+<pre tabindex="0"><code>Repository johngodlee-local
 type = Maildir
 localfolders = ~/.mail/johngodlee@gmail.com
 </code></pre><p>The section above defines the location and mailbox type of the local repository for the email from my account</p>
 <p><code>nametrans = lambda folder: {'drafts': '[Google Mail]/Drafts', ...}.get(folder, folder)</code> translates Gmail&rsquo;s IMAP folders into folders in my local mail directory. I think this is necessary as Gmail&rsquo;s folders contain forward slashes, which would mess up a normal file system. I only translated the system IMAP folders, as custom folders (labels) don&rsquo;t use the <code>[Google Mail]/</code> prefix and are synced automatically as is. I had some trouble getting <code>offlineimap</code> to recognise my system folders, as many other guides recommend using the <code>[Gmail]/</code> prefix, but for whatever reason my account uses <code>[Google Mail]/</code>.</p>
-<pre tabindex="0"><code>[Repository johngodlee-remote]
+<pre tabindex="0"><code>Repository johngodlee-remote
 maxconnections = 3
 type = Gmail
 remoteuser = johngodlee@gmail.com
@@ -373,8 +372,7 @@ macro index,pager \\  &quot;&lt;vfolder-from-query&gt;&quot;
 </ul>
 <p>y full setup can be explored in my <a href="https://github.com/johngodlee/dotfiles" target="_blank">dotfiles</a>
 </p>
-<p><a href="/img_full/mutt/neomutt.png">&lt;img src=&#34;/img/mutt/neomutt.png&#34; alt=&#34;Mutt screenshot&#34;&gt;</a>
-</p>
+<p><img src="/img/mutt/neomutt.png" alt="Mutt screenshot"></p>
 
 </main>
 

@@ -128,8 +128,7 @@ gdal_merge.py -n 0 -a_nodata 0 *_NDVI.tif -o ndvi_merge_o.tif
 gdalwrap -t_srs '+proj=longlat +datum=WGS84' ndvi_merge_0.tif ndvi_merge_0_longlat.tif
 
 gdalwarp -cutline  'bicuar_shp/WDPA_Mar2018_protected_area_350-shapefile-polygons.shp' -crop_to_cutline -dstalpha ndvi_merge_0_longlat.tif ndvi_merge_0_longlat_bicuar.tif
-</code></pre><p><a href="/img_full/gdal_ndvi/bicuar_ndvi.png">&lt;img src=&#34;/img/gdal_ndvi/bicuar_ndvi.png&#34; alt=&#34;Bicuar NDVI&#34;&gt;</a>
-</p>
+</code></pre><p><img src="/img/gdal_ndvi/bicuar_ndvi.png" alt="Bicuar NDVI"></p>
 <p>Then I can use an R script to look at the distribution of NDVI across the park</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Packages</span>
 <span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">raster</span><span style="color:#000;font-weight:bold">)</span>
@@ -142,14 +141,12 @@ gdalwarp -cutline  'bicuar_shp/WDPA_Mar2018_protected_area_350-shapefile-polygon
 <span style="color:#000">ndvi_vec</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">getValues</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ndvi_tif_bicuar</span><span style="color:#000;font-weight:bold">)</span>
 
 <span style="color:#000">hist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ndvi_vec</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">breaks</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><a href="/img_full/gdal_ndvi/bicuar_hist.png">&lt;img src=&#34;/img/gdal_ndvi/bicuar_hist.png&#34; alt=&#34;Bicuar histogram&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/gdal_ndvi/bicuar_hist.png" alt="Bicuar histogram"></p>
 <p>I can also experiment with plotting areas of the park within a certain threshold of NDVI</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">ndvi_thresh</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ndvi_tif_bicuar[ndvi_tif_bicuar</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0.6</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA</span>
 
 <span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ndvi_thresh</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><a href="/img_full/gdal_ndvi/bicuar_ndvi_0.5.png">&lt;img src=&#34;/img/gdal_ndvi/bicuar_ndvi_0.5.png&#34; alt=&#34;Bicuar NDVI&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/gdal_ndvi/bicuar_ndvi_0.5.png" alt="Bicuar NDVI"></p>
 
 </main>
 

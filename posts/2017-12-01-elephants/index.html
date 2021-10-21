@@ -65,10 +65,8 @@
 <span style="color:#8f5902;font-style:italic"># DBH boxplots ----</span>
 <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">tree_loc_diam_1_2_summ</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">plot</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">dbh_cm</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">geom_boxplot</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><p><a href="/img_full/elephants/dbh_map.png">&lt;img src=&#34;/img/elephants/dbh_map.png&#34; alt=&#34;Bubble plot of trees&#34;&gt;</a>
-</p>
-<p><a href="/img_full/elephants/dbh_plot.png">&lt;img src=&#34;/img/elephants/dbh_plot.png&#34; alt=&#34;Boxplot of tree diameters&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/elephants/dbh_map.png" alt="Bubble plot of trees"></p>
+<p><img src="/img/elephants/dbh_plot.png" alt="Boxplot of tree diameters"></p>
 <p>Now I want to create a map that shows how clustered together the trees are in any given plot. For this I use the handy <code>stat_density2d</code> geom from <code>ggplot2</code>, and fill according to <code>..level..</code>. Also I found I had to manually increase the size of the plot, otherwise the density shading polygons get clipped and look really messy.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Is there an effect of elephants on spatial clustering of trees? ----</span>
 <span style="color:#8f5902;font-style:italic"># Split data frames</span>
@@ -106,10 +104,8 @@
 	<span style="color:#000">theme</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">legend.text</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">element_text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">),</span>
 				<span style="color:#000">axis.text</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">element_text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
 	<span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Tree Density&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><a href="/img_full/elephants/elephant_plot.png">&lt;img src=&#34;/img/elephants/elephant_plot.png&#34; alt=&#34;Heatmap of trees with elephants&#34;&gt;</a>
-</p>
-<p><a href="/img_full/elephants/no_elephant_plot.png">&lt;img src=&#34;/img/elephants/no_elephant_plot.png&#34; alt=&#34;Heatmap of trees without elephants&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/elephants/elephant_plot.png" alt="Heatmap of trees with elephants"></p>
+<p><img src="/img/elephants/no_elephant_plot.png" alt="Heatmap of trees without elephants"></p>
 <p>The spatial clustering of trees in a plot with elephant activity (left) and without elephant activity (right). Elephants clearly have caused spatial clustering of trees.</p>
 
 </main>

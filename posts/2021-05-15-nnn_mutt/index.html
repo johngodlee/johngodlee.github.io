@@ -42,10 +42,9 @@
 , a very simple bash script.</p>
 <p>I do keep a version of the <a href="https://github.com/jarun/nnn" target="_blank">nnn file manager</a>
  on my system however, just in case. nnn is fast and minimal enough in its un-patched out of the box state that I never have to think about it. I found out that there is a
-<a href="https://github.com/mcchrish/nnn.vim" target="_blank">nnn.vim plugin</a>
- that works very similar to the <a href="https://github.com/junegunn/fzf.vim" target="_blank">fzf.vim plugin</a>
- that I already use for quickly navigating files in vim. With some help from the maintainer of nnn.vim (<a href="https://github.com/mcchrish/nnn.vim/issues/91" target="_blank"> see this issue</a>
-), I wrote some vimscript to pick files in nnn.vim and paste them in as attachments in my mutt email.</p>
+nnn.vim plugin](<a href="https://github.com/mcchrish/nnn.vim" target="_blank">https://github.com/mcchrish/nnn.vim</a>
+) that works very similar to the <a href="https://github.com/junegunn/fzf.vim" target="_blank">fzf.vim plugin</a>
+ that I already use for quickly navigating files in vim. With some help from the maintainer of nnn.vim ([ see this issue</p>
 <p>First the nnn.vim plugin must be installed, for example with vim-plug: <code>Plug 'mcchrish/nnn.vim'</code>.</p>
 <p>Then write a function to format the output of nnn.vim:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">!</span> <span style="color:#000">s</span>:<span style="color:#000">mutt_attach</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lines</span><span style="color:#000;font-weight:bold">)</span><span style="color:#a40000">
@@ -69,10 +68,8 @@
 </span></code></pre></div><p>This is the bit I got from @mcchrish.</p>
 <p>And finally write a file type specific mapping that only works in mail filetypes:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vim" data-lang="vim"><span style="color:#000">autocmd</span> <span style="color:#000">Filetype</span> <span style="color:#000">mail</span> <span style="color:#000">nnoremap</span> <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">silent</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">Leader</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#000">A</span> :<span style="color:#000">call</span> <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000">SID</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#000">nnncall</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;/Users/johngodlee&#39;</span><span style="color:#000;font-weight:bold">,</span> { <span style="color:#4e9a06">&#39;edit&#39;</span>: <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;&lt;SID&gt;mutt_attach&#39;</span><span style="color:#000;font-weight:bold">)</span> }<span style="color:#000;font-weight:bold">)&lt;</span><span style="color:#000">CR</span><span style="color:#000;font-weight:bold">&gt;</span><span style="color:#a40000">
-</span></code></pre></div><p><a href="/img_full/nnn_mutt/nnn.png">&lt;img src=&#34;/img/nnn_mutt/nnn.png&#34; alt=&#34;nnn.vim in action&#34;&gt;</a>
-</p>
-<p><a href="/img_full/nnn_mutt/att.png">&lt;img src=&#34;/img/nnn_mutt/att.png&#34; alt=&#34;Results pasted into vim buffer&#34;&gt;</a>
-</p>
+</span></code></pre></div><p><img src="/img/nnn_mutt/nnn.png" alt="nnn.vim in action"></p>
+<p><img src="/img/nnn_mutt/att.png" alt="Results pasted into vim buffer"></p>
 
 </main>
 

@@ -54,8 +54,7 @@
 <span style="color:#8f5902;font-style:italic"># Look at basic plot</span>
 <span style="color:#000">pwpp_results</span>
 </code></pre></div><p>The plot looks like this:</p>
-<p><a href="/img_full/pwpp/basic.jpeg">&lt;img src=&#34;/img/pwpp/basic.png&#34; alt=&#34;Default marginal means plot&#34;&gt;</a>
-</p>
+<p><img src="/img/pwpp/basic.png" alt="Default marginal means plot"></p>
 <p>As the object <code>pwpp_results</code> is a glorified <code>ggplot()</code> object, it&rsquo;s possible to extract the data used to make the plot and store it in tidy dataframes:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Extract data from plot object</span>
 <span style="color:#000">marg_vals</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
@@ -104,8 +103,7 @@
 <p><code>scale_x_continuous</code> marks breaks for a number of common significance thresholds.</p>
 <p><code>coord_trans</code> log transforms the x axis so that lines near the low end of the P value scale are more spaced out, as they are more important for interpretation, <code>clip = &quot;off&quot;</code> ensures that the full range of P values is shown, so plots are interpretable across models with different categories.</p>
 <p>The final plot looks like this:</p>
-<p><a href="/img_full/pwpp/full.jpeg">&lt;img src=&#34;/img/pwpp/full.png&#34; alt=&#34;ggplot2 marginal means&#34;&gt;</a>
-</p>
+<p><img src="/img/pwpp/full.png" alt="ggplot2 marginal means"></p>
 
 </main>
 

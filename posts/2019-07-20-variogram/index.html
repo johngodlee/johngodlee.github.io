@@ -31,8 +31,7 @@
 
 <main>
 <p>The default output of <code>variogram()</code> from the <code>{gstat}</code> package looks fine:</p>
-<p><a href="/img_full/variogram/variogram.jpeg">&lt;img src=&#34;/img/variogram/variogram.png&#34; alt=&#34;Default semivariogram&#34;&gt;</a>
-</p>
+<p><img src="/img/variogram/variogram.png" alt="Default semivariogram"></p>
 <p>But I wanted more control over how it looked for a manuscript I&rsquo;m writing. I&rsquo;m most familiar with <code>{ggplot2}</code> so wanted to use that.</p>
 <p>First grab some data</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">gstat</span><span style="color:#000;font-weight:bold">)</span>
@@ -56,8 +55,7 @@
   <span style="color:#8f5902;font-style:italic">#ylim(0, 52) +</span>
   <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
   <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Distance (m)&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Semivariance (\u03B3)&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><a href="/img_full/variogram/ggplot.jpeg">&lt;img src=&#34;/img/variogram/ggplot.png&#34; alt=&#34;ggplot2 semivariogram&#34;&gt;</a>
-</p>
+</code></pre></div><p><img src="/img/variogram/ggplot.png" alt="ggplot2 semivariogram"></p>
 
 </main>
 

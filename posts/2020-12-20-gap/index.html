@@ -140,9 +140,7 @@ pdal pipeline pipelines/centre.json --readers.las.filename<span style="color:#ce
 <span style="color:#000;font-weight:bold">]</span>
 </code></pre></div><p>The interesting bit is next. I used a program called <a href="http://www.povray.org/" target="_blank">POV-ray</a>
  to draw voxels in a 3D space at the position of each point in the point cloud and with the same size as the voxels defined during voxelisation. Then I positioned a virtual camera pointing upwards at the subplot centre, the same setup and lens curvature as the hemispherical photograph, with a white sky and black voxels, to create a virtual hemispherical photograph. Here is a side by side comparison of a real hemispherical photo (top) and a virtual photo (bottom) from a single plot. Note that the real photo is a mirror image, as you would expect from a photo:</p>
-<p><a href="/img_full/gap/real.png">&lt;img src=&#34;/img/gap/real.png&#34; alt=&#34;Real photo&#34;&gt;</a>
- <a href="/img_full/gap/virtual.png">&lt;img src=&#34;/img/gap/virtual.png&#34; alt=&#34;Virtual photo&#34;&gt;</a>
-</p>
+<p><img src="/img/gap/real.png" alt="Real photo">](/img_full/gap/real.png) [<img src="/img/gap/virtual.png" alt="Virtual photo"></p>
 <p>Here is the AWK script I used to generate the POV-ray voxels:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-awk" data-lang="awk"><span style="color:#204a87">BEGIN</span> <span style="color:#000;font-weight:bold">{</span> 
 	<span style="color:#204a87">FS</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;,&#34;</span>
