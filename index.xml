@@ -6,17 +6,7 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 20 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Voronoi tessellation to measure tree spatial distribution</title>
-      <link>http://johngodlee.xyz/posts/2021-10-20-voronoi/</link>
-      <pubDate>Wed, 20 Oct 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2021-10-20-voronoi/</guid>
-      <description>Voronoi diagrams partition multi-dimensional space into regions, where all positions within a given region are closest to a single point in the multi-dimensional space. Voronoi diagrams are named after Georgy Voronoy, but can also be called a Dirichlet tessellation (Peter Gustav Lejeune Dirichlet), or Thiessen polygons (Alfred H. Thiessen), as the same thing was implemented in different fields independently.
-I discovered Voronoi diagrams when researching methods to describe spatial clustering. I wanted a simple single number measure of how clustered together trees in a plot are, so that I could include that metric as a term in a linear model which looked at factors determining woodland canopy complexity.</description>
-    </item>
-    
+    <lastBuildDate>Tue, 12 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Walking three days of the Cleveland Way</title>
       <link>http://johngodlee.xyz/posts/2021-10-12-cleveland_way/</link>
@@ -196,6 +186,15 @@ Enriching the experience of a PhD tutor through active teaching – Teaching Mat
       
       <guid>http://johngodlee.xyz/posts/2021-06-01-befr/</guid>
       <description>I&amp;rsquo;ve been writing the background and introduction chapter of my PhD thesis. In it, I write about previous research into the &amp;ldquo;Biodiversity - Ecosystem Function Relationship&amp;rdquo;, the idea that variation in biodiversity affects the way ecosystems function. To visualise some of the breakthroughs over the last 30 or so years I decided to make a schematic diagram. The diagram is below, with the lengthy caption I included in the chapter.</description>
+    </item>
+    
+    <item>
+      <title>compInd: An R package for forest tree-tree competition indices</title>
+      <link>http://johngodlee.xyz/posts/2021-05-20-compind/</link>
+      <pubDate>Thu, 20 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-05-20-compind/</guid>
+      <description>I&amp;rsquo;ve put an R package on my Github which has functions for a load of different competition indices designed for forest tree-tree competition, which I&amp;rsquo;ve harvested from the academic literature. A lot of these competition indices come from older papers, as times have moved on and this isn&amp;rsquo;t such a popular field of research anymore, but with more and more emphasis being put on long-term forest plot monitoring infrastructure to track biodiversity, productivity, and reaction to climate change, I think it might be time for a revival.</description>
     </item>
     
   </channel>
