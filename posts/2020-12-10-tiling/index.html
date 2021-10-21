@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tiling wallpapers | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Tiling wallpapers</h1>
+
+<h2>2020-12-10</h2>
+</div>
+
+<main>
+<p>I&rsquo;ve recently become enamoured with tiling desktop wallpapers. These are wallpapers where the image is repeated across the screen in a regular grid to produce the illusion of a continuous texture. Tiling wallpapers used to be a necessity when hard drive space and memory were limited. Now they&rsquo;re more of a curiosity and source of nostalgia. One benefit of tiling wallpapers is that I can store them in my dotfiles repo and the repo will still stay small, while some other wallpapers I have can be up to 50MB.</p>
+<p>I was initially inspired by <a href="https://old.reddit.com/r/unixporn/comments/7ivelb/xfce_got_obsessed_with_tiling_wallpapers/" target="_blank">this post on reddit</a>
+ which uses a retro looking XFCE window manager setup. It almost looks more like FVWM.</p>
+<p>I scoured a few different sources for my favourite tiling wallpapers. Here are a few places where there are a bunch of tiling wallpapers:</p>
+<ul>
+<li><a href="http://cs.gettysburg.edu/~duncjo01/archive/patterns/" target="_blank">Index of /~duncjo01/archive/patterns</a>
+</li>
+<li><a href="https://github.com/dkeg/bitmap-walls" target="_blank">dkeg/bitmap-walls: Collection of tiled bitmap walls for xsetroot</a>
+</li>
+<li><a href="https://github.com/BenjaminHCCarr/PropagandaTiles" target="_blank">BenjaminHCCarr/PropagandaTiles</a>
+</li>
+</ul>
+<p>I wanted to showcase a few of my favourite tiling wallpapers, which can be seen below. The way this website renders dithered images will probably make some of the screenshots look terrible at this resolution, so click the images to see them full size. All the images below were captured wit hthe same pixel dimensions by the way, and so are directly comparable:</p>
+<p><a href="/img_full/tiling/blue_rivet.png">&lt;img src=&#34;/img/tiling/blue_rivet.png&#34; alt=&#34;Blue rivets&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/cyan_diag_tile.png">&lt;img src=&#34;/img/tiling/cyan_diag_tile.png&#34; alt=&#34;Cyan diagonal tiles&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/forest.png">&lt;img src=&#34;/img/tiling/forest.png&#34; alt=&#34;Forest&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/blue_wave.png">&lt;img src=&#34;/img/tiling/blue_wave.png&#34; alt=&#34;Blue wave&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/weave.png">&lt;img src=&#34;/img/tiling/weave.png&#34; alt=&#34;Weave&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/grey_tile.png">&lt;img src=&#34;/img/tiling/grey_tile.png&#34; alt=&#34;Grey tile&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/narrow_cyan_diag.png">&lt;img src=&#34;/img/tiling/narrow_cyan_diag.png&#34; alt=&#34;Narrow cyan diagonal lines&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/wide_cyan_diag.png">&lt;img src=&#34;/img/tiling/wide_cyan_diag.png&#34; alt=&#34;Wide cyan diagonal tiles&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/neg_grey_box.png">&lt;img src=&#34;/img/tiling/neg_grey_box.png&#34; alt=&#34;Negative grey box&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/small_cyan_tile.png">&lt;img src=&#34;/img/tiling/small_cyan_tile.png&#34; alt=&#34;Small cyan tile&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/mid_cyan_tile.png">&lt;img src=&#34;/img/tiling/mid_cyan_tile.png&#34; alt=&#34;Medium cyan tile&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/large_cyan_tile.png">&lt;img src=&#34;/img/tiling/large_cyan_tile.png&#34; alt=&#34;Large cyan tile&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/blue_tile.png">&lt;img src=&#34;/img/tiling/blue_tile.png&#34; alt=&#34;Blue tile&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/purple_wave.png">&lt;img src=&#34;/img/tiling/purple_wave.png&#34; alt=&#34;Purple wave&#34;&gt;</a>
+</p>
+<p><a href="/img_full/tiling/purple.png">&lt;img src=&#34;/img/tiling/purple.png&#34; alt=&#34;Purple texture&#34;&gt;</a>
+</p>
+<p>Just to prove how tiny the files are, here is a breakdown of their file sizes. Also, I&rsquo;ve been learning AWK:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">du -b * |\
+awk '
+	BEGIN {printf(&quot;%20s  %5s\n&quot;, &quot;file&quot;, &quot;bytes&quot;)} 
+	{printf(&quot;%20s  %5s\n&quot;,  $2, $1)}' |\
+sort -nk2
+</code></pre><pre tabindex="0"><code>                file  bytes
+ small_cyan_tile.gif     69
+   mid_cyan_tile.gif    107
+    neg_grey_box.gif    127
+       blue_wave.gif    140
+ large_cyan_tile.gif    170
+     purple_wave.gif    177
+narrow_cyan_diag.png    195
+  wide_cyan_diag.png    265
+          forest.png    325
+       blue_tile.png    373
+           weave.png    419
+  cyan_diag_tile.png    609
+      blue_rivet.bmp    630
+       grey_tile.bmp   1270
+          purple.png   2297
+</code></pre><p>The files for each of the wallpapers seen above <a href="/files/tiling/tiles.zip">can be found here</a>
+.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Modelling stem diameter class distribution with Weibull distributions | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Modelling stem diameter class distribution with Weibull distributions</h1>
+
+<h2>2021-03-30</h2>
+</div>
+
+<main>
+<p>The two-parameter Weibull probability distribution is commonly used to model the distribution of stem diameters in forests. The scale and shape parameters can be used to compare different forest stands to see how their distributions vary. I created a function in R which calculates these parameters per plot, basically a wrapper around <code>MASS::fitdistr()</code>. It&rsquo;s worth noting that FPC refers to adjustments by sampling effort that may occur in plots with a nested sampling design:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic">#&#39; Fit a two-parameter Weibull distribution of diameter size classes</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param x dataframe of stem measurements</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param plot_id column name string of plot IDs</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param diam column name string of stem diameters</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param fpc column name string of stem FPC values</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param return_fit logical, optionally return a list of model objects instead</span>
+<span style="color:#8f5902;font-style:italic">#&#39;     of a dataframe of parameters</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @return dataframe with the shape and scale parameters, and the standard </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     errors of each parameter for each plot-level Weibull distribution</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39; @details The two-parameter Weibull distribution is a probability density </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     function of the form: \eqn{f(D) = c/d(D/d)^{c-1}  exp(–(D/d)^{c})}, </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     where $c$ is the shape parameter, $d$ is the scale parameter, and $D$ </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     is the stem diameter. To deal with variation in sampling effort, this </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     function duplicates rows based on their FPC, rounding the number of rows </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     up or down. E.g. a stem with FPC=0.08 would be duplicated 13 times, </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     because $1/0.08=12.5$. The Weibull distribution is fitted here using </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     Maximum Likelihood. $c$ is closely related to the mean stem diameter </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     in most cases. $d&lt;1$ indicates a concave exponential which becomes more </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     extreme as $d -&gt; 0$, while $d&gt;1$ indicates a hump-shaped </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     relationship which becomes increasingly left-skewed as </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     $d -&gt; inf$.</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39;     Note that the Weibull distribution is not capable of representing </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     bimodal or more complex diameter distributions, which can occur in </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     disturbed woodlands. </span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     Any NA diameters will be excluded from the calculation</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @examples</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39; @importFrom MASS fitdistr</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39; @export</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#000">diamWeibullGen</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">plot_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;plot_id&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">diam</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;diam&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fpc</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;fpc&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+  <span style="color:#000">return_fit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">x_split</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">split</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">x[[plot_id]]</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_split</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">y_dup</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">y</span><span style="color:#000">[rep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">row.names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">y[[fpc]]</span><span style="color:#000;font-weight:bold">)),</span><span style="color:#000">]</span>
+
+    <span style="color:#000">y_fil</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">y_dup[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y_dup[[diam]]</span><span style="color:#000;font-weight:bold">),</span><span style="color:#000">]</span>
+
+    <span style="color:#000">fit</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">tryCatch</span><span style="color:#000;font-weight:bold">({</span>
+      <span style="color:#000">suppressWarnings</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">MASS</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">fitdistr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y_fil[[diam]]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;weibull&#34;</span><span style="color:#000;font-weight:bold">))</span>
+    <span style="color:#000;font-weight:bold">},</span> 
+    <span style="color:#000">error</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">cond</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">})</span>
+
+    <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">return_fit</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#000">ret</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">fit</span>
+    <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span> 
+      <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fit</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">ret</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
+          <span style="color:#000">weibull_shape</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#000">weibull_scale</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#000">weibull_shape_se</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#000">weibull_scale_se</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#000">plot_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y[[plot_id]]</span><span style="color:#000;font-weight:bold">)</span>
+          <span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">ret</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
+          <span style="color:#000">weibull_shape</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">fit[[1]][1]</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#000">weibull_scale</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">fit[[1]][2]</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#000">weibull_shape_se</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">fit[[2]][1]</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#000">weibull_scale_se</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">fit[[2]][2]</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#000">plot_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y[[plot_id]]</span><span style="color:#000;font-weight:bold">)</span>
+          <span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#000">ret</span>
+  <span style="color:#000;font-weight:bold">})</span>
+
+  <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">return_fit</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;plot_id&#34;</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plot_id</span>
+  <span style="color:#000;font-weight:bold">}</span>
+
+  <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>I created another function which fits a Weibull distribution and extrapolates it to estimate the number of stems within arbitrary size classes:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic">#&#39; Estimate lower size-class abundances in plots with higher minimum diameter thresholds</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param x dataframe of stem measurements</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param plot_data dataframe of plot data</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param binwidth </span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param min_diam_thresh column name string of minimum diameter threshold in \code{plot_data}</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param diam column name string of stem diameter in \code{x}</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param min_limit lower diameter limit down to which to estimate stem abundance</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param size_classes vector of size classes </span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @return dataframe of stem abundances per size class</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39; @examples</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39; @export</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#000">diamWeibullEst</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">plot_data</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">bins</span><span style="color:#000;font-weight:bold">,</span> 
+  <span style="color:#000">stem_plot_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;plot_id&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">plot_plot_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">stem_plot_id</span><span style="color:#000;font-weight:bold">,</span> 
+  <span style="color:#000">min_diam_thresh</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;min_diam_thresh&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">diam</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;diam&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fpc</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;fpc&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+
+  <span style="color:#8f5902;font-style:italic"># Get plot IDs in stems and plots</span>
+  <span style="color:#000">plots_all</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x[[stem_plot_id]]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">plot_data[[plot_plot_id]]</span><span style="color:#000;font-weight:bold">))</span>
+
+  <span style="color:#8f5902;font-style:italic"># Which plot IDs are shared?</span>
+  <span style="color:#000">good_plots</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plots_all[plots_all</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000">x[[stem_plot_id]]</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">plots_all</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000">plot_data[[plot_plot_id]]]</span>
+
+  <span style="color:#8f5902;font-style:italic"># Plots not in stems </span>
+  <span style="color:#000">plots_not_in_stems</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plots_all[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">plots_all</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000">x[[stem_plot_id]]]</span>
+
+  <span style="color:#8f5902;font-style:italic"># Plots not in plots</span>
+  <span style="color:#000">plots_not_in_plots</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plots_all[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">plots_all</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000">plot_data[[plot_plot_id]]]</span>
+
+  <span style="color:#8f5902;font-style:italic"># Plots with no min diam thresh</span>
+  <span style="color:#000">plot_no_thresh</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plot_data</span><span style="color:#000">[is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plot_data[[min_diam_thresh]]</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">plot_plot_id]</span>
+
+  <span style="color:#8f5902;font-style:italic"># Warning for plots with no min diam thresh</span>
+  <span style="color:#000">seosawr</span><span style="color:#ce5c00;font-weight:bold">:::</span><span style="color:#000">warnFormat</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plot_no_thresh</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#4e9a06">&#34;Some plots have NA diameter thresholds:&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;warning&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#8f5902;font-style:italic"># Warning for any plots which have been dropped </span>
+  <span style="color:#000">seosawr</span><span style="color:#ce5c00;font-weight:bold">:::</span><span style="color:#000">warnFormat</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plots_not_in_plots</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#4e9a06">&#34;Some plots not present in plot data, will be NA:&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;warning&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#000">seosawr</span><span style="color:#ce5c00;font-weight:bold">:::</span><span style="color:#000">warnFormat</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plots_not_in_stems</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#4e9a06">&#34;Some plots have no stems, will be 0:&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;warning&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#8f5902;font-style:italic"># For each plot </span>
+  <span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plots_all</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+
+      <span style="color:#8f5902;font-style:italic"># Get stems and plots</span>
+      <span style="color:#000">x_fil</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x[x[[stem_plot_id]]</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x[[diam]]</span><span style="color:#000;font-weight:bold">),</span><span style="color:#000">]</span>
+
+      <span style="color:#000">plots_fil</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plot_data[plot_data[[plot_plot_id]]</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span>
+
+      <span style="color:#8f5902;font-style:italic"># Find min diam thresh</span>
+      <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plots_fil</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">min_diam</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">min</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plots_fil[[min_diam_thresh]]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">na.rm</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+
+        <span style="color:#8f5902;font-style:italic"># Filter to plot diameter threshold</span>
+        <span style="color:#000">x_fil</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x_fil[x_fil[[diam]]</span> <span style="color:#ce5c00;font-weight:bold">&gt;=</span> <span style="color:#000">min_diam</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_fil[[diam]]</span><span style="color:#000;font-weight:bold">),</span><span style="color:#000">]</span>
+        
+        <span style="color:#8f5902;font-style:italic"># Calculate weibull </span>
+        <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_fil</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+          <span style="color:#000">weib</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">diamWeibullGen</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_fil</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">diam</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">diam</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">plot_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">stem_plot_id</span><span style="color:#000;font-weight:bold">,</span> 
+            <span style="color:#000">fpc</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;fpc&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">return_fit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span>
+
+          <span style="color:#8f5902;font-style:italic"># Get replicated rows by FPC</span>
+          <span style="color:#000">x_dup</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x_fil</span><span style="color:#000">[rep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">row.names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_fil</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">x_fil[[fpc]]</span><span style="color:#000;font-weight:bold">)),</span><span style="color:#000">]</span>
+
+          <span style="color:#8f5902;font-style:italic"># Extract Weibull parameters</span>
+          <span style="color:#000">weib_shape</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">weib</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">weibull_shape</span>
+          <span style="color:#000">weib_scale</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">weib</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">weibull_scale</span>
+
+          <span style="color:#8f5902;font-style:italic"># Find number of stems used to generate the distribution</span>
+          <span style="color:#000">nstems_obs</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_dup[[diam]]</span><span style="color:#000;font-weight:bold">)</span>
+
+          <span style="color:#8f5902;font-style:italic"># Find predicted proportion of stems this represents</span>
+          <span style="color:#000">prop_obs</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unname</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">exp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">min_diam</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">weib_scale</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">^weib_shape</span><span style="color:#000;font-weight:bold">))</span>
+
+          <span style="color:#8f5902;font-style:italic"># Estimate total number of stems</span>
+          <span style="color:#000">nstems_total</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">nstems_obs</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">prop_obs</span>
+
+          <span style="color:#8f5902;font-style:italic"># For each bin, calculate estimated proportion of stems</span>
+          <span style="color:#000">n_est</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unlist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bins</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">z</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+            <span style="color:#8f5902;font-style:italic"># Estimate proportion of stems in category of interest</span>
+            <span style="color:#000">prop_cat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unname</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">exp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">z[[1]]</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">weib_scale</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">^weib_shape</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">-</span> 
+              <span style="color:#000">exp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">z[[2]]</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">weib_scale</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">^weib_shape</span><span style="color:#000;font-weight:bold">))</span>
+
+            <span style="color:#000">prop_cat</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">nstems_total</span> 
+            <span style="color:#000;font-weight:bold">}))</span>
+
+        <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span>
+          <span style="color:#000">n_est</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">0</span>
+        <span style="color:#000;font-weight:bold">}</span>
+      <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">n_est</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA_real_</span>
+      <span style="color:#000;font-weight:bold">}</span>
+
+      <span style="color:#8f5902;font-style:italic"># Create pretty bin chars</span>
+      <span style="color:#000">diam_class</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unlist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bins</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">z</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">z[[1]]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">z[[2]]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sep</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;-&#34;</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000;font-weight:bold">}))</span>
+
+      <span style="color:#8f5902;font-style:italic"># Create dataframe of output</span>
+      <span style="color:#000">ret</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">diam_class</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">n_est</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ret</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[1]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plot_plot_id</span> 
+
+      <span style="color:#8f5902;font-style:italic"># Return</span>
+      <span style="color:#000">ret</span> 
+  <span style="color:#000;font-weight:bold">}))</span>
+
+  <span style="color:#8f5902;font-style:italic"># Return</span>
+  <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>The function models stem numbers reasonably consistently among plots, but tends to under-estimate the lower diameter size classes:</p>
+<p><a href="/img_full/weibull/p_plot.png">&lt;img src=&#34;/img/weibull/p_plot.png&#34; alt=&#34;Estimated diameter size classes vs. observed&#34;&gt;</a>
+</p>
+<p>In the plot each set of points connected by a line is a plot, and each point is a diameter size class, with the proportion of stems observed within that size class on the x axis, and the proportion of stems estimated by <code>diamWeibullEst()</code> on the y axis. As you can see, large diameter size classes are slightly over-estimated in their proportional abundance, and the smallest size class (5-10 cm) is consistently under-estimated. This is probably because the Weibull distribution will dip down towards zero unless the shape parameter (k) is less than 1.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

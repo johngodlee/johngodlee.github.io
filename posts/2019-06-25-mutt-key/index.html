@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fetching mail with offlineimap within Mutt | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Fetching mail with offlineimap within Mutt</h1>
+
+<h2>2019-06-25</h2>
+</div>
+
+<main>
+<p>I wanted to be able to press a key in <code>mutt</code> which would run <code>offlineimap</code> in the background to get new messages, then ask Mutt to put them on screen. This line goes in my <code>.muttrc</code>:</p>
+<pre tabindex="0"><code>macro index,pager @ &quot;&lt;enter-command&gt;unset wait_key&lt;enter&gt;&lt;shell-escape&gt;offlineimap -o -u quiet &amp;&lt;enter&gt;&lt;sync-mailbox&gt;&quot; &quot;Run offlineimap&quot;
+</code></pre><p>It defines a macro which can be run in the index or the pager of <code>mutt</code> by pressing the <code>@</code> key.</p>
+<p>First it stops <code>mutt</code> from asking the user to <code>press any key to continue</code> once the shell command is finished.</p>
+<p>Next it invokes <code>offlineimap</code> in the background (<code>&amp;</code>). Then afterwards it syncs <code>mutt</code> with its mailboxes (<code>:sync-mailbox</code>).</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

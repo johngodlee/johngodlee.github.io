@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pretty pictures from Terrestrial LiDAR | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Pretty pictures from Terrestrial LiDAR</h1>
+
+<h2>2021-04-20</h2>
+</div>
+
+<main>
+<p>I&rsquo;ve been trying to extract tree canopy complexity statistics from my terrestrial LiDAR data. As part of this I have been creating Canopy Height Models (CHMs) for each of my savanna plots. This involves &ldquo;pit-filling&rdquo; to remove low points where the LiDAR didn&rsquo;t penetrate all the way to the top of the canopy. Without pit-filling, the canopy surface appears pock-marked and jaggedy, while I want to approximate the top of the canopy as an even surface. So basically, in order to pick the best pit-filling and canopy height model algorithms, I have been making lots of maps and 3D surfaces of the tree canopy surface. I&rsquo;m not going to get into the maths behind what I did, I just wanted to share some pretty pictures that came out of this process. Note, all these images are from the same plot, in Bicuar National Park, southwest Angola.</p>
+<p><a href="/img_full/lidar_art/raw.png">&lt;img src=&#34;/img/lidar_art/raw.png&#34; alt=&#34;99th percentile of height from raw point cloud data, following noise removal and voxelisation&#34;&gt;</a>
+</p>
+<p><a href="/img_full/lidar_art/gam.png">&lt;img src=&#34;/img/lidar_art/gam.png&#34; alt=&#34;Predicted values from a generalised additive model of canopy height&#34;&gt;</a>
+</p>
+<p><a href="/img_full/lidar_art/pit.png">&lt;img src=&#34;/img/lidar_art/pit.png&#34; alt=&#34;Canopy height after pit-filling&#34;&gt;</a>
+</p>
+<p><a href="/img_full/lidar_art/topo.png">&lt;img src=&#34;/img/lidar_art/topo.png&#34; alt=&#34;Topographic roughness index&#34;&gt;</a>
+</p>
+<p><a href="/img_full/lidar_art/topo_coarse.png">&lt;img src=&#34;/img/lidar_art/topo_coarse.png&#34; alt=&#34;Topographic roughness index, using a more coarse 1 m^2 resolution&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

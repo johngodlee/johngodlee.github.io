@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Grabbing BibTeX from a DOI | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Grabbing BibTeX from a DOI</h1>
+
+<h2>2021-08-08</h2>
+</div>
+
+<main>
+<p>There&rsquo;s a website called <a href="https://www.doi2bib.org/" target="_blank">doi2bib.org</a>
+ that takes a DOI and returns a BibTeX entry. I have been using it for a while to quickly get references for writing my PhD thesis. The website uses the DOI proxy server REST API in the background, so I figured it wouldn&rsquo;t be too hard to use CURL directly on the API to do the same thing in the terminal, to save me opening my web browser. This CURL request works well, where <code>$1</code> is the DOI.</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">curl -LH &quot;Accept: application/x-bibtex&quot; http://dx.doi.org/$1
+</code></pre><p>In a similar vein, I wrote a script that grabs DOIs from a PDF. I used the regex for DOIs provided in a <a href="https://www.crossref.org/blog/dois-and-matching-regular-expressions/" target="_blank">blog post on CrossRef</a>
+, which apparently matches 74.4 of 74.9 million registered DOIs. The script grabs the first DOI in the PDF by default, because that&rsquo;s most often the DOI of the article itself, rather than DOIs for references in the article.</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/usr/bin/env sh
+
+pdftotext &quot;$1&quot; - |\
+	grep -ioP &quot;\b(10.\d{4,9}/[-._;()/:A-Z0-9]+)\b&quot; |\
+	head -n 1
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

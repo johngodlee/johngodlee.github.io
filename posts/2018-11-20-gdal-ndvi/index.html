@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculating NDVI from Sentinel 2 images for Bicuar National Park | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Calculating NDVI from Sentinel 2 images for Bicuar National Park</h1>
+
+<h2>2018-11-20</h2>
+</div>
+
+<main>
+<p>I recently ventured into trying to make sense of sentinel 2 data, multispectral remote sensing imagery. I wanted to calculate NDVI for Bicuar National Park, so I could see whether it&rsquo;s possible to identify areas of miombo woodland within the park using variation in the NDVI, which you would expect is higher in woodland and lower in grassland.</p>
+<p>I got some cloud free images for the area covering Bicuar and wrote a Python script which calculates NDVI, from the red band and near infra-red band:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#8f5902;font-style:italic"># Import libraries</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">glob</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">gdal</span> 
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">os</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">fnmatch</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">re</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">cv2</span>
+
+<span style="color:#8f5902;font-style:italic"># Define a function to find files given a pattern</span>
+<span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">find</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pattern</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">path</span><span style="color:#000;font-weight:bold">):</span>
+    <span style="color:#000">result</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[]</span>
+    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">root</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dirs</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">files</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">walk</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">path</span><span style="color:#000;font-weight:bold">):</span>
+        <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">name</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">files</span><span style="color:#000;font-weight:bold">:</span>
+            <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">fnmatch</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">fnmatch</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">pattern</span><span style="color:#000;font-weight:bold">):</span>
+                <span style="color:#000">result</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">path</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">join</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">root</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">name</span><span style="color:#000;font-weight:bold">))</span>
+    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">result</span>
+
+<span style="color:#8f5902;font-style:italic"># Set working directory for images</span>
+<span style="color:#000">rootdir</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;/sentinel_bicuar&#39;</span>
+<span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">chdir</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rootdir</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Create a list of folders </span>
+<span style="color:#000">folders</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">next</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">walk</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">getcwd</span><span style="color:#000;font-weight:bold">()))[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span>
+
+<span style="color:#8f5902;font-style:italic"># Loop through each folder in turn</span>
+<span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">folders</span><span style="color:#000;font-weight:bold">:</span>
+  <span style="color:#8f5902;font-style:italic"># Set input directory</span>
+  <span style="color:#000">in_dir</span> <span style="color:#ce5c00;font-weight:bold">=</span>  <span style="color:#000">rootdir</span> <span style="color:#ce5c00;font-weight:bold">+</span>  <span style="color:#4e9a06">&#39;/&#39;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">i</span>
+
+  <span style="color:#8f5902;font-style:italic"># Search directory for desired bands</span>
+  <span style="color:#000">red_file</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">find</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;*B04.jp2&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">in_dir</span><span style="color:#000;font-weight:bold">)[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span>
+  <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Processing: &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">red_file</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">nir_file</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">find</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;*B08.jp2&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">in_dir</span><span style="color:#000;font-weight:bold">)[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span>
+
+  <span style="color:#8f5902;font-style:italic"># Open each band using gdal</span>
+  <span style="color:#000">red_link</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">gdal</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">Open</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">red_file</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">nir_link</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">gdal</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">Open</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">nir_file</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#8f5902;font-style:italic"># Store as an array</span>
+  <span style="color:#000">red_array</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">red_link</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">GetRasterBand</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ReadAsArray</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">0.0001</span>
+  <span style="color:#000">nir_array</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">nir_link</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">GetRasterBand</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">ReadAsArray</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">0.0001</span>
+ 
+  <span style="color:#8f5902;font-style:italic"># Create a mask filled with zeroes</span>
+  <span style="color:#000">mask</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">red_array</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0.</span>
+
+  <span style="color:#8f5902;font-style:italic"># Calculate NDVI </span>
+  <span style="color:#000">ndvi2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">nir_array</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000">red_array</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">nir_array</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">red_array</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#8f5902;font-style:italic"># Set mask values back to 0</span>
+  <span style="color:#000">ndvi2</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">mask</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.</span>
+
+  <span style="color:#8f5902;font-style:italic"># Create output filename based on input name </span>
+  <span style="color:#000">out_string_a</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">re</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">search</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;A004323_(.*)/IMG_DATA&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">red_file</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">group</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">out_string_b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">re</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">search</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;IMG_DATA/(.*)_B04.&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">red_file</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">group</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">out_file</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rootdir</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#39;/&#39;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">out_string_a</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#39;_&#39;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">out_string_b</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#39;_NDVI.tif&#39;</span>
+  <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;Creating file: &#39;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">out_file</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#8f5902;font-style:italic"># Get dimensions</span>
+  <span style="color:#000">x_pixels</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ndvi2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shape</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#8f5902;font-style:italic"># number of pixels in x</span>
+  <span style="color:#000">y_pixels</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ndvi2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">shape</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#8f5902;font-style:italic"># number of pixels in y</span>
+
+  <span style="color:#8f5902;font-style:italic"># Set up output GeoTIFF</span>
+  <span style="color:#000">driver</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">gdal</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">GetDriverByName</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;GTiff&#39;</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#8f5902;font-style:italic"># Create driver using output filename, x and y pixels, # of bands, and datatype</span>
+  <span style="color:#000">ndvi_data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">driver</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">Create</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out_file</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">x_pixels</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y_pixels</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">gdal</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">GDT_Float32</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#8f5902;font-style:italic"># Set nodata value</span>
+  <span style="color:#000">ndvi_data</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">GetRasterBand</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">SetNoDataValue</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0.</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#8f5902;font-style:italic"># Set NDVI array as the 1 output raster band</span>
+  <span style="color:#000">ndvi_data</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">GetRasterBand</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">WriteArray</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ndvi2</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#8f5902;font-style:italic"># Setting up the coordinate reference system of the output GeoTIFF</span>
+  <span style="color:#000">geotrans</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">red_link</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">GetGeoTransform</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#8f5902;font-style:italic"># Grab input GeoTranform information</span>
+  <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">geotrans</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">proj</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">red_link</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">GetProjection</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#8f5902;font-style:italic"># Grab projection information from input file</span>
+
+  <span style="color:#8f5902;font-style:italic"># now set GeoTransform parameters and projection on the output file</span>
+  <span style="color:#000">ndvi_data</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">SetGeoTransform</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">geotrans</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">ndvi_data</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">SetProjection</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">proj</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">ndvi_data</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">FlushCache</span><span style="color:#000;font-weight:bold">()</span>
+  <span style="color:#000">ndvi_data</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">None</span>
+
+  <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;DONE&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>Then I use gdal to merge each of the resultant .tif files with an NDVI band into a single file, then clip that file with the outline of <a href="https://www.protectedplanet.net/#thematic-areas" target="_blank">Bicuar National Park</a>
+.</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
+
+echo &quot;Merging tif files&quot;
+
+gdal_merge.py -n 0 -a_nodata 0 *_NDVI.tif -o ndvi_merge_o.tif
+
+gdalwrap -t_srs '+proj=longlat +datum=WGS84' ndvi_merge_0.tif ndvi_merge_0_longlat.tif
+
+gdalwarp -cutline  'bicuar_shp/WDPA_Mar2018_protected_area_350-shapefile-polygons.shp' -crop_to_cutline -dstalpha ndvi_merge_0_longlat.tif ndvi_merge_0_longlat_bicuar.tif
+</code></pre><p><a href="/img_full/gdal_ndvi/bicuar_ndvi.png">&lt;img src=&#34;/img/gdal_ndvi/bicuar_ndvi.png&#34; alt=&#34;Bicuar NDVI&#34;&gt;</a>
+</p>
+<p>Then I can use an R script to look at the distribution of NDVI across the park</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Packages</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">raster</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rgdal</span><span style="color:#000;font-weight:bold">)</span>
+
+
+<span style="color:#8f5902;font-style:italic"># Import data ----</span>
+<span style="color:#000">ndvi_tif_bicuar</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">raster</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;ndvi_merge_0_longlat_bicuar.tif&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">ndvi_vec</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">getValues</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ndvi_tif_bicuar</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">hist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ndvi_vec</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">breaks</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p><a href="/img_full/gdal_ndvi/bicuar_hist.png">&lt;img src=&#34;/img/gdal_ndvi/bicuar_hist.png&#34; alt=&#34;Bicuar histogram&#34;&gt;</a>
+</p>
+<p>I can also experiment with plotting areas of the park within a certain threshold of NDVI</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">ndvi_thresh</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ndvi_tif_bicuar[ndvi_tif_bicuar</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0.6</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA</span>
+
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ndvi_thresh</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p><a href="/img_full/gdal_ndvi/bicuar_ndvi_0.5.png">&lt;img src=&#34;/img/gdal_ndvi/bicuar_ndvi_0.5.png&#34; alt=&#34;Bicuar NDVI&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

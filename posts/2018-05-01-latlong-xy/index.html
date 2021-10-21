@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Converting stem locations in a square plot to X Y metre coordinates | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Converting stem locations in a square plot to X Y metre coordinates</h1>
+
+<h2>2018-05-01</h2>
+</div>
+
+<main>
+<p>I&rsquo;m working on a large dataset of woodland plots with in the <a href="https://seosaw.github.io" target="_blank">SEOSAW network</a>
+. As part of this work I want to compare the spatial distribution of tree stems within the plots. Some of the plots have their stem locations recorded as decimal latitude/longitude co-ordinates, presumably done with a handheld GPS, while other plots have their stems recorded as metre coordinates from the plot edges, presumably these plots were done with a set of tape measures.</p>
+<p>I can&rsquo;t easily compare plots with these different methods and it&rsquo;s good to be consistent, so I set about writing a function in R that can take stem locations and plot corner loctions in latitude/longitude coordinates and convert them to rought X Y metre coordinates. The function can be found below, and also <a href="/files/latlong_xy/latlong_xy_function.R">here</a>
+. This is what I came up with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Function allowing lat long to x y coordinate conversion</span>
+<span style="color:#8f5902;font-style:italic"># John Godlee (johngodlee@gmail.com)</span>
+<span style="color:#8f5902;font-style:italic"># 2018_04_20</span>
+
+<span style="color:#8f5902;font-style:italic"># Packages ----</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dplyr</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># Data manip.</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rgdal</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># CRS stuff</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">raster</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># spLines()</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rgeos</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># gDistance()</span>
+
+<span style="color:#8f5902;font-style:italic"># Function ----</span>
+
+<span style="color:#8f5902;font-style:italic"># stem_id = a unique ID string for each stem</span>
+<span style="color:#8f5902;font-style:italic"># stem_lon, stem_lat = latitude longitude coordinates for each stem</span>
+<span style="color:#8f5902;font-style:italic"># corner_id = unique ID string for each plot corner</span>
+<span style="color:#8f5902;font-style:italic"># corner_lon, corner_lat = latitude longitude coordinates for each plot corner</span>
+
+<span style="color:#000">latlong_xy</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stem_id</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">stem_lon</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">stem_lat</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">corner_id</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">corner_lon</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">corner_lat</span><span style="color:#000;font-weight:bold">){</span>
+
+<span style="color:#000">long_2_utm</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+	<span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;UTM zone &#34;</span><span style="color:#000;font-weight:bold">,</span>
+		<span style="color:#000;font-weight:bold">(</span><span style="color:#000">floor</span><span style="color:#000;font-weight:bold">((</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">180</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%%</span> <span style="color:#0000cf;font-weight:bold">60</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span>
+		<span style="color:#000">ifelse</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;S&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;N&#34;</span><span style="color:#000;font-weight:bold">),</span> 
+		<span style="color:#000">sep</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000">epsg</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">make_EPSG</span><span style="color:#000;font-weight:bold">()</span>  <span style="color:#8f5902;font-style:italic"># Create list of EPSG dataset to search for CRS</span>
+<span style="color:#000">wgs84</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">epsg</span><span style="color:#000">[grep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;WGS 84&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">epsg</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">note</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ignore.case</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">),</span><span style="color:#000">]</span>  <span style="color:#8f5902;font-style:italic"># Search for wgs84</span>
+<span style="color:#000">wgs84</span><span style="color:#000">[grep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;longlat&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wgs84</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">prj4</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ignore.case</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">),</span><span style="color:#000">]</span>  <span style="color:#8f5902;font-style:italic"># grep proj4string to check</span>
+<span style="color:#000">wgs84_crs</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">CRS</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wgs84</span><span style="color:#000">[grep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;longlat&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wgs84</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">prj4</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ignore.case</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">),</span><span style="color:#000">]</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">prj4[2]</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># Store string as vector</span>
+
+<span style="color:#8f5902;font-style:italic"># Must change the UTM zone to match location of your plot.</span>
+<span style="color:#000">utm_id</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">long_2_utm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">mean</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">corner_lon</span><span style="color:#000;font-weight:bold">),</span> 
+	<span style="color:#000">mean</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">corner_lat</span><span style="color:#000;font-weight:bold">))</span>
+
+<span style="color:#000">utm_zone_crs</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">CRS</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wgs84</span><span style="color:#000">[grep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">utm_id</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wgs84</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">note</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ignore.case</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">),</span><span style="color:#000">]</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">prj4[1]</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># grep for UTM zone and store</span>
+
+<span style="color:#8f5902;font-style:italic"># Convert stem data to utm</span>
+<span style="color:#000">stems_points</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">SpatialPointsDataFrame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">as.matrix</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stem_lon</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">stem_lat</span><span style="color:#000;font-weight:bold">)),</span>  <span style="color:#8f5902;font-style:italic"># extract only long lat coords</span>
+	<span style="color:#000">proj4string</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">wgs84_crs</span><span style="color:#000;font-weight:bold">,</span>
+	<span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stem_id</span><span style="color:#000;font-weight:bold">))</span>
+
+<span style="color:#8f5902;font-style:italic"># Transform SPDF to utm</span>
+<span style="color:#000">stems_points_sp_utm</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">spTransform</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stems_points</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">utm_zone_crs</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Convert back to dataframe</span>
+<span style="color:#000">stems_points_df_utm</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stems_points_sp_utm</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Give column names</span>
+<span style="color:#000">colnames</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stems_points_df_utm</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;id&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;x_utm&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;y_utm&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Convert plot corners to utm ----</span>
+<span style="color:#000">plot_corners_clean</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">corner_id</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;x&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">corner_lon</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;y&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">corner_lat</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">plot_corners_points</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">SpatialPointsDataFrame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plot_corners_clean[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> 
+	<span style="color:#000">proj4string</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">wgs84_crs</span><span style="color:#000;font-weight:bold">,</span> 
+	<span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plot_corners_clean[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">))</span>
+
+<span style="color:#8f5902;font-style:italic"># Transform SPDF to utm</span>
+<span style="color:#000">plot_corners_points_utm</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">spTransform</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plot_corners_points</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">utm_zone_crs</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Convert back to dataframe</span>
+<span style="color:#000">plot_corners_df_utm</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plot_corners_points_utm</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Give column names</span>
+<span style="color:#000">colnames</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">plot_corners_df_utm</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;id&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;x_coord&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;y_coord&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+
+<span style="color:#8f5902;font-style:italic"># Make spatial lines from corners ----</span>
+
+<span style="color:#8f5902;font-style:italic"># Get corner locations</span>
+<span style="color:#000">corner_nw</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plot_corners_df_utm[1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span>
+
+<span style="color:#000">corner_ne</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plot_corners_df_utm[2</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span>
+
+<span style="color:#000">corner_sw</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plot_corners_df_utm[4</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span>
+
+<span style="color:#8f5902;font-style:italic"># Create x axis line</span>
+<span style="color:#000">x_line</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">corner_nw</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">corner_ne</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_coord</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y_coord</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">as.matrix</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">spLines</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.,</span> <span style="color:#000">crs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">utm_zone_crs</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Create y axis line </span>
+<span style="color:#000">y_line</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">corner_nw</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">corner_sw</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_coord</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y_coord</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">as.matrix</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">spLines</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.,</span> <span style="color:#000">crs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">utm_zone_crs</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Calculate x y distances from line to point for each stem and append to data frame ----</span>
+<span style="color:#000">stems_points_df_utm</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">x_coord</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">as.vector</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">gDistance</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stems_points_sp_utm</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y_line</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">byid</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">T</span><span style="color:#000;font-weight:bold">))</span>
+<span style="color:#000">stems_points_df_utm</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">y_coord</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">as.vector</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">gDistance</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stems_points_sp_utm</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">x_line</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">byid</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">T</span><span style="color:#000;font-weight:bold">))</span>
+
+<span style="color:#8f5902;font-style:italic"># Clean up old and unnecessary columns</span>
+<span style="color:#000">stems_loc_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">stems_points_df_utm</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;id&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;x_coord&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;y_coord&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">stems_loc_df</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

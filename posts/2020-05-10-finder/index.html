@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Snippets to tweak macOS Finder.app | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Snippets to tweak macOS Finder.app</h1>
+
+<h2>2020-05-10</h2>
+</div>
+
+<main>
+<p>MacOS' Finder.app and the Dock aren&rsquo;t really designed for power users, but both are so integral to the Desktop Environment that it&rsquo;s difficult to do without. Fortunately there are a few tweaks which can be made to make both a bit better. Below is a list of the various code snippets I&rsquo;ve used to adjust Finder, the Dock, and a couple of other closely related utilities that come bundled with macOS:</p>
+<p>Show full filepath in Finder address bar:</p>
+<pre tabindex="0"><code>defaults write com.apple.finder _FXShowPosixPathInTitle -bool true; killall Finder
+</code></pre><p>Hide path bar in Finder:</p>
+<pre tabindex="0"><code>defaults write com.apple.finder ShowPathbar -bool true; killall Finder
+</code></pre><p>Show hidden files and directories in Finder:</p>
+<pre tabindex="0"><code>defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder
+</code></pre><p>Enable text selection in QuickLook windows:</p>
+<pre tabindex="0"><code>defaults write com.apple.finder QLEnableTextSelection -bool TRUE; killall Finder
+</code></pre><p>Disable QuickLook window animation:</p>
+<pre tabindex="0"><code>defaults write -g QLPanelAnimationDuration -float 0; killall Finder
+</code></pre><p>Disable window animations:</p>
+<pre tabindex="0"><code>defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+</code></pre><p>Reduce transparency across system:</p>
+<pre tabindex="0"><code>defaults write com.apple.universalaccess reduceTransparency 1
+</code></pre><p>Show file extensions in Finder:</p>
+<pre tabindex="0"><code>defaults write NSGlobalDomain AppleShowAllExtensions -bool true; killall Finder
+</code></pre><p>Display folders first in finder:</p>
+<pre tabindex="0"><code>defaults write com.apple.finder _FXSortFoldersFirst -bool true; killall Finder
+</code></pre><p>Always use list view as default in Finder:</p>
+<pre tabindex="0"><code>defaults write com.apple.finder FXPreferredViewStyle -string &quot;Nlsv&quot;; killall Finder
+</code></pre><p>Show the user Library folder in Finder:</p>
+<pre tabindex="0"><code>chflags nohidden ~/Library &amp;&amp; xattr -d com.apple.FinderInfo ~/Library
+</code></pre><p>Make the Dock reappear instantly on hover and disable the slide-in animation:</p>
+<pre tabindex="0"><code>defaults write com.apple.Dock autohide-time-modifier -int 0; killall Dock
+defaults write com.apple.Dock autohide-delay -float 0; killall Dock
+</code></pre><p>Make hidden apps transparent in the Dock:</p>
+<pre tabindex="0"><code>defaults write com.apple.Dock showhidden -bool yes; killall Dock
+</code></pre><p>Disable bouncing animation for Dock items:</p>
+<pre tabindex="0"><code>defaults write com.apple.Dock no-bouncing -bool TRUE; kilall Dock
+</code></pre><p>Expand system save panel by default:</p>
+<pre tabindex="0"><code>defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+</code></pre><p>Disable screenshot floating preview thumbnail created by Screenshot.app:</p>
+<pre tabindex="0"><code>defaults write com.apple.screencapture show-thumbnail -bool FALSE
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

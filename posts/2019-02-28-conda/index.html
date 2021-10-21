@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Python conda virtual environment in bash prompt | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Python conda virtual environment in bash prompt</h1>
+
+<h2>2019-02-28</h2>
+</div>
+
+<main>
+<p>I was forced to use the python package manager <code>conda</code> for some work, as it proved to be the easiest way to install a certain python module. A nice thing about conda is the ability to set up multiple virtual environments which can each use different versions of python modules. You can set a conda virtual environment with:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">conda create -n envname 
+</code></pre><p>There are also lots of other options to set such as the python version (<code>python=3.6</code>).</p>
+<p>Then the environment is activated with:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">source activate envname
+</code></pre><p>By default, conda puts the name of the virtual environment (<code>envname</code>) at the start of the PS1 bash prompt. For those of us with customised bash prompts, this can look really ugly. For instance, my prompt normally looks like this:</p>
+<pre tabindex="0"><code>┏[02:17:31] johngodlee@Johns-MBP ~ [mac_master=] 
+┗$
+</code></pre><p>But with conda&rsquo;s defaults it looks like this:</p>
+<pre tabindex="0"><code>(lidar)┏[02:17:31] johngodlee@Johns-MBP ~ [mac_master=] 
+┗$
+</code></pre><p>It would be nice to put the environment name somewhere else in the prompt, which is what I set out to do. So the first things to do is to stop conda putting the env name at the start of the prompt. Edit <code>~/.condarc</code> to include:</p>
+<pre tabindex="0"><code>changeps1: false
+</code></pre><p>Then in <code>~/.bash_profile</code> (or <code>~/.bashrc</code> if on Linux), add the following function above the <code>PS1=</code> lines:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">get_conda_env ()
+{
+    if [ ! -z &quot;$CONDA_DEFAULT_ENV&quot; ]; then
+        printf -- &quot;%s&quot; &quot;($CONDA_DEFAULT_ENV)&quot;
+    else
+        printf -- &quot;%s&quot; &quot;&quot;
+    fi
+}
+</code></pre><p>Then in the <code>PS1=</code> lines it&rsquo;s simple to just call the variable created by <code>get_conda_env()</code>:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">PS1='$(check_conda_env)'
+</code></pre><p>y bash prompt definition currently looks like this:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">PS1='┏'	# Elbow
+PS1+='[\T]'	# Time
+PS1+=' '	# Space 
+PS1+='\u@\h'	# User@hostname
+PS1+=' ' 	# Space
+PS1+='\[\e[31m\]\w\[\e[m\]'	# current dir
+PS1+=' '	# Space
+PS1+='\[\e[96m\]$(__git_ps1 &quot;[%s]&quot;)\[\e[m\]'  # git branch
+PS1+=' '	# Space
+PS1+='\[\e[34m\]$(get_conda_env)\[\e[m\]'  # conda env
+PS1+=' '	# Space
+PS1+='\n'	# New line
+PS1+='┗'	# Elbow
+PS1+='$'	# $
+PS1+=' '	# Space
+
+</code></pre><p>And looks like this:</p>
+<pre tabindex="0"><code>┏[02:17:31] johngodlee@Johns-MBP ~ [mac_master=] (envname)
+┗$
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

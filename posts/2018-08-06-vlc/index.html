@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VLC from the command line on macOS | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>VLC from the command line on macOS</h1>
+
+<h2>2018-08-06</h2>
+</div>
+
+<main>
+<p>I download podcasts using <a href="https://github.com/johngodlee/pypodd" target="_blank">pypodd</a>
+, then I want to play the files, but I don&rsquo;t want to leave the terminal. I found out that <a href="https://www.videolan.org/vlc/" target="_blank">VLC</a>
+ has a some command line options, including ad really nice ncurses interface. I made an alias in my <code>.bash_profile</code> which starts VLC in the right way and plays a nominated file:</p>
+<pre tabindex="0"><code>alias vlc=&quot;/Applications/VLC.app/Contents/MacOS/VLC -I ncurses&quot;
+</code></pre><p>Then in bash I can type:</p>
+<pre tabindex="0"><code>vlc file.mp3
+</code></pre><p>to open VLC and play the file.</p>
+<p>There are lots of other arguments to use VLC in the command line, most of which are documented <a href="https://wiki.videolan.org/Documentation:Advanced_Use_of_VLC/" target="_blank">here</a>
+.</p>
+<p><a href="/img_full/vlc/vlc.png">&lt;img src=&#34;/img/vlc/vlc.png&#34; alt=&#34;VLC terminal screenshot&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

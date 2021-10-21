@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Pandoc template for converting markdown letters to LaTeX PDFs | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>A Pandoc template for converting markdown letters to LaTeX PDFs</h1>
+
+<h2>2019-10-10</h2>
+</div>
+
+<main>
+<p>On my current trend of loving LaTeX, I have been writing letters which I needed to print and send in the post in LaTeX. But, this seemed like overkill, especially since letters are almost always plain text and lots of aspects are reused such as the address header. Markdown is what I use to write plain text notes, but LaTeX formatted PDFs look pretty, so I came up with a template for converting Markdown formatted letters into PDFs, via pandoc, with LaTeX. The template lives in <code>~/.pandoc/templates/letter.tex</code> and can be used like this:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">pandoc letter.md --template=letter.tex -o letter.pdf
+</code></pre><p>The template is below. It&rsquo;s also my very first foray into templating LaTeX with pandoc, so it might seem quite simplistic:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>letter<span style="color:#204a87">}</span>
+
+<span style="color:#8f5902;font-style:italic">% Define page geometry
+</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#c4a000">[margin=2.5cm]</span><span style="color:#204a87">{</span>geometry<span style="color:#204a87">}</span>
+
+<span style="color:#8f5902;font-style:italic">% Set font
+</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#c4a000">[T1]</span><span style="color:#204a87">{</span>fontenc<span style="color:#204a87">}</span>
+
+<span style="color:#8f5902;font-style:italic">% Image handling
+</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>graphicx<span style="color:#204a87">}</span>
+
+<span style="color:#8f5902;font-style:italic">% Push Closing to left margin
+</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">\longindentation</span>=0pt
+
+<span style="color:#204a87;font-weight:bold">\signature</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#c4a000">[width=0.2\textwidth]</span><span style="color:#204a87">{</span>/Users/user/docs/short<span style="color:#204a87">_</span>sig.png<span style="color:#204a87">}</span> <span style="color:#204a87;font-weight:bold">\\</span> <span style="color:#4e9a06">$</span><span style="color:#204a87">if</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">author</span><span style="color:#ce5c00;font-weight:bold">)</span><span style="color:#4e9a06">$$</span><span style="color:#204a87">author</span><span style="color:#4e9a06">$$</span><span style="color:#204a87">else</span><span style="color:#4e9a06">$</span>John L. Godlee<span style="color:#4e9a06">$</span><span style="color:#204a87">endif</span><span style="color:#4e9a06">$</span><span style="color:#204a87">}</span> <span style="color:#8f5902;font-style:italic">% Your name for the signature at the bottom
+</span><span style="color:#8f5902;font-style:italic"></span>
+<span style="color:#4e9a06">$</span><span style="color:#204a87">if</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">address</span><span style="color:#ce5c00;font-weight:bold">)</span><span style="color:#4e9a06">$</span>
+<span style="color:#204a87;font-weight:bold">\address</span><span style="color:#204a87">{</span><span style="color:#4e9a06">$</span><span style="color:#204a87">for</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">address</span><span style="color:#ce5c00;font-weight:bold">)</span><span style="color:#4e9a06">$$</span><span style="color:#204a87">address</span><span style="color:#4e9a06">$$</span><span style="color:#204a87">sep</span><span style="color:#4e9a06">$</span><span style="color:#204a87;font-weight:bold">\\</span><span style="color:#4e9a06">$</span><span style="color:#204a87">endfor</span><span style="color:#4e9a06">$</span><span style="color:#204a87">}</span>
+<span style="color:#4e9a06">$</span><span style="color:#204a87">else</span><span style="color:#4e9a06">$</span>
+<span style="color:#204a87;font-weight:bold">\address</span><span style="color:#204a87">{</span>This is <span style="color:#204a87;font-weight:bold">\\</span> an address <span style="color:#204a87;font-weight:bold">\\</span> Liverpool <span style="color:#204a87;font-weight:bold">\\</span> LV12 P46 <span style="color:#204a87;font-weight:bold">\\</span> johngodlee@gmail.com<span style="color:#204a87">}</span> 
+<span style="color:#4e9a06">$</span><span style="color:#204a87">endif</span><span style="color:#4e9a06">$</span>
+
+<span style="color:#4e9a06">$</span><span style="color:#204a87">if</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">date</span><span style="color:#ce5c00;font-weight:bold">)</span><span style="color:#4e9a06">$</span>
+<span style="color:#204a87;font-weight:bold">\date</span><span style="color:#204a87">{</span><span style="color:#4e9a06">$</span><span style="color:#204a87">date</span><span style="color:#4e9a06">$</span><span style="color:#204a87">}</span>
+<span style="color:#4e9a06">$</span><span style="color:#204a87">endif</span><span style="color:#4e9a06">$</span>
+
+<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+
+<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>letter<span style="color:#204a87">}{}</span> <span style="color:#8f5902;font-style:italic">% Name/title of the addressee
+</span><span style="color:#8f5902;font-style:italic"></span>
+<span style="color:#4e9a06">$</span><span style="color:#204a87">if</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">opening</span><span style="color:#ce5c00;font-weight:bold">)</span><span style="color:#4e9a06">$</span>
+<span style="color:#204a87;font-weight:bold">\opening</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\textbf</span><span style="color:#204a87">{</span><span style="color:#4e9a06">$</span><span style="color:#204a87">opening</span><span style="color:#4e9a06">$</span><span style="color:#204a87">}}</span>
+<span style="color:#4e9a06">$</span><span style="color:#204a87">else</span><span style="color:#4e9a06">$</span>
+<span style="color:#204a87;font-weight:bold">\opening</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\textbf</span><span style="color:#204a87">{</span>Dear Sir or Madam,<span style="color:#204a87">}}</span>
+<span style="color:#4e9a06">$</span><span style="color:#204a87">endif</span><span style="color:#4e9a06">$</span>
+
+<span style="color:#4e9a06">$</span><span style="color:#204a87">body</span><span style="color:#4e9a06">$</span>
+
+<span style="color:#204a87;font-weight:bold">\vspace</span><span style="color:#204a87">{</span>2<span style="color:#204a87;font-weight:bold">\parskip</span><span style="color:#204a87">}</span> <span style="color:#8f5902;font-style:italic">% Extra whitespace for aesthetics
+</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#4e9a06">$</span><span style="color:#204a87">if</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">closing</span><span style="color:#ce5c00;font-weight:bold">)</span><span style="color:#4e9a06">$</span>
+<span style="color:#204a87;font-weight:bold">\closing</span><span style="color:#204a87">{</span><span style="color:#4e9a06">$</span><span style="color:#204a87">closing</span><span style="color:#4e9a06">$</span><span style="color:#204a87">}</span>
+<span style="color:#4e9a06">$</span><span style="color:#204a87">else</span><span style="color:#4e9a06">$</span>
+<span style="color:#204a87;font-weight:bold">\closing</span><span style="color:#204a87">{</span>Yours sincerely,<span style="color:#204a87">}</span>
+<span style="color:#4e9a06">$</span><span style="color:#204a87">endif</span><span style="color:#4e9a06">$</span>
+<span style="color:#204a87;font-weight:bold">\vspace</span><span style="color:#204a87">{</span>2<span style="color:#204a87;font-weight:bold">\parskip</span><span style="color:#204a87">}</span> <span style="color:#8f5902;font-style:italic">% Extra whitespace for aesthetics
+</span><span style="color:#8f5902;font-style:italic"></span>
+<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>letter<span style="color:#204a87">}</span>
+
+<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</code></pre></div><p>When writing the Markdown document, YAML header material adds details like the address and the sign-off:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+author: John Godlee
+closing: Yours faithfully,
+opening: Dear all,
+date: 36th Octobry 1849
+address:
+<span style="color:#204a87;font-weight:bold">-</span> 157 Market Road
+<span style="color:#204a87;font-weight:bold">-</span> Sofa City
+<span style="color:#204a87;font-weight:bold">-</span> United Kingdom
+...
+
+This is the body of my letter it will say some stuff that hopefully will be formatted in multiple gorgeous paragraphs. I have a pen a laptop a sticky note an apple a computer screen a phone a handkerchief a desk a mouse a keyboard.
+</code></pre></div><p><code>$if(address)$</code> is an if statement that tests whether the YAML variable <code>address</code> exists. If it does, each element of <code>address</code> is placed inside a LaTeX <code>\address{}</code> command, separated by <code>\\</code> to trigger a new line, using <code>$for(address)$</code> and <code>$endfor$</code> as the Pandoc equivalent of a for loop. The other <code>$if(..)$</code> statements work in the same way.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

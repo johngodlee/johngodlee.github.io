@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Converting Qutebrowser bookmarks to w3m bookmarks | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Converting Qutebrowser bookmarks to w3m bookmarks</h1>
+
+<h2>2018-12-01</h2>
+</div>
+
+<main>
+<p>I use <a href="https://qutebrowser.org/" target="_blank">Qutebrowser</a>
+ as my primary web browser, but I also really like using <a href="http://w3m.sourceforge.net/" target="_blank">w3m</a>
+ for super fast text-based browsing when I&rsquo;m working mostly in the terminal. As a bit of practice in writing bash scripts, I figured I would try to write a script which constructed a w3m style <code>bookmark.html</code> from my Qutebrowser formatted <code>bookmarks/urls</code> and <code>quickmarks</code>, because confusingly, Qutebrowser uses two files for bookmarks, with different formatting. This is what I came up with:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
+
+touch ~/.w3m/bookmark.html
+
+echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Bookmarks&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Quickmarks&lt;/h1&gt;
+&lt;ul&gt;&quot; &gt; ~/.w3m/bookmark.html
+
+while read line; do
+    if [[ $line != *&quot;qute&quot;* ]]; then
+        url=$(echo $line | sed 's@.* @@')
+        desc=$(echo $line | sed 's/\(.*\) .*/\1/') 
+        echo &quot;&lt;li&gt;&lt;a href=\&quot;$url\&quot;&gt;$desc&lt;/a&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+    fi
+done &lt; ~/.qutebrowser/quickmarks 
+
+echo &quot;&lt;/ul&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+
+echo &quot;&lt;h1&gt;Other bookmarks&lt;/h1&gt;
+&lt;ul&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+
+while read line; do
+    if [[ $line != *&quot;qute&quot;* ]]; then
+        url=$(echo $line | cut -d &quot; &quot; -f 1) 
+        desc=$(echo ${line#* }) 
+        echo &quot;&lt;li&gt;&lt;a href=\&quot;$url\&quot;&gt;$desc&lt;/a&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+    fi
+done &lt; ~/.qutebrowser/bookmarks/urls 
+
+echo &quot;&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+</code></pre><p>Firstly it creates a new <code>bookmark.html</code>, then echos some preamble HTML, then loops through each line of <code>quickmarks</code> then <code>urls</code>, cutting the line into the URL and the description of that URL, and forwards it to <code>bookmark.html</code>, then it puts in the footer HTML material. Importantly, it doesn&rsquo;t include any bookmarks with the string <code>qute</code> in them, which all refer to Qutebrowser only special URIs, it does this with an if statement <code>if [[ $line != *&quot;qute&quot;* ]]; then</code>.</p>
+<p>In w3m, I can then open <code>bookmark.html</code> with <code>Esc-b</code>.</p>
+<p>For the record, <code>.qutebrowser/bookmarks/urls</code> looks like this:</p>
+<pre tabindex="0"><code>http://www.tablesgenerator.com/ Create LaTeX tables online 
+http://rbasicsworkshop.weebly.com/ R Basics Workshop - Home  
+http://app.uio.no/ifi/texcount/online.php TexCount 
+https://snazzymaps.com/ Snazzy Maps - Free Styles for Google Maps 
+http://www.protectedplanet.net/ Protected Planet 
+</code></pre><p>while <code>.qutebrowser/quickmarks</code> looks like this:</p>
+<pre tabindex="0"><code>Gmail https://mail.google.com/mail/u/0/h/
+Google Keep https://keep.google.com/
+Google Photos https://photos.google.com/
+YouTube http://www.youtube.com/
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

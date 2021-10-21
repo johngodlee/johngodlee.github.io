@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Using the LaTeX &#39;float&#39; package with Pandoc | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Using the LaTeX &lsquo;float&rsquo; package with Pandoc</h1>
+
+<h2>2019-01-29</h2>
+</div>
+
+<main>
+<p>When I convert markdown documents to pdf files using LaTeX and Pandoc, LaTeX is very helpful at placing images optimally to minimise whitespace. a basic pandoc command might look like this:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">pandoc -f markdown -t latex  -o output.pdf input.md
+</code></pre><p>The issue is, when I&rsquo;m using pandoc with markdown, I often don&rsquo;t care about the placement of images. I&rsquo;m normally making short documents for note-taking or something like that. As a result, I normally place images in the text in the place I want them to appear in the pdf output.</p>
+<p>After a bit of googling for inspiration, I found two methods of doing this. The first, is very simple and tells pandoc not to create figures, but instead just to include images inline.</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">pandoc -f markdown-implicit_figures -t pdf -o output.pdf input.md
+</code></pre><p>This is fine, but it removes centering on the images, and removes the option for me to include a caption with <code>![CAPTION HERE](img/diagram.png)</code>.</p>
+<p>A better option I think, is to allow LaTeX to use the <code>float</code> package in order to place images using attributes such as <code>[H]</code> to force images to appear where they appear in the source.</p>
+<p>I already have a LaTeX template that I use for pandoc, called <code>simple_doc.latex</code>. It lives in <code>~/.pandoc/templates/</code> so it can be linked to easily in pandoc commands.</p>
+<p>The relevant piece of <code>simple_doc.latex</code> is:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#4e9a06">$</span><span style="color:#204a87">if</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">graphics</span><span style="color:#ce5c00;font-weight:bold">)</span><span style="color:#4e9a06">$</span>
+<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>graphics<span style="color:#204a87">}</span> 
+<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>graphicx<span style="color:#204a87">}</span>
+<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>float<span style="color:#204a87">}</span>
+<span style="color:#204a87;font-weight:bold">\makeatletter</span>
+
+<span style="color:#8f5902;font-style:italic">% Define max width and max height arguments to be conditional on img size
+</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">\def\maxwidth</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\ifdim\Gin</span>@nat@width&gt;<span style="color:#204a87;font-weight:bold">\linewidth\linewidth\else\Gin</span>@nat@width<span style="color:#204a87;font-weight:bold">\fi</span><span style="color:#204a87">}</span>
+<span style="color:#204a87;font-weight:bold">\def\maxheight</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\ifdim\Gin</span>@nat@height&gt;<span style="color:#204a87;font-weight:bold">\textheight\textheight\else\Gin</span>@nat@height<span style="color:#204a87;font-weight:bold">\fi</span><span style="color:#204a87">}</span>
+<span style="color:#204a87;font-weight:bold">\makeatother</span>
+
+<span style="color:#8f5902;font-style:italic">% Scale images if necessary, so that they will not overflow the page
+</span><span style="color:#8f5902;font-style:italic">% margins by default, and it is still possible to overwrite the defaults
+</span><span style="color:#8f5902;font-style:italic">% using explicit options in \includegraphics[width, height, ...]{}
+</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">\setkeys</span><span style="color:#204a87">{</span>Gin<span style="color:#204a87">}{</span>width=0.5<span style="color:#204a87;font-weight:bold">\maxwidth</span>,height=0.5<span style="color:#204a87;font-weight:bold">\maxheight</span>,keepaspectratio<span style="color:#204a87">}</span>
+
+<span style="color:#204a87;font-weight:bold">\let\origfigure\figure</span>
+<span style="color:#204a87;font-weight:bold">\let\endorigfigure\endfigure</span>
+<span style="color:#204a87;font-weight:bold">\renewenvironment</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>[1][2] <span style="color:#204a87">{</span>
+    <span style="color:#204a87;font-weight:bold">\expandafter\origfigure\expandafter</span><span style="color:#c4a000">[H]</span>
+<span style="color:#204a87">}</span> <span style="color:#204a87">{</span>
+    <span style="color:#204a87;font-weight:bold">\endorigfigure</span>
+<span style="color:#204a87">}</span>
+
+<span style="color:#4e9a06">$</span><span style="color:#204a87">endif</span><span style="color:#4e9a06">$</span>
+</code></pre></div><p>I got the inspiration for this from this <a href="https://tex.stackexchange.com/questions/101725/latex-figures-appear-before-text-in-pandoc-markdown" target="_blank">Stack Overflow question</a>
+.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

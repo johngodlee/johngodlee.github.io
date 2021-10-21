@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Empirical Cumulative Density Function (ECDF) plots | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Empirical Cumulative Density Function (ECDF) plots</h1>
+
+<h2>2021-04-15</h2>
+</div>
+
+<main>
+<p>Twice recently I&rsquo;ve wanted to check the proportional coverage of a dataset. For example, I have a dataset where trees are nested within plots. I wanted to check what proportion of trees within each plot had measurements in the <a href="https://www.try-db.org/" target="_blank">TRY global trait database</a>
+ for leaf nitrogen per dry mass. Specifically, I wanted to check what proportion of plots had <em>at least</em> a given proportion of trees <em>or more</em> represented in TRY.</p>
+<p>I could have visualised this with a histogram, but it&rsquo;s not very visually appealing because it requires some mental gymnastics to add up each bin greater than the minimum threshold:</p>
+<p><a href="/img_full/ecdf/hist.png">&lt;img src=&#34;/img/ecdf/hist.png&#34; alt=&#34;Histogram of TRY representation in plots&#34;&gt;</a>
+</p>
+<p>A better method I&rsquo;ve found is an Empirical Cumulative Density Function (ECDF) plot.</p>
+<p>First I have the dataframe, where each row is a tree, with plot ID, species, and mean leaf nitrogen per dry mass for that species. If a species doesn&rsquo;t have a nitrogen measurement, it&rsquo;s recorded as NA:</p>
+<table>
+<thead>
+<tr>
+<th>plot</th>
+<th>species</th>
+<th>leaf_n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JLG_10</td>
+<td>Combretum collinum</td>
+<td>24.29</td>
+</tr>
+<tr>
+<td>JLG_10</td>
+<td>Pericopsis angolensis</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>JLG_10</td>
+<td>Pericopsis angolensis</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>JLG_10</td>
+<td>Burkea africana</td>
+<td>20.72</td>
+</tr>
+<tr>
+<td>JLG_10</td>
+<td>Burkea africana</td>
+<td>20.72</td>
+</tr>
+<tr>
+<td>JLG_10</td>
+<td>Burkea africana</td>
+<td>20.72</td>
+</tr>
+</tbody>
+</table>
+<p>Then I calculate the proportion of trees with trait measurements:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Split stems data by plot</span>
+<span style="color:#000">dat_split</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">split</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dat</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">plot</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># For each plot, proportion of trees and ba represented for each trait</span>
+<span style="color:#000">prop</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat_split</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">n_trees</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#000">plot</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">plot</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">n_trees</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">prop_leaf_n</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">leaf_n</span><span style="color:#000;font-weight:bold">),</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">n_trees</span>
+  <span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}))</span>
+</code></pre></div><p>Then calculate what percentage of plots have above a minimum threshold of trees with measurements:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">thresh</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">0.8</span>
+
+<span style="color:#000">prop_plots</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sum</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">prop</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">prop_leaf_n</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">thresh</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">prop</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>Then I can make an ECDF plot using <code>{ggplot2}</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+	<span style="color:#000">geom_line</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">prop</span><span style="color:#000;font-weight:bold">,</span> 
+	<span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">prop_leaf_n</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000">..y..</span><span style="color:#000;font-weight:bold">),</span>
+	<span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;ecdf&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">pad</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+	<span style="color:#000">geom_vline</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xintercept</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">thresh</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">linetype</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;red&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+	<span style="color:#000">geom_hline</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">yintercept</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">prop_plots</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">linetype</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;red&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+	<span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Proportion of trees&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Proportion of plots&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+	<span style="color:#000">theme_bw</span><span style="color:#000;font-weight:bold">()</span>
+</code></pre></div><p><a href="/img_full/ecdf/ecdf.png">&lt;img src=&#34;/img/ecdf/ecdf.png&#34; alt=&#34;ECDF plot, proportion of plots with proportion of trees with leaf N measurements&#34;&gt;</a>
+</p>
+<p>From the plot above it&rsquo;s easy to see that in 31% of the plots at least 80% of trees have at least one leaf nitrogen measurement in the TRY database. It&rsquo;s also easy to see the trend in the coverage. Hardly any plots have all trees covered by leaf nitrogen measurements, and it really drops off a cliff at about 98% tree coverage.</p>
+<p>The plot above is generated from a real dataset of ~1250 woodland/savanna plots in southern Africa. It&rsquo;s easy to see that trait coverage is not great in southern African species, especially given that leaf nitrogen is one of the most commonly collected traits that can tell us a lot about life history strategy and place am individual on the leaf economic spectrum. When you aggregate to genus coverage gets a bit better, but I am sceptical about how much I can trust a trait estimate that is an aggregate of species potentially found across the world. Additionally, these graphs only tell part of the story, because they only count whether a tree has at least one trait measurement in TRY. To get decent estimates of the mean of a trait like leaf nitrogen content you need LOTS of replication, preferably &gt;10,000 data points to account for all the bias that can be introduced by site, season, leaf age, tree age, leaf location on the tree, measurement error, etc.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

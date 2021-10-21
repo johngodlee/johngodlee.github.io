@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Comparing which simulated distribution is closest to the truth | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Comparing which simulated distribution is closest to the truth</h1>
+
+<h2>2020-10-05</h2>
+</div>
+
+<main>
+<p>I had an email from a colleague who had a load of univariate distributions generated from different landscape evolution simulations. They wanted to compare which distribution was closest to the observed distibution in the real landscape.</p>
+<p>To begin with, the colleague suggested using t-tests to see if two distributions were similar, but I think there is a problem with using t-tests in that way. As I interpret it, t-tests analyse whether two distribution means are appreciably different, rather than similar. Anyway, this was my discussion:</p>
+<blockquote>
+<p>So, you have many simulated elevation distributions, and you want to know which distribution closest to the true observed distribution? In that case, I definitely take issue with using K-S (Kolmogorov-Smirnov) tests or many one-sample t-tests, as they just don’t fit the framing of your question. Both these will test whether the sample mean of a simulated distribution is appreciably different from the observed mean in the original landscape, using a p-value test. Firstly, it’s not as simple as reversing the logic to say: “if you have a non-significant p-value then they are appreciably similar”. Secondly, you don’t want to know whether each simulation is suitable (i.e. similar) or not, you want to know which is most suitable. With the above tests all simulations might be suitable, and given the large sample size I would wager that they all would be, but you wouldn’t know which was the most sitable.</p>
+<p>As an aside, before resigning yourself to non-parametric tests, it might be worth seeing if a simple transformation of the data can achieve normality, or at least normal-ish. Try log-transforming or sqrt-ing. With a sample of 3000 points I don’t think having truly normal data is such a big deal anyway, and there is a lot of literature to support linear models being robust to violations of normality.</p>
+<p>Equivalence testing may be what you are looking for. It tests instead whether two distributions are suitably similar, but it won’t be able to tell you which one is most similar to the truth.</p>
+<p>My favourite approach however, having mulled this over a good deal, is this:</p>
+<ul>
+<li>Transform distributions to achieve a normal-ish distribution.</li>
+<li>Do a linear regression of observed (original landscape, dependent, y) against predicted (simulated, independent, x) values.</li>
+<li>Compare those regression models using AIC or some other information criterion to find the regression which minimises variance between predicted and observed values. The simulated values used in that regression are from the “best” simulation. You could also report R^2 values, which should be highest in the model with the lowest AIC. Note it is generally accepted that if two models are within 2 AIC points of each other, you cannot say that one is better than the other, thus you may have multiple simulations which are the most suitable.</li>
+</ul>
+<p>I’ve included an R script which does similar with a bunch of fake normal-ish data.</p>
+<p>For data visualisation, I would:</p>
+<ul>
+<li>Transform distributions to achieve a normal-ish distribution.</li>
+<li>Make an interval plot or a boxplot showing the mean and standard deviation of each simulated distribution compared to the true mean.</li>
+</ul>
+<p>My attempt is also in the R script.</p>
+<p>Thanks for the interesting problem, let me know what you end up using,
+John</p>
+</blockquote>
+<p>Here is the R script I referenced:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Which elevation distribution is closest to the truth?</span>
+<span style="color:#8f5902;font-style:italic"># John Godlee (johngodlee@gmail.com)</span>
+<span style="color:#8f5902;font-style:italic"># 2020-10-05</span>
+
+<span style="color:#000">set.seed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">20201005</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Packages</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dplyr</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">tidyr</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Create data</span>
+<span style="color:#000">distrib_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span>
+  <span style="color:#000">obs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rnorm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">144</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">),</span> 
+  <span style="color:#000">el1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rnorm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">110</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">),</span> 
+  <span style="color:#000">el2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rnorm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">120</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">),</span> 
+  <span style="color:#000">el3</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rnorm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">130</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">),</span>
+  <span style="color:#000">el4</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rnorm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">140</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">),</span> 
+  <span style="color:#000">el5</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rnorm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">150</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">),</span> 
+  <span style="color:#000">el6</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rnorm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">160</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">##&#39; 6 simulated distrib. and 1 observed distrib.. Each has: </span>
+<span style="color:#8f5902;font-style:italic">##&#39;   1000 points,</span>
+<span style="color:#8f5902;font-style:italic">##&#39;   standard deviation of 5</span>
+<span style="color:#8f5902;font-style:italic">##&#39;   varying mean</span>
+
+<span style="color:#8f5902;font-style:italic"># Create density plot </span>
+<span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">distrib_list</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">gather</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.,</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">value</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+    <span style="color:#000">geom_line</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;density&#34;</span><span style="color:#000;font-weight:bold">,</span>
+      <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">value</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">))</span>
+
+<span style="color:#8f5902;font-style:italic">##&#39; Expect that `el4` is most similar to `obs`</span>
+
+<span style="color:#8f5902;font-style:italic"># Run linear regressions</span>
+<span style="color:#000">mod_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">distrib_list[</span><span style="color:#0000cf;font-weight:bold">-1</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> 
+  <span style="color:#000">lm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#000">distrib_list[[1]]</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">})</span>
+
+<span style="color:#8f5902;font-style:italic"># Extract AIC, BIC, R^2</span>
+<span style="color:#000">mod_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">distrib_list[</span><span style="color:#0000cf;font-weight:bold">-1</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">))</span>
+<span style="color:#000">mod_df</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">aic</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">mod_list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">AIC</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">mod_df</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">bic</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">mod_list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">BIC</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">mod_df</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">rsq</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">mod_list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000">summary</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">r.squared</span> <span style="color:#000;font-weight:bold">})</span>
+
+<span style="color:#8f5902;font-style:italic">##&#39; There are loads of other metrics to choose from</span>
+
+<span style="color:#8f5902;font-style:italic"># Look at the extracted metrics</span>
+<span style="color:#000">mod_df</span>
+
+<span style="color:#8f5902;font-style:italic"># Visualise data</span>
+<span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">distrib_list</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">gather</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.,</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">value</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+  <span style="color:#000">mutate</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sim</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">case_when</span><span style="color:#000;font-weight:bold">(</span>
+      <span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;el&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">,</span>
+      <span style="color:#204a87;font-weight:bold">TRUE</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+    <span style="color:#000">geom_boxplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">raw_dat</span><span style="color:#000;font-weight:bold">,</span>
+      <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">value</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">sim</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+    <span style="color:#000">stat_summary</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">raw_dat</span><span style="color:#000;font-weight:bold">,</span> 
+      <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">value</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">sim</span><span style="color:#000;font-weight:bold">),</span>
+      <span style="color:#000">fun</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">mean</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">geom</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;point&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">shape</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">21</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;black&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+    <span style="color:#000">theme</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">legend.position</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;none&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>An R function to split species names | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>An R function to split species names</h1>
+
+<h2>2020-06-05</h2>
+</div>
+
+<main>
+<p>For my research assistant position I have been cleaning lots of taxonomic data for tree species in southern Africa. On the surface this seems simple, <code>Brachystegia spiciformis</code> gets split into <code>c(&quot;Brachystegia&quot;, &quot;spiciformis&quot;)</code>. However, what about when the species is written as <code>Brachystegia spiciformis var. kwangensis</code>? Here is a list of possible species name forms I found in my dataset:</p>
+<ul>
+<li>Brachystegia spiciformis</li>
+<li>Brachystegia cf. spiciformis</li>
+<li>Acacia abyssinica subsp. calophylla</li>
+<li>Acacia sieberiana var. woodii</li>
+</ul>
+<p>And that isn&rsquo;t counting the species with multiple below-species taxonomic ranks, like: <code>Vachellia gerrardii subsp. gerrardii var. latisiliqua</code>.</p>
+<p>Separating these out by hand would take a very long time, so I wrote a function which does it for me.</p>
+<p>First the function splits strings by spaces or optionally dots with no spaces, then it searches to see if a species is <code>cf.</code>, meaning that the absolute species isn&rsquo;t known but a guess has been made, in which case <code>species</code> is replaces with <code>indet</code> (indeterminate) and the species is stored in the <code>confer</code> column. Then a similar process to search for both varieties and subspecies. If below-species ranks are to be returned then the dataframe is returned as is, otherwise the confer column replaces the <code>indet</code> in species if below-species ranks are not returned.</p>
+<p>This function doesn&rsquo;t catch <code>Brachystegia sp.2</code>, but I have a separate function which replaces these with <code>Brachystegia indet</code> based on a lookup table supplied by the user.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic">#&#39; Split full species name into genus, species, and optionally below-species taxonomic ranks</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param x vector of genus and species names</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param subsp logical, should lower taxonomic ranks be returned?</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @return dataframe of character vectors with one column per rank</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @export</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#000">splitSpecies</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">subsp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">strsplit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34; |[a-z]\\.[a-z]&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#8f5902;font-style:italic"># genus</span>
+    <span style="color:#000">genus</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">y[1]</span>
+
+    <span style="color:#8f5902;font-style:italic"># cf and species </span>
+    <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;cf(\\.)?&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y[2]</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#000">species</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;indet&#34;</span>
+      <span style="color:#000">cf</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">y[3]</span>
+      <span style="color:#000">plus</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">1</span>
+    <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#000">species</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">y[2]</span>
+      <span style="color:#000">cf</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA_character_</span>
+      <span style="color:#000">plus</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">0</span>
+    <span style="color:#000;font-weight:bold">}</span>
+
+    <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y[3</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#000">plus]</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#000">sub_string</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000">[</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#000">plus</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">collapse</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34; &#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+      <span style="color:#8f5902;font-style:italic"># variety if present</span>
+      <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;var(\\.)?&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sub_string</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">string</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">strsplit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sub_string</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34; &#34;</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000">variety</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">string[[1]]</span><span style="color:#000">[which</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;var(\\.)&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">string[[1]]</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]</span>
+      <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">variety</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA_character_</span>
+      <span style="color:#000;font-weight:bold">}</span>
+
+      <span style="color:#8f5902;font-style:italic"># subspecies if present</span>
+      <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;subs(p)?(\\.)?&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sub_string</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">string</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">strsplit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sub_string</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34; &#34;</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000">subspecies</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">string[[1]]</span><span style="color:#000">[which</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;subs(p)?(\\.)?&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">string[[1]]</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]</span>
+      <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">subspecies</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA_character_</span>
+      <span style="color:#000;font-weight:bold">}</span>
+      <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">genus</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">species</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">cf</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">subspecies</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">variety</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">genus</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">species</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">cf</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">NA_character_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">NA_character_</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">}</span>
+  <span style="color:#000;font-weight:bold">})</span>
+
+  <span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">))</span>
+  <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;genus&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;species&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;confer&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;subspecies&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;variety&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+
+  <span style="color:#8f5902;font-style:italic"># Replace cf. as species is subsp. == FALSE</span>
+  <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">subsp</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">out</span>
+  <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">confer</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">confer[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">confer</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+    <span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">out[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;genus&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;species&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+  <span style="color:#000;font-weight:bold">}</span>
+  <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

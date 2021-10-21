@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Creating a personal library catalogue | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Creating a personal library catalogue</h1>
+
+<h2>2019-11-25</h2>
+</div>
+
+<main>
+<p>I have books split between my parents' house and my house and sometimes I would like to check whether I have a certain book, in order that I can lend it to someone or read up on something specific. To make this process of finding books easier I decided to create a digital personal library catalogue. I decided to use BibTeX to construct the catalogue, because it&rsquo;s a system I know pretty well from writing LaTeX research papers and keeping my bibliography of academic papers.</p>
+<p>Other options I explored briefly before returning to BibTeX were:</p>
+<ul>
+<li><a href="https://calibre-ebook.com/" target="_blank">Calibre</a>
+ - primarily an e-book manager software, but which allows you to create records with no e-book attached which can be used for physical books.</li>
+<li>An SQL database.</li>
+<li><a href="https://www.libib.com/" target="_blank">Libib</a>
+ - A web-app for managing a personal library, with paid options and options to export .csv.</li>
+<li><a href="https://www.goodreads.com/" target="_blank">Goodreads</a>
+ - A free website to manage books read, similar to Libib from what I can tell, but very popular.</li>
+</ul>
+<p>Apart from it being the option I was most confident in using, I also know that BibTeX .bib files are just plain text, so I know they will always be parse-able in the future. There is also a good amount of associated software for BibTeX files that has grown up around document formatting, LaTeX and Pandoc.</p>
+<p>One issue with BibTeX is that it is not robustly specified. There are many optional fields and different ways of formatting the contents of each field, and this can cause things to break with certain bibliography styles and with different bibliography managers, which almost always format things incorrectly. I recently came across <a href="https://serialmentor.com/blog/2015/10/2/Bibtex" target="_blank">this article</a>
+ which I think sums up many issues with BibTeX and attempts to impose some order.</p>
+<p>I learnt that the ISBN (International Standard Book Number) was introduced in 1970 originally as a 10 digit code, which was later expanded to a 13 digit code gradually between 2005 and 2007. This means that for most books in my library, I can easily check their bibliographic information by running the ISBN through an online service such as <a href="https://www.xarg.org/tools/isbn-to-bibtex/" target="_blank">this tool by Robert Eisele</a>
+ which generates a BibTeX entry from an ISBN.</p>
+<p>I decided on a consistent BibTeX entry to use with my personal library:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex">@book<span style="color:#204a87">{</span>Willock1974,
+  editor = <span style="color:#204a87">{}</span>,
+  author = <span style="color:#204a87">{</span>Willock, C. and Plage, G. D.<span style="color:#204a87">}</span>,
+  title = <span style="color:#204a87">{</span>Africa&#39;s Rift Valley<span style="color:#204a87">}</span>,
+  year = 1974,
+  publisher = <span style="color:#204a87">{</span>Time Life UK<span style="color:#204a87">}</span>,
+  address = <span style="color:#204a87">{</span>London, UK<span style="color:#204a87">}</span>,
+  isbn = <span style="color:#204a87">{</span>0705400964<span style="color:#204a87">}</span>,
+  lc = <span style="color:#204a87">{</span>QH195.R53 W54<span style="color:#204a87">}</span>
+<span style="color:#204a87">}</span>
+</code></pre></div><p>ost of this is self-explanatory. There are optional fields for the book entry:</p>
+<ul>
+<li>volume or number</li>
+<li>series</li>
+<li>edition</li>
+<li>month</li>
+<li>note</li>
+</ul>
+<p>But I found that I really didn&rsquo;t need most of these identifiers, with most books in my collection not having any of them. <code>note</code> I may choose to use later to add searchable terms to certain books.</p>
+<p>I would like to present my personal library on my website, my gopherhole and as a nicely formatted <code>.pdf</code>. I could probably use pandoc for all of these tasks, but adding a shell script and a few templates isn&rsquo;t hard either. This is the shell script:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
+
+latexmk -pdf books.tex
+
+pandoc --filter pandoc-citeproc --csl /Users/johngodlee/.texmf/apa.csl --standalone books.md -o books.html
+
+pandoc -f html -t plain --columns=68 -o books.txt books.html
+</code></pre><p>This first creates <code>books.pdf</code> using <code>latexmk</code>. I used a latex template called <code>books.tex</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
+
+<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>mynotes<span style="color:#204a87">}</span>
+
+<span style="color:#204a87;font-weight:bold">\renewcommand\refname</span><span style="color:#204a87">{}</span>
+
+<span style="color:#204a87;font-weight:bold">\title</span><span style="color:#204a87">{</span>Bibliography<span style="color:#204a87">}</span>
+<span style="color:#204a87;font-weight:bold">\date</span><span style="color:#204a87">{}</span>
+
+<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+
+<span style="color:#204a87;font-weight:bold">\maketitle</span><span style="color:#204a87">{}</span>
+
+<span style="color:#204a87;font-weight:bold">\nocite</span><span style="color:#204a87">{</span>*<span style="color:#204a87">}</span>
+<span style="color:#204a87;font-weight:bold">\bibliography</span><span style="color:#204a87">{</span>books<span style="color:#204a87">}</span>
+
+<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</code></pre></div><p>The magic command is <code>\nocite{*}</code> which includes a bibliographic entry for every item in <code>books.bib</code>, regardless of whether it is cited in the text.</p>
+<p>The shell script then uses <code>pandoc</code> and <code>pandoc-cireproc</code> to create <code>books.html</code>, using a custom <code>.csl</code> file which formats the references in generic APA style. I downloaded <code>apa.csl</code> from <a href="https://github.com/citation-style-language/styles" target="_blank">this Github repo</a>
+. I had to use a markdown template (<code>books.md</code>) to get the references to display properly:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+bibliography: books.bib
+nocite: &#34;@*&#34;
+title: &#34;Library&#34;
+...
+</code></pre></div><p>Pandoc is then used to re-format the html as plain text for use on my gopherhole. I couldn&rsquo;t go straight from markdown to plain text and get the references to display. I guess the <code>nocite: &quot;@*&quot;</code> is ignored in that case.</p>
+<p>The references in the plain text look like this:</p>
+<pre tabindex="0"><code>Allen, M. F. S. (2003). Portuguese in 3 months. London, UK: Dorling
+Kindersley.
+
+Auden, W. H. (1968). Selected poems. London, UK: Faber; Faber.
+
+Bates, L., &amp; Sheers, O. (2018). Letters to the future: On equality
+and gender. Hay-on-Wye, UK: Hay Festival Press.
+
+Beaujean, A. A. (2014). Latent variable modeling using r. New York
+NY, USA: Routledge.
+</code></pre><p>And in <code>.html</code> they look like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">div</span> <span style="color:#c4a000">id</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ref-Allen2003&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">p</span><span style="color:#000;font-weight:bold">&gt;</span>Allen, M. F. S. (2003). <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">em</span><span style="color:#000;font-weight:bold">&gt;</span>Portuguese in 3 months<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">em</span><span style="color:#000;font-weight:bold">&gt;</span>. London, UK: Dorling Kindersley.<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">p</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">div</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">div</span> <span style="color:#c4a000">id</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ref-Auden1968&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">p</span><span style="color:#000;font-weight:bold">&gt;</span>Auden, W. H. (1968). <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">em</span><span style="color:#000;font-weight:bold">&gt;</span>Selected poems<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">em</span><span style="color:#000;font-weight:bold">&gt;</span>. London, UK: Faber; Faber.<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">p</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">div</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">div</span> <span style="color:#c4a000">id</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ref-Bates2018&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">p</span><span style="color:#000;font-weight:bold">&gt;</span>Bates, L., <span style="color:#ce5c00">&amp;amp;</span> Sheers, O. (2018). <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">em</span><span style="color:#000;font-weight:bold">&gt;</span>Letters to the future: On equality and gender<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">em</span><span style="color:#000;font-weight:bold">&gt;</span>. Hay-on-Wye, UK: Hay Festival Press.<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">p</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">div</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">div</span> <span style="color:#c4a000">id</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ref-Beaujean2014&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">p</span><span style="color:#000;font-weight:bold">&gt;</span>Beaujean, A. A. (2014). <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">em</span><span style="color:#000;font-weight:bold">&gt;</span>Latent variable modeling using r<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">em</span><span style="color:#000;font-weight:bold">&gt;</span>. New York NY, USA: Routledge.<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">p</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">div</span><span style="color:#000;font-weight:bold">&gt;</span>
+</code></pre></div><p>y personal library can now be found <a href="/library/">here, on my website</a>
+.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

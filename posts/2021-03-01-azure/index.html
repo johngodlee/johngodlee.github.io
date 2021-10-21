@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Microsoft Azure Translator API call in R | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Microsoft Azure Translator API call in R</h1>
+
+<h2>2021-03-01</h2>
+</div>
+
+<main>
+<p>A colleague was having trouble constructing an API call in R to call the Microsoft Azure Translator. They had lots of household survey responses in Portuguese that they wanted to translate to English for analysis. There are some <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/translator/quickstart-translator" target="_blank">examples</a>
+ on the Microsoft Azure documentation of how to call the API using C#, Go, Java, Node.js and Python, but nothing for R. There are some R packages for using Azure Translator that already exist:</p>
+<ul>
+<li><a href="https://github.com/ChristopherLucas/translateR" target="_blank">{translateR}</a>
+ - Google and Microsoft API access</li>
+<li><a href="https://github.com/Azure/AzureCognitive" target="_blank">{AzureCognitive}</a>
+ - larger scope than just translation. Officially endorsed?</li>
+<li><a href="https://github.com/chainsawriot/mstranslator" target="_blank">{mstranslator}</a>
+ - abandoned?</li>
+</ul>
+<p>but as Azure Translator uses a conventional RESTful API, it&rsquo;s also possible just to use the <a href="https://github.com/r-lib/httr" target="_blank">{httr} package</a>
+.</p>
+<p>Using Azure Translator requires setting up an Azure account in order to access an API key. <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/translator/quickstart-translator" target="_blank">More documentation on that here</a>
+. As of 2021-02-30 there is a free tier for Azure Translator which offers up to 2 million characters of translation for free per month, with a few other features.</p>
+<p>In R, first, load packages and create some text to translate, two sentences, in English and Portuguese:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Packages</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">httr</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Create some example Portuguese (used Google Translate)</span>
+<span style="color:#000">engl</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;This is some test text. The big train had black smoke.&#34;</span>
+<span style="color:#000">port</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;Este é um texto de teste. O grande trem tinha fumaça preta.&#34;</span>
+<span style="color:#000">engl2</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;Cardboard boxes are easy to flatten&#34;</span>
+<span style="color:#000">port2</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;Caixas de papelão são fáceis de achatar&#34;</span>
+</code></pre></div><p>Then, define keys, endpoints and parameters for the API call. The <code>key</code>, <code>endpoint</code> and <code>location</code> can be retrieved from your Azure portal.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">key</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;XXX&#34;</span>
+<span style="color:#000">endp</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;https://api.cognitive.microsofttranslator.com&#34;</span>
+<span style="color:#000">location</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;global&#34;</span>
+<span style="color:#000">path</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;translate&#34;</span>
+<span style="color:#000">apiv</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;3.0&#34;</span>
+<span style="color:#000">to_lang</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;en&#34;</span>
+</code></pre></div><p>Create the headers:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">heads</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span>
+  <span style="color:#4e9a06">&#34;Ocp-Apim-Subscription-Key&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">key</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#4e9a06">&#34;Ocp-Apim-Subscription-Region&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">location</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#4e9a06">&#34;Content-type&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;application/json&#34;</span>
+  <span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>This is the bit that took me a bit of trial and error to figure out, using nested lists to create a JSON-like query that can then be converted to JSON for the API query. The Azure documentation states that API queries should follow this structure:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">[</span>
+	<span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#204a87;font-weight:bold">&#34;Text&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Hello, what is your name?&#34;</span>
+	<span style="color:#000;font-weight:bold">},</span>
+	<span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#204a87;font-weight:bold">&#34;Text&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;My name is John&#34;</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">]</span>
+</code></pre></div><p>So in R, thats a list, containing two other named lists (named &ldquo;Text&rdquo;), each containing a single character string, the string to translate. In R:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">input</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">port</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">port2</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">input_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Text&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000;font-weight:bold">})</span>
+</code></pre></div><p>Construct the query using <code>httr::POST()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">result</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">POST</span><span style="color:#000;font-weight:bold">(</span>
+  <span style="color:#000">endp</span><span style="color:#000;font-weight:bold">,</span> 
+  <span style="color:#000">path</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">path</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#000">query</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#000">`api-version`</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">apiv</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">to</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">to_lang</span>
+    <span style="color:#000;font-weight:bold">),</span>
+  <span style="color:#000">body</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">input_list</span><span style="color:#000;font-weight:bold">,</span> 
+  <span style="color:#000">encode</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;json&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+  <span style="color:#000">add_headers</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.headers</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">heads</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>The result is returned as a JSON string, so R needs to parse it to return a similarly nested list structure:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">[</span>
+	<span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#204a87;font-weight:bold">&#34;detectedLanguage&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+			<span style="color:#204a87;font-weight:bold">&#34;language&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;pt&#34;</span><span style="color:#000;font-weight:bold">,</span>
+			<span style="color:#204a87;font-weight:bold">&#34;score&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
+		<span style="color:#000;font-weight:bold">},</span>
+		<span style="color:#204a87;font-weight:bold">&#34;translations&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span>
+			<span style="color:#000;font-weight:bold">{</span>
+				<span style="color:#204a87;font-weight:bold">&#34;text&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;This is a test text. The big train had black smoke.&#34;</span><span style="color:#000;font-weight:bold">,</span>
+				<span style="color:#204a87;font-weight:bold">&#34;to&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;en&#34;</span>
+			<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">]</span>
+	<span style="color:#000;font-weight:bold">},</span>
+	<span style="color:#000;font-weight:bold">{</span>
+		<span style="color:#204a87;font-weight:bold">&#34;detectedLanguage&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span> 
+			<span style="color:#204a87;font-weight:bold">&#34;language&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;pt&#34;</span><span style="color:#000;font-weight:bold">,</span>
+			<span style="color:#204a87;font-weight:bold">&#34;score&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
+		<span style="color:#000;font-weight:bold">},</span>
+		<span style="color:#204a87;font-weight:bold">&#34;translations&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span>
+			<span style="color:#000;font-weight:bold">{</span>
+				<span style="color:#204a87;font-weight:bold">&#34;text&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Cardboard boxes are easy to flatten&#34;</span><span style="color:#000;font-weight:bold">,</span>
+				<span style="color:#204a87;font-weight:bold">&#34;to&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;en&#34;</span>
+			<span style="color:#000;font-weight:bold">}</span>
+		<span style="color:#000;font-weight:bold">]</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">]</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">result_parse</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">content</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">result</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">as</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;parsed&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><pre tabindex="0"><code>[[1]]
+[[1]]$detectedLanguage
+[[1]]$detectedLanguage$language
+[1] &quot;pt&quot;
+
+[[1]]$detectedLanguage$score
+[1] 1
+
+
+[[1]]$translations
+[[1]]$translations[[1]]
+[[1]]$translations[[1]]$text
+[1] &quot;This is a test text. The big train had black smoke.&quot;
+
+[[1]]$translations[[1]]$to
+[1] &quot;en&quot;
+
+
+
+
+[[2]]
+[[2]]$detectedLanguage
+[[2]]$detectedLanguage$language
+[1] &quot;pt&quot;
+
+[[2]]$detectedLanguage$score
+[1] 1
+
+
+[[2]]$translations
+[[2]]$translations[[1]]
+[[2]]$translations[[1]]$text
+[1] &quot;Cardboard boxes are easy to flatten&quot;
+
+[[2]]$translations[[1]]$to
+[1] &quot;en&quot;
+</code></pre><p>Then it&rsquo;s trivial to convert it to whatever data structure you want, in my case I want a dataframe:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">result_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">result_parse</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#000">from_lang_det</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">detectedLanguage</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">language</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">from_lang_score</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">detectedLanguage</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">score</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">to_lang</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">translations[[1]]</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">to</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">trans</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">translations[[1]]</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">text</span>
+    <span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}))</span>
+</code></pre></div><table>
+<thead>
+<tr>
+<th>from_lang_det</th>
+<th>from_lang_score</th>
+<th>to_lang</th>
+<th>trans</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pt</td>
+<td>1</td>
+<td>en</td>
+<td>This is a test text &hellip;</td>
+</tr>
+<tr>
+<td>pt</td>
+<td>1</td>
+<td>en</td>
+<td>Cardboard boxes are &hellip;</td>
+</tr>
+</tbody>
+</table>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

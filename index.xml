@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>John L. Godlee</title>
+    <link>http://johngodlee.xyz/</link>
+    <description>Recent content on John L. Godlee</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Wed, 20 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Voronoi tessellation to measure tree spatial distribution</title>
+      <link>http://johngodlee.xyz/posts/2021-10-20-voronoi/</link>
+      <pubDate>Wed, 20 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-10-20-voronoi/</guid>
+      <description>Voronoi diagrams partition multi-dimensional space into regions, where all positions within a given region are closest to a single point in the multi-dimensional space. Voronoi diagrams are named after Georgy Voronoy, but can also be called a Dirichlet tessellation (Peter Gustav Lejeune Dirichlet), or Thiessen polygons (Alfred H. Thiessen), as the same thing was implemented in different fields independently.
+I discovered Voronoi diagrams when researching methods to describe spatial clustering. I wanted a simple single number measure of how clustered together trees in a plot are, so that I could include that metric as a term in a linear model which looked at factors determining woodland canopy complexity.</description>
+    </item>
+    
+    <item>
+      <title>Walking three days of the Cleveland Way</title>
+      <link>http://johngodlee.xyz/posts/2021-10-12-cleveland_way/</link>
+      <pubDate>Tue, 12 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-10-12-cleveland_way/</guid>
+      <description>The Cleveland Way is a National Trail in the UK, running 109 miles around the edge of the North York Moors National Park. It starts in Helmsley, and ends on Filey Brigg, near Filey. It&amp;rsquo;s definitely a trail in two parts, with the first part mostly on moorland or through wooded valleys, and the second part along cliffs and built-up areas by the coast. I walked the in-land part, from Helmsley to Guisborough.</description>
+    </item>
+    
+    <item>
+      <title>Mulching trees to stop grass growth</title>
+      <link>http://johngodlee.xyz/posts/2021-09-30-mulching/</link>
+      <pubDate>Thu, 30 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-09-30-mulching/</guid>
+      <description>The trees we planted back in February are doing well, but the grass has been growing a lot because there aren&amp;rsquo;t any sheep in the field anymore. Left unmanaged, the grass would grow very tall and possibly impede the growth of the trees. We&amp;rsquo;ve had two sprays of glyphosate herbicide on the grass around the trees to keep it down, but I don&amp;rsquo;t like spraying too much because of the adverse impact it might have on the rest of the ecosystem, and the risk that it might damage the trees.</description>
+    </item>
+    
+    <item>
+      <title>Display lots of points with tiles in ggplot2</title>
+      <link>http://johngodlee.xyz/posts/2021-09-25-point_tile/</link>
+      <pubDate>Sat, 25 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-09-25-point_tile/</guid>
+      <description>I was making a map for my PhD thesis which showed the locations of field studies of the Biodiversity-Ecosystem Function Relationship , taken from three meta-analyses (Duffy et al. 2017 , Clarke et al. 2014 , and Liang et al. 2016 ). I wanted to demonstrate how few studies have been conducted in southern Africa, with the purpose of showing the reader that this is a problem that I was going to solve in the thesis.</description>
+    </item>
+    
+    <item>
+      <title>Data management during and after my PhD</title>
+      <link>http://johngodlee.xyz/posts/2021-09-20-phd_mgmt/</link>
+      <pubDate>Mon, 20 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-09-20-phd_mgmt/</guid>
+      <description>During my PhD I spent a lot of time collecting field data. Along with colleagues from Angola I setup 15 1 ha permanent woodland survey plots in Bicuar National Park, Angola, where we conducted a census of all woody stems &amp;gt;5 cm diameter, and made additional measurements of the grass biomass and tree canopy cover. These plots will hopefully have another census in 2023. I also collected terrestrial LiDAR data in 22 1 ha woodland plots, all 15 in Bicuar National Park and an additional seven in southern Tanzania, to quantify canopy complexity.</description>
+    </item>
+    
+    <item>
+      <title>PhD keyboard</title>
+      <link>http://johngodlee.xyz/posts/2021-09-10-keyboard/</link>
+      <pubDate>Fri, 10 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-09-10-keyboard/</guid>
+      <description>My keyboard has served me well over the course of my PhD. I bought it second hand off gumtree for £4 in Edinburgh, and picked it up in an ASDA car park.
+It&amp;rsquo;s a Fujitsu Siemens KB SC, a model introduced in 2006, I think, I had a hard time finding information about it online. It has a UK (British) English 105 ISO key layout, with rubber dome switches, and connects by USB.</description>
+    </item>
+    
+    <item>
+      <title>Sensible page breaks in LaTeX grouped longtables</title>
+      <link>http://johngodlee.xyz/posts/2021-08-31-longtable_break/</link>
+      <pubDate>Tue, 31 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-08-31-longtable_break/</guid>
+      <description>I had a longtable in a LaTeX document that was grouped, with multirow items and midrules which delimited the groups. The problem was that when the table broke across two pages, the groups were split and the multirow was not repeated on the second page, making the table look very messy. For example:
+&amp;lt;img src=&amp;#34;/img/longtable_break/messy.png&amp;#34; alt=&amp;#34;A messy grouped longtable&amp;#34;&amp;gt; I learned this trick from the longtable documentation that can be used to prevent the table breaking at certain lines.</description>
+    </item>
+    
+    <item>
+      <title>Collecting qualitative colour palettes</title>
+      <link>http://johngodlee.xyz/posts/2021-08-21-qualpal/</link>
+      <pubDate>Sat, 21 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-08-21-qualpal/</guid>
+      <description>I have been curating a personal R package for a few months now, to try and organise the many snippets of R code that I tend to reuse in different projects. The package isn&amp;rsquo;t on CRAN, but it is on Github for anybody interested. One of the functions I keep is essentially a list of qualitative colour palettes. Some are my original creations, but most are lifted from other packages, or examples I&amp;rsquo;ve seen somewhere online.</description>
+    </item>
+    
+    <item>
+      <title>Flowering Aechmea fasciata</title>
+      <link>http://johngodlee.xyz/posts/2021-08-15-aechmea/</link>
+      <pubDate>Sun, 15 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-08-15-aechmea/</guid>
+      <description>I have an &amp;ldquo;urn plant&amp;rdquo;, otherwise known as Aechmea fasciata, which was given to me as a sucker by my Grandmother. It is native to Brazil and grows as an epiphyte on trees in moist tropical forest. It&amp;rsquo;s also cultivated as a house plant. Due to its epiphytic habit it doesn&amp;rsquo;t draw up much water through its roots, instead preferring to have water poured into the basal rosette. As it grows, juveniles grow as suckers from the base, which can be snipped off when they&amp;rsquo;re big enough and grown in a separate pot.</description>
+    </item>
+    
+    <item>
+      <title>Grabbing BibTeX from a DOI</title>
+      <link>http://johngodlee.xyz/posts/2021-08-08-doi2bib/</link>
+      <pubDate>Sun, 08 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-08-08-doi2bib/</guid>
+      <description>There&amp;rsquo;s a website called doi2bib.org that takes a DOI and returns a BibTeX entry. I have been using it for a while to quickly get references for writing my PhD thesis. The website uses the DOI proxy server REST API in the background, so I figured it wouldn&amp;rsquo;t be too hard to use CURL directly on the API to do the same thing in the terminal, to save me opening my web browser.</description>
+    </item>
+    
+    <item>
+      <title>siunitx &#39;S&#39; table column &#39;table-format&#39; option</title>
+      <link>http://johngodlee.xyz/posts/2021-08-01-sitable/</link>
+      <pubDate>Sun, 01 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-08-01-sitable/</guid>
+      <description>I can&amp;rsquo;t believe it&amp;rsquo;s taken me this long to figure out how to use the table-format option of the S column type from the siunitx package in a LaTeX table!
+A basic table in LaTeX, showing part of the mtcars dataset in R:
+\begin{table}[h] \centering \begin{tabular}{lrrrrr} \hline &amp;amp; {mpg} &amp;amp; {cyl} &amp;amp; {disp} &amp;amp; {drat} &amp;amp; {qsec} \\ \hline Mazda RX4 &amp;amp; 21 &amp;amp; 6 &amp;amp; 160 &amp;amp; 3.9 &amp;amp; 16.</description>
+    </item>
+    
+    <item>
+      <title>Diagrams to explain niche complementarity</title>
+      <link>http://johngodlee.xyz/posts/2021-07-31-niche/</link>
+      <pubDate>Sat, 31 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-07-31-niche/</guid>
+      <description>I&amp;rsquo;ve just finished writing the background chapter for my PhD thesis. I&amp;rsquo;ve been writing about how competing species co-exist by occupying different niche space. To visualise nice complementarity, I made these schematic diagrams, which I&amp;rsquo;ve included below along with the length caption I included in the chapter.
+&amp;lt;img src=&amp;#34;/img/niche/niche_all.png&amp;#34; alt=&amp;#34;Schematic diagrams visualising niche complementarity&amp;#34;&amp;gt; Schematic diagrams demonstrating niche occupation and secondary controls on the mechanism of niche complementarity. Each density plot shows a number of species, each represented by the species functional contribution (productivity) under different environmental conditions (niche space) within the larger environmental niche volume (dashed line).</description>
+    </item>
+    
+    <item>
+      <title>BibLaTeX reference formatting</title>
+      <link>http://johngodlee.xyz/posts/2021-07-15-biblatex/</link>
+      <pubDate>Thu, 15 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-07-15-biblatex/</guid>
+      <description>I was preparing references for a paper I submitted to a journal. The journal had some pretty specific reference formatting criteria, and for whatever reason submitting a .bib file wasn&amp;rsquo;t enough for them. I have been using biblatex for quite some time, but have always puzzled over how to customise the citations and reference list. Formatted references are very ambiguous, with innumerable different ways to display the same information. As such, customising the output of BibLaTeX is also quite complex, as it has to deal with the many edge cases that occur in author names, and the many different types of reference.</description>
+    </item>
+    
+    <item>
+      <title>tmux popup windows for quickly launching scripts</title>
+      <link>http://johngodlee.xyz/posts/2021-07-10-tmux_popup/</link>
+      <pubDate>Sat, 10 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-07-10-tmux_popup/</guid>
+      <description>I was inspired by this video , which uses the pop-up window feature in tmux v3.2+ to quickly launch scripts that don&amp;rsquo;t deserve their own pane. I wrote a similar script to handle the pop-ups, which I keep in my $PATH:
+#!/usr/bin/env sh  # List scripts  read -d &amp;#39;&amp;#39; APPS &amp;lt;&amp;lt; EOF passwords	~/bin/tmux_popup/./fpass_popup mount drives	~/bin/netmount search papers	~/bin/papers stopwatch	~/bin/stopwatch internet speed test	~/bin/speed emojis	~/bin/tmux_popup/./emoji_popup calculator	~/bin/tmux_popup/.</description>
+    </item>
+    
+    <item>
+      <title>Scraping museum catalogues</title>
+      <link>http://johngodlee.xyz/posts/2021-07-05-catalogs/</link>
+      <pubDate>Mon, 05 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-07-05-catalogs/</guid>
+      <description>My partner is visiting some museums and art galleries in the eastern United States in the autumn, to look at Maya, Aztec and Mixtec artefacts that relate to slavery, captivity and forced labour. To find artefacts, she was looking through the online catalogues of each institution, and at the same time wanted to record metadata about the objects to refer back to later. Unfortunately, harvesting the metadata was taking a long time due to all the copying and pasting and manually saving images.</description>
+    </item>
+    
+    <item>
+      <title>Network graph of R package usage</title>
+      <link>http://johngodlee.xyz/posts/2021-06-25-r_packages/</link>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-06-25-r_packages/</guid>
+      <description>I wanted to know which R packages I use the most in my work, just as a little toy exercise in data wrangling and network visualisation.
+I searched through all the R scripts on my laptop using ripgrep , to find which packages I use:
+rg &amp;quot;^library(.*)$&amp;quot; -g *.R -g &#39;!Library/*&#39; &amp;gt; packages.txt The -g glob excludes any files in ~/Library, because these are email attachments which sometimes aren&amp;rsquo;t mine, and when they are mine they&amp;rsquo;re often duplicates of a script already stored on my computer somewhere else.</description>
+    </item>
+    
+    <item>
+      <title>Interview presentation for SECO post-doc position</title>
+      <link>http://johngodlee.xyz/posts/2021-06-23-seco_pres/</link>
+      <pubDate>Wed, 23 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-06-23-seco_pres/</guid>
+      <description>I applied for a post-doc position with the SECO project recently. I got the job, so I thought I would post the presentation I gave as part of the interview. The idea for the presentation was to give a 12 minute run-down of &amp;ldquo;my previous work, how it links to the post-doc position, and my plans for the position&amp;rdquo;. I&amp;rsquo;ve pasted the slides below with an approximate script of what I said.</description>
+    </item>
+    
+    <item>
+      <title>ASCII/UTF8 terrestrial carbon cycle diagram</title>
+      <link>http://johngodlee.xyz/posts/2021-06-17-carbon_ascii/</link>
+      <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-06-17-carbon_ascii/</guid>
+      <description>I have been thinking about the carbon cycle. I decided to try and make a simple terrestrial carbon cycle diagram using only ASCII art. It&amp;rsquo;s completely useless, but was quite fun to make. There&amp;rsquo;s two versions, one which uses some UTF8 characters, and another which only uses ASCII characters.
+ ┌─────────────────────────┐ │NPP = GPP - Ar │ │NEP = NPP - Hr │ │NBP = NEP - harvest, fire│ └─────────────────────────┘ ┌───┐ ┌───┐ ┌───┐ Harvest │GPP│ │Ar │ │Hr │ +Fires └─┬─┘ └─▲─┘ ▲─▲─▲ &#39; &#39;▲&#39; &#39; │ │ │ │ │ &#39; &#39; │ &#39; &#39; _▼_____│_ │ │ │ ^^^^│^^^^ \ / │ │ │ \^ ^ ^/ \ NPP────────┐ ┌┘ │ └┐ \^ ^ ^/ \ / │ │ │ │ \^^^/ │ │ │ │ │ │ │^│ │ │ │ │ │ │ │^│ │ │ ▼ │ │ │ ^│^│^ ════╬═╬════════&amp;quot;&amp;quot;&amp;quot;&amp;quot;═╬═######══════╩═╩═══ ┌─┤ ├─┐ Litter│ Wood ┼ │ │ ┼ │ ╱│╲ ╱│╲────────▶SOC─────────────────▶DOC  +-------------------------+ |NPP = GPP - Ar | |NEP = NPP - Hr | |NBP = NEP - harvest, fire| +-------------------------+ +---+ +---+ +---+ Harvest |GPP| |Ar | |Hr | +Fires +---+ +---+ +---+ &#39; &#39;^&#39; &#39; | ^ ^ ^ ^ &#39; &#39; | &#39; &#39; _v_____|_ | | | ~~~~|~~~~ \ / | | | \&#39; &#39; &#39;/ \ NPP--------+ | | | \&#39; &#39; &#39;/ \ / | | | | \&#39;&#39;&#39;/ | | | | | | |&#39;| | | | | | | |&#39;| | | v | | | &#39;|&#39;|&#39; ----| |--------&amp;quot;&amp;quot;&amp;quot;&amp;quot;-|-######------+-+--- --| |-- Litter| Wood | | | | | /|\ /|\--------&amp;gt;SOC-----------------&amp;gt;DOC </description>
+    </item>
+    
+    <item>
+      <title>A blog post on the Edinburgh Teaching Award</title>
+      <link>http://johngodlee.xyz/posts/2021-06-03-edta_blog/</link>
+      <pubDate>Thu, 03 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-06-03-edta_blog/</guid>
+      <description>I wrote a blog post about my experience with the Edinburgh Teaching Award, which is a professional development programme with the aim of improving teaching skills in higher education. It&amp;rsquo;s published on the Edinburgh Teaching Matters Blog, at the link below:
+Enriching the experience of a PhD tutor through active teaching – Teaching Matters blog </description>
+    </item>
+    
+    <item>
+      <title>Diagrams to summarise Biodiversity - Ecosystem Function Research</title>
+      <link>http://johngodlee.xyz/posts/2021-06-01-befr/</link>
+      <pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-06-01-befr/</guid>
+      <description>I&amp;rsquo;ve been writing the background and introduction chapter of my PhD thesis. In it, I write about previous research into the &amp;ldquo;Biodiversity - Ecosystem Function Relationship&amp;rdquo;, the idea that variation in biodiversity affects the way ecosystems function. To visualise some of the breakthroughs over the last 30 or so years I decided to make a schematic diagram. The diagram is below, with the lengthy caption I included in the chapter.</description>
+    </item>
+    
+  </channel>
+</rss>

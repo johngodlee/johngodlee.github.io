@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FZF script for searching a lookup table | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>FZF script for searching a lookup table</h1>
+
+<h2>2020-06-15</h2>
+</div>
+
+<main>
+<p>I have a very long lookup table which corrects synonymy in species names.</p>
+<p>The table is a <code>.csv</code> with the original name in the first column and the corrected name in the second column.</p>
+<p>I wrote a shell script which uses <code>fzf</code> to search the table and outputs the corrected name:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/usr/bin/env sh 
+
+csv=$(csvcut -c &quot;${2}&quot;,&quot;${3}&quot; &quot;${1}&quot; | sed 's/,/ -- /g' | tail -n +2)
+
+echo &quot;${csv}&quot; | fzf | sed 's/.*--\ //'
+</code></pre><pre tabindex="0"><code>fzf_csv test.csv orig corr
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

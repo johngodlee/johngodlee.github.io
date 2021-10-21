@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Figuring out Sums of Squares in ANOVA | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Figuring out Sums of Squares in ANOVA</h1>
+
+<h2>2018-09-20</h2>
+</div>
+
+<main>
+<p>I was teaching on a field course and when the students started analysing their data in R, one of them noticed that if they switched around the independent variables in an <code>lm()</code> they got different results with different methods of computing analysis of variance tables. I wanted to investigate it more, and this is the resulting R Markdown report that I wrote:</p>
+<p>The report can be found <a href="/files/anova_ssq/anova_ssq.zip">here</a>
+ and is also pasted below</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h1 id="clear-console">Clear console</h1>
+<p>cat(&quot;\014&quot;)  <!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<h1 id="add-factors-for-the-anova-analyses">Add factors for the anova analyses</h1>
+<p>mtcars$group &lt;- mtcars$cyl %&gt;%
+gsub(4, &quot;A&quot;, .) %&gt;%
+gsub(6, &quot;B&quot;, .) %&gt;%
+gsub(8, &quot;C&quot;, .) %&gt;%
+as.factor(.)</p>
+<p>mtcars$group2 &lt;- as.factor(rep(c(&quot;D&quot;, &quot;E&quot;, &quot;F&quot;, &quot;G&quot;), times = 8))</p>
+<p>mtcars$group3 &lt;- as.factor(rep(c(&quot;H&quot;, &quot;I&quot;), times = 16))</p>
+<p>mtcars$group4 &lt;- as.factor(rep(c(&quot;J&quot;, &quot;J&quot;, &quot;K&quot;, &quot;K&quot;, &quot;L&quot;, &quot;L&quot;, &quot;M&quot;, &quot;M&quot;, &quot;J&quot;, &quot;K&quot;, &quot;L&quot;, &quot;M&quot;, &quot;M&quot;, &quot;L&quot;, &quot;K&quot;, &quot;J&quot;), times = 2))</p>
+<p>head(mtcars)<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>summary(mod1)<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>mod &lt;- lm(y ~ continuous + grouping)</p>
+<p>Anova(mod, method = &quot;II&quot;)<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

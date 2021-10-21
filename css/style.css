@@ -1,0 +1,115 @@
+:root {
+	--lightgrey-color: #eee;
+	--darkgrey-color: #999;
+	--black-color: #333;
+	--highlight-color: #366;
+}
+
+body {
+	max-width: 800px;
+	margin: auto;
+	padding: 1em;
+	line-height: 1.5em;
+}
+
+/* header and footer areas */
+.menu { 
+	padding: 0;
+}
+
+.menu li { 
+	display: inline-block;
+	padding: 0em 1em 0em 0em;
+}
+
+hr {
+	border-style: solid;
+	color: var(--darkgrey-color);
+}
+
+footer {
+ 	 margin-top: 4em;
+}
+
+/* Headings */
+
+h1 { font-size: 1.8em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.3em; }
+h4 { font-size: 1.2em; }
+h5 { font-size: 1.12em; }
+h6 { font-size: 1em; }
+
+/* lists */
+ul {
+	padding-left: 2em;
+}
+
+ol {
+	padding-left: 2em;
+}
+
+
+/* post list */
+ul.postlist {
+	list-style-type: none;
+	padding: 0;
+}
+
+/* code */
+pre {
+	border: 1px solid var(--darkgrey-color);
+	padding: 1em;
+	overflow-x: auto;
+}
+
+code { 
+	background: var(--lightgrey-color);
+}
+
+pre code { 
+	background: none;
+}
+
+/* misc elements */
+a {
+	color: var(--highlight-color);
+}
+a:hover {
+   color: var(--lightgrey-color);
+   background: var(--highlight-color);
+}
+
+img, iframe, video { 
+	max-width: 100%;
+	margin: auto;
+	display: block;
+}
+
+main { 
+	hyphens: auto;
+}
+
+blockquote {
+	background: var(--lightgrey-color);
+	border-left: 5px solid var(--darkgrey-color);
+	padding: 0.25em 1em;
+}
+
+table {
+	margin: auto;
+	border-top: 1px solid var(--darkgrey-color);
+	border-bottom: 1px solid var(--darkgrey-color);
+}
+
+table thead th {
+	border-bottom: 1px solid var(--darkgrey-color);
+}
+
+th, td {
+	padding: 5px;
+}
+
+thead, tfoot, tr:nth-child(even) { 
+	background: var(--lightgrey-color);
+}

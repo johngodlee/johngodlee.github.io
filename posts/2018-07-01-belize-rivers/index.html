@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Making arty renders of Belize&#39;s rivers | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Making arty renders of Belize&rsquo;s rivers</h1>
+
+<h2>2018-07-01</h2>
+</div>
+
+<main>
+<p>y partner spends a lot of time in Belize for work and was looking for something to hang on her wall as a piece of art. I thought that a stylised map of Belize could make a nice minimalist piece of art, but because I have no artistic skills, I decided to do it using R.</p>
+<p>I got some shapefiles to start with:</p>
+<ul>
+<li><a href="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/wrcr.20440" target="_blank">A simple global river bankfull width and depth database</a>
+ - For the rivers</li>
+<li><a href="https://gadm.org/download_country_v3.html" target="_blank">GADM Data</a>
+ - Outline of Belize</li>
+</ul>
+<p>I also experimented with other shapefiles of rivers in Belize, but the one above is the one I preferred, mainly because it has slightly angular lines. These are the other sources I looked at:</p>
+<ul>
+<li><a href="http://www.biodiversity.bz/" target="_blank">Meerman 2015</a>
+</li>
+<li><a href="http://www.diva-gis.org/gdata" target="_blank">Digital Chart of the World - Inland Water</a>
+</li>
+</ul>
+<p><a href="/img_full/belize_rivers/examples.jpg">&lt;img src=&#34;/img/belize_rivers/examples.png&#34; alt=&#34;Map comparison&#34;&gt;</a>
+</p>
+<p>Here is the R code that I used to create the map output. I saved it as an svg for printing and also as a png for previewing:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Packages ----</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rgdal</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">raster</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Add shapefiles ----</span>
+<span style="color:#000">belize</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dsn</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;BLZ_adm&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">layer</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;BLZ_adm0&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">rivers_1</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dsn</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;camerica&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">layer</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;carivs&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">rivers_2</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dsn</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Belize_Rivers 2&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">layer</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Belize_Rivers&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">rivers_3</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dsn</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;BLZ_wat&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">layer</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;BLZ_water_lines_dcw&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">watersheds</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dsn</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Belize_Watersheds&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">layer</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Belize_Watersheds&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Fix shapefiles ----</span>
+
+<span style="color:#8f5902;font-style:italic">## Transform rivers_2 to wgs84 CRS</span>
+<span style="color:#000">rivers_2_wgs84</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">spTransform</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">CRS</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&#34;</span><span style="color:#000;font-weight:bold">))</span> 
+
+<span style="color:#8f5902;font-style:italic"># rivers_1 ---- </span>
+
+<span style="color:#8f5902;font-style:italic">## Filter out rivers not in Belize</span>
+<span style="color:#000">rivers_1_belize</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">crop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">belize</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">## Save as .svg</span>
+<span style="color:#000">svg</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">filename</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;img/svg/rivers_1_belize.svg&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">20</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">onefile</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_1_belize</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">belize</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">add</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">dev.off</span><span style="color:#000;font-weight:bold">()</span>
+
+<span style="color:#8f5902;font-style:italic">## Filter out small rivers according to bank full width</span>
+<span style="color:#000">rivers_1_big</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rivers_1_belize[rivers_1_belize</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">a_WIDTH</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">quantile</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_1_belize</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">a_WIDTH</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.50</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">]</span>
+
+<span style="color:#8f5902;font-style:italic">## Save as .svg</span>
+<span style="color:#000">svg</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">filename</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;img/svg/rivers_1_big.svg&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">20</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">onefile</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_1_big</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">belize</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">add</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">dev.off</span><span style="color:#000;font-weight:bold">()</span>
+
+
+<span style="color:#8f5902;font-style:italic"># rivers_2 ----</span>
+
+<span style="color:#8f5902;font-style:italic">## Filter streams that are more than 2nd order, or 3rd order</span>
+<span style="color:#000">rivers_2_first</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rivers_2_wgs84[rivers_2_wgs84</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">Strm_order</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">]</span>
+<span style="color:#000">rivers_2_second</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rivers_2_wgs84[rivers_2_wgs84</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">Strm_order</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">]</span>
+
+<span style="color:#8f5902;font-style:italic">## Crop to belize outline</span>
+<span style="color:#000">rivers_2_first_belize</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">crop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_2_first</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">belize</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">rivers_2_second_belize</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">crop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_2_second</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">belize</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">## Write as shapefiles because the cropping took a long time</span>
+<span style="color:#000">writeOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">obj</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">rivers_2_first_belize</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dsn</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;belize_rivers_2_first_crop&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">layer</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;belizer_rivers_2_first_crop&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">driver</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ESRI Shapefile&#34;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">writeOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">obj</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">rivers_2_second_belize</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dsn</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;belize_rivers_2_second_crop&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">layer</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;belizer_rivers_2_second_crop&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">driver</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ESRI Shapefile&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">## Save as .svg</span>
+<span style="color:#000">svg</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">filename</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;img/svg/rivers_2_wgs84.svg&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">20</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">onefile</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_2_wgs84</span><span style="color:#000;font-weight:bold">)</span> 
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">belize</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">add</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">dev.off</span><span style="color:#000;font-weight:bold">()</span>
+
+<span style="color:#000">svg</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">filename</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;img/svg/rivers_2_first_belize.svg&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">20</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">onefile</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_2_first_belize</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">belize</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">add</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">dev.off</span><span style="color:#000;font-weight:bold">()</span>
+
+<span style="color:#000">svg</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">filename</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;img/svg/rivers_2_second_belize.svg&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">20</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">onefile</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_2_second_belize</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">belize</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">add</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">dev.off</span><span style="color:#000;font-weight:bold">()</span>
+
+
+<span style="color:#8f5902;font-style:italic"># rivers 3 ----</span>
+
+<span style="color:#8f5902;font-style:italic">## Save as .svg</span>
+<span style="color:#000">svg</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">filename</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;img/svg/rivers_3.svg&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">15</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">20</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">onefile</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rivers_3</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">plot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">belize</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">add</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">dev.off</span><span style="color:#000;font-weight:bold">()</span>
+</code></pre></div><p>I&rsquo;m printing off the big file next week, then I want to frame it in a thin black edge frame with glossy glass.</p>
+<p><a href="/img_full/belize_rivers/rivers_1_belize.png">&lt;img src=&#34;/img/belize_rivers/rivers_1_belize.png&#34; alt=&#34;Best map&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

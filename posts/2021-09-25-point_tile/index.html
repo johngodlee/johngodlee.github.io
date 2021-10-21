@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Display lots of points with tiles in ggplot2 | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Display lots of points with tiles in ggplot2</h1>
+
+<h2>2021-09-25</h2>
+</div>
+
+<main>
+<p>I was making a map for my PhD thesis which showed the locations of field studies of the <a href="https://doi.org/10.1146/annurev-ecolsys-120213-091917" target="_blank">Biodiversity-Ecosystem Function Relationship</a>
+, taken from three meta-analyses (<a href="https://doi.org/10.1038/nature23886" target="_blank">Duffy et al. 2017</a>
+, <a href="https://doi.org/10.1016/j.tree.2017.02.012" target="_blank">Clarke et al. 2014</a>
+, and <a href="https://doi.org/10.1126/science.aaf8957" target="_blank">Liang et al. 2016</a>
+). I wanted to demonstrate how few studies have been conducted in southern Africa, with the purpose of showing the reader that this is a problem that I was going to solve in the thesis.</p>
+<p><a href="/img_full/point_tile/befr_map.png">&lt;img src=&#34;/img/point_tile/befr_map.png&#34; alt=&#34;Original map of BEFR studies&#34;&gt;</a>
+</p>
+<p>I wanted to include the map in my thesis as vector graphics, because they compress better than raster images and look crisper on the computer screen. The problem was that the .pdf output of the map from ggplot2 in R was 22.5 MB, which on its own is about as large as the rest of the thesis pdf. The reason the file was so large is because there were lots of overlapping points.</p>
+<p>I spent a long time thinking about technical ways to reduce the file size, using different exporter libraries like Cairo, or using an alternative file type, but nothing managed to maintain the quality of the original image while also reducing the file size.</p>
+<p>In the end, I decided to redesign the map to use raster tiles instead of points. A tile was counted as filled if there was at least one point found within it. Here is the code I used to convert the points to raster, in R:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sf</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dplyr</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rnaturalearth</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">raster</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">world</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ne_countries</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">returnclass</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;sf&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">continent</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#4e9a06">&#34;Antarctica&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">coord_all</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readRDS</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;dat/coord_all.rds&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p><code>coord_all</code> is a list of three dataframes, each from a different meta-analysis, where each dataframe has two columns with the latitude and longitude of each study. Next I <code>lapply()</code> over each dataframe. First I convert the dataframe to <code>sf</code> points, then create an empty raster spanning the whole earth, then use <code>rasterize()</code> to fill the raster and finally convert the raster to a dataframe for plotting in <code>ggplot()</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">coord_all_rast</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">coord_all</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">x_sf</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">st_as_sf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">coords</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;lon&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;lat&#34;</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+    <span style="color:#000">st_set_crs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">4326</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#000">x_rast</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">raster</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">crs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">crs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_sf</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">vals</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> 
+    <span style="color:#000">resolution</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">ext</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">extent</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">-180</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">180</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">-90</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">90</span><span style="color:#000;font-weight:bold">)))</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+    <span style="color:#000">rasterize</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_sf</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">.)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+    <span style="color:#000">as</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.,</span> <span style="color:#4e9a06">&#34;SpatialPixelsDataFrame&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+    <span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.)</span>
+
+  <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_rast</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">})</span>
+</code></pre></div><p>Then it&rsquo;s just a case of using <code>geom_tile()</code> on each dataframe. I stacked the tile layers according to the number of filled tiles, as the dark blue layer doesn&rsquo;t have many filled tiles and was getting masked by the dark green layer.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Plot</span>
+<span style="color:#000">map</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">geom_sf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">world</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;black&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.25</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">geom_tile</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">coord_all_rast[[2]]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;darkgreen&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">alpha</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">geom_tile</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">coord_all_rast[[3]]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;darkred&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">alpha</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">geom_tile</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">coord_all_rast[[1]]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;darkblue&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">alpha</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">theme_void</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">theme</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">legend.position</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;none&#34;</span><span style="color:#000;font-weight:bold">)</span> 
+
+<span style="color:#000">pdf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">file</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;img/befr_map.pdf&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">8</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">3.5</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">map</span>
+<span style="color:#000">dev.off</span><span style="color:#000;font-weight:bold">()</span>
+</code></pre></div><p><a href="/img_full/point_tile/befr_map_tile.png">&lt;img src=&#34;/img/point_tile/befr_map_tile.png&#34; alt=&#34;The updated map, using geom_tile&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

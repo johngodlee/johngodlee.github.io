@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Making a geoJSON powered Leaflet map | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Making a geoJSON powered Leaflet map</h1>
+
+<h2>2018-04-18</h2>
+</div>
+
+<main>
+<p>I made a website for my labgroup using Jekyll and Github-pages. It can be seen here at <a href="https://seosaw.github.io" target="_blank">seosaw.github.io</a>
+. The bit I want to show off about is the interactive map I made for the page on data and sites, which can be seen <a href="https://seosaw.github.io/data.html" target="_blank">here</a>
+.</p>
+<p>The map is powered using <a href="http://leafletjs.com" target="_blank">leaflet</a>
+, which is a Javascript library specifically for making maps.</p>
+<p>This is how I got our data to run on the map.</p>
+<p>First I have to generate the geoJSON files for the location of our sites as points, and also for a polygon layer showing the extent of savannas in Africa. I used R to generate these files because that is the platform I have the most experience with GIS stuff in. This is a stripped down version of the script I used to transform the original data <code>.csv</code> and <code>.shp</code> into geoJSON outputs:</p>
+<p>For the plot data:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Packages ----</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dplyr</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">geojsonio</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">readr</span><span style="color:#000;font-weight:bold">)</span>
+
+
+<span style="color:#8f5902;font-style:italic"># Read in plot data </span>
+<span style="color:#000">plots</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">read.csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;plots.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Create intermediate data frame ----</span>
+<span style="color:#000">plots_export</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">plots</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">longitude_of_centre</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">latitude_of_centre</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">mutate</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;-&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">plotcode</span><span style="color:#000;font-weight:bold">),</span>
+				 <span style="color:#000">lon</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">as.numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">as.character</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">longitude_of_centre</span><span style="color:#000;font-weight:bold">)),</span>
+				 <span style="color:#000">lat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">as.numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">as.character</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">latitude_of_centre</span><span style="color:#000;font-weight:bold">)),</span>
+				 <span style="color:#000">area_of_plot</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">as.numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">area_of_plot</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">10000</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">country</span><span style="color:#000;font-weight:bold">,</span> 
+				 <span style="color:#000">area_of_plot</span><span style="color:#000;font-weight:bold">,</span> 
+				 <span style="color:#000">lon</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lat</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+	<span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lon</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lat</span><span style="color:#000;font-weight:bold">))</span>
+	
+<span style="color:#8f5902;font-style:italic"># Export to json ----</span>
+<span style="color:#000">geojson_write</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">plots_export</span><span style="color:#000;font-weight:bold">,</span>
+	<span style="color:#000">lat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;lat&#34;</span><span style="color:#000;font-weight:bold">,</span>
+	<span style="color:#000">lon</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;lon&#34;</span><span style="color:#000;font-weight:bold">,</span>
+	<span style="color:#000">file</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;plots_export&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>And for the polygon data:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Packages ----</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rgdal</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rgeos</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">geojsonio</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Read shapefile ----</span>
+<span style="color:#000">white_veg</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dsn</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;whitesveg&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+	<span style="color:#000">layer</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;Whites vegetation&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Attempting to transform CRS to wgs84 ---- </span>
+<span style="color:#8f5902;font-style:italic">## No CRS given</span>
+<span style="color:#000">proj4string</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">white_veg</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">spTransform</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg</span><span style="color:#000;font-weight:bold">,</span>
+	<span style="color:#000">CRS</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;+proj=longlat +datum=WGS84&#34;</span><span style="color:#000;font-weight:bold">))</span>
+
+<span style="color:#000">white_veg_sub</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">white_veg</span><span style="color:#000">[which</span><span style="color:#000;font-weight:bold">((</span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">DESCRIPTIO</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;Moist-infertile savanna&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> 
+	<span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">DESCRIPTIO</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;Mosaics of forest&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> 
+	<span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">DESCRIPTIO</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;Mopane savanna&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> 
+	<span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">DESCRIPTIO</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;Montane Forest&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> 
+	<span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">DESCRIPTIO</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;Hydropmorphic grassland&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> 
+	<span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">DESCRIPTIO</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;Arid-fertile savanna&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> 
+	<span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">DESCRIPTIO</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;Sedge and reed swamp&#34;</span><span style="color:#000;font-weight:bold">)),</span><span style="color:#000">]</span>
+
+
+<span style="color:#000">white_woodlands_poly</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">gUnaryUnion</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg_sub</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Output to geojson ----</span>
+<span style="color:#8f5902;font-style:italic"># Export to json ----</span>
+<span style="color:#000">geojson_write</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">white_woodlands_poly</span><span style="color:#000;font-weight:bold">,</span>
+	<span style="color:#000">file</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;miombo_po&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>The polygon data comes from White&rsquo;s 1983 vegetation map of Africa, which remains the best approximation of the biomes of Africa, even though it was constructed in a very non-systematic fashion.</p>
+<p>Next I have to convert these geoJSON files to <code>.js</code> files and name them as variables by adding a variable designation at the top of the files like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">miombo</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span>
+	<span style="color:#000;font-weight:bold">{</span><span style="color:#4e9a06">&#34;type&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;FeatureCollection&#34;</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#4e9a06">&#34;features&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[{</span>
+    <span style="color:#4e9a06">&#34;type&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Feature&#34;</span><span style="color:#000;font-weight:bold">,</span>
+
+<span style="color:#000;font-weight:bold">...</span>
+
+</code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">locations</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span>
+<span style="color:#000;font-weight:bold">{</span> <span style="color:#4e9a06">&#34;type&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Feature&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;id&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;properties&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#4e9a06">&#34;name&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Kruger Skukuza - SSM-001&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;country&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;South Africa&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;area_of_plot&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">40000.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;lon&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">31.4970563</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;lat&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">25.0197541</span> <span style="color:#000;font-weight:bold">},</span> <span style="color:#4e9a06">&#34;geometry&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#4e9a06">&#34;type&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Point&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;coordinates&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span> <span style="color:#0000cf;font-weight:bold">31.4970563</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">25.0197541</span> <span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">},</span>
+<span style="color:#000;font-weight:bold">{</span> <span style="color:#4e9a06">&#34;type&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Feature&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;id&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;properties&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#4e9a06">&#34;name&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Hwange-Farm41 - ZHH-001&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;country&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Zimbabwe&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;area_of_plot&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">1000.0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;lon&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">27.90663333</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;lat&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">18.62653333</span> <span style="color:#000;font-weight:bold">},</span> <span style="color:#4e9a06">&#34;geometry&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#4e9a06">&#34;type&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Point&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;coordinates&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span> <span style="color:#0000cf;font-weight:bold">27.90663333</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">18.62653333</span> <span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">},</span>
+
+<span style="color:#000;font-weight:bold">...</span>
+
+</code></pre></div><p>Then, I need to construct the javascript file which makes the map, which calls the map tiles (<code>L.tileLayer</code>), and gives the plot locations and polygons various aesthetic attributes:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">mymap</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">L</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">map</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;leaf-map&#39;</span><span style="color:#000;font-weight:bold">).</span><span style="color:#000">setView</span><span style="color:#000;font-weight:bold">([</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">16.5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">24.7</span><span style="color:#000;font-weight:bold">],</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">);</span>
+
+<span style="color:#000">L</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">tileLayer</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">maxZoom</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">18</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#39;mapbox.streets&#39;</span>
+<span style="color:#000;font-weight:bold">}).</span><span style="color:#000">addTo</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">mymap</span><span style="color:#000;font-weight:bold">);</span>
+
+<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">plotLocOptions</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">fillOpacity</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#000">weight</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">0.2</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#000">radius</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#000">fillColor</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;#7A0099&#34;</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;#7A0099&#34;</span>
+<span style="color:#000;font-weight:bold">};</span>
+
+<span style="color:#204a87;font-weight:bold">function</span> <span style="color:#000">miomboOptions</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">feature</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">fillOpacity</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">0.9</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">fillColor</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;#179600&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;#179600&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">weight</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">0.1</span>
+<span style="color:#000;font-weight:bold">};</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000">L</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">geoJSON</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">miombo</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#000">style</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">miomboOptions</span><span style="color:#000;font-weight:bold">}).</span><span style="color:#000">addTo</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">mymap</span><span style="color:#000;font-weight:bold">);</span>
+
+<span style="color:#000">L</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">geoJSON</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">locations</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">pointToLayer</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">feature</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">latlng</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">L</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">circleMarker</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">latlng</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">plotLocOptions</span><span style="color:#000;font-weight:bold">);</span>
+  <span style="color:#000;font-weight:bold">},</span>
+	<span style="color:#000">onEachFeature</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">feature</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">layer</span><span style="color:#000;font-weight:bold">){</span>
+		<span style="color:#000">layer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">bindPopup</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Name: &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">feature</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">properties</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">name</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;&lt;br&gt;&#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+		<span style="color:#4e9a06">&#34;Country: &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">feature</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">properties</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">country</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;&lt;br&gt;&#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+	  <span style="color:#4e9a06">&#34;Plot Area: &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">feature</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">properties</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">area_of_plot</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34; m&lt;sup&gt;2&lt;/sup&gt;&#34;</span><span style="color:#000;font-weight:bold">);</span>
+	<span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}).</span><span style="color:#000">addTo</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">mymap</span><span style="color:#000;font-weight:bold">);</span>
+
+</code></pre></div><p>The only thing left to do is make sure all of these scripts are called in the right order in the HTML file:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">script</span> <span style="color:#c4a000">src</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/scripts/plot_loc.js&#34;</span><span style="color:#000;font-weight:bold">&gt;&lt;/</span><span style="color:#204a87;font-weight:bold">script</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#8f5902;font-style:italic">&lt;!plot locations&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">script</span> <span style="color:#c4a000">src</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/scripts/miombo_po.js&#34;</span><span style="color:#000;font-weight:bold">&gt;&lt;/</span><span style="color:#204a87;font-weight:bold">script</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#8f5902;font-style:italic">&lt;!polygon locations&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">script</span> <span style="color:#c4a000">src</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;https://unpkg.com/leaflet@1.2.0/dist/leaflet.js&#34;</span>
+	<span style="color:#c4a000">integrity</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==&#34;</span>
+	<span style="color:#c4a000">crossorigin</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;/</span><span style="color:#204a87;font-weight:bold">script</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#8f5902;font-style:italic">&lt;!leaflet script&gt;</span>
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">script</span> <span style="color:#c4a000">src</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/scripts/leaf-map.js&#34;</span><span style="color:#000;font-weight:bold">&gt;&lt;/</span><span style="color:#204a87;font-weight:bold">script</span><span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#8f5902;font-style:italic">&lt;!map construction script&gt;</span>
+</code></pre></div><p><a href="/img_full/geojson/map.png">&lt;img src=&#34;/img/geojson/map.png&#34; alt=&#34;Leaflet map&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

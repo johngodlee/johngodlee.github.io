@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Writing non-standard notation in ggplot2 | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Writing non-standard notation in ggplot2</h1>
+
+<h2>2019-08-20</h2>
+</div>
+
+<main>
+<p>On the current theme of writing papers, I&rsquo;ve been preparing figures in R using ggplot2 for a manuscript. I need to put subscripts, greek letters and other non-standard bits of text into facet labels and axis labels, mostly to denote the units of a variable. I found that there are multiple ways to achieve this and unfortunately it seems like different ways are necessary in different contexts, however, a lot of what I needed to do could be covered by <code>expression()</code>, which constructs mathematical expressions in R using &ldquo;plotmath&rdquo; syntax.</p>
+<p>I wrote notes on how to accomplish different tasks requiring plotmath and I thought I would put those notes here. See below:</p>
+<!-- raw HTML omitted -->
+<h1 id="non-standard-notation-in-ggplot2">Non-standard notation in ggplot2</h1>
+<p><code>expression()</code> notation:</p>
+<ul>
+<li>Basic arithmetic - <code>expression(x + y - z %*% a %/% b %+-% e %~~% q != p)</code>
+<ul>
+<li>(x plus y minus z times a divided-by b plus-or-minus e approximately q does-not-equal p)</li>
+</ul>
+</li>
+<li>Juxtaposition - <code>expression(paste(x, y, z))</code></li>
+<li>Subscript - <code>expression(&quot;cm&quot;^2)</code>, <code>expression(&quot;cm&quot;^{x + y-2})</code>
+<ul>
+<li><code>{}</code> is used to group items together without adding brackets</li>
+</ul>
+</li>
+<li>Superscript - <code>expression(&quot;CO&quot;[2])</code>
+<ul>
+<li>To put a sub and superscript together: <code>R[m]^2</code></li>
+</ul>
+</li>
+<li>Degree symbol - <code>expression(32 * degree)</code>
+<ul>
+<li>The <code>*</code> signifies the start of a special character but without a space before it</li>
+</ul>
+</li>
+<li>Greek letters - <code>expression(alpha - omega)</code></li>
+<li>Brackets -</li>
+<li>Fractions - <code>expression(frac('Top', 'Bottom'))</code></li>
+<li>Roots - <code>expression(sqrt(x, y))</code>
+<ul>
+<li>The y root of x</li>
+</ul>
+</li>
+<li>Typeface - <code>expression(plain(x) italic(y) bold(z) bolditalic(a) underline(b)</code></li>
+<li>Deliberate space - <code>expression(x + phantom(0) + y)</code></li>
+<li>Normal space - <code>expression(&quot;leaf&quot; ~ &quot;area&quot; ~ (cm^2))</code></li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li><code>expression()</code> can&rsquo;t take spaces in quoted text, <code>expression(&quot;leaf area&quot; ~ (cm^2))</code> wouldn&rsquo;t parse well, but <code>expression(&quot;leaf&quot; ~ &quot;area&quot; ~ (cm^2))</code> would be fine.</li>
+</ul>
+<p>Example workflow for ggplot2 axis titles:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dplyr</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">tidyr</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">area</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rnorm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">50</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">mean</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sd</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">leaf_chloro</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rnorm</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">50</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">mean</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sd</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">groups</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;A&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;B&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;C&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;D&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;E&#34;</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">times</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">area</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">leaf_chloro</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">groups</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">df</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">groups</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">area</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">geom_bar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;identity&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">groups</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Group&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">expression</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Leaf&#34;</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#4e9a06">&#34;area&#34;</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">cm^2</span><span style="color:#000;font-weight:bold">)))</span>
+</code></pre></div><p>Facet labels:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">df_long</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">gather</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">df</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">key</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">var</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">value</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">groups</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">df_label</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">df_long</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">mutate</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">var_exp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">factor</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">var</span><span style="color:#000;font-weight:bold">,</span> 
+    <span style="color:#000">levels</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;area&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;leaf_chloro&#34;</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">labels</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span>
+      <span style="color:#000">expression</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Leaf&#34;</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#4e9a06">&#34;area&#34;</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">cm^2</span><span style="color:#000;font-weight:bold">)),</span>
+      <span style="color:#000">expression</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Chlorophyll-&#34;</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#000">alpha</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">)))</span>
+
+<span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">df_label</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">groups</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">value</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">geom_bar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;identity&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">groups</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">facet_wrap</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">~</span><span style="color:#000">var_exp</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">labeller</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">label_parsed</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>Axis labels:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">df</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">groups</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">area</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">geom_bar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;identity&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">groups</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">scale_x_discrete</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">labels</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#4e9a06">&#34;A&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">expression</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">alpha</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#4e9a06">&#34;B&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">expression</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">beta</span><span style="color:#000;font-weight:bold">),</span> 
+    <span style="color:#4e9a06">&#34;C&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">expression</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">gamma</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#4e9a06">&#34;D&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">expression</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">epsilon</span><span style="color:#000;font-weight:bold">),</span> 
+    <span style="color:#4e9a06">&#34;E&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">expression</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">omega</span><span style="color:#000;font-weight:bold">)))</span>
+</code></pre></div><p>Custom annotations and labels:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">df</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">groups</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">area</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+  <span style="color:#000">geom_bar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;identity&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">groups</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">geom_label</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">25</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;(alpha != Alpha)&#34;</span><span style="color:#000;font-weight:bold">),</span> 
+    <span style="color:#000">parse</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#3465a4">T</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

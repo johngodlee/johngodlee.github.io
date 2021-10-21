@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Curl-able contact card | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Curl-able contact card</h1>
+
+<h2>2020-08-08</h2>
+</div>
+
+<main>
+<p>I saw a Github Gist with a businesss card that can be displayed all pretty-like in the terminal using <code>curl</code>. The one online was quite simplistic, it just padded out the card contents manually with spaces, which required a lot of trial and error to position everything correctly. It also required knowing the ANSI escape sequences to colour and style the text.</p>
+<p>I wrote the script below to automate some of this process and produce a similar looking contact card:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/usr/bin/env bash
+
+# Define colours and fonts
+boxcol=&quot;[36m&quot;
+default=&quot;[0m&quot;
+bold=&quot;[1m&quot;
+underline=&quot;[4m&quot;
+reverse=&quot;[7m&quot;
+black=&quot;[30m&quot;
+red=&quot;[31m&quot;
+green=&quot;[32m&quot;
+yellow=&quot;[33m&quot;
+blue=&quot;[34m&quot;
+magenta=&quot;[35m&quot;
+cyan=&quot;[36m&quot;
+white=&quot;[37m&quot;
+
+# Card items, in line order
+inputs=()
+inputs+=(&quot;${red}${underline}John L. Godlee&quot;)
+inputs+=(&quot;${blue}PhD Student, University of Edinburgh&quot;)
+inputs+=(&quot;&quot;)
+inputs+=(&quot;${bold}Email: ${default}johngodlee@gmail.com&quot;)
+inputs+=(&quot;${bold}Blog: ${default}https://johngodlee.github.io&quot;)
+inputs+=(&quot;${bold}GitHub: ${default}https://github.com/johngodlee&quot;)
+inputs+=(&quot;${bold}ORCiD: ${default}https://orcid.org/0000-0001-5595-255X&quot;)
+inputs+=(&quot;&quot;)
+inputs+=(&quot;${yellow}curl -sL https://johngodlee.github.io/files/card&quot;)
+
+# Define left-padding
+leftpad='    '
+
+# Define box drawing chars
+vbord=&quot;│&quot;
+hbord=&quot;─&quot;
+tlcor=&quot;╭&quot;
+trcor=&quot;╮&quot;
+brcor=&quot;╯&quot;
+blcor=&quot;╰&quot;
+
+# Get length of longest line 
+linel=$(for i in &quot;${inputs[@]}&quot;; do
+	echo $i | sed 's/\x1b\[[0-9;]*m//g'| wc -c
+done | sort -nr | head -n 1)
+
+# Get width of card, with padding
+inwidth=$(($linel + 4*2))
+
+# Get length of left-padding
+leftpadl=${#leftpad}
+
+# Print top line
+printf &quot;$boxcol&quot;
+printf &quot;$tlcor&quot;
+for ((i=1; i&lt;=inwidth; i++)); do
+	printf &quot;$hbord&quot; 
+done
+printf &quot;$trcor&quot;
+printf &quot;\n&quot;
+printf &quot;$boxcol&quot;
+printf &quot;$vbord&quot;
+for ((i=1; i&lt;=inwidth; i++)); do
+	printf &quot; &quot; 
+done
+printf &quot;$vbord&quot;
+printf &quot;\n&quot;
+
+# Print each card item
+for ((i = 0; i &lt; ${#inputs[@]}; i++))
+do
+	# Get length of string
+	stringcl=$(echo ${inputs[$i]} | sed 's/\x1b\[[0-9;]*m//g')
+	stringl=${#stringcl}
+
+	# Get length of right padding 
+	rightpadl=$(($inwidth-$stringl-$leftpadl))
+
+	# Print border
+	printf &quot;$boxcol$vbord&quot; 
+
+	# Print left-padding
+	printf &quot;$leftpad&quot;
+		
+	# Print string
+	printf &quot;$default${inputs[$i]}$default&quot;
+
+	# Print right-padding
+	for ((j=1; j&lt;=rightpadl; j++))
+	do
+		printf &quot; &quot;
+	done
+
+	# Print border
+	printf &quot;$boxcol$vbord&quot;
+
+	# New-line
+	printf &quot;\n&quot;
+done
+
+# Print bottom line
+printf &quot;$boxcol&quot;
+printf &quot;$vbord&quot;
+for ((i=1; i&lt;=inwidth; i++)); do
+	printf &quot; &quot; 
+done
+printf &quot;$vbord&quot;
+printf &quot;\n&quot;
+printf &quot;$boxcol$blcor&quot;
+for ((i=1; i&lt;=inwidth; i++)); do
+	printf &quot;$hbord&quot; 
+done
+printf &quot;$brcor&quot;
+printf &quot;\n&quot;
+</code></pre><p>The customisation comes from the <code>inputs</code> array, which contains the contents of the contact card, and uses the variables for font and colour to style the text, e.g.:</p>
+<pre tabindex="0"><code>inputs+=(&quot;${red}${underline}John L. Godlee&quot;)
+</code></pre><p>The script requires <code>bash</code> rather than a standard POSIX shell, because it uses bash arithmetic, but this could probably be ported to use <code>bc</code> or something. Also not that some of the escape sequences might not have rendered properly on the web, like <code>^[</code>.</p>
+<p><a href="/img_full/card/card.png">&lt;img src=&#34;/img/card/card.png&#34; alt=&#34;Contact card screenshot&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

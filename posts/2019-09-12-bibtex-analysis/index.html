@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Analysing BibTeX files in R | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Analysing BibTeX files in R</h1>
+
+<h2>2019-09-12</h2>
+</div>
+
+<main>
+<p>I have a master BibTeX file called <code>lib.bib</code>, which contains bibliographic information on every paper I&rsquo;ve read, which pairs with a directory of those papers' .pdf files. I thought it would be fun to see if there were patterns in my reading which I could find by analysing <code>lib.bib</code> in R.</p>
+<p>I have a bash script which extracts bibliographic information from each BibTeX entry and stores it as a text file:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
+
+# Extract year of publication
+cat ~/google_drive/lib.bib | grep -E &quot;year = [0-9]{4}&quot; | grep -oE &quot;[0-9]{4}&quot; &gt; years.txt
+
+# Extract all authors per paper, clean
+cat ~/google_drive/lib.bib | grep -E &quot;author = {&quot; | sed 's/.*= {\([^]]*\)},.*/\1/g' | sed 's/[^A-z \-]//g' | sed 's/\\//g' | sed 's/ and /,/g' &gt; authors.txt
+
+# Extract journal
+cat ~/google_drive/lib.bib | grep -E &quot;journal = {|publisher = {|url = |institution = {|organization = {|school = {&quot; | sed 's/.*{\([^]]*\)}.*/\1/g' &gt; journals.txt
+
+Rscript analysis.R
+</code></pre><p>It makes three files, one containing the year of publication, one containing the authors for each publication, and one containing the publication name.</p>
+<p>Extracting author names was the most difficult because names are not always formatted the same, especially those names which contain <code>{van der} Putten</code> for example, where the actual initial of the surname is not <code>v</code> but <code>P</code> in the example above. One interesting trick I found was using <code>sed</code> to extract text between the first occurrence of one character, and the last occurrence of another character, ignoring repeats of those characters. I used this to extract author names between <code>{ }</code> despite some authors having <code>{van der}</code> in their surname:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">sed 's/.*= {\([^]]*\)},.*/\1/g'
+</code></pre><p>Then the bash script calls an R script:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Packages</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dplyr</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">igraph</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggnetwork</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Load data</span>
+<span style="color:#000">years</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readLines</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;years.txt&#34;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">journals</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readLines</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;journals.txt&#34;</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">authors</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readLines</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;authors.txt&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Clean</span>
+<span style="color:#000">authors_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">strsplit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">authors</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">split</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;,&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">papers</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">years</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">as.numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">years</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">journals</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">papers</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">authors</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">authors_list</span>
+
+<span style="color:#000">papers</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">num_authors</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">authors_list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p><code>papers$authors</code> actually contains a list where each row is a vector of author names for a paper</p>
+<p>The first plot draws a correlation between year of publication and number of authors:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Plot correlation between year of publication and number of authors</span>
+<span style="color:#000">year_author_correl</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">papers</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">years</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">num_authors</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">geom_point</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Year&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;authors (n)&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">scale_y_continuous</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">trans</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#39;log&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">breaks</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">8</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">20</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">40</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">60</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">80</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">140</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">180</span><span style="color:#000;font-weight:bold">))</span>
+</code></pre></div><p><a href="/img_full/bibtex_analysis/year_author_correl.png">&lt;img src=&#34;/img/bibtex_analysis/year_author_correl.png&#34; alt=&#34;Plot of year of publication and number of authors&#34;&gt;</a>
+</p>
+<p>The next two plots are bar graphs of the frequency of the most common authors (first and co-authors) and the most common first authors:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic">## Get list of most common authors</span>
+<span style="color:#000">author_all</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unlist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">papers</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">authors</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">## Get top ten authors</span>
+<span style="color:#000">author_top_ten_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sort</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">table</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">author_all</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">decreasing</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">author_top_ten_df</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;author&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;freq&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">## Plot</span>
+<span style="color:#000">author_top_ten</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">author_top_ten_df</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">author</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">freq</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">geom_bar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;identity&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">author</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;black&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">theme</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">legend.position</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;none&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Author&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Frequency&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">## Get top first authors</span>
+<span style="color:#000">author_common</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unlist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">papers</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">authors</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">first</span><span style="color:#000;font-weight:bold">))</span>
+
+<span style="color:#000">author_common_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sort</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">table</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">author_common</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">decreasing</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">author_common_df</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;author&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;freq&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">author_common_df_clean</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">author_common_df</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">freq</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">## Plot</span>
+<span style="color:#000">first_author_top</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">author_common_df_clean</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">author</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">freq</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">geom_bar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;identity&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">author</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;black&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">theme</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">legend.position</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;none&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Author&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Frequency&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p><a href="/img_full/bibtex_analysis/author_top_ten.png">&lt;img src=&#34;/img/bibtex_analysis/author_top_ten.png&#34; alt=&#34;Top ten authors in my collection&#34;&gt;</a>
+ <a href="/img_full/bibtex_analysis/first_author_top.png">&lt;img src=&#34;/img/bibtex_analysis/first_author_top.png&#34; alt=&#34;Top ten first authors in my collection&#34;&gt;</a>
+</p>
+<p>The final plot is a network graph of shared authorship. This isn&rsquo;t perfect. What I would ideally like is to draw ellipses around groups of authors on the same paper, to see whether groups of authors tend to publish together multiple times, but I couldn&rsquo;t figure out how to do it with an <code>igraph</code> object:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic">## Create edge list</span>
+<span style="color:#000">authors_list_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">()</span>
+
+<span style="color:#000">for</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span> <span style="color:#000">in</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">papers</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">authors</span><span style="color:#000;font-weight:bold">)){</span>
+  <span style="color:#000">authors_list_df[[i]]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">author</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">papers</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">authors[[i]]</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">authors_list_df[[i]]</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">paper_id</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">times</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">papers</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">authors[[i]]</span><span style="color:#000;font-weight:bold">))</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000">authors_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">bind_rows</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">authors_list_df</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">authors_edge_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">authors_df</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">inner_join</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.,</span> <span style="color:#000">authors_df</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">by</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;paper_id&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">author.x</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000">author.y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">count</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">author.x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">author.y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">paper_id</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">authors_vertex_meta</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">authors_edge_df[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000">]</span>
+
+<span style="color:#000">authors_edge</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">authors_edge_df[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">graph_from_data_frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.,</span> <span style="color:#000">directed</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">authors_edge_fort</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">fortify</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">authors_edge</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic">## Plot</span>
+<span style="color:#000">author_network</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">authors_edge_fort</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">geom_edges</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">xend</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">xend</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">yend</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">yend</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">geom_point</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;black&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;grey&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">shape</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">21</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+  <span style="color:#000">theme_void</span><span style="color:#000;font-weight:bold">()</span>
+</code></pre></div><p><a href="/img_full/bibtex_analysis/author_network.png">&lt;img src=&#34;/img/bibtex_analysis/author_network.png&#34; alt=&#34;Network of authorship&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

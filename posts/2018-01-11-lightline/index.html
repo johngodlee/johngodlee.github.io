@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Replacing the lightline.vim plugin with a custom statusline/tabline | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Replacing the lightline.vim plugin with a custom statusline/tabline</h1>
+
+<h2>2018-01-11</h2>
+</div>
+
+<main>
+<p>Yesterday I decided, in an effort to remove plugin dependencies in my <code>.vimrc</code> and to learn a bit more about how VIM works, to get rid of <a href="https://github.com/itchyny/lightline.vim" target="_blank">lightline.vim</a>
+ and replace it with a statusline and tabline of my own design.</p>
+<h2 id="statusline-basics">Statusline basics</h2>
+<p>I&rsquo;v never had any problems with lightline in the year or so that I&rsquo;ve been using it. I&rsquo;ve never used VIM without lightline in fact. Lightline provides lots of useful information as standard, such as the file name, the cursor position in the file, the file type, and importantly, it changes colour depending on what mode you are in, <code>insert</code>, <code>visual</code>, <code>normal</code>, etc..</p>
+<p><a href="/img_full/lightline/lightline.png">&lt;img src=&#34;/img/lightline/lightline.png&#34; alt=&#34;Lightline&#34;&gt;</a>
+</p>
+<p><a href="/img_full/lightline/lightline_insert.png">&lt;img src=&#34;/img/lightline/lightline_insert.png&#34; alt=&#34;Lightline insert mode&#34;&gt;</a>
+</p>
+<p>But, just having lightline do everything for me isn&rsquo;t particularly exciting. So first thing was to see what the default statusline looks like:</p>
+<p><a href="/img_full/lightline/status_basic.png">&lt;img src=&#34;/img/lightline/status_basic.png&#34; alt=&#34;Default status line&#34;&gt;</a>
+</p>
+<p>Very boring, all you can see is the file name.</p>
+<p>Ideally, I want some useful information about my document in the statusline, namely in order from most to least wanted:</p>
+<ul>
+<li>What mode I am in</li>
+<li>The file name</li>
+<li>The git branch the file is on</li>
+<li>Whether the file has been modified since the last save</li>
+<li>The file type, e.g. markdown, java, html</li>
+<li>How far through the document I am, as a percentage</li>
+<li>How far through the document I am, as line number</li>
+<li>The column number</li>
+</ul>
+<p>All of these, except the git branch, can be easily added to the statusline with code found in the help file for the statusline, (<code>:help statusline</code>)</p>
+<p>To add an item to the statusline, in your <code>.vimrc</code> add a line that starts:</p>
+<pre tabindex="0"><code>set statusline=
+</code></pre><p>Then add one of the &lsquo;printf&rsquo; style codes in the help file. e.g. for the file name, otherwise known as the tail of the filepath (<code>%t</code>):</p>
+<pre tabindex="0"><code>set statusline=%t
+</code></pre><p>After reloading your <code>.vimrc</code> (<code>:source .vimrc</code>) you will see nothing has changed. Yay!</p>
+<p>To test it&rsquo;s actually worked, try adding some other codes:</p>
+<pre tabindex="0"><code>set statusline=%t%m%y%p%l%c
+</code></pre><p>which produces this:</p>
+<p><a href="/img_full/lightline/status_codes.png">&lt;img src=&#34;/img/lightline/status_codes.png&#34; alt=&#34;Status line with content&#34;&gt;</a>
+</p>
+<p>which is very ugly, and not particularly easy to read, either in the <code>vimrc</code> or in the statusline itself. First, let&rsquo;s rectify this in the <code>.vimrc</code>. I like to separate out my statusline code so that each item or group of items is on its own line. The syntax used below is similar to that used to design a prompt in the bash shell:</p>
+<pre tabindex="0"><code>set statusline=%t	&quot; file name
+set statusline+=%m	&quot; modified?
+set statusline+=%y	&quot; file type
+set statusline+=%p	&quot; percentage through file
+set statusline+=%l	&quot; line number
+set statusline+=%c	&quot; column number
+</code></pre><p>Source your <code>.vimrc</code> to see that nothing has changed in the statusline, but the <code>.vimrc</code> is much easier to read.</p>
+<p>Now we can break up the information in the statusline a bit, using spaces and special characters.</p>
+<p>First, I want a space between certain items, which I can add by adding <code>set statusline+=\ </code> lines to my statusline code. Note the actual space after the <code>\ </code>. You can also add normal characters to the statusline. For instance, to break up the line and column number you could add a <code>:</code> by adding <code>set statusline+=:</code>:</p>
+<pre tabindex="0"><code>set statusline=%t	&quot; file name
+set statusline+=\ 	&quot; space
+set statusline+=%m	&quot; modified?
+set statusline+=\ 	&quot; space
+set statusline+=%y	&quot; file type
+set statusline+=\ 	&quot; space
+set statusline+=%p	&quot; percentage through file
+set statusline+=\ 	&quot; space
+set statusline+=%l	&quot; line number
+set statusline+=:	&quot; colon separator
+set statusline+=%c	&quot; column number
+</code></pre><p><a href="/img_full/lightline/status_space.png">&lt;img src=&#34;/img/lightline/status_space.png&#34; alt=&#34;Status line with spacing between content&#34;&gt;</a>
+</p>
+<p>Now. I don&rsquo;t really want the information about my position in the file on the left side, I&rsquo;d rather have it on the right side. I can switch to the right side of the statusline by adding <code>set statusline+=%=</code> before the lines you want to appear on the right side:</p>
+<pre tabindex="0"><code>set statusline=%t	&quot; file name
+set statusline+=\ 	&quot; space
+set statusline+=%m	&quot; modified?
+set statusline+=\ 	&quot; space
+set statusline+=%y	&quot; file type
+set statusline+=\ 	&quot; space
+
+set statusline+=%=      &quot; switch to right side
+
+set statusline+=%p	&quot; percentage through file
+set statusline+=\ 	&quot; space
+set statusline+=%l	&quot; line number
+set statusline+=:	&quot; colon separator
+set statusline+=%c	&quot; column number
+</code></pre><p><a href="/img_full/lightline/status_right.png">&lt;img src=&#34;/img/lightline/status_right.png&#34; alt=&#34;Status line split left and right&#34;&gt;</a>
+</p>
+<p>So that&rsquo;s the basics of a statusline covered I think. Now onto making our own functions</p>
+<h2 id="custom-items-and-functions-in-statusline">Custom items and functions in statusline</h2>
+<p>I didn&rsquo;t come up with the ideas presented here myself, I adapted them from online sources. Three things on my list of desired features in the statusline don&rsquo;t appear as standard codes in the help file, those things are displaying the mode I am in, changing the colour based on the mode, and the git branch.</p>
+<h3 id="display-the-mode">Display the mode</h3>
+<p>First let&rsquo;s do the mode, which is fairly easy, because VIM already has a global variable called <code>currentmode</code>, so I just need to give the default outputs some aliases that are easier to read:</p>
+<pre tabindex="0"><code>let g:currentmode={
+    \ 'n'  : 'Normal',
+    \ 'no' : 'N·Operator Pending',
+    \ 'v'  : 'Visual',
+    \ 'V'  : 'V·Line',
+    \ '^V' : 'V·Block',
+    \ 's'  : 'Select',
+    \ 'S'  : 'S·Line',
+    \ '^S' : 'S·Block',
+    \ 'i'  : 'Insert',
+    \ 'R'  : 'R',
+    \ 'Rv' : 'V·Replace',
+    \ 'c'  : 'Command',
+    \ 'cv' : 'Vim Ex',
+    \ 'ce' : 'Ex',
+    \ 'r'  : 'Prompt',
+    \ 'rm' : 'More',
+    \ 'r?' : 'Confirm',
+    \ '!'  : 'Shell',
+    \ 't'  : 'Terminal'
+    \}
+</code></pre><p>then call the variable in the statusline code:</p>
+<pre tabindex="0"><code>set statusline=%{g:currentmode[mode()]}	&quot; mode
+set statusline+=\ 	&quot; space
+set statusline+=%t	&quot; file name
+set statusline+=\ 	&quot; space
+set statusline+=%m	&quot; modified?
+set statusline+=\ 	&quot; space
+set statusline+=%y	&quot; file type
+set statusline+=\ 	&quot; space
+
+set statusline+=%=      &quot; switch to right side
+
+set statusline+=%p	&quot; percentage through file
+set statusline+=\ 	&quot; space
+set statusline+=%l	&quot; line number
+set statusline+=:	&quot; colon separator
+set statusline+=%c	&quot; column number
+</code></pre><h3 id="git-branch">Git branch</h3>
+<p>The git branch is a bit harder, requiring vim script and running some shell commands in the <code>.vimrc</code>. Here is my code to define a function to show the git branch in the statusline:</p>
+<pre tabindex="0"><code>function CurrentGitBranch()
+    let gitoutput = system('git status -b '.shellescape(expand('%')).' | head -1 | grep -oE &quot;[^ ]+$&quot; | tr -d &quot;[:cntrl:]&quot;')
+    if gitoutput =~ &quot;invalid&quot;
+        let b:gitstatus = ''
+    else
+        let b:gitstatus = gitoutput
+    endif
+endfunc
+
+autocmd BufEnter,BufWritePost * call CurrentGitBranch()
+</code></pre><p>Let&rsquo;s go through this line by line.</p>
+<ul>
+<li><code>function CurrentGitBranch()</code> defines a function called <code>CurrentGitBranch()</code>.</li>
+<li><code>let gitoutput = system('git status -b '.shellescape(expand('%')).' | head -1 | grep -oE &quot;[^ ]+$&quot; | tr -d &quot;[:cntrl:]&quot;')</code> defines a variable called <code>gitoutput</code>.
+<ul>
+<li>It uses the <code>system()</code> command to run <code>git status -b</code> using the open file <code>.shellescape(expand('&amp;'))</code> as the file to runthe command on.</li>
+<li><code> | head -1 | grep -oE &quot;[^ ]+$&quot; | tr -d &quot;[:cntrl:]&quot;</code> is a series of pipes which returns the first line of <code>git status</code> then greps the final word, then removes the <code>^@</code> control sequence, which would otherwise appear in the statusline.</li>
+</ul>
+</li>
+<li><code>if gitoutput =~ &quot;invalid&quot;</code> is the start of an if statement which defines <code>b:gitstatus</code> as either an empty string if no file is open (which would normally return a line containing the word <code>invalid</code>, or defines it as the contents of <code>gitoutput</code>.</li>
+<li><code>autocmd BufEnter,BufWritePost * call CurrentGitBranch()</code> runs the function.</li>
+</ul>
+<p>To add <code>b:gitstatus</code> to the statusline, follow the same rules as for the current mode function we did earlier.</p>
+<pre tabindex="0"><code>set statusline=%{g:currentmode[mode()]}	&quot; mode
+set statusline+=\ 	&quot; space
+set statusline+=%t	&quot; file name
+set statusline+=\ 	&quot; space	
+set statusline+=%{b:gitstatus}		&quot; git branch
+set statusline+=%m	&quot; modified?
+set statusline+=\ 	&quot; space
+set statusline+=%y	&quot; file type
+set statusline+=\ 	&quot; space
+
+set statusline+=%=      &quot; switch to right side
+
+set statusline+=%p	&quot; percentage through file
+set statusline+=\ 	&quot; space
+set statusline+=%l	&quot; line number
+set statusline+=:	&quot; colon separator
+set statusline+=%c	&quot; column number
+</code></pre><p><a href="/img_full/lightline/status_git.png">&lt;img src=&#34;/img/lightline/status_git.png&#34; alt=&#34;Status line with git repository&#34;&gt;</a>
+</p>
+<h3 id="conditional-colour-changing">Conditional colour changing</h3>
+<p>For the colour changing status bar you can use another function:</p>
+<pre tabindex="0"><code>function! ChangeStatuslineColor()
+  if (mode() ==# 'i')
+    exe 'hi User1 ctermfg=black ctermbg=white'
+  else
+    exe 'hi User1 ctermfg=white ctermbg=black'
+  endif
+  return ''
+endfunction
+</code></pre><p>This defines the <code>User1</code> colour palette, with foreground (text) and background colours, reversing the colours depending on the current mode. To add it to the statusline:</p>
+<pre tabindex="0"><code>set statusline=%{ChangeStatuslineColor()}	&quot; Load function
+set statusline+=%1*	&quot; Change colour palette to `User1`
+set statusline+=%{g:currentmode[mode()]}	&quot; Display the mode
+set statusline+=%0*	&quot; Return to default colour palette
+set statusline+=\ 	&quot; space
+set statusline+=%t	&quot; file name
+set statusline+=\ 	&quot; space	
+set statusline+=%{b:gitstatus}		&quot; git branch
+set statusline+=%m	&quot; modified?
+set statusline+=\ 	&quot; space
+set statusline+=%y	&quot; file type
+set statusline+=\ 	&quot; space
+
+set statusline+=%=      &quot; switch to right side
+
+set statusline+=%p	&quot; percentage through file
+set statusline+=\ 	&quot; space
+set statusline+=%l	&quot; line number
+set statusline+=:	&quot; colon separator
+set statusline+=%c	&quot; column number
+</code></pre><p><a href="/img_full/lightline/status_colour.png">&lt;img src=&#34;/img/lightline/status_colour.png&#34; alt=&#34;Status line with colour&#34;&gt;</a>
+</p>
+<p>Obviously you can change the colours to whatever you desire, using ANSI colour codes to extend the colour range, and if you have an X terminal, just change <code>cterm</code> to <code>xterm</code> and you can then use Xterm colour codes. You could also add extra <code>elseif</code> statements to add other modes. Lightline for example turns orange when in visual mode.</p>
+<h2 id="my-actual-statusline">My actual statusline</h2>
+<p>While the above has all the basic functionality, it&rsquo;s very ugly. For my real statusline I tweaked things a little bit more:</p>
+<pre tabindex="0"><code>&quot; statusline always showing, even when NERDTree is hidden
+set laststatus=2
+
+&quot; Map of modes and their codes for statusline
+let g:currentmode={
+    \ 'n'  : 'Normal',
+    \ 'no' : 'N·Operator Pending',
+    \ 'v'  : 'Visual',
+    \ 'V'  : 'V·Line',
+    \ '^V' : 'V·Block',
+    \ 's'  : 'Select',
+    \ 'S'  : 'S·Line',
+    \ '^S' : 'S·Block',
+    \ 'i'  : 'Insert',
+    \ 'R'  : 'R',
+    \ 'Rv' : 'V·Replace',
+    \ 'c'  : 'Command',
+    \ 'cv' : 'Vim Ex',
+    \ 'ce' : 'Ex',
+    \ 'r'  : 'Prompt',
+    \ 'rm' : 'More',
+    \ 'r?' : 'Confirm',
+    \ '!'  : 'Shell',
+    \ 't'  : 'Terminal'
+    \}
+
+&quot; Change statusline colour based on mode 
+function! ChangeStatuslineColor()
+  if (mode() ==# 'i')
+    exe 'hi StatusLine ctermbg=black ctermfg=032'
+  elseif (mode() =~# '\v(v|V)')
+    exe 'hi StatusLine ctermbg=black ctermfg=172'
+  else    
+    exe 'hi Statusline ctermbg=white ctermfg=black'
+  endif
+  return ''
+endfunction
+
+&quot; Get git branch in statusline
+function CurrentGitBranch()
+    let gitoutput = system('git status -b '.shellescape(expand('%')).' | head -1 | grep -oE &quot;[^ ]+$&quot; | tr -d &quot;[:cntrl:]&quot;') 
+    if gitoutput =~ &quot;invalid&quot;
+        let b:gitstatus = ''
+    else
+        let b:gitstatus = gitoutput 
+    endif
+endfunc
+
+autocmd BufEnter,BufWritePost * call CurrentGitBranch()
+
+&quot; Statusline
+&quot; left side
+set statusline=%{ChangeStatuslineColor()}	&quot; Change colour
+set statusline+=\ %-8.{toupper(g:currentmode[mode()])} 	&quot; Current mode
+set statusline+=\ \|\  	&quot; Vert-line and space   
+set statusline+=%t	&quot; File name
+set statusline+=\ \|\  	&quot; Vert-line and space   
+set statusline+=%{b:gitstatus}		&quot; git branch
+set statusline+=%=	&quot; Switch to right side
+
+&quot; right side
+set statusline+=%m%r &quot; Modified and read only flags
+set statusline+=\ 		&quot;Space
+set statusline+=%y	&quot; File type
+set statusline+=\ \|\ 	&quot; Space, Vert-line and space
+set statusline+=%3.p%%	&quot; Percentage through file - min size 3
+set statusline+=\ \|\ 	&quot; Vert-line and Space
+set statusline+=%8.(%4.l:%-3.c%)	&quot; Line and column number in group
+set statusline+=\ 		&quot; Space
+</code></pre><p><a href="/img_full/lightline/status_my.png">&lt;img src=&#34;/img/lightline/status_my.png&#34; alt=&#34;My status line&#34;&gt;</a>
+</p>
+<p><a href="/img_full/lightline/status_my_insert.png">&lt;img src=&#34;/img/lightline/status_my_insert.png&#34; alt=&#34;My status line - insert mode&#34;&gt;</a>
+</p>
+<h2 id="the-tabline">The tabline</h2>
+<p>Less important, but still something that lightline used to do which now I do myself is the tabline. With lightline the tabline looks like this:</p>
+<p><a href="/img_full/lightline/tab_lightline.png">&lt;img src=&#34;/img/lightline/tab_lightline.png&#34; alt=&#34;Lightline tab line&#34;&gt;</a>
+</p>
+<p>Setting the tabline manually isn&rsquo;t as easy as the statusline. Technically you can set the tabline using the same code as the statusline (e.g. <code>set tabline=%t</code>), but this will result in the following, regardless of how many tabs are actually open:</p>
+<p><a href="/img_full/lightline/tab_simple.png">&lt;img src=&#34;/img/lightline/tab_simple.png&#34; alt=&#34;Default tab line&#34;&gt;</a>
+</p>
+<p>I don&rsquo;t entirely understand how the tabline works at the moment, so I borrowed this tabline function from <a href="http://dhruvasagar.com/2014/04/06/vim-custom-tabline" target="_blank">this website</a>
+:</p>
+<pre tabindex="0"><code>function! MyTabLine()
+  let s = ''
+  for i in range(tabpagenr('$'))
+    let tabnr = i + 1 &quot; range() starts at 0
+    let winnr = tabpagewinnr(tabnr)
+    let buflist = tabpagebuflist(tabnr)
+    let bufnr = buflist[winnr - 1]
+    let bufname = fnamemodify(bufname(bufnr), ':t')
+
+    let s .= '%' . tabnr . 'T'
+    let s .= (tabnr == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
+    let s .= ' ' . tabnr
+
+    let n = tabpagewinnr(tabnr,'$')
+    if n &gt; 1 | let s .= ':' . n | endif
+
+    let s .= empty(bufname) ? ' [No Name] ' : ' ' . bufname . ' '
+
+    let bufmodified = getbufvar(bufnr, &quot;&amp;mod&quot;)
+    if bufmodified | let s .= '+ ' | endif
+  endfor
+  let s .= '%#TabLineFill#'
+  return s
+endfunction
+</code></pre><p>Then to run it:</p>
+<pre tabindex="0"><code>set tabline=%!MyTabLine()
+</code></pre><p><a href="/img_full/lightline/tab_function.png">&lt;img src=&#34;/img/lightline/tab_function.png&#34; alt=&#34;My tabline&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

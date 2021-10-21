@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>I made a command line podcast grabber in Python | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>I made a command line podcast grabber in Python</h1>
+
+<h2>2018-03-26</h2>
+</div>
+
+<main>
+<p><a href="https://github.com/johngodlee/pypodd" target="_blank">Pypodd</a>
+</p>
+<p>I&rsquo;ve been working on and off since around Summer last year, making a simplistic command line podcast catching app. I had a go with lots of other podcatchers: <a href="https://github.com/m3nu/upodder" target="_blank">upodder</a>
+, <a href="https://github.com/manolomartinez/greg" target="_blank">greg</a>
+, <a href="https://github.com/doga/podcatcher" target="_blank">podcatcher</a>
+ and others that I can&rsquo;t remember, but I found them to be just a bit overblown, and many had difficulty when RSS feeds were constructed with certain types of formatting. So while I was on trying to learn Python I set myself the task of writing a little app.</p>
+<p>In the end, it only took 120 lines of code, which I think is quite good, though it doesn&rsquo;t do anything fancy like let you store databases of played episodes, it just lists podcasts through a heirarchical menu system and lets you download them one at a time.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#8f5902;font-style:italic">#!/usr/local/opt/python/libexec/bin/python</span>
+
+<span style="color:#8f5902;font-style:italic"># Modules</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">feedparser</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">urllib</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">os</span>
+<span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">csv</span>
+<span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">progress.bar</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">Bar</span>
+
+<span style="color:#8f5902;font-style:italic"># Define system location variables</span>
+<span style="color:#000">destDir</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">environ</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;HOME&#39;</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">sep</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;Downloads&#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">os</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">sep</span>  <span style="color:#8f5902;font-style:italic"># Note trailing `os.sep`</span>
+<span style="color:#000">subsLoc</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;subscriptions.txt&#34;</span> 
+<span style="color:#8f5902;font-style:italic"># e.g. subsLoc = os.environ[&#39;HOME&#39;] + os.sep + &#34;subscriptions.txt&#34;</span>
+
+<span style="color:#8f5902;font-style:italic"># Define progress bar class for urllib.urlretrieve()</span>
+<span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">dlProg</span><span style="color:#000;font-weight:bold">:</span>
+    <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#3465a4">self</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">url</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">to</span><span style="color:#000;font-weight:bold">):</span>
+        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">p</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">None</span>
+
+        <span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">update</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">blocks</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">bs</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size</span><span style="color:#000;font-weight:bold">):</span>
+            <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#204a87;font-weight:bold">not</span> <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">p</span><span style="color:#000;font-weight:bold">:</span>
+                <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">p</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">Bar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">to</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87">max</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">size</span><span style="color:#000;font-weight:bold">)</span>
+            <span style="color:#204a87;font-weight:bold">else</span><span style="color:#000;font-weight:bold">:</span>
+                <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">:</span>
+                    <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">p</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">update</span><span style="color:#000;font-weight:bold">()</span>
+                <span style="color:#204a87;font-weight:bold">else</span><span style="color:#000;font-weight:bold">:</span>
+                    <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">p</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">goto</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">blocks</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">bs</span><span style="color:#000;font-weight:bold">)</span>
+
+        <span style="color:#000">urllib</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">urlretrieve</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">url</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">to</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">update</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#3465a4">self</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">p</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">finish</span><span style="color:#000;font-weight:bold">()</span>
+
+<span style="color:#8f5902;font-style:italic"># Import subscriptions list from csv containing [url, name]</span>
+<span style="color:#204a87;font-weight:bold">with</span> <span style="color:#204a87">open</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">subsLoc</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">as</span> <span style="color:#000">f</span><span style="color:#000;font-weight:bold">:</span>
+    <span style="color:#000">subs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">csv</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">reader</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">f</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">subs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">subs</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Split subs into URLs and titles</span>
+<span style="color:#000">urlList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">x</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">subs</span><span style="color:#000;font-weight:bold">]</span>    
+<span style="color:#000">subList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">x</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">subs</span><span style="color:#000;font-weight:bold">]</span>
+
+<span style="color:#8f5902;font-style:italic"># Select a podcast to download, from list of subscriptions</span>
+<span style="color:#000">count_subs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span>
+<span style="color:#000">input_exit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span>
+
+<span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000">input_exit</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#8f5902;font-style:italic"># Terminate program if input_exit == 2</span>
+    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">subList</span><span style="color:#000;font-weight:bold">:</span>
+        <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">str</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">count_subs</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;) &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># Print list of podcasts - could convert to parsed feeds later</span>
+        <span style="color:#000">count_subs</span> <span style="color:#ce5c00;font-weight:bold">+=</span> <span style="color:#0000cf;font-weight:bold">1</span>
+    <span style="color:#000">input_subs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">input</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">Choose a podcast [1-n]: &#34;</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># Take input</span>
+    <span style="color:#000">input_subs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input_subs</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># Convert input to integer</span>
+    <span style="color:#000">index_subs</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">input_subs</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#0000cf;font-weight:bold">1</span>  <span style="color:#8f5902;font-style:italic"># For 0-base indexing</span>
+
+    <span style="color:#8f5902;font-style:italic"># Parse chosen feed</span>
+    <span style="color:#000">feedChooseList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[]</span>  <span style="color:#8f5902;font-style:italic"># Create empty list</span>
+    <span style="color:#000">feedChooseList</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">urlList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">index_subs</span><span style="color:#000;font-weight:bold">])</span>  <span style="color:#8f5902;font-style:italic"># Fill list with URL of chosen podcast</span>
+
+    <span style="color:#000">feedList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[]</span>  <span style="color:#8f5902;font-style:italic"># Create empty list</span>
+    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">feedChooseList</span><span style="color:#000;font-weight:bold">:</span>
+        <span style="color:#000">feedList</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">feedparser</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">parse</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">))</span>  <span style="color:#8f5902;font-style:italic"># Fill list parsed data from URL</span>
+
+    <span style="color:#8f5902;font-style:italic"># Extract episode names from parsed feed</span>
+    <span style="color:#000">nameList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[]</span>  <span style="color:#8f5902;font-style:italic"># Create empty list</span>
+    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">feedList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">][</span><span style="color:#4e9a06">&#39;entries&#39;</span><span style="color:#000;font-weight:bold">]:</span>  <span style="color:#8f5902;font-style:italic"># Fill list with names of episodes</span>
+        <span style="color:#000">nameList</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;title&#39;</span><span style="color:#000;font-weight:bold">])</span>
+
+    <span style="color:#8f5902;font-style:italic"># Extract episode links from parsed feed</span>
+    <span style="color:#000">linkList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[]</span>  <span style="color:#8f5902;font-style:italic"># Create empty list</span>
+    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">feedList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">][</span><span style="color:#4e9a06">&#39;entries&#39;</span><span style="color:#000;font-weight:bold">]:</span>  <span style="color:#8f5902;font-style:italic"># Fill list with episode URLs</span>
+        <span style="color:#000">linkList</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">append</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;enclosures&#39;</span><span style="color:#000;font-weight:bold">][</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">][</span><span style="color:#4e9a06">&#39;href&#39;</span><span style="color:#000;font-weight:bold">])</span>
+
+    <span style="color:#8f5902;font-style:italic"># Select episode to download - most recent or other - menu 1</span>
+    <span style="color:#000">count_epi_1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span>
+    <span style="color:#000">optList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;Most recent episode&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;Another episode&#39;</span><span style="color:#000;font-weight:bold">]</span>  <span style="color:#8f5902;font-style:italic"># Create a list of options</span>
+
+    <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">Most recent episode: &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">nameList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># Print name of most recent episode</span>
+    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">optList</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#8f5902;font-style:italic"># Choose between most recent or other episode</span>
+            <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">str</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">count_epi_1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;) &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span>
+            <span style="color:#000">count_epi_1</span> <span style="color:#ce5c00;font-weight:bold">+=</span> <span style="color:#0000cf;font-weight:bold">1</span>
+    <span style="color:#000">input_epi_1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">input</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">Choose an episode to download: &#34;</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># Take user input</span>
+    <span style="color:#000">input_epi_1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input_epi_1</span><span style="color:#000;font-weight:bold">)</span>
+
+    <span style="color:#8f5902;font-style:italic"># Select an episode to download - menu 2</span>
+    <span style="color:#000">count_epi_2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span>
+    <span style="color:#000">count_epi_3</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span>
+    <span style="color:#000">len_nameList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">nameList</span><span style="color:#000;font-weight:bold">)</span>
+
+    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">input_epi_1</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#8f5902;font-style:italic"># Outer if statement, if user inputs 1 or 2, do stuff, otherwise, return to beginning</span>
+        <span style="color:#204a87">print</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">Downloading most recent episode&#34;</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000">dlExt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;.mp3&#34;</span>
+        <span style="color:#000">dlName</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">nameList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span>
+        <span style="color:#000">dlFile</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">destDir</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">dlName</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">dlExt</span>
+        <span style="color:#000">dlURL</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">linkList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span>
+        <span style="color:#000">dlProg</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dlURL</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dlFile</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000">optList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;Download more&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;Exit&#39;</span><span style="color:#000;font-weight:bold">]</span>  <span style="color:#8f5902;font-style:italic"># Create a list of options</span>
+        <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">optList</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#8f5902;font-style:italic"># Give option to download more podcasts (return to main menu or exit</span>
+            <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">str</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">count_epi_2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;) &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span>
+            <span style="color:#000">count_epi_2</span> <span style="color:#ce5c00;font-weight:bold">+=</span> <span style="color:#0000cf;font-weight:bold">1</span>
+        <span style="color:#000">input_exit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">input</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">Finished Downloading. Get more?&#34;</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000">input_exit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input_exit</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#000">input_epi_1</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">:</span>
+        <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">nameList</span><span style="color:#000;font-weight:bold">:</span>
+            <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">str</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">count_epi_2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;) &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span>
+            <span style="color:#000">count_epi_2</span> <span style="color:#ce5c00;font-weight:bold">+=</span><span style="color:#0000cf;font-weight:bold">1</span>
+        <span style="color:#000">input_epi_2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">input</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">Choose an episode to download: &#34;</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000">input_epi_2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input_epi_2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#0000cf;font-weight:bold">1</span>
+        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">input_epi_2</span> <span style="color:#ce5c00;font-weight:bold">&lt;=</span> <span style="color:#000">len_nameList</span><span style="color:#000;font-weight:bold">:</span>  <span style="color:#8f5902;font-style:italic"># Inner if statement, If user inputs a valid episode number, do stuff, otherwise, try again</span>
+            <span style="color:#000">dlExt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;.mp3&#34;</span>
+            <span style="color:#000">dlName</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">nameList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">input_epi_2</span><span style="color:#000;font-weight:bold">]</span>
+            <span style="color:#000">dlFile</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">destDir</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">dlName</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">dlExt</span>
+            <span style="color:#000">dlURL</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">linkList</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">input_epi_2</span><span style="color:#000;font-weight:bold">]</span>
+            <span style="color:#000">dlProg</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dlURL</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dlFile</span><span style="color:#000;font-weight:bold">)</span>
+            <span style="color:#000">optList</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;Download more&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;Exit&#39;</span><span style="color:#000;font-weight:bold">]</span>  <span style="color:#8f5902;font-style:italic"># Create a list of options</span>
+            <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000">i</span> <span style="color:#204a87;font-weight:bold">in</span> <span style="color:#000">optList</span><span style="color:#000;font-weight:bold">:</span>
+                <span style="color:#204a87">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87">str</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">count_epi_3</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;) &#34;</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span>
+                <span style="color:#000">count_epi_3</span> <span style="color:#ce5c00;font-weight:bold">+=</span> <span style="color:#0000cf;font-weight:bold">1</span>
+            <span style="color:#000">input_exit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">input</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">Finished Downloading. Get more?&#34;</span><span style="color:#000;font-weight:bold">)</span>
+            <span style="color:#000">input_exit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">int</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input_exit</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#204a87;font-weight:bold">else</span><span style="color:#000;font-weight:bold">:</span>
+            <span style="color:#000">raw_input</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Invalid choice, press Enter to try again...&#34;</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#204a87;font-weight:bold">else</span><span style="color:#000;font-weight:bold">:</span>
+        <span style="color:#000">raw_input</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Invalid choice, press Enter to try again...&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>So basically, it&rsquo;s just a set of if statements linked to the value of user input variables, all wrapped in a big while loop so it continues to return to the first level menu unless you tell it to exit.</p>
+<p>The structure goes like this, where each number refers to a menu requiring user input:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">1. Choose a podcast to download
+│
+└─2. Choose an episode to download, most recent or another
+  │  
+  ├─Most Recent
+  │ │
+  │ └─Downloading most recent episode
+  └─Another 
+    │
+    └─3. Choose a specific episode to download
+      │
+      └─Download the specific episode
+</code></pre></div><p><a href="/img_full/pypodd/pypodd_scrot.png">&lt;img src=&#34;/img/pypodd/pypodd_scrot.png&#34; alt=&#34;Pypodd screenshot&#34;&gt;</a>
+</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+

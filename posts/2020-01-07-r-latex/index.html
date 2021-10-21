@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>R functions for creating LaTeX variables | John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>R functions for creating LaTeX variables</h1>
+
+<h2>2020-01-07</h2>
+</div>
+
+<main>
+<p>After writing some more for a manuscript I decided to formalise my workflow where I output numerical variables from R for use in LaTeX, so if the values change they update automatically in the manuscript. Below is a collection of functions which make the process easier:</p>
+<p><strong>Formatting a number with the correct number of decimal points or significant figures:</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">num_format</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">method</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;round&#34;</span><span style="color:#000;font-weight:bold">){</span>
+  <span style="color:#000">sprintf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;%.&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">digits</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;f&#34;</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">method</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;round&#34;</span><span style="color:#000;font-weight:bold">){</span>
+      <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">digits</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">}</span><span style="color:#000">else</span> <span style="color:#000">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">method</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;signif&#34;</span><span style="color:#000;font-weight:bold">){</span>
+      <span style="color:#000">signif</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">digits</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">})</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p><strong>Formatting a p-value:</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">p_format</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">p</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">){</span>
+  <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">case_when</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">p</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0.01</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#4e9a06">&#34;p&lt;0.01&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">p</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0.05</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#4e9a06">&#34;p&lt;0.05&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#204a87;font-weight:bold">TRUE</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;p = &#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">as.character</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">num_format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">p</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">digits</span><span style="color:#000;font-weight:bold">)))</span>
+  <span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><ul>
+<li><code>p_format(1.1)</code> = &ldquo;p = 1.10&rdquo;</li>
+<li><code>p_format(0.025)</code> = &ldquo;p&lt;0.05&rdquo;</li>
+<li><code>p_format(0.494, digits = 1)</code> = &ldquo;p = 0.5&rdquo;</li>
+</ul>
+<p><strong>Extracting the slope and standard error from a linear regression:</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">lm_format</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">){</span>
+  <span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;F(&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">summary</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">fstatistic[2]</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#4e9a06">&#34;,&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">summary</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">fstatistic[3]</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#4e9a06">&#34;) = &#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">num_format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">summary</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">fstatistic[1]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">digits</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#4e9a06">&#34;, &#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">p_format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">anova</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">`Pr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#3465a4">F</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">`[1]</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p><code>mod1 &lt;- lm(mtcars$mpg ~ mtcars$hp</code></p>
+<ul>
+<li><code>lm_format(mod1)</code> = &ldquo;F(1,30) = 45.46, p&lt;0.01&rdquo;</li>
+</ul>
+<p><strong>Formatting two arbitrary numbers as x plus/minus y</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">pm_format</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dx</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dy</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">dx</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">pm</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;$\\pm$&#34;</span><span style="color:#000;font-weight:bold">){</span>
+  <span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">num_format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">dx</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">pm</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">num_format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">dy</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><ul>
+<li><code>pm_format(0.3332, 0.4673)</code> = &ldquo;0.33$\pm$0.467&rdquo;</li>
+<li><code>pm_format(0.3332, 0.4673, dx = 1, dy = 3)</code> = &ldquo;0.3$\pm$0.467&rdquo;</li>
+</ul>
+<p><strong>Output the value of a variable as a LaTeX variable:</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">command_output</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">name</span><span style="color:#000;font-weight:bold">){</span> 
+  <span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\\newcommand{\\&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">ifelse</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">missing</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">name</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">deparse</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">substitute</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#000">name</span><span style="color:#000;font-weight:bold">),</span> 
+    <span style="color:#4e9a06">&#34;}{&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+    <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> 
+    <span style="color:#4e9a06">&#34;}&#34;</span>
+  <span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p><code>x &lt;- 0.4367</code></p>
+<ul>
+<li><code>command_output(x)</code> = &ldquo;\newcommand{\x}{0.4367}&rdquo;</li>
+<li><code>command_output(x, &quot;test&quot;)</code> = &ldquo;\newcommand{\test}{0.4367}&rdquo;</li>
+</ul>
+<p>Notice that all the backslashes have to be duplicated to escape them when they are written to a file.</p>
+<p><strong>Write a list of commands to a .tex file:</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">latex_write</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">path</span><span style="color:#000;font-weight:bold">){</span>
+  <span style="color:#000">fileConn</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">file</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">path</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">writeLines</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#000">unlist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">use.names</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">fileConn</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">close</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fileConn</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Full example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">val1</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">0.55</span>
+<span style="color:#000">val2</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">0.2477</span>
+<span style="color:#000">val3</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">0.044</span>
+
+<span style="color:#000">values_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">val1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">val2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">val2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">val3</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">val3</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#000">command_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">()</span>
+<span style="color:#000">for</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span> <span style="color:#000">in</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">values_list</span><span style="color:#000;font-weight:bold">)){</span>
+    <span style="color:#000">command_list[[i]]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">command_output</span><span style="color:#000;font-weight:bold">(</span>
+      <span style="color:#000">num_format</span><span style="color:#000;font-weight:bold">(</span>
+        <span style="color:#000">values_list[[i]]</span>
+        <span style="color:#000;font-weight:bold">),</span>
+      <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">values_list[i]</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">}</span>
+
+<span style="color:#000">latex_write</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">command_list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;test.tex&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a>
+  
+  </footer>
+  </body>
+</html>
+
