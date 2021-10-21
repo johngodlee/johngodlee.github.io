@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="John Godlee">
+  <meta name="dcterms.date" content="2018-04-01">
+  <title>Lorem Ipsum</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="pandoc_tweak.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <style type="text/css">
+  
+  html, body {
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+  }
+  
+  body {
+      overflow-x: hidden;
+      width: 90%;
+      margin: 0 auto;
+      padding: 0;
+      border-left: none;
+      border-right: none;
+      color: black;
+      font-family: "Hoefler Text", Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+      font-size: 100%;
+      line-height: 200%;
+  }
+  img {
+      max-width: 90%;
+      display: block;
+      margin: 0 auto;
+  }
+  pre {
+      font-family: monospace;
+      border: 1px solid gray;
+      padding: 0.5em;
+      background-color: #E8E8E8;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+  }
+  
+  :not(pre) > code{
+      font-family: monospace;
+      border: 1px solid gray; 
+      padding: 0.25em;
+      background-color: #E8E8E8;
+  }
+  blockquote {
+      font-style: italic;
+      text-align: justify;
+      padding: 0.25em;
+      border-left: 2px solid gray;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+  }
+  
+  hr {
+      border: 0;
+      width: 90%;
+      height: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  h1 a, h2 a, h3 a, h4 a, h5 a { 
+      text-decoration: none;
+  }
+  h1, h2, h3, h4, h5 {
+      font-weight: bold;
+  /*    border-bottom: 1px dashed rgba(0, 0, 0, 0.2); */
+      color: #262626;
+  }
+  h1 {
+          font-size: 140%;
+  	border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+  }
+  
+  h2 {
+          font-size: 130%;
+  }
+  
+  h3 {
+          font-size: 120%;
+  }
+  
+  h4 {
+          font-size: 110%;
+  }
+  
+  h5 {
+          font-size: 100%;
+  }
+  
+  h1.title {
+          font-size: 200%;
+          font-weight: bold;
+          padding-top: 0.2em;
+          padding-bottom: 0.2em;
+          text-align: left;
+          border: none;
+  }
+  
+  dt code {
+          font-weight: bold;
+  }
+  dd p {
+          margin-top: 0;
+  }
+  
+  #footer {
+          padding-top: 1em;
+          font-size: 70%;
+          color: gray;
+          text-align: center;
+  }
+  
+  table {
+      border: 1px solid black;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      border-collapse: collapse;
+  }
+  
+  table thead {
+      background-color: #E8E8E8;
+  }
+  </style>
+</head>
+<body>
+<header>
+<h1 class="title">Lorem Ipsum</h1>
+<h2 class="author">John Godlee</h2>
+<h3 class="date">2018-04-01</h3>
+</header>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ligula enim, commodo ut placerat vitae, cursus aliquam risus.</p>
+<h1 id="super-header">Super header</h1>
+<p>Praesent accumsan tincidunt interdum. Sed nulla tortor, convallis in placerat quis, consectetur sit amet arcu. <a href="https://johngodlee.github.io">THIS IS A LINK</a> Etiam sit amet dui malesuada,</p>
+<ul>
+<li>List item 1</li>
+<li>List item 2</li>
+</ul>
+<ol type="1">
+<li>List item a</li>
+<li>List item b</li>
+</ol>
+<hr />
+<p><em>Praesent accumsan</em> <strong>tincidunt interdum.</strong> Sed nulla tortor, convallis in placerat quis, consectetur sit amet arcu. Etiam sit amet dui malesuada, fermentum tortor finibus, tristique leo.</p>
+<hr />
+<h2 id="smaller-header">Smaller header</h2>
+<blockquote>
+<p>Fusce mattis <code>lacus commodo</code> orci rutrum, vel vestibulum dolor iaculis. Fusce et libero ligula. Proin non metus lorem. Duis <code>placerat lobortis</code> felis ac pretium.</p>
+<p>-- Pliny</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pdf</span>(<span class="st">&quot;Regression_plot.pdf&quot;</span>)
+  for (var in <span class="kw">unique</span>(Root$Plot_Date_Sample)) {
+    <span class="kw">print</span>( <span class="kw">ggplot</span>(Root[Root$Plot_Date_Sample==var,], 
+        <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> Cum_Root_Mass_g)) +
+<span class="st">             </span><span class="kw">geom_point</span>())
+  }
+<span class="kw">dev.off</span>()</code></pre></div>
+<figure>
+    <img src="../../img/pandoc_css/test.png" />
+</figure>
+<p>Duis tempus consectetur accumsan. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse eget metus enim. Proin semper at velit a varius.</p>
+</body>
+</html>
