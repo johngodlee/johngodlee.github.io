@@ -19,7 +19,8 @@
 &lt;p&gt;I&amp;rsquo;ve decided to build the website using &lt;a href=&#34;https://gohugo.io/&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt;
 , which is faster to compile than Jekyll and doesn&amp;rsquo;t appear to suffer from the same crazy Ruby dependency issues that Jekyll suffers from on my machine. So far, I&amp;rsquo;ve found it fairly simple to migrate the website across to Hugo, and I&amp;rsquo;ve found that Hugo offers a great deal more control and possibilities for automation than Jekyll.&lt;/p&gt;
 &lt;p&gt;The website now has a personal blurb at the top of the homepage, along with some links to other pages and profiles around the web, and a list of the ten most recent blog posts I&amp;rsquo;ve written. My CV is as before, but I&amp;rsquo;ve added a new section called &amp;ldquo;Works&amp;rdquo; which lists articles I&amp;rsquo;ve authored or contributed to, as well as some presentations and R packages I&amp;rsquo;ve written. My recipes are now held in the same Git repo as the website, and I figured out a neat way to automatically index the recipes based on their category (dessert, drinks, etc.) using Hugo&amp;rsquo;s list pages. I&amp;rsquo;ll explain more comprehensively how this works, because I think it might be useful for other people.&lt;/p&gt;
-&lt;p&gt;The directory structure for my recipes is as follows:&lt;/p&gt;
+&lt;p&gt;The directory structure for my &lt;a href=&#34;http://johngodlee.xyz/recipes/&#34;&gt;recipes&lt;/a&gt;
+ is as follows:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;content
 └─ recipes
    ├─ _index.md
@@ -102,7 +103,10 @@
 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;figure&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then I can call this shortcode in a markdown file like this:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;{{&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;link&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/img_full/test/test.jpg&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/img/test/test.png&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;alt text&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;}}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally, I should also mention that the RSS feed URL has changed slightly, the new RSS feed is:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://johngodlee.xyz/index.xml&#34; target=&#34;_blank&#34;&gt;https://johngodlee.xyz/index.xml&lt;/a&gt;
+&lt;/p&gt;
+</description>
     </item>
     
     <item>
