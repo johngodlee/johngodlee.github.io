@@ -39,7 +39,7 @@
 
 <p>I found out that <code>rifle.conf</code> is the config file which controls how Ranger opens files. It is normally found in <code>~/.config/ranger/rifle.conf</code>.</p>
 <p>The default <code>rifle.conf</code> however is dense, complex and doesn&rsquo;t play well with an ordinary mac setup.</p>
-<p>So I decided to try and strip down <code>rifle.conf</code> and rebuild it for use on macOS. If you want to skip straight to the <code>rifle.conf</code> that I use, <a href="files/rifle.conf">follow this link</a>
+<p>So I decided to try and strip down <code>rifle.conf</code> and rebuild it for use on macOS. If you want to skip straight to the <code>rifle.conf</code> that I use, <a href="/files/ranger/rifle.conf">follow this link</a>
 .</p>
 <p>Now open up your own <code>rifle.conf</code> and start editing:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">vim ~/.config/ranger/rifle.conf
@@ -47,8 +47,7 @@
 <p><code>rifle.conf</code> is structured so each line provides a set of conditions separated by commas (<code>,</code>) e.g. <code>ext mp3</code>, followed by an equals <code>=</code>, then a terminal command, e.g. vlc <code>$@</code>. When Ranger is asked to open a file, it cycles through every line from top to bottom until it finds a line where all the conditions are met, then it runs the terminal command. This means that the top-most line where all the conditions are met will be run. Using this logic you can construct a <code>rifle.conf</code> that works on different systems, if you order potential applications from most to least preferred.</p>
 <h2 id="using-open">Using <code>open</code></h2>
 <p>ost Linux applications can simply be opened by typing their name into the terminal, optionally followed by a file to open and various rules, e.g. <code>zathura example.pdf</code>. In macOS however, typing the equivalent <code>preview example.pdf</code> just returns an error that <code>preview</code> has not been found. The same goes for <code>Preview</code>, <code>preview.app</code> and <code>Preview.app</code>.</p>
-<p>Instead, on a Mac, I find the best way to call an application from the command line is to use <a href="https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/open.1.html" target="_blank">&lt;code&gt;open&lt;/code&gt;</a>
-.</p>
+<p>Instead, on a Mac, I find the best way to call an application from the command line is to use <code>open</code>.</p>
 <p>The following lines all open Preview.app:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">open -a preview
 open -a preview.app
@@ -61,7 +60,7 @@ open -a Preview.app
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">ext pdf = open -a preview &quot;$@&quot;
 </code></pre><p>Where <code>&quot;$@&quot;</code> is the file path of the file highlighted in Ranger The above there says, if the file extension is <code>.pdf</code>, open the file with Preview.app.</p>
 <h2 id="regex">Regex</h2>
-<p>Regular expressions can be used to make more complex conditions, e.g. using <code>|</code> to include multiple file extensions in one line, or <code>[]</code> and <code>?</code> to list similar extensions without repetition. Try to work out what the conditions below mean. If you need a refresher on Regex, I often refer to [this website](LINK TO REGEX):</p>
+<p>Regular expressions can be used to make more complex conditions, e.g. using <code>|</code> to include multiple file extensions in one line, or <code>[]</code> and <code>?</code> to list similar extensions without repetition. Try to work out what the conditions below mean.</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">ext jpe?g|png|gif = open -a preview &quot;$@&quot;
 ext od[dfgpst] = open -a libreoffice &quot;$@&quot;
 </code></pre><h2 id="mime-types">MIME types</h2>
