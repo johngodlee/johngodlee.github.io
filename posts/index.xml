@@ -6,7 +6,39 @@
     <description>Recent content in Blog archive on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 20 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Extracting pages with colour from a PDF</title>
+      <link>http://johngodlee.xyz/posts/2021-10-26-colour_pdf/</link>
+      <pubDate>Tue, 26 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-10-26-colour_pdf/</guid>
+      <description>&lt;p&gt;I wanted to print my PhD thesis so I could have a version to annotate before my viva. The cost at my local copy shop to print a full colour version of the thesis would have been somewhere around £60, while a black and white copy only cost about £15. It wasn&amp;rsquo;t necessary to print the whole document in colour as only pages with figures contained any colour, so I wanted to find a way to automatically extract the pages which did contain colour and create a new document containing only those pages, so I could print those in colour separately.&lt;/p&gt;
+&lt;p&gt;I created a shell script that uses &lt;a href=&#34;https://ghostscript.com/&#34; target=&#34;_blank&#34;&gt;ghostscript (gs)&lt;/a&gt;
+ to find the colour pages, and &lt;a href=&#34;https://github.com/rrthomas/pdfjam&#34; target=&#34;_blank&#34;&gt;pdfjam&lt;/a&gt;
+ to extract those pages and create a new document:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env sh
+&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Extract colour pages from a PDF, then create a new PDF containing only those pages. Useful for saving on printing costs.&lt;/span&gt;
+
+&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$#&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; -ne &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+	&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Usage: &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; &amp;lt;input.pdf&amp;gt; &amp;lt;output.pdf&amp;gt;&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;
+&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+
+&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; ! -f &lt;span style=&#34;color:#000&#34;&gt;$1&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Input file not found&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;
+&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+
+&lt;span style=&#34;color:#000&#34;&gt;pages&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;gs -o - -sDEVICE&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;inkcov &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; tail -n +6 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/^Page*/N;s/\n//&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sed -E &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/Page [0-9]+ 0.00000  0.00000  0.00000  / d&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep -Eo &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;^Page\s[0-9]+&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; tr &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/,$//g&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+
+pdfjam &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;pages&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; -o &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&amp;gt; /dev/null
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The first part of the script with the &lt;code&gt;if&lt;/code&gt; statements simply checks whether the parameters passed to the script are valid. The script needs to be fed an existing input file, and an output file name.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;pages&lt;/code&gt; variable is created by using the &lt;code&gt;inkcov&lt;/code&gt; device provided in &lt;code&gt;gs&lt;/code&gt; &amp;gt;v9.05. The &lt;code&gt;inkcov&lt;/code&gt; device displays the ink coverage separately for each page, so all that needs to be done is to exclude pages which contain only black, and then format the page numbers in the way that &lt;code&gt;pdfjam&lt;/code&gt; expects. &lt;code&gt;pdfjam&lt;/code&gt; then takes the input filename, the page range, and the output filename and creates a new PDF document.&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>New website</title>
       <link>http://johngodlee.xyz/posts/2021-10-20-new_website/</link>
@@ -1580,23 +1612,6 @@ Ref. 7: &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\citep&lt;/sp
       <description>&lt;p&gt;I wrote a blog post about my experience with the Edinburgh Teaching Award, which is a professional development programme with the aim of improving teaching skills in higher education. It&amp;rsquo;s published on the Edinburgh Teaching Matters Blog, at the link below:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.teaching-matters-blog.ed.ac.uk/enriching-the-experience-of-a-phd-tutor-through-active-teaching/&#34; target=&#34;_blank&#34;&gt;Enriching the experience of a PhD tutor through active teaching – Teaching Matters blog&lt;/a&gt;
 &lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Diagrams to summarise Biodiversity - Ecosystem Function Research</title>
-      <link>http://johngodlee.xyz/posts/2021-06-01-befr/</link>
-      <pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2021-06-01-befr/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;ve been writing the background and introduction chapter of my PhD thesis. In it, I write about previous research into the &amp;ldquo;Biodiversity - Ecosystem Function Relationship&amp;rdquo;, the idea that variation in biodiversity affects the way ecosystems function. To visualise some of the breakthroughs over the last 30 or so years I decided to make a schematic diagram. The diagram is below, with the lengthy caption I included in the chapter.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/befr/befr_graph.png&#34;&gt;&lt;img
-          alt=&#34;Schematic diagram visualising some key breakthroughs in biodiversity - ecosystem function research&#34;
-          title=&#34;Schematic diagram visualising some key breakthroughs in biodiversity - ecosystem function research&#34;src=&#34;http://johngodlee.xyz/img/befr/befr_graph.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;Schematic diagrams illustrating various inferences made on the Biodiversity - Ecosystem Function Relationship by previous studies. a) The classic BEF relationship found by many small scale experiments (Cardinale, Srivastava, et al., 2009). b) As more functions are considered simultaneously the minimum species richness needed to maintain overall ecosystem functionality increases, also showing how the proportion of functionally redundant species increases as less functions are considered (i.e. the curve reaches asymptote at a lower species richness) (Hector and Bagchi, 2007). c) The saturating relationship of the number of ecosystem functions considered and the number of species influencing ecosystem multifunctionality (Hector and Bagchi, 2007). d) As studies progress through time the strength of the BEF relationhip increases, the rate of increase in ecosystem function increases as species richness (S) grows (Cardinale, J. P. Wright, et al., 2007). e) As studies progress through time the shape of the relationship becomes more linear, saturating at progressively higher species richnesses. Studies averaged over longer periods exhibit a greater loss in ecosystem function in response to an equivalent species richness reduction (Reich, D. Tilman, et al., 2012). f) When functional richness is used in place of species richness, the relationship reaches asymptote at a higher richness. Additionally the relationship becomes more concave as a power coefficient representing the strength and number of species interactions increases. FR gt1 (interspecific competition greater than intraspecific competition (unstable)) results in a convex relationship, while FR lt1 results in a concave relationship (Mora, Danovaro, and Loreau, 2014).&lt;/p&gt;
 </description>
     </item>
     
