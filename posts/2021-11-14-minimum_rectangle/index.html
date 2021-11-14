@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Creating a minimumbounding rectangle around sf polygons in R</h1>
+
+<h2>2021-11-14</h2>
+</div>
+
+<main>
+<p>I wanted to calculate the minimum bounding rectangle around various polygons in a dataset I was working on. The minimum bounding rectangle is the smallest rectangle that totally encompasses the given polygon.</p>
+<figure><a href="/img_full/minimum_rectangle/example.png"><img
+          alt="Example of a polygon and a minimum bounding rectangle."
+          title="Example of a polygon and a minimum bounding rectangle."src="/img/minimum_rectangle/example.png" 
+      /></a></figure>
+
+
+<p>I have been using R and the <code>sf</code> package to work with the polygons. The polygons represent projected tree crown areas. The minimum bounding rectangle is a useful thing to calculate as it can tell you about elongation of the polygon and the direction of the axis of elongation, which in my case might tell me something about wind direction.</p>
+<p>I wrote this function which returns the vertex point coordinates, width, length, and long-axis angle of the minimum bounding rectangle around a set of polygons:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic">#&#39; Return the minimum bounding rectangle around a set of polygons</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @param x sf object containing only geometries of type \code{POLYGON} or </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     \code{MULTIPOLYGON}</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; @return list containing vertex points (\code{ptx}), </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     width (\code{width}) length (\code{length}) and angle of bounding </span>
+<span style="color:#8f5902;font-style:italic">#&#39;     rectangle of each polygon.</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39; @examples</span>
+<span style="color:#8f5902;font-style:italic">#&#39; dat &lt;- sf::st_read(system.file(&#34;shape/nc.shp&#34;, package=&#34;sf&#34;))</span>
+<span style="color:#8f5902;font-style:italic">#&#39; min_box_list &lt;- minBox(dat)</span>
+<span style="color:#8f5902;font-style:italic">#&#39; min_box_list[[1]]</span>
+<span style="color:#8f5902;font-style:italic">#&#39;</span>
+<span style="color:#8f5902;font-style:italic">#&#39; min_box_sf &lt;- do.call(rbind, lapply(min_box_list, function(x) {</span>
+<span style="color:#8f5902;font-style:italic">#&#39;   pts_sf &lt;- sf::st_as_sf(as.data.frame(x$pts), coords = c(&#34;X&#34;, &#34;Y&#34;))</span>
+<span style="color:#8f5902;font-style:italic">#&#39;   sf::st_sf(geometry = sf::st_convex_hull(sf::st_union(pts_sf)), crs = sf::st_crs(dat))</span>
+<span style="color:#8f5902;font-style:italic">#&#39;   }))</span>
+<span style="color:#8f5902;font-style:italic">#&#39; plot(sf::st_geometry(dat), col = NA, border = &#34;blue&#34;)</span>
+<span style="color:#8f5902;font-style:italic">#&#39; plot(sf::st_geometry(min_box_sf), col = NA, border = &#34;red&#34;, add = TRUE)</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39; @importFrom sf st_is st_coordinates</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#8f5902;font-style:italic">#&#39; @export</span>
+<span style="color:#8f5902;font-style:italic">#&#39; </span>
+<span style="color:#000">minBox</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">stopifnot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sf</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">st_is</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;POLYGON&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;MULTIPOLYGON&#34;</span><span style="color:#000;font-weight:bold">))))</span>
+
+  <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sf</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">st_geometry</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">x_mat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sf</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">st_coordinates</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span>
+    
+    <span style="color:#8f5902;font-style:italic"># Extract convex hull of polygon</span>
+    <span style="color:#000">H</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">chull</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_mat</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">n</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">H</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">hull</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x_mat[H</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">]</span>
+    
+    <span style="color:#8f5902;font-style:italic"># Get direction vector</span>
+    <span style="color:#000">hDir</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">diff</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">hull</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">hull[1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">))</span>
+    <span style="color:#000">hLens</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sqrt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rowSums</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">hDir^2</span><span style="color:#000;font-weight:bold">))</span>
+    <span style="color:#000">huDir</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">diag</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">hLens</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%*%</span> <span style="color:#000">hDir</span>
+    <span style="color:#000">ouDir</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">huDir[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">huDir[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+    
+    <span style="color:#8f5902;font-style:italic"># Project hull vertices </span>
+    <span style="color:#000">projMat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">huDir</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ouDir</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%*%</span> <span style="color:#000">t</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">hull</span><span style="color:#000;font-weight:bold">)</span>
+    
+    <span style="color:#8f5902;font-style:italic"># Get width and length of bounding rectangle</span>
+    <span style="color:#000">rangeH</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">matrix</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">ncol</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">rangeO</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">matrix</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">ncol</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">widths</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">lengths</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">)</span>
+    
+    <span style="color:#000">for</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span> <span style="color:#000">in</span> <span style="color:#000">seq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">along</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">n</span><span style="color:#000;font-weight:bold">)))</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#000">rangeH[i</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">range</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">projMat[i</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000">rangeO[i</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">range</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">projMat[n</span><span style="color:#ce5c00;font-weight:bold">+</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000">widths[i]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">abs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">diff</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rangeH[i</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">))</span>
+      <span style="color:#000">lengths[i]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">abs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">diff</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rangeO[i</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">))</span>
+    <span style="color:#000;font-weight:bold">}</span>
+    
+    <span style="color:#000">eMin</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">which.min</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">widths</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">lengths</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">hProj</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rangeH[eMin</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">oProj</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">rangeO[eMin</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+    
+    <span style="color:#8f5902;font-style:italic"># Move projections to rectangle corners</span>
+    <span style="color:#000">hPts</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sweep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">hProj</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">oProj[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">oPts</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sweep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">hProj</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">oProj[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;+&#34;</span><span style="color:#000;font-weight:bold">)</span>
+    
+    <span style="color:#8f5902;font-style:italic"># Get corner coordinates</span>
+    <span style="color:#000">basis</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">huDir[eMin</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ouDir[eMin</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">hCorn</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">basis</span> <span style="color:#ce5c00;font-weight:bold">%*%</span> <span style="color:#000">hPts</span>
+    <span style="color:#000">oCorn</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">basis</span> <span style="color:#ce5c00;font-weight:bold">%*%</span> <span style="color:#000">oPts</span>
+    <span style="color:#000">pts</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">t</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">hCorn</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">oCorn[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">))</span>
+    
+    <span style="color:#8f5902;font-style:italic"># Angle</span>
+    <span style="color:#000">dPts</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">diff</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pts</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">e</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">dPts</span><span style="color:#000">[which.max</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rowSums</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dPts^2</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#000">]</span> 
+    <span style="color:#000">eUp</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">e</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">sign</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">e[2]</span><span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000">deg</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">atan2</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">eUp[2]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">eUp[1]</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#0000cf;font-weight:bold">180</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#204a87;font-weight:bold">pi</span>
+    
+    <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pts</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pts</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">length</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lengths[eMin]</span><span style="color:#000;font-weight:bold">,</span> 
+        <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">widths[eMin]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">angle</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">deg</span><span style="color:#000;font-weight:bold">))</span>
+  <span style="color:#000;font-weight:bold">})</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Here is the output of the example code in the function definition, showing the minimum bounding rectangles of each county in North Carolina, which is a dataset included in the <code>sf</code> package.</p>
+<figure><a href="/img_full/minimum_rectangle/nc.png"><img
+          alt="Counties in North Carolina and their minimum bounding rectangles."
+          title="Counties in North Carolina and their minimum bounding rectangles."src="/img/minimum_rectangle/nc.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
