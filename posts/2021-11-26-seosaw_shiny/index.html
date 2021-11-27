@@ -34,7 +34,7 @@
  to make it easier to quickly filter plots in the <a href="https://seosaw.github.io/" target="_blank">SEOSAW network</a>
  based on plot metadata and attributes of the plot. I built the app using <a href="https://shiny.rstudio.com/" target="_blank">Shiny</a>
 , which offers a neat solution for creating simple HTML5 web apps in R.</p>
-<p>I&rsquo;ve pasted the code for the app below. The app is actually fairly simple. It has a sidebar with a bunch of sliders and dropdown checkbox options to filter a dataframe of plot metadata. The main panel has a map displaying the plot locations, with the points optionally shaded according to one of the fields of plot metadata. the map is built using <a href="https://rstudio.github.io/leaflet/" target="_blank">leaflet</a>
+<p>I&rsquo;ve pasted the code for the app below. The app is actually fairly simple. It has a sidebar with a bunch of sliders and dropdown checkbox options to filter a dataframe of plot metadata. The main panel has a map displaying the plot locations, with the points optionally shaded according to one of the fields of plot metadata. The map is built using <a href="https://rstudio.github.io/leaflet/" target="_blank">leaflet</a>
 , and pulls background tiles from <a href="https://www.mapbox.com/" target="_blank">mapbox</a>
 . Below the map is a table showing the selected plots with their metadata values.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Packages</span>
