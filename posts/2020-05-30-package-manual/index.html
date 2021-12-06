@@ -30,12 +30,12 @@
 </div>
 
 <main>
-<p>There&rsquo;s already a tonne of stuff on how to write R packages, see <a href="">here</a>
-, <a href="">here</a>
-, <a href="">here</a>
- and <a href="">here</a>
+<p>There&rsquo;s already a tonne of stuff on how to write R packages, see <a href="https://tinyheero.github.io/jekyll/update/2015/07/26/making-your-first-R-package.html" target="_blank">here</a>
+, <a href="https://r-pkgs.org/" target="_blank">here</a>
+, <a href="https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/" target="_blank">here</a>
+ and <a href="https://kbroman.org/pkg_primer/" target="_blank">here</a>
 . Part of the reason for the breadth of articles is that there are many different workflows for how to write them. Here I&rsquo;m only going to share my thoughts on writing package documentation, because that&rsquo;s the area where I didn&rsquo;t find one complete resource that answered all of my questions and provided a workflow I liked, when I was writing my first serious package.</p>
-<p>To briefly explain the basic structure of my package, I took <a href="">advice from Hadley</a>
+<p>To briefly explain the basic structure of my package, I took <a href="https://r-pkgs.org/r.html" target="_blank">advice from Hadley</a>
  and kept functions in my package inside thematic files, like <code>biomass.R</code> and <code>taxonomy.R</code>, with each of these files holding multiple functions. It&rsquo;s somewhere between keeping all functions in one file and keeping each function in its own file. I think both of these extremes ignore the natural sorting which can come from keeping a tidy directory structure. I found it more intuitive to find a particular function based on its theme when I used these thematic files.</p>
 <p>I used <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html" target="_blank">roxygen2</a>
  to store the documentation for each package function alongside the code for that function in my <code>R/*.R</code> files. For example, my convenience function for concatenating genus and species names to one string (picked as an example purely because it&rsquo;s short):</p>
