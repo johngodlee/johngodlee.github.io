@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Processing data from the TRY traits database</h1>
+
+<h2>2021-12-20</h2>
+</div>
+
+<main>
+<p>I&rsquo;ve been working recently with data from the TRY global plant traits database, to assess which dominant dry tropical tree species we have good trait data for, and for which we are lacking decent trait data. One of the key inputs to the process-based carbon cycle model used in the SECO project is leaf mass per area, sometimes expressed as the leaf area per mass, aka specific leaf area (SLA), so I&rsquo;m focussing on that. If we find gaps in the trait coverage of some species, maybe we can address those gaps with data collection during the project.</p>
+<p>The data requests retrieved from TRY are in a format that makes them quite difficult to parse in R. Instead of a 2D table, it&rsquo;s more like a 1D list, with metadata and trait data on different rows, linked by an observation ID. In this post I want to share the R code I use to create a neat dataframe from this data.</p>
+<p>I use <code>data.table::fread()</code> to read in the data, because the files can be quite large, 3.35 GB in my case:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">try_dat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">fread</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;dat/18017.txt&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">header</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sep</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;\t&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dec</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;.&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+  <span style="color:#000">quote</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">data.table</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">encoding</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;UTF-8&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>Also note that the data are tab separated, and to fix encoding issues it&rsquo;s a good idea to enforce UTF-8 encoding.</p>
+<p>Then I rename some columns and keep the useful ones:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">try_clean</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">try_dat</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#000">obs_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ObservationID</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">species_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">AccSpeciesID</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">species_name</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">AccSpeciesName</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">trait_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TraitID</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">trait_name</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TraitName</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">key_id</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">DataID</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">key_name</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">DataName</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">val_orig</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">OrigValueStr</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">val_std</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">StdValue</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">unit_std</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">UnitName</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000">error_risk</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ErrorRisk</span><span style="color:#000;font-weight:bold">)</span> 
+</code></pre></div><p>I create lookup tables to match the species IDs and trait IDs later on:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">species_id_lookup</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">try_clean</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+  <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">species_id</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">species_name</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+  <span style="color:#000">unique</span><span style="color:#000;font-weight:bold">()</span>
+
+<span style="color:#000">trait_id_lookup</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">try_clean</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+  <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">trait_id</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">trait_name</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+  <span style="color:#000">unique</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+  <span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">trait_id</span><span style="color:#000;font-weight:bold">))</span> 
+</code></pre></div><p>Then I split the data by observation ID:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">try_split</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">split</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">try_clean</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">try_clean</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">obs_id</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>Then I loop through each of those observations, extracting the trait data and some useful metadata that is commonly attached to each observation. But note that there are lots of metadata in TRY, and not all observations share all metadata. A lot don&rsquo;t even have latitude and longitude coordinates, limiting their usefulness.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">total</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">try_split</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">try_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">mclapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">seq_along</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">try_split</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">message</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;/&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">total</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">try_split[[x]]</span>
+  <span style="color:#8f5902;font-style:italic"># Subset columns</span>
+  <span style="color:#000">traits</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">trait_id</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;species_id&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;trait_id&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;val_orig&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;val_std&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;unit_std&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;error_risk&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+
+  <span style="color:#8f5902;font-style:italic"># Extract some common metadata</span>
+  <span style="color:#000">meta_ext</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">key_val</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">ext</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">y[y</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">key_id</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">key_val</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;val_std&#34;</span><span style="color:#000">]</span>
+    <span style="color:#000">ifelse</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ext</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ext</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000;font-weight:bold">}</span>
+
+  <span style="color:#000">traits</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">elev</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">meta_ext</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">61</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">traits</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">longitude</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">meta_ext</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">60</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">traits</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">latitude</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">meta_ext</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">59</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">traits</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">map</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">meta_ext</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">80</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">traits</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">mat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">meta_ext</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">62</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">traits</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">biome</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">meta_ext</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">193</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000">traits</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">country</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">meta_ext</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1412</span><span style="color:#000;font-weight:bold">)</span>
+
+  <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">traits</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">},</span> <span style="color:#000">mc.cores</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">)))</span>
+</code></pre></div><p>Finally, I can add the trait and species names back in using the lookup tables:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Add trait and species names to dataframe</span>
+<span style="color:#000">try_df</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">trait_name</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">trait_id_lookup</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">trait_short[</span>
+  <span style="color:#000">match</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">try_df</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">trait_id</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">trait_id_lookup</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">trait_id</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+
+<span style="color:#000">try_df</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_name</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">species_id_lookup</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_name[</span>
+  <span style="color:#000">match</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">try_df</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_id</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">species_id_lookup</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_id</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+</code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
