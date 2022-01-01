@@ -6,7 +6,37 @@
     <description>Recent content in Blog archive on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 20 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 30 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pros and cons of conducting ecological fieldwork with ODK</title>
+      <link>http://johngodlee.xyz/posts/2021-12-30-odk_pro_con/</link>
+      <pubDate>Thu, 30 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2021-12-30-odk_pro_con/</guid>
+      <description>&lt;p&gt;I constantly flip back and forth on using mobile data collection methods for ecological fieldwork. I put a decent amount of effort into making &lt;a href=&#34;https://seosaw.github.io/manuals.html&#34; target=&#34;_blank&#34;&gt;ODK forms for the SEOSAW project&lt;/a&gt;
+, and when they were rolled out to remote project partners they worked pretty well. However, I&amp;rsquo;ve yet to drag myself away from using conventional pen and paper for my own fieldwork.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/odk_pro_con/odk_example.png&#34;&gt;&lt;img
+          alt=&#34;Example of an ODK form used to collect vegetation plot metadata.&#34;
+          title=&#34;Example of an ODK form used to collect vegetation plot metadata.&#34;src=&#34;http://johngodlee.xyz/img/odk_pro_con/odk_example.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Here, I&amp;rsquo;m going to briefly lay out some pros and cons of using mobile data collection methods for ecological fieldwork. There are many different mobile data collection software, but I&amp;rsquo;ll use ODK as an example here, because it&amp;rsquo;s one of the most ubiquitous and it&amp;rsquo;s the one I&amp;rsquo;ve used most in the past.&lt;/p&gt;
+&lt;h2 id=&#34;pros&#34;&gt;Pros&lt;/h2&gt;
+&lt;p&gt;Using ODK forms eliminates errors introduced during data transcription from paper to computer. Data collection on paper can get quite messy, especially if it&amp;rsquo;s raining or you&amp;rsquo;re in a rush. On the other hand, the data transcription phase can help to identify potential data recording errors, which can be fixed the next day if transcription is done each evening after work.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve read a few articles which suggest that the speed of data recording is improved when using ODK. I actually think that&amp;rsquo;s debatable. It depends on how well trained the data recorder is and how well the ODK form is designed. It&amp;rsquo;s easy to design an unintuitive ODK form. Data entry by paper can be very quick, especially if you make use of shorthand, symbols and diagrams.&lt;/p&gt;
+&lt;p&gt;Our work involves rolling out the same data collection protocol to many different project partners, so they can collect data at their field sites and send it back to us for analysis. With a pen and paper, there&amp;rsquo;s no consistency among data collectors in how they record their data, which can lead to data being collected in the wrong way, and can make it difficult to figure out the formatting of the original paper tables. It&amp;rsquo;s easy to cut corners during data recording with paper forms, telling yourself that you will remember what various squiggles and poorly written notes mean, but this can backfire.&lt;/p&gt;
+&lt;p&gt;ODK forms can be programmed to check data entry in real time. For example, when recording tree stem diameters, there are some logical checks, like if a stem is lt5 cm diameter it should not be recorded, and if a stem is gt100 cm diameter it is likely to be a mistake and should be double checked. Similarly, when a plot is being recensused, it is possible to check newly recorded data against data recorded in previous years. So if a stem suddenly grows by an unrealistic among, the data recorder can be notified. Data checking can also be done on paper forms, but with ODK forms it can be enforced with warnings and error messages.&lt;/p&gt;
+&lt;h2 id=&#34;cons&#34;&gt;Cons&lt;/h2&gt;
+&lt;p&gt;Although ODK helps to enforce some structure in data collection, it necessarily reduces the flexibility of data entry. It&amp;rsquo;s often useful to annotate data points on a paper form, e.g. &amp;ldquo;this diameter measurement was taken in two parts with a long piece of string because the tree was very big&amp;rdquo;. If an ODK form is poorly designed, it might not have anywhere to record this extra information, and so it will be lost. Even with a &amp;ldquo;notes&amp;rdquo; question in the ODK form, I still get the feeling that the data recorder is less likely to record these annotations on an ODK form than on a more flexible paper form.&lt;/p&gt;
+&lt;p&gt;Waterproof paper is more robust in the field than a mobile phone or a tablet. With waterproof paper you don&amp;rsquo;t have to worry about sun glaring off the screen making it impossible to read, you don&amp;rsquo;t have to worry about it getting wet and damaging the electronics or making the screen difficult to use, and you don&amp;rsquo;t have to worry about it running out of battery in the middle of the day. Ultimately, electronics are much more likely to break than paper.&lt;/p&gt;
+&lt;p&gt;Although most people around the world now have access to an Android smartphone, it&amp;rsquo;s still a consideration that there is some extra cost in rolling out mobile data collection among project partners.&lt;/p&gt;
+&lt;p&gt;There will be extra training involved in teaching data collectors how to set up ODKCollect or KoboCollect on their Android device, and this can be hard to do properly if there is a language barrier and the training is being done remotely. Although ODK promises a simple interface to record data, getting the blank forms downloaded to your device and uploading the collected data to a remote server cab be a hassle, requiring detailed &lt;a href=&#34;https://bitbucket.org/miombo/seosaw/raw/master/doc/forms/odk/filling_forms.txt&#34; target=&#34;_blank&#34;&gt;step by step instructions&lt;/a&gt;
+. Often our fieldsites don&amp;rsquo;t have a reliable mobile data connection, so form data can&amp;rsquo;t be uploaded to the remote server immediately. This means that the data needs to be manually sent from the Android device to a laptop every few days as a backup, using software like &lt;a href=&#34;https://docs.getodk.org/briefcase-intro/&#34; target=&#34;_blank&#34;&gt;ODK Briefcase&lt;/a&gt;
+, just in case the phone is damaged or lost, and this requires more training. I get the sense that people place undue trust in digital data storage as compared to paper, or rather the digital data is out of sight and so out of mind, and this might lead to data not getting backed up as often as it should in the field.&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Processing data from the TRY traits database</title>
       <link>http://johngodlee.xyz/posts/2021-12-20-try/</link>
@@ -1735,53 +1765,6 @@ Ref. 7: &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\citep&lt;/sp
 
 
 </description>
-    </item>
-    
-    <item>
-      <title>tmux popup windows for quickly launching scripts</title>
-      <link>http://johngodlee.xyz/posts/2021-07-10-tmux_popup/</link>
-      <pubDate>Sat, 10 Jul 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2021-07-10-tmux_popup/</guid>
-      <description>&lt;p&gt;I was inspired by &lt;a href=&#34;https://www.youtube.com/watch?v=41JxYe70Xwo&#34; target=&#34;_blank&#34;&gt;this video&lt;/a&gt;
-, which uses the pop-up window feature in &lt;a href=&#34;https://github.com/tmux/tmux&#34; target=&#34;_blank&#34;&gt;tmux&lt;/a&gt;
- v3.2+ to quickly launch scripts that don&amp;rsquo;t deserve their own pane. I wrote a similar script to handle the pop-ups, which I keep in my &lt;code&gt;$PATH&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env sh
-&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# List scripts &lt;/span&gt;
-&lt;span style=&#34;color:#204a87&#34;&gt;read&lt;/span&gt; -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt; APPS &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;passwords	~/bin/tmux_popup/./fpass_popup
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;mount drives	~/bin/netmount
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;search papers	~/bin/papers
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;stopwatch	~/bin/stopwatch
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;internet speed test	~/bin/speed
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;emojis	~/bin/tmux_popup/./emoji_popup
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;calculator	~/bin/tmux_popup/./calc_popup
-&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
-
-&lt;span style=&#34;color:#000&#34;&gt;SELECTED&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$APPS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; fzf -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;	&amp;#34;&lt;/span&gt; --with-nth &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;s/.*\t//g&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
-
-&lt;span style=&#34;color:#204a87&#34;&gt;eval&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SELECTED&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The scripts are listed by their name, which appears in the fzf pop-up, and their path, separated by a tab.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tmux_popup/popup.png&#34;&gt;&lt;img
-          alt=&#34;Example of tmux popup window&#34;
-          title=&#34;Example of tmux popup window&#34;src=&#34;http://johngodlee.xyz/img/tmux_popup/popup.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;The scripts currently available in the popup:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;passwords - Search &lt;code&gt;pass&lt;/code&gt; password store using &lt;code&gt;fzf&lt;/code&gt; and copy the selected password to the clipboard&lt;/li&gt;
-&lt;li&gt;mount drives - Search mountable drives using &lt;code&gt;fzf&lt;/code&gt; and mount the selected drive&lt;/li&gt;
-&lt;li&gt;search papers - Search through academic article pdfs using &lt;code&gt;fzf&lt;/code&gt; and &lt;code&gt;pdftotext&lt;/code&gt;, then open the selected pdf&lt;/li&gt;
-&lt;li&gt;stopwatch - Run a stopwatch&lt;/li&gt;
-&lt;li&gt;internet speed test - Run an upload/download speed test&lt;/li&gt;
-&lt;li&gt;emojis - Search through emojis using &lt;code&gt;fzf&lt;/code&gt; and copy the selected emoji to the clipboard&lt;/li&gt;
-&lt;li&gt;calculator - open an &lt;code&gt;R&lt;/code&gt; console with &lt;code&gt;--no-save&lt;/code&gt; and &lt;code&gt;--quiet&lt;/code&gt; flags for performing simple calculations&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The script is launched by hitting &lt;code&gt;&amp;lt;prefix&amp;gt;-Tab&lt;/code&gt; in tmux, using this line in my &lt;code&gt;.tmux.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;bind-key Tab capture-pane \; save-buffer /tmp/tmux-buffer \; delete-buffer \; display-popup -w 50% -h 50% -E &amp;quot;/path/to/fzf-speed&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>
