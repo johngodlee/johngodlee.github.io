@@ -3,11 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2021-12-30T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url><url>
+    <loc>http://johngodlee.xyz/posts/2022-01-10-atom_notebook/</loc>
+    <lastmod>2022-01-10T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2021-12-30T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2022-01-05-bark_punch/</loc>
+    <lastmod>2022-01-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/2021-12-30-odk_pro_con/</loc>
     <lastmod>2021-12-30T00:00:00+00:00</lastmod>

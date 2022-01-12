@@ -6,7 +6,122 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Thu, 30 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Atom notebooks</title>
+      <link>http://johngodlee.xyz/posts/2022-01-10-atom_notebook/</link>
+      <pubDate>Mon, 10 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2022-01-10-atom_notebook/</guid>
+      <description>&lt;p&gt;Atom Notebook laptops haven&amp;rsquo;t been cool in about 12 years. Even when they first came out, the low-power Atom CPU had fairly low performance with software of the time. Now, as the web continues to bloat up more and more, and desktop applications continue to demand more and more resources, Atom notebooks really struggle to run a conventional operating system and common desktop applications, particularly web browsers. Along with a restrictive Intel Atom CPU, most Atom notebooks don&amp;rsquo;t have much RAM, normally 1-2 GB. Notebooks were pushed to the sidelines when the iPad and other tablet PCs came along, and partly by smartphones, because there was no longer a need for an ultra-portable laptop with a long battery life.&lt;/p&gt;
+&lt;p&gt;I now have two Toshiba NB-series Atom notebooks, gifted to me by people who were going to throw them away. The first I was given is the Toshiba NB100, and recently I was given a Toshiba NB200.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve haven&amp;rsquo;t changed any components on the NB100, mainly because I find it really difficult to use the keyboard. The keys are very small and cramped, with some dodgy key location choices on the bottom left and right. The keys are also very squishy. Maybe I could get used to it, but in reality I will never have need to use one of these laptops. The NB100 uses a 1.6 GHz N270 CPU, comes with a 120 GB 5400 rpm hard drive, 1 GB DDR2 RAM, and a 8.9&amp;quot; display.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb100_keyboard.jpg&#34;&gt;&lt;img
+          alt=&#34;Toshiba NB100 keyboard&#34;
+          title=&#34;Toshiba NB100 keyboard&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb100_keyboard.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb100_outside.jpg&#34;&gt;&lt;img
+          alt=&#34;Toshiba NB100 outside&#34;
+          title=&#34;Toshiba NB100 outside&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb100_outside.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb100_inside.jpg&#34;&gt;&lt;img
+          alt=&#34;Toshiba NB100 inside&#34;
+          title=&#34;Toshiba NB100 inside&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb100_inside.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;For the NB200 I found a spare 256GB SSD, and a stick of 2GB DDR2 RAM, so I installed those to see if the laptop would run a bit faster. It does run quite snappy using a Linux distribution with a minimal window manager, but running Windows XP is still quite sluggish. Besides I would never run Windows XP now, as it&amp;rsquo;s been retired for a few years. The NB200 uses the slightly faster N280 CPU. The keyboard on the NB200 is much easier to use, with a comfortable amount of space between keys, though still with some awkward key positions on the bottom right of the keyboard to save space. The NB200 also looks a lot more modern. It&amp;rsquo;s thinner than the NB100, and feels less boxy. It&amp;rsquo;s surprising these laptops look so different given that the NB200 was only released ~6 months after the NB100, in January and July 2009, respectively. Inside though, the two models are quite similar.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb200_outside.jpg&#34;&gt;&lt;img
+          alt=&#34;Toshiba NB200 outside&#34;
+          title=&#34;Toshiba NB200 outside&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb200_outside.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb200_inside.jpg&#34;&gt;&lt;img
+          alt=&#34;Toshiba NB200 inside&#34;
+          title=&#34;Toshiba NB200 inside&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb200_inside.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;I tend to install Debian on these old notebooks. There are &lt;a href=&#34;https://www.debian.org/releases/stable/i386/&#34; target=&#34;_blank&#34;&gt;Debian i386 images&lt;/a&gt;
+, which are necessary for the N270 CPU which can only run a 32-bit OS. Debian also has a minimal installer, so I can choose not to install lots of programs I know I&amp;rsquo;ll never need.&lt;/p&gt;
+&lt;p&gt;For a window manager I tend to default to using &lt;a href=&#34;https://i3wm.org/&#34; target=&#34;_blank&#34;&gt;i3&lt;/a&gt;
+ or &lt;a href=&#34;https://github.com/baskerville/bspwm&#34; target=&#34;_blank&#34;&gt;bspwm&lt;/a&gt;
+, because they are easy to setup and have pretty low overheads. Occasionally I&amp;rsquo;ve dabbled with &lt;a href=&#34;https://dwm.suckless.org/&#34; target=&#34;_blank&#34;&gt;dwm&lt;/a&gt;
+, but life is too short to pursue it to perfection.&lt;/p&gt;
+&lt;p&gt;I do like the look of these old notebooks, and I&amp;rsquo;d love an excuse to use them, like if I was travelling and didn&amp;rsquo;t have a job and the only emails I needed to send were to my family and friends. But I have a decent laptop, and at the moment I spend so much of my day sat at a desk using a computer it really doesn&amp;rsquo;t make sense to switch to a different laptop to gain a small amount of portability. So in the end they are just novelties. Maybe if I have small kids then I can boot one of them into a [TTY](&lt;a href=&#34;https://en.wikipedia.org/wiki/Tty_%28Unix%29%29&#34; target=&#34;_blank&#34;&gt;https://en.wikipedia.org/wiki/Tty_(Unix%29)&lt;/a&gt;
+ to teach them how computers work.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Making bark thickness punches</title>
+      <link>http://johngodlee.xyz/posts/2022-01-05-bark_punch/</link>
+      <pubDate>Wed, 05 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2022-01-05-bark_punch/</guid>
+      <description>&lt;p&gt;Trees in savannas often have thick corky bark to insulate the vascular cambium, buds and meristem tissue from fires (&lt;a href=&#34;https://doi.org/10.1071/BT12225_CO&#34; target=&#34;_blank&#34;&gt;Pérez-Harguindeguy et al. 2016&lt;/a&gt;
+). Outside of fire-prone savannas, bark thickness still varies a lot among species. The English Oak for instance has very thick bark, but doesn&amp;rsquo;t occur in fire-prone regions. Various theories have been put forward to explain functional variation in bark thickness among species in non-fire-prone ecosystems, like resistance to frost, mechanical stability in windy environments, and buffering against fluctuations in water potential (&lt;a href=&#34;https://doi.org/10.1111/nph.12541&#34; target=&#34;_blank&#34;&gt;Rosell et al. 2014&lt;/a&gt;
+). Interestingly, it doesn&amp;rsquo;t look like bark thickness is necessarily associated with other &amp;ldquo;slow economic&amp;rdquo; plant traits like thick leaves, wood density and leaf mass per area (&lt;a href=&#34;https://doi.org/10.3732/ajb.1500157&#34; target=&#34;_blank&#34;&gt;Richardson et al. 2015&lt;/a&gt;
+). Trees in tropical rainforests often have very thin and smooth bark. It has been suggested that thick bark may be a disadvantage in these ecosystems as it provides shelter for invertebrate enemies (&lt;a href=&#34;https://doi.org/10.1111/1365-2435.12372&#34; target=&#34;_blank&#34;&gt;Pausas 2015&lt;/a&gt;
+).&lt;/p&gt;
+&lt;p&gt;In the &lt;a href=&#34;https://blogs.ed.ac.uk/seco-project/&#34; target=&#34;_blank&#34;&gt;SECO project&lt;/a&gt;
+, I&amp;rsquo;m interested in bark thickness as a measure of resistance to fire. Differences in bark thickness might explain variation in carbon dynamics among ecosystems based on their fire regime and tree community composition.&lt;/p&gt;
+&lt;p&gt;My Dad found some steel pipe that used to be used in the dairy for milk. The pipe had a 23 mm external diameter and a 16 mm internal diameter, meaning the wall thickness was ~7 mm. Punch diameter varies, but 10-15 mm seemed common across the literature I found. The &lt;a href=&#34;https://bitbucket.org/miombo/seosaw/raw/master/doc/manuals/traits_manual/versions/seosaw_traits_manual_latest.pdf&#34; target=&#34;_blank&#34;&gt;SEOSAW traits manual&lt;/a&gt;
+, originally written by Carla Staver recommends 15 mm. We cut the pipe out using hacksaws, and then cut it into 8 inch lengths. About 1 inch from the top of each section of pipe, I drilled a hole all the way through the pipe. At the other end of the pipe we used a bench grinder to sharpen the pipe, with a bevel on the outside.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bark_punch/pipe.jpg&#34;&gt;&lt;img
+          alt=&#34;Where the vacuum pipe was installed in the dairy&#34;
+          title=&#34;Where the vacuum pipe was installed in the dairy&#34;src=&#34;http://johngodlee.xyz/img/bark_punch/pipe.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;We found some metal rod in the farm buildings attached to a rusting piece of farm machinery called a Lely Cock Pheasant. This machine is also known as a &amp;ldquo;[tedder](&lt;a href=&#34;https://en.wikipedia.org/wiki/Tedder_%28machine%29%29%22&#34; target=&#34;_blank&#34;&gt;https://en.wikipedia.org/wiki/Tedder_(machine%29)&amp;#34;&lt;/a&gt;
+ and is used to turn hay, kind of like a mechanised pitchfork. We used an angle grinder to remove the rods, then I cut the rod into 9 inch lengths with a hacksaw, slightly longer than the punch. The rod fits into the drilled hole to use as a handle to pull the bark punch back out of the tree trunk. The rod can also be used to push the bark plug out of the pipe so it can be measured.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bark_punch/cock_pheasant.jpg&#34;&gt;&lt;img
+          alt=&#34;Cock Pheasant&#34;
+          title=&#34;Cock Pheasant&#34;src=&#34;http://johngodlee.xyz/img/bark_punch/cock_pheasant.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Finally, I cut a small piece of wood to protect the top of the pipe when hammering the pipe into the tree trunk.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bark_punch/punch.jpg&#34;&gt;&lt;img
+          alt=&#34;Bark punch&#34;
+          title=&#34;Bark punch&#34;src=&#34;http://johngodlee.xyz/img/bark_punch/punch.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bark_punch/sharp.jpg&#34;&gt;&lt;img
+          alt=&#34;Sharpened end of bark punch&#34;
+          title=&#34;Sharpened end of bark punch&#34;src=&#34;http://johngodlee.xyz/img/bark_punch/sharp.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;I tested the bark punch on a piece of fresh ash that came down in storm Arwen a few weeks back, fresh enough that I can pretend it&amp;rsquo;s a living tree trunk.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bark_punch/action.jpg&#34;&gt;&lt;img
+          alt=&#34;Bark punch in action&#34;
+          title=&#34;Bark punch in action&#34;src=&#34;http://johngodlee.xyz/img/bark_punch/action.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bark_punch/plug.jpg&#34;&gt;&lt;img
+          alt=&#34;Plug removed from bark punch&#34;
+          title=&#34;Plug removed from bark punch&#34;src=&#34;http://johngodlee.xyz/img/bark_punch/plug.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bark_punch/hole.jpg&#34;&gt;&lt;img
+          alt=&#34;Hole in trunk from bark punch&#34;
+          title=&#34;Hole in trunk from bark punch&#34;src=&#34;http://johngodlee.xyz/img/bark_punch/hole.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
     <item>
       <title>Pros and cons of conducting ecological fieldwork with ODK</title>
       <link>http://johngodlee.xyz/posts/2021-12-30-odk_pro_con/</link>
@@ -1532,238 +1647,6 @@ Mazda RX4 &lt;span style=&#34;color:#204a87&#34;&gt;&amp;amp;&lt;/span&gt; 21.00
 &lt;li&gt;Removes any table position forcing, better to do this in LaTeX - &lt;code&gt;table.placement =&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Uses &lt;code&gt;booktabs&lt;/code&gt; to add &lt;code&gt;toprule&lt;/code&gt;, &lt;code&gt;midrule&lt;/code&gt;, &lt;code&gt;bottomrule&lt;/code&gt; - &lt;code&gt;booktabs =&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Diagrams to explain niche complementarity</title>
-      <link>http://johngodlee.xyz/posts/2021-07-31-niche/</link>
-      <pubDate>Sat, 31 Jul 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2021-07-31-niche/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;ve just finished writing the background chapter for my PhD thesis. I&amp;rsquo;ve been writing about how competing species co-exist by occupying different niche space. To visualise nice complementarity, I made these schematic diagrams, which I&amp;rsquo;ve included below along with the length caption I included in the chapter.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/niche/niche_all.png&#34;&gt;&lt;img
-          alt=&#34;Schematic diagrams visualising niche complementarity&#34;
-          title=&#34;Schematic diagrams visualising niche complementarity&#34;src=&#34;http://johngodlee.xyz/img/niche/niche_all.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;Schematic diagrams demonstrating niche occupation and secondary controls on the mechanism of niche complementarity. Each density plot shows a number of species, each represented by the species functional contribution (productivity) under different environmental conditions (niche space) within the larger environmental niche volume (dashed line). a) shows how the degree of overlap in functional niche of two species affects the total utilisation of the environmental niche volume (area under all species curves). When species are functionally distinct (left), more of the environmental niche volume is utilised. Removal of a species in this case would result in a large reduction in ecosystem productivity, while on the right, where functional redundancy is high, removal of a single species would have negligible effects. b) shows the effect of adding a functionally distinct species to an ecosystem. c) shows the effect of niche breadth on niche volume utilisation. On the left, three generalist species overlap in their functional niche. While each species has relatively incomplete utilisation of the environmental niche volume, this is offset as each species may occupy a wide range of environmental conditions. If the red species was removed, there would be only a marginal reduction in ecosystem productivity. On the right, three specialist species have a narrower niche breadth but a more complete utilisation of the environmental niche under ideal conditions. If a species was removed from this ecosystem, there would be a much greater reduction in ecosystem productivity.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>BibLaTeX reference formatting</title>
-      <link>http://johngodlee.xyz/posts/2021-07-15-biblatex/</link>
-      <pubDate>Thu, 15 Jul 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2021-07-15-biblatex/</guid>
-      <description>&lt;p&gt;I was preparing references for a paper I submitted to a journal. The journal had some pretty specific reference formatting criteria, and for whatever reason submitting a .bib file wasn&amp;rsquo;t enough for them. I have been using &lt;code&gt;biblatex&lt;/code&gt; for quite some time, but have always puzzled over how to customise the citations and reference list. Formatted references are very ambiguous, with innumerable different ways to display the same information. As such, customising the output of BibLaTeX is also quite complex, as it has to deal with the many edge cases that occur in author names, and the many different types of reference.&lt;/p&gt;
-&lt;p&gt;After some trial and error I configured BibLaTeX so the references and citations looked sensible. I thought I would go through the customisations I made and explain what effect they have.&lt;/p&gt;
-&lt;p&gt;First, here is my basic .tex file, which includes some necessary preamble material and then prints some references:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;[natbib,
-	backend=biber
-	]&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;biblatex&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\addbibresource&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;ref.bib&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-Ref. 1: &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\citep&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Jost2007&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-Ref. 2: &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\citep&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Fick2017&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-Ref. 3: &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\citep&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Dinerstein2017&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-Ref. 4: &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\citep&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Adole2018a&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-Ref. 5: &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\citep&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Adole2018b&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-Ref. 6: &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\citep&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;VIPPHEN&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-Ref. 7: &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\citep&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Fake2021&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\printbibliography&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{}&lt;/span&gt;
-
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I&amp;rsquo;m using &lt;code&gt;natbib&lt;/code&gt; syntax to write the citations, and &lt;code&gt;biber&lt;/code&gt; as a bibliography parsing engine.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;ref.bib&lt;/code&gt; looks like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&amp;#34; One author article
-@article&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Jost2007,
-  author = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Jost, L.&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  title = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Partitioning diversity into independent alpha and beta components&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  year = 2007,
-  journal = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Ecology&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  volume = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;88&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  number = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;10&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  pages = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;2427--2439&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  DOI = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;10.1890/06-1736.1&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&amp;#34; Two author article
-@article&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Fick2017,
-  author = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Fick, S. E. and Hijmans, R. J.&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  title = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;WorldClim 2: &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;New&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt; 1‐km spatial resolution climate surfaces for global land areas&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  year = 2017,
-  journal = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;International Journal of Climatology&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  volume = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;37&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  number = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;12&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  pages = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;4302--4315&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  DOI = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;10.1002/joc.5086&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&amp;#34; Two articles with same authors:
-&amp;#34; The first
-@article&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Adole2018a,
-  doi = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;10.1111/gcb.14310&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  year = 2018,
-  publisher = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Wiley&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  volume = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;24&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  number = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;9&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  pages = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;4054--4068&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  author = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Adole, T. and Dash, J. and Atkinson, P. M.&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  title = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Large-scale prerain vegetation green-up across Africa&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  journal = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Global Change Biology&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&amp;#34; The second
-@article&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Adole2018b,
-  doi = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;10.1016/j.apgeog.2017.12.006&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  year = 2018,
-  publisher = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Elsevier &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;BV&lt;span style=&#34;color:#204a87&#34;&gt;}}&lt;/span&gt;,
-  volume = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;90&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  pages = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;187--199&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  author = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Adole, T. and Dash, J. and Atkinson, P. M.&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  title = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Characterising the land surface phenology of Africa using 500~m &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;MODIS&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;EVI&lt;span style=&#34;color:#204a87&#34;&gt;}}&lt;/span&gt;,
-  journal = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Applied Geography&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&amp;#34; Long author list
-@article&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Dinerstein2017,
-  doi = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;10.1093/biosci/bix014&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  year = 2017,
-  publisher = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Oxford University Press (&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;OUP&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  volume = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;67&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  number = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;6&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  pages = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;534--545&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  author = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Dinerstein, E. and Olson, D. and Joshi, A. and Vynne, C. and Burgess, N. D. and Wikramanayake, E. and Hahn, N. and Palminteri, S. and Hedao, P. and Noss, R. and Hansen, M. and Locke, H. and Ellis, E. C. and Jones, B. and Barber, C. V. and Hayes, R. and Kormos, C. and Martin, V. and Crist, E. and Sechrest, W. and Price, L. and Baillie, J. E. M. and Weeden, D. and Suckling, K. and Davis, C. and Sizer, N. and Moore, R. and Thau, D. and Birch, T. and Potapov, P. and Turubanova, S. and Tyukavina, A. and de Souza, N. and Pintea, L. and Brito, J. C. and Llewellyn, O. A. and Miller, A. G. and Patzelt, A. and Ghazanfar, S. A. and Timberlake, J. and Kl&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;o&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;ser, H. and Shennan-Farp&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;o&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;n, Y. and Kindt, R. and Lilles&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\o&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;, J. B. and van Breugel, P. and Graudal, L. and Voge, M. and Al-Shammari, K. F. and Saleem, M.&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  title = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;An ecoregion-based approach to protecting half the terrestrial realm&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  journal = &lt;span style=&#34;color:#204a87&#34;&gt;{{&lt;/span&gt;BioScience&lt;span style=&#34;color:#204a87&#34;&gt;}}&lt;/span&gt;
-&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&amp;#34; Book
-@book&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Legendre1998,
-  author = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Pierre Legendre, and Louis Legendre&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  title = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Numerical Ecology, 2nd edition&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  year = 1998,
-  publisher = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Elsevier&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  address = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Amsterdam, Netherlands&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&amp;#34; Dataset
-@dataset&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;VIPPHEN,
-  author = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Didan, L. and Barreto, A.&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  title = &lt;span style=&#34;color:#204a87&#34;&gt;{{&lt;/span&gt;NASA MEaSUREs Vegetation Index and Phenology (VIP) Phenology EVI2 Yearly Global 0.05Deg CMG [Data set]&lt;span style=&#34;color:#204a87&#34;&gt;}}&lt;/span&gt;,
-  year = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;2016&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  doi = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;10.5067/MEaSUREs/VIP/VIPPHEN&lt;span style=&#34;color:#204a87&#34;&gt;_&lt;/span&gt;EVI2.004&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  publisher = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;NASA EOSDIS Land Processes DAAC&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  urldate = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;2020-08-05&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-
-&amp;#34; Hypothetical reference with a lot of non-standard names
-@article&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Fake2021,
-  year = 2021,
-  volume = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;656&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  number = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  pages = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;1--5&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  author = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Godlee, E. L. G. and de Olson, D. and van den Joshi, A. and der Vynne, C. and Den Burgess, N. D. and MacNail, E. and Shennan-Farp&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;o&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;n, Y. and Mute, S.-P.&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  title = &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;This is a fake reference&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;,
-  journal = &lt;span style=&#34;color:#204a87&#34;&gt;{{&lt;/span&gt;Nature&lt;span style=&#34;color:#204a87&#34;&gt;}}&lt;/span&gt;
-&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;All these references were chosen to highlight some of the diversity of bibliographic entries I have experienced.&lt;/p&gt;
-&lt;p&gt;The basic document produces a file like this:&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/biblatex/1_basic.png&#34;&gt;&lt;img
-          alt=&#34;Basic LaTeX document&#34;
-          title=&#34;Basic LaTeX document&#34;src=&#34;http://johngodlee.xyz/img/biblatex/1_basic.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;The first thing to change is the basic reference style. Currently the references are numbered, but I prefer the author-year style, so I alter the &lt;code&gt;biblatex&lt;/code&gt; options to look like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;[natbib,
-	backend=biber,
-	style=authoryear
-	]&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;biblatex&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;which produces this document:&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/biblatex/2_authoryear.png&#34;&gt;&lt;img
-          alt=&#34;Author-year style references&#34;
-          title=&#34;Author-year style references&#34;src=&#34;http://johngodlee.xyz/img/biblatex/2_authoryear.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;There are a few issues that still need to be solved, so I&amp;rsquo;ll go through them one by one.&lt;/p&gt;
-&lt;p&gt;Firstly, the number of names reported in both the citations and the reference list is not how I would like it. For example, Adole et al. (2018a) has three authors in the citation, but I would prefer one author then et al. if there are more than two authors. Also, Dinerstein et al. (2017) only has one author then et al. in the reference list, but I want to list up to 10 authors then et al., so I alter the &lt;code&gt;biblatex&lt;/code&gt; options once more:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;[natbib,
-	backend=biber,
-	style=authoryear,
-	maxcitenames=2, 
-	mincitenames=1, 
-	minbibnames=10, 
-	maxbibnames=10
-	]&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;biblatex&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This allows up to two names in the citations before et al., and if et al. is used, only the first author name is given. Also a maximum of 10 names is displayed in the reference list, but if there are fewer than 10 then all names are displayed.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/biblatex/3_names.png&#34;&gt;&lt;img
-          alt=&#34;Changing the number of authors&#34;
-          title=&#34;Changing the number of authors&#34;src=&#34;http://johngodlee.xyz/img/biblatex/3_names.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;Next, BibLaTeX has decided that if two papers have the same author list, that the second paper can omit the author list in place of a dash. I don&amp;rsquo;t like this, so I change the options again:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;[natbib,
-	backend=biber,
-	style=authoryear,
-	maxcitenames=2, 
-	mincitenames=1, 
-	minbibnames=10, 
-	maxbibnames=10,
-	uniquename=false, 
-	uniquelist=false,
-	dashed=false
-	]&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;biblatex&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This prints the full author list for every repeat.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/biblatex/4_unique.png&#34;&gt;&lt;img
-          alt=&#34;Always printing the full author list, even when repeated&#34;
-          title=&#34;Always printing the full author list, even when repeated&#34;src=&#34;http://johngodlee.xyz/img/biblatex/4_unique.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;Next, the Legendre and Legendre (1998) reference has provided the full first names for each author in the .bib file. This is valid BibTeX syntax, but BibLaTeX then defaults to printing those first names in the reference rather than the initials, which looks messy when using a mix of initials and full names. So I configure BibLaTeX to always use initials.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;[natbib,
-	backend=biber,
-	style=authoryear,
-	maxcitenames=2, 
-	mincitenames=1, 
-	minbibnames=10, 
-	maxbibnames=10,
-	uniquename=false, 
-	uniquelist=false,
-	dashed=false,
-	giveninits=true
-	]&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;biblatex&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/biblatex/5_inits.png&#34;&gt;&lt;img
-          alt=&#34;Always use initials, even when full names provided&#34;
-          title=&#34;Always use initials, even when full names provided&#34;src=&#34;http://johngodlee.xyz/img/biblatex/5_inits.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;Finally, and this might be a bit nit-picky, I would prefer to use an ampersand rather than &amp;ldquo;and&amp;rdquo; when listing the final author name, both in the citations and the reference list, so I add this line to the document preamble:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\renewcommand*\finalnamedelim&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\addspace\&amp;amp;\space&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/biblatex/6_ampers.png&#34;&gt;&lt;img
-          alt=&#34;Use an ampersand for the final author&#34;
-          title=&#34;Use an ampersand for the final author&#34;src=&#34;http://johngodlee.xyz/img/biblatex/6_ampers.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
 </description>
     </item>
     
