@@ -6,7 +6,23 @@
     <title>John L. Godlee</title>
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/fonts.css" />
-    </head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+
+  </head>
 
   <body>
     <nav>
@@ -46,24 +62,24 @@
 <p>The point distribution norm (<a href="https://people.sc.fsu.edu/~jburkardt/publications/gb_2004.pdf" target="_blank">Gunzburger and Burkardt 2004</a>
 ) is calculated as:</p>
 <p>$$
-h = max h_{i}
-h_{i} = max |z_{i}-y|
+h = \textnormal{max} h_{i} \\
+h_{i} = \textnormal{max} |z_{i}-y|
 $$</p>
 <p>where $y$ is the point, and $z_{i}$ are the voronoi cell vertices. $h_{i}$ is the distance from the point to the furthest vertex. Smaller $h$ implies a more uniform distribution.</p>
 <p>The point distribution ratio is calculated as:</p>
 <p>$$
-\mu = \frac{max h_{i}}{min h_{i}}
+\mu = \frac{\textnormal{max} h_{i}}{\textnormal{min} h_{i}}
 $$</p>
 <p>where $h_{i}$ is same as above. For a uniform distribution $\mu = 1$.</p>
 <p>The regularity measure (Gunzburger and Burkardt 2004) is calculated as:</p>
 <p>$$
-\chi = max \chi_{i}
+\chi = \textnormal{max} \chi_{i} \\
 \chi_{i} = \frac{2h_{i}}{\gamma_{i}}
 $$</p>
 <p>where $\gamma_{i}$ is the minimum distance between a point $i$ and its nearest neighbour, and where $h_{i}$ is the same as the point distribution norm. For a uniform distribution $\chi = \chi_{i}$, smaller is more uniform.</p>
 <p>The cell area deviation (Gunzburger and Burkardt 2004) is calculated as:</p>
 <p>$$
-\upsilon = \frac{max V_{i}}{min V_{i}}
+\upsilon = \frac{\textnormal{max} V_{i}}{\textnormal{min} V_{i}}
 $$</p>
 <p>where $V_{i}$ is the area of cell $i$. In a uniform distribution, $\upsilon = 1$.</p>
 <p>The Polsby-Popper index (<a href="http://hdl.handle.net/20.500.13051/17448" target="_blank">Polsby and Popper 1991</a>

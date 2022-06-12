@@ -29,24 +29,24 @@
 &lt;p&gt;The point distribution norm (&lt;a href=&#34;https://people.sc.fsu.edu/~jburkardt/publications/gb_2004.pdf&#34; target=&#34;_blank&#34;&gt;Gunzburger and Burkardt 2004&lt;/a&gt;
 ) is calculated as:&lt;/p&gt;
 &lt;p&gt;$$
-h = max h_{i}
-h_{i} = max |z_{i}-y|
+h = \textnormal{max} h_{i} \\
+h_{i} = \textnormal{max} |z_{i}-y|
 $$&lt;/p&gt;
 &lt;p&gt;where $y$ is the point, and $z_{i}$ are the voronoi cell vertices. $h_{i}$ is the distance from the point to the furthest vertex. Smaller $h$ implies a more uniform distribution.&lt;/p&gt;
 &lt;p&gt;The point distribution ratio is calculated as:&lt;/p&gt;
 &lt;p&gt;$$
-\mu = \frac{max h_{i}}{min h_{i}}
+\mu = \frac{\textnormal{max} h_{i}}{\textnormal{min} h_{i}}
 $$&lt;/p&gt;
 &lt;p&gt;where $h_{i}$ is same as above. For a uniform distribution $\mu = 1$.&lt;/p&gt;
 &lt;p&gt;The regularity measure (Gunzburger and Burkardt 2004) is calculated as:&lt;/p&gt;
 &lt;p&gt;$$
-\chi = max \chi_{i}
+\chi = \textnormal{max} \chi_{i} \\
 \chi_{i} = \frac{2h_{i}}{\gamma_{i}}
 $$&lt;/p&gt;
 &lt;p&gt;where $\gamma_{i}$ is the minimum distance between a point $i$ and its nearest neighbour, and where $h_{i}$ is the same as the point distribution norm. For a uniform distribution $\chi = \chi_{i}$, smaller is more uniform.&lt;/p&gt;
 &lt;p&gt;The cell area deviation (Gunzburger and Burkardt 2004) is calculated as:&lt;/p&gt;
 &lt;p&gt;$$
-\upsilon = \frac{max V_{i}}{min V_{i}}
+\upsilon = \frac{\textnormal{max} V_{i}}{\textnormal{min} V_{i}}
 $$&lt;/p&gt;
 &lt;p&gt;where $V_{i}$ is the area of cell $i$. In a uniform distribution, $\upsilon = 1$.&lt;/p&gt;
 &lt;p&gt;The Polsby-Popper index (&lt;a href=&#34;http://hdl.handle.net/20.500.13051/17448&#34; target=&#34;_blank&#34;&gt;Polsby and Popper 1991&lt;/a&gt;
