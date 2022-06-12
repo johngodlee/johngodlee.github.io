@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/cv">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Voronoi tessellation to measure tree spatial distribution</h1>
+
+<h2>2022-06-12</h2>
+</div>
+
+<main>
+<p>Voronoi diagrams partition multi-dimensional space into regions, where all positions within a given region are closest to the same known point in the multi-dimensional space. Voronoi diagrams are named after Georgy Voronoy, but can also be called a Dirichlet tessellation (Peter Gustav Lejeune Dirichlet), or Thiessen polygons (Alfred H. Thiessen), as the same thing was implemented in different fields independently.</p>
+<p>I discovered voronoi diagrams when researching methods to describe spatial clustering. I wanted a simple single number measure of how clustered together trees in a plot are, so that I could include that metric as a term in a linear model which looked at factors determining woodland canopy complexity.</p>
+<h1 id="what-is-spatial-clustering">What is spatial clustering?</h1>
+<p>It&rsquo;s useful to think about the distribution of points (spatial point patterns) by looking at three special cases. The first special case is complete spatial randomness (CSR), where all points are located completely independently of one another. The second is total regularity, where all points are an equal distance from all nearest neighbours, as in a regular lattice. The third case is clustering, where points are attracted to each other, rather than repelled. In ecology speak, you could say that spatial regularity is the result of negative density dependence, while spatial clustering is the result of positive density dependence. Regularity and clustering represent opposite ends of a continuum, with CSR in the middle, representing the neutral, zero effect. The continuum is bounded at the end of regularity; given a number of individuals in a space they can only get so far away from their neighbours. At the clustered end of the continuum, I imagine the theoretical limit to clustering would be when all points occupy the same single point in the plot space. The idea of randomness is difficult to comprehend from just one sample. A random distribution could by chance be identical either an even distribution or a clustered distribution. Experiments on randomly generated data will have to be repeated many times to understand the average effect.</p>
+<figure><a href="img_full/voronoi/pan.png"><img
+          alt="Three identical reference frames showing complete spatial randomness, clustering, and regularity of a similar number of points"
+          title="Three identical reference frames showing complete spatial randomness, clustering, and regularity of a similar number of points"src="img/voronoi/pan.png" 
+      /></a></figure>
+
+
+<p>This thought experiment assumes that we are sampling the whole population and the whole available space, but in reality, as the negative density dependence effect increases, the population sampled in the sampling frame merely gets smaller, and the remaining individuals get pushed to outside the sampling frame. Similarly, although there is no theoretical limit on the clustering effect, in biology there is a practical one. It is unlikely that the benefits of clustering among individuals, trees for example, would not be offset by other factors at very close spatial scales, such as the occupation of the same physical space by their trunks.</p>
+<h1 id="extracting-metrics-from-voronoi-diagrams">Extracting metrics from voronoi diagrams</h1>
+<p>On their own, voronoi diagrams don&rsquo;t provide any metrics of spatial distribution, they are merely a visual and mathematical representation of a point distribution. From the voronoi polygons however, one can extract various metric related to the size, shape and distribution of the polygons themselves. This is the focus of my investigation in this blog post.</p>
+<p>The point distribution norm (<a href="https://people.sc.fsu.edu/~jburkardt/publications/gb_2004.pdf" target="_blank">Gunzburger and Burkardt 2004</a>
+) is calculated as:</p>
+<p>$$
+h = max h_{i}
+h_{i} = max |z_{i}-y|
+$$</p>
+<p>where $y$ is the point, and $z_{i}$ are the voronoi cell vertices. $h_{i}$ is the distance from the point to the furthest vertex. Smaller $h$ implies a more uniform distribution.</p>
+<p>The point distribution ratio is calculated as:</p>
+<p>$$
+\mu = \frac{max h_{i}}{min h_{i}}
+$$</p>
+<p>where $h_{i}$ is same as above. For a uniform distribution $\mu = 1$.</p>
+<p>The regularity measure (Gunzburger and Burkardt 2004) is calculated as:</p>
+<p>$$
+\chi = max \chi_{i}
+\chi_{i} = \frac{2h_{i}}{\gamma_{i}}
+$$</p>
+<p>where $\gamma_{i}$ is the minimum distance between a point $i$ and its nearest neighbour, and where $h_{i}$ is the same as the point distribution norm. For a uniform distribution $\chi = \chi_{i}$, smaller is more uniform.</p>
+<p>The cell area deviation (Gunzburger and Burkardt 2004) is calculated as:</p>
+<p>$$
+\upsilon = \frac{max V_{i}}{min V_{i}}
+$$</p>
+<p>where $V_{i}$ is the area of cell $i$. In a uniform distribution, $\upsilon = 1$.</p>
+<p>The Polsby-Popper index (<a href="http://hdl.handle.net/20.500.13051/17448" target="_blank">Polsby and Popper 1991</a>
+) describes the compactness of a shape. It was originally developed to quantify the degree of gerrymandering of political districts in the USA. For a given voronoi cell, it is calculated as:</p>
+<p>$$
+PP(D) = \frac{4\pi A(D)}{P(D)^{2}}
+$$</p>
+<p>where $D$ is the voronoi cell, $P(D)$ is the perimeter, and $A(D)$ is the area. Lower values of $PP(D)$ imply less compactness.</p>
+<p>Cell elongation is calculated by fitting the minimum bounding rectangle to the voronoi cell, then taking the ratio of the length of the longer side to the shorter side.</p>
+<figure><a href="/img_full/voronoi/min_box_plot.png"><img
+          alt="Illustrating the minimum bounding rectangle around a voronoi cell."
+          title="Illustrating the minimum bounding rectangle around a voronoi cell."src="/img/voronoi/min_box_plot.png" 
+      /></a></figure>
+
+
+<p>The distance between the centre of gravity (centroid) of the voronoi cell and the point is influenced by the regularity of distribution of neighbouring points. As the distribution deviates from evenness, the distance of points from their cell centroid increases.</p>
+<figure><a href="/img_full/voronoi/g_plot.png"><img
+          alt="Comparison of evenly spread points and clustered points, showing distance between cell centre of gravity and point."
+          title="Comparison of evenly spread points and clustered points, showing distance between cell centre of gravity and point."src="/img/voronoi/g_plot.png" 
+      /></a></figure>
+
+
+<h1 id="non-voronoi-measures-of-spatial-pattern">Non-voronoi measures of spatial pattern</h1>
+<p>There are many other measures of spatial point patterns and clustering which aren&rsquo;t related to voronoi tessellation. I&rsquo;ll describe some of these methods below, and use them as a comparison to the metrics I derive from the voronoi polygons.</p>
+<h2 id="ripleys-k-and-ripleys-l">Ripley&rsquo;s K and Ripley&rsquo;s L</h2>
+<p>Ripley&rsquo;s K function measures the expected number of neighbours found within a given distance of a randomly selected point. To use Ripley&rsquo;s K to test for CSR, one can simulate a number of random point distributions within the same area as the real population, say 100 or 1000 (multiples of 10 make it easier to estimate P-values), then see whether the real Ripley&rsquo;s K overlaps with the simulated Ripley&rsquo;s K functions.</p>
+<p>Ripley&rsquo;s K is often re-calculated as Ripley&rsquo;s L, also known as the variance stabilised Ripley&rsquo;s K function. Ripley&rsquo;s L is approximately constant under CSR. If $L_{obs} &lt; L_{exp}$, the pattern is more regular than expected, while if $L_{obs} &gt; L_{exp}$, the pattern is more clustered than expected. Further Ripley&rsquo;s L is sometimes plotted as $L_{r} ~ r$, so that the zero line and envelope bounding CSR are horizontal.</p>
+<p>Here&rsquo;s an example of calculating and visualising Ripley&rsquo;s K, Ripley&rsquo;s L, and L-r using a real world vegetation survey plot in miombo woodlands in southwest Angola.</p>
+<figure><a href="/img_full/voronoi/ripley_klr.png"><img
+          alt="Ripley&#39;s K and Ripley&#39;s L visualisations from a miombo plot in Angola."
+          title="Ripley&#39;s K and Ripley&#39;s L visualisations from a miombo plot in Angola."src="/img/voronoi/ripley_klr.png" 
+      /></a></figure>
+
+
+<p>In this example, it looks like stems are generally more clustered than expected at all observed distances. Clustering effects are especially prominent up to ~2.5 m. This may actually be due to some trees having multiple stems growing from the same root stock, but were not observed to connect above the ground, and were thus recorded as separate individuals.</p>
+<h2 id="winkelmass">Winkelmass</h2>
+<p>I wrote about the Uniform Angle Index, or winkelmass, in <a href="/2021/05/10/winkelmass.html">previous post</a>
+. The winkelmass (<a href="https://doi.org/10.1016/j.foreco.2005.12.039" target="_blank">Pommerening 2006</a>
+) measures the spatial distribution of trees according to the angles between neighbouring trees. For this experiment I calculated the plot level mean and the coefficient of variation of the winkelmass. I won&rsquo;t go into massive detail about how the winkelmass works, as I&rsquo;ve talked about it before, but here is a diagram which shows how trees are scored based on the spatial distribution of their four nearest neighbours. Higher scores imply clustering, while lower scores imply regularity.</p>
+<figure><a href="/img_full/voronoi/winkelmass.png"><img
+          alt="Diagram showing how the winkelmass varies with spatial arrangement of trees."
+          title="Diagram showing how the winkelmass varies with spatial arrangement of trees."src="/img/voronoi/winkelmass.png" 
+      /></a></figure>
+
+
+<h2 id="nearest-neighbour-distances">Nearest neighbour distances</h2>
+<p>Nearest neighbour distance distributions are commonly used to describe spatial point patterns, and are included in the calculations for some of the voronoi-derived metrics. I also chose to calculate the coefficient of variation of nearest neighbour distances as a simple measurement of the heterogeneity in spatial relations among individuals across the plot, and the plot level mean of nearest neighbour distances to measure crowding across the plot.</p>
+<p>You can get a visual representation of how close a point distribution is to CSR by comparing the cumulative density distribution of nearest neighbour distances against the theoretical cumulative distribution for a completely random spatial point pattern, which should be $G_{r} = 1 - exp(-\lambda{} * \pi{} * r^{2})$. As with the Ripley&rsquo;s K and L functions, you can compute simulations to construct a confidence interval ribbon. Points rising above the ribbon are more clustered than expected at that spatial scale.</p>
+<figure><a href="/img_full/voronoi/even_csr_ripley_g.png"><img
+          alt="Cumulative density distribution of plots increasing in randomness."
+          title="Cumulative density distribution of plots increasing in randomness."src="/img/voronoi/even_csr_ripley_g.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/voronoi/csr_clust_ripley_g.png"><img
+          alt="Cumulative density distribution of plots increasing in clustering."
+          title="Cumulative density distribution of plots increasing in clustering."src="/img/voronoi/csr_clust_ripley_g.png" 
+      /></a></figure>
+
+
+<h1 id="simulating-the-behaviour-of-the-metrics">Simulating the behaviour of the metrics</h1>
+<p>To generate a gradient of evenness to randomness, I started off with a grid of 100 points with 10 metres between each point. Then I sequentially moved randomly chosen points to a random location in the plot. After all points had been moved I assumed the points were distributed completely at random. I repeated this process with 50 replicates. The R code to generate these data is below.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Create a regular grid of points</span>
+<span style="color:#8f5902;font-style:italic"># 5 m buffer inside plot</span>
+<span style="color:#8f5902;font-style:italic"># 10 m between points</span>
+<span style="color:#8f5902;font-style:italic"># 100x100 m grid</span>
+<span style="color:#000">xy_vec</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">seq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">dat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">expand.grid</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xy_vec</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">xy_vec</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;x&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;y&#34;</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Number of replicates</span>
+<span style="color:#000">reps</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">50</span>
+
+<span style="color:#8f5902;font-style:italic"># Replicate grid of points</span>
+<span style="color:#000">even_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">replicate</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">reps</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dat</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">simplify</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># Possible coordinates for movement</span>
+<span style="color:#000">c_repls</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">seq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0.1</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># For each replicate, randomly move points</span>
+<span style="color:#8f5902;font-style:italic"># Move every point once</span>
+<span style="color:#8f5902;font-style:italic"># Evenness -&gt; randomness</span>
+<span style="color:#000">even_csr_points</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">mclapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">even_list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#8f5902;font-style:italic"># Randomise order in which points are moved</span>
+  <span style="color:#000">ord</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sample</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">seq_len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">))</span>
+  <span style="color:#8f5902;font-style:italic"># Create list to fill</span>
+  <span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#8f5902;font-style:italic"># For each point </span>
+  <span style="color:#000">for </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span> <span style="color:#000">in</span> <span style="color:#000">seq_len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x[[1]]</span><span style="color:#000;font-weight:bold">)))</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">x[[i</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x[[i]]</span>
+    <span style="color:#8f5902;font-style:italic"># Move point to a random location</span>
+    <span style="color:#000">x[[i</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]][ord[i]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;x&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;y&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sample</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c_repls</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">replace</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#000;font-weight:bold">}</span>
+  <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">},</span> <span style="color:#000">mc.cores</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><!-- raw HTML omitted -->
+<p>To generate a gradient of randomness to clustering, I started off with 100 points randomly distributed in the plot. Then I randomly assigned 10 points to act as &ldquo;cluster points&rdquo;. For each of the remaining 90 points I then randomly chose points and moved them closer to their nearest cluster point by half their original distance. The R code to generate these data is below.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">rand_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">replicate</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">reps</span><span style="color:#000;font-weight:bold">,</span> 
+  <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">sample</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c_repls</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">),</span>
+    <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">sample</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c_repls</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">)),</span> 
+  <span style="color:#000">simplify</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span>
+
+<span style="color:#8f5902;font-style:italic"># For each replicate, randomly points closer to nearest cluster point</span>
+<span style="color:#000">csr_clust_points</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">mclapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rand_list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#8f5902;font-style:italic"># Define points to use as clusters</span>
+  <span style="color:#000">clust_rows</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sample</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">seq_len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#8f5902;font-style:italic"># Extract cluster points</span>
+  <span style="color:#000">clust_pts</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x[clust_rows</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span>
+  <span style="color:#8f5902;font-style:italic"># Extract non-cluster points</span>
+  <span style="color:#000">pts</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x[</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">clust_rows</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span>
+  <span style="color:#8f5902;font-style:italic"># Find nearest cluster point for each non-cluster point</span>
+  <span style="color:#000">nn</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">nn2</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">clust_pts[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">pts[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">k</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[[1]]</span>
+  <span style="color:#8f5902;font-style:italic"># Randomise order in which points are moved</span>
+  <span style="color:#000">ord</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sample</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">seq_len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pts</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pts</span><span style="color:#000;font-weight:bold">))</span>
+  <span style="color:#8f5902;font-style:italic"># Create list to fill</span>
+  <span style="color:#000">pts</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pts</span><span style="color:#000;font-weight:bold">)</span>
+  <span style="color:#8f5902;font-style:italic"># For each point</span>
+  <span style="color:#000">for </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span> <span style="color:#000">in</span> <span style="color:#000">seq_len</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">nrow</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pts[[1]]</span><span style="color:#000;font-weight:bold">)))</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">pts[[i</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">pts[[i]]</span>
+    <span style="color:#8f5902;font-style:italic"># Get midpoint between chosen point and cluster point and update coords</span>
+    <span style="color:#000">pts[[i</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]][i</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">pts[[i</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]][i</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+      <span style="color:#000">clust_pts[nn[i]</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span>
+  <span style="color:#000;font-weight:bold">}</span>
+  <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pts</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">},</span> <span style="color:#000">mc.cores</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p><code>nn2()</code> comes from the <a href="">&lt;code&gt;{RANN}&lt;/code&gt;</a>
+ package, which provides a really fast nearest neighbour function. <code>mclapply()</code> comes from the <code>{parallel}</code> package.</p>
+<!-- raw HTML omitted -->
+<p>For the evenness to randomness dataset, I ended up with 50 replicates, each containing, 101 plots, with each plot containing 100 points. A total of 505000 points for which I had to calculate voronoi polygons. Similarly, the randomness to clustering dataset contained 50<em>91</em>90=409500 points. Originally, I was using the <code>st_voronoi()</code> function from the <code>{sf}</code> package to calculate the voronoi polygons, but this was far too slow for my purposes, and the resulting data files were huge, hundreds of MB even when compressed into a .rds file. In the end I settled on using the <code>{deldir}</code> package, which provides a really fast voronoi tessellation function that returns only the coordinates of the vertices of each polygon. This took the size of the data files down to about 2 MB. The R code I used to process the points is below.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">vor_polys</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">even_csr_points</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">csr_clust_points</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">mclapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">seq_along</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">seq_along</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i[[x]]</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#000">message</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;:&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000">vor</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">deldir</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i[[x]][[y]]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">rw</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">))</span>
+      <span style="color:#000">vor_tiles</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">tile.list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">vor</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">vor_tiles</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">z</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">z</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">z</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000;font-weight:bold">})</span>
+    <span style="color:#000;font-weight:bold">})</span>
+  <span style="color:#000;font-weight:bold">},</span> <span style="color:#000">mc.cores</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">})</span>
+</code></pre></div><h1 id="predictions">Predictions</h1>
+<p>In summary, I derived the following metrics of point dispersion:</p>
+<ul>
+<li>Mean winkelmass</li>
+<li>Coefficient of variation of winkelmass</li>
+<li>Coefficient of variation of nearest neighbour distance</li>
+<li>Point distribution norm</li>
+<li>Point distribution ratio</li>
+<li>Regularity measure</li>
+<li>Mean distance between centre of gravity of cell and point</li>
+<li>Coefficient of variation of distance between centre of gravity of cell and point</li>
+<li>Cell area deviation</li>
+<li>Coefficient of variation of cell area</li>
+<li>Coefficient of variation of the Polsby-Popper index</li>
+<li>Coefficient of variation of cell elongation</li>
+</ul>
+<p>I thought it would be good practice to make predictions of how each measure might vary along a continuum from evenness to randomness to clustering:</p>
+<ul>
+<li>Mean winkelmass
+<ul>
+<li>Even-random: increase</li>
+<li>Clustered-random: no change</li>
+</ul>
+</li>
+<li>Coefficient of variation of winkelmass
+<ul>
+<li>Even-random: increase</li>
+<li>Random-clustered: no change</li>
+</ul>
+</li>
+<li>Coefficient of variation of nearest neighbour distance
+<ul>
+<li>Even-random: increase</li>
+<li>Random-clustered: decrease</li>
+</ul>
+</li>
+<li>Point distribution norm
+<ul>
+<li>Even-random: increase</li>
+<li>Random-clustered: increase</li>
+</ul>
+</li>
+<li>Point distribution ratio
+<ul>
+<li>Even-random: increase</li>
+<li>Random-clustered: increase</li>
+</ul>
+</li>
+<li>Regularity measure
+<ul>
+<li>Even-random: decrease</li>
+<li>Random-clustered: no change</li>
+</ul>
+</li>
+<li>Mean distance between centre of gravity of cell and point
+<ul>
+<li>Even-random: no change</li>
+<li>Random-clustered: no change</li>
+</ul>
+</li>
+<li>Coefficient of variation of distance between centre of gravity of cell and point
+<ul>
+<li>Even-random: increase</li>
+<li>Random-clustered: increase</li>
+</ul>
+</li>
+<li>Cell area deviation
+<ul>
+<li>Even-random: increase</li>
+<li>Random-clustered: increase</li>
+</ul>
+</li>
+<li>Coefficient of variation of cell area
+<ul>
+<li>Even-random: increase</li>
+<li>Random-clustered: increase</li>
+</ul>
+</li>
+<li>Coefficient of variation of the Polsby-Popper index
+<ul>
+<li>Even-random: increase</li>
+<li>Random-clustered: increase</li>
+</ul>
+</li>
+<li>Coefficient of variation of cell elongation
+<ul>
+<li>Even-random: increase</li>
+<li>Random-clustered: increase</li>
+</ul>
+</li>
+</ul>
+<h1 id="results-of-simulations">Results of simulations</h1>
+<p>Here are the results for the even-random experiment:</p>
+<figure><a href="/img_full/voronoi/even_csr_comp.png"><img
+          alt="Effect of increasing randomness on metrics."
+          title="Effect of increasing randomness on metrics."src="/img/voronoi/even_csr_comp.png" 
+      /></a></figure>
+
+
+<p>The coefficient of variation of the winkelmass acts in the opposite way to what I expected, decreasing with randomness. I can&rsquo;t really understanding why this is the case, but it&rsquo;s a clear trend. I&rsquo;d expect that as randomness increases, there is greater variation in the spatial distribution of nearest neighbours.</p>
+<p>There are also some measures that simply didn&rsquo;t work. The point distribution norm and point distribution ratio for instance, just didn&rsquo;t behave how they were suggested in the literature I read. In the plot above you can see that in one simulation the point distribution norm and point distribution ratio suddenly jump up at around 50 substitutions. I looked into what was going on with the that made this happen. It seems that these metrics break down if two points are in exactly the same location. See the plot below, which shows the points and their voronoi cells overlaid at two consecutive intervals. The point which moves between these two intervals is highlighted as a blue square, while the points which don&rsquo;t move are grey circles. The original position of the points are presented as small markers, and the positions after the movement are presented as large markers. The voronoi cells before the movement are thick black lines, and after the movement are thin orange lines. I guess when a point is moved to exactly the same position as another point their voronoi cells are extremely small and this somehow messes up the metric? I still haven&rsquo;t got to the bottom of this one.</p>
+<p>The regularity measure, although it does show a general decrease in regularity as randomness increases, there is lots of noise, and definitely isn&rsquo;t monotonic, which I think limits its usefulness. Same with the cell area deviation, it does show a general increase with randomness, but it isn&rsquo;t consistent.</p>
+<p>The coefficient of variation of cell elongation increases with randomness, but it&rsquo;s quite noisy among simulations, and the measure saturates quickly.</p>
+<p>There&rsquo;s a weird effect where in one simulation the coefficient of variation of the cell centre of gravity suddenly increases before continuing to decrease as in the other simulations. Like with the point distribution norm, this appears to happen when in one simulation a point is moved to the exact same position as another point.</p>
+<p>None of the measures increased linearly, but maybe this has more to do with how I generated the transition from evenness to randomness.</p>
+<figure><a href="/img_full/voronoi/cell_vor_plot.png"><img
+          alt="Illustration of increasing coefficient of variation of cell area with increasing spatial randomness."
+          title="Illustration of increasing coefficient of variation of cell area with increasing spatial randomness."src="/img/voronoi/cell_vor_plot.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/voronoi/even_csr_pairs.png"><img
+          alt="Pairwise comparisons of metrics for even-random data."
+          title="Pairwise comparisons of metrics for even-random data."src="/img/voronoi/even_csr_pairs.png" 
+      /></a></figure>
+
+
+<p>I also did pairwise comparisons of the metrics, to see how they relate to each other. All the metrics were significantly correlated with each other according to a Pearson&rsquo;s correlation coefficient, but some of the relationships are definitely not linear, so take those correlations with a pinch of salt. I also did a spearmans rank test and there were also all significantly correlated. Some interesting relationsips I see are that as the mean winkelmass increases, the coefficient of variation of the winkelmass decreases. I think this is because as points become less evenly distribution, thus increasing the mean winkelmass, it also means that neighbours are likely to be less evenly distributed, i.e. the points are not totally independent of each other. Also, as cell area coefficient of variation increases, the coefficient of variation of nearest neighbour distances also increases and the coefficient of variation of the polsby-popper index increases. This means basically that cells get longer as they become less evenly distributed, makes sense.</p>
+<figure><a href="/img_full/voronoi/csr_clust_comp.png"><img
+          alt="Effect of increasing clustering on metrics."
+          title="Effect of increasing clustering on metrics."src="/img/voronoi/csr_clust_comp.png" 
+      /></a></figure>
+
+
+<p>The results for the random-clustered data are not so pretty. Some metrics, like the coefficient of cell area and mean winkelmass do appear to increase with clustering, but understandably, all metrics are heavily dependent on the starting distribution of the points, which were generated randomly. I guess maybe if I had many more simulations I might start to see more clear patterns. It&rsquo;s curious that some of the measures like the point distribution norm, point distribution ratio, and regularity measure stay the same for many point movements, then suddenly increase or decrease, while other metrics are a lot more sensitive to each movement. This is because some of the metrics, particularly those presented in Gunzburger and Burkardt (2004), rely on changes in the maximum value of some metric measured across all points, so there&rsquo;s often no observed change in the metrics even though there&rsquo;s lots of change happening with values less than the maximum.</p>
+<h1 id="a-real-world-test">A real world test</h1>
+<p>I have some real data from my field site in southwest Angola, Bicuar National Park, where we have 15 permanent vegetation monitoring plots. Each plot is 100x100 m (1 ha). In each plot I have the location of each tree with at least 1 stem &gt;5 cm stem diameter at 1.3 m height (DBH, diameter at breast height). Tree locations were recorded using an XY grid coordinate system, using tape measures.</p>
+<figure><a href="/img_full/voronoi/bicuar_pairs.png"><img
+          alt="Pairwise comparison of dispersion metrics in Bicuar plots."
+          title="Pairwise comparison of dispersion metrics in Bicuar plots."src="/img/voronoi/bicuar_pairs.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
