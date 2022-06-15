@@ -6,7 +6,18 @@
     <description>Recent content in Blog archive on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2022-06-12T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2022-06-15T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PhD thesis</title>
+      <link>http://johngodlee.xyz/posts/2022-06-15-thesis/</link>
+      <pubDate>2022-06-15T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2022-06-15-thesis/</guid>
+      <description>&lt;p&gt;It looks like my PhD thesis has been available online on the Edinburgh Research Archive since late February. Here is the &lt;a href=&#34;http://dx.doi.org/10.7488/era/1878&#34; target=&#34;_blank&#34;&gt;link&lt;/a&gt;
+ if anybody is interested to have a look. I don&amp;rsquo;t recommend reading the whole thing. There&amp;rsquo;s a joke that the only people who read a PhD thesis are the author and the examiner, and even the examiners skip bits. It&amp;rsquo;s a pretty dense technical document, but a good track record of what I did during my PhD.&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Voronoi tessellation to measure tree spatial distribution</title>
       <link>http://johngodlee.xyz/posts/2022-06-12-voronoi/</link>
@@ -1877,108 +1888,6 @@ $$&lt;/p&gt;
 pdfjam &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;pages&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; -o &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&amp;gt; /dev/null
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The first part of the script with the &lt;code&gt;if&lt;/code&gt; statements simply checks whether the parameters passed to the script are valid. The script needs to be fed an existing input file, and an output file name.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;pages&lt;/code&gt; variable is created by using the &lt;code&gt;inkcov&lt;/code&gt; device provided in &lt;code&gt;gs&lt;/code&gt; &amp;gt;v9.05. The &lt;code&gt;inkcov&lt;/code&gt; device displays the ink coverage separately for each page, so all that needs to be done is to exclude pages which contain only black, and then format the page numbers in the way that &lt;code&gt;pdfjam&lt;/code&gt; expects. If no colour pages are found then the script exits without creating a new PDF. &lt;code&gt;pdfjam&lt;/code&gt; then takes the input filename, the page range, and the output filename and creates a new PDF document.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>New website</title>
-      <link>http://johngodlee.xyz/posts/2021-10-20-new_website/</link>
-      <pubDate>2021-10-20T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2021-10-20-new_website/</guid>
-      <description>&lt;p&gt;I have finally redesigned my website. Previously I was running the website using &lt;a href=&#34;https://jekyllrb.com/&#34; target=&#34;_blank&#34;&gt;Jekyll&lt;/a&gt;
-, and uploading to Github. I was using a slightly modified version of the &lt;a href=&#34;https://github.com/jekyll/minima&#34; target=&#34;_blank&#34;&gt;minima theme&lt;/a&gt;
-, but it was still just a list of blog posts, very bare bones. As I&amp;rsquo;m starting the next chapter of my career in a couple of weeks, as a post-doc researcher at the University of Edinburgh, I thought it was time for a refresh of my website.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ve decided to build the website using &lt;a href=&#34;https://gohugo.io/&#34; target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt;
-, which is faster to compile than Jekyll and doesn&amp;rsquo;t appear to suffer from the same crazy Ruby dependency issues that Jekyll suffers from on my machine. So far, I&amp;rsquo;ve found it fairly simple to migrate the website across to Hugo, and I&amp;rsquo;ve found that Hugo offers a great deal more control and possibilities for automation than Jekyll.&lt;/p&gt;
-&lt;p&gt;The website now has a personal blurb at the top of the homepage, along with some links to other pages and profiles around the web, including Gopher and Gemini, and a list of the ten most recent blog posts I&amp;rsquo;ve written. My CV is as before, but I&amp;rsquo;ve added a new section called &amp;ldquo;Works&amp;rdquo; which lists articles I&amp;rsquo;ve authored or contributed to, as well as some presentations and R packages I&amp;rsquo;ve written. My recipes are now held in the same Git repo as the website, and I figured out a neat way to automatically index the recipes based on their category (dessert, drinks, etc.) using Hugo&amp;rsquo;s list pages. I&amp;rsquo;ll explain more comprehensively how this works, because I think it might be useful for other people.&lt;/p&gt;
-&lt;p&gt;The directory structure for my &lt;a href=&#34;http://johngodlee.xyz/recipes/&#34;&gt;recipes&lt;/a&gt;
- is as follows:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;content
-└─ recipes
-   ├─ _index.md
-   ├─ bread
-   │  ├─ _index.md
-   │  ├─ beer_rolls.md
-   │  ├─ ciabatta.md
-   │  └─ potato_bread.md
-   ├─ dessert
-   │  ├─ _index.md
-   │  ├─ chocolate_brownies.md
-   │  ├─ elderberry_pie.md
-   │  └─ victoria_sponge_cake.md
-   └─ mains
-      ├─ _index.md
-      ├─ bean_chilli.md
-      ├─ braised_leeks.md
-      └─ yorkshire_pudding.md
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I have a &lt;code&gt;layouts/recipes/list.html&lt;/code&gt; that looks like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;{{ if (eq .Title &amp;#34;Recipes&amp;#34;) }}
-  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ul&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;postlist&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-    {{ range .Sections.ByTitle }}
-      &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;li&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;            
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{{ .RelPermalink }}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;{{ .Title }}&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-        {{ partial &amp;#34;recursive.html&amp;#34; . }}
-      &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;li&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-    {{ end }}
-  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ul&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-{{ else }}
-  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ul&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;postlist&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-    {{ range .RegularPages }}
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;li&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{{ .RelPermalink }}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;{{ .Title | markdownify }}&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;li&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-    {{ end }}
-  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ul&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;and &lt;code&gt;layouts/partials/recursive.html&lt;/code&gt; looks like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;{{ $child_pages := union .Sections .Pages }}
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ul&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-  {{ range $child_pages.ByTitle }}
-  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;li&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;                                    
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{{ .RelPermalink }}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; {{ .Title }} &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-    {{ if or (.Sections) (.Pages) }}
-    {{ partial &amp;#34;recursive.html&amp;#34; . }}
-    {{ end }}
-  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;li&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-  {{ end }}
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;ul&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Each sub-category of recipes has a &amp;ldquo;title&amp;rdquo; in the YAML frontmatter of its own &lt;code&gt;_index.md&lt;/code&gt;, like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;color:#000&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;title&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Drinks&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;---&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This title is used to populate the first level of the list in the recipes index, using this snippet from &lt;code&gt;layouts/recipes/list.html&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;    {{ range .Sections.ByTitle }}
-      &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;li&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;            
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{{ .RelPermalink }}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;{{ .Title }}&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-        {{ partial &amp;#34;recursive.html&amp;#34; . }}
-      &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;li&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-    {{ end }}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I got some inspiration on how to deal with this problem from &lt;a href=&#34;https://github.com/gbmhunter/blog/blob/master/layouts/partials/menu_recursive.html&#34; target=&#34;_blank&#34;&gt;this other Hugo website&lt;/a&gt;
-.&lt;/p&gt;
-&lt;p&gt;Another thing that gave me some trouble was serving images. On my old website I used low-resolution dithered images in blog posts, and each image could be clicked to open a full resolution version of the image. In markdown, using Jekyll, I did this by nesting the low resolution image inside a link to the full resolution image:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;[&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;![alt text&lt;/span&gt;](&lt;span style=&#34;color:#c4a000&#34;&gt;{{ site.baseurl }}/img/test/test.png&lt;/span&gt;)]({{ site.baseurl }}/img_full/test/test.jpg)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;But when I ported this over to Hugo, it was garbling the file path for the full resolution image, replacing &lt;code&gt;&amp;gt;&lt;/code&gt; with &lt;code&gt;&amp;amp;gt&lt;/code&gt; and so on. I found that Hugo shortcodes offered a much better way of constructing these image calls. I used the default Hugo figure shortcode as a base to create my own &lt;code&gt;img&lt;/code&gt; shortcode:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;figure&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-  {{- if .Get &amp;#34;link&amp;#34; -}}
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{{ .Get &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;link&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-  {{- end -}}
-      &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;img&lt;/span&gt; 
-        &lt;span style=&#34;color:#a40000&#34;&gt;{{&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;or&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;(.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;Get&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;)&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;(.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;Get&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;caption&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;)&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}&lt;/span&gt;
-          &lt;span style=&#34;color:#c4a000&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{{ with .Get &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}{{&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}{{&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}{{&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;Get&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;caption&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;markdownify&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;plainify&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}{{&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;end&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}&amp;#34;&lt;/span&gt;
-          &lt;span style=&#34;color:#c4a000&#34;&gt;title&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{{ with .Get &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}{{&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;.&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}{{&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}{{&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;Get&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;caption&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;markdownify&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;plainify&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}{{&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;end&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}&amp;#34;&lt;/span&gt;
-        &lt;span style=&#34;color:#a40000&#34;&gt;{{&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;end&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;}}&lt;/span&gt;
-        &lt;span style=&#34;color:#c4a000&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{{ .Get &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;}}&amp;#34;&lt;/span&gt; 
-      &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&amp;gt;&lt;/span&gt;
-  {{- if .Get &amp;#34;link&amp;#34; -}}
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;a&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-  {{- end -}}
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;figure&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then I can call this shortcode in a markdown file like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;{{&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;link&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/img_full/test/test.jpg&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/img/test/test.png&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;alt text&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;}}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally, I should also mention that the RSS feed URL has changed slightly, the new RSS feed is:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://johngodlee.xyz/index.xml&#34; target=&#34;_blank&#34;&gt;https://johngodlee.xyz/index.xml&lt;/a&gt;
-&lt;/p&gt;
 </description>
     </item>
     
