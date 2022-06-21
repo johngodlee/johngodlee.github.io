@@ -30,9 +30,9 @@
 &lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoProject&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Comment&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoContext&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Statement&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;So when I open my &lt;code&gt;todo.md&lt;/code&gt; it looks like this:&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/todo_txt/scrot.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/todo/scrot.png&#34;&gt;&lt;img
           alt=&#34;Screenshot of todo.md showing syntax highlighting&#34;
-          title=&#34;Screenshot of todo.md showing syntax highlighting&#34;src=&#34;http://johngodlee.xyz/img/todo_txt/scrot.png&#34; 
+          title=&#34;Screenshot of todo.md showing syntax highlighting&#34;src=&#34;http://johngodlee.xyz/img/todo/scrot.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
