@@ -6,7 +6,39 @@
     <description>Recent content in Blog archive on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2022-06-15T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2022-06-20T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Todo lists in Vim, syntax highlighting</title>
+      <link>http://johngodlee.xyz/posts/2022-06-20-todo/</link>
+      <pubDate>2022-06-20T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2022-06-20-todo/</guid>
+      <description>&lt;p&gt;I keep a todo list on my computer, which contains tasks for work and home. It also contains items where I&amp;rsquo;m waiting for someone to do something, and I use it as a scratchpad for bits of pertinent information that might be useful in the near future. The file is written in &lt;a href=&#34;https://daringfireball.net/projects/markdown/&#34; target=&#34;_blank&#34;&gt;Markdown&lt;/a&gt;
+. Items in the list are written as bullet points (-), and sometimes I group items together under headers (#). Sometimes I have headers for each day of the week, and sometimes for a particular project I&amp;rsquo;m working on. The bullet point list of tasks is sometimes nested to include extra information about each task, or to add subtasks below a main task.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve known about the &lt;a href=&#34;http://todotxt.org/&#34; target=&#34;_blank&#34;&gt;todo.txt&lt;/a&gt;
+ file format for a long time, and I see the logic in it. todo.txt is very flexible and has a number of optional features. You can specify due dates and creation dates (&lt;code&gt;2022-05-05&lt;/code&gt;, &lt;code&gt;due:2022-05-05&lt;/code&gt;), prioritise tasks using a letter system (&lt;code&gt;(A)&lt;/code&gt;, &lt;code&gt;(B)&lt;/code&gt;), group tasks by project (&lt;code&gt;@project&lt;/code&gt;) or context (&lt;code&gt;+context&lt;/code&gt;), mark tasks as done (&lt;code&gt;[ ]&lt;/code&gt;, &lt;code&gt;[x]&lt;/code&gt;) and optionally move completed tasks to a separate &lt;code&gt;done.txt&lt;/code&gt; file. In my current system I already move tasks to &amp;ldquo;done&amp;rdquo; files, one per day, and I often add creation dates and due dates, especially on tasks where I&amp;rsquo;m waiting for someone to do something.&lt;/p&gt;
+&lt;p&gt;The thing that has always put me off using todo.txt is the inability to add longer descriptions or subtasks to a task. Each task must occupy a single line. I also like having the ability to group tasks under headers as this allows me to plan my time, but todo.txt requires each line to be a task. Whenever I&amp;rsquo;ve dabbled with todo.txt in the past, it&amp;rsquo;s always given me tunnel vision, making it so I can only focus on the next few short tasks ahead of me, at the expense of understanding the wider context of my work. That being said, I would like to start making use of the context and project tags from todo.txt to organise tasks in my &lt;code&gt;todo.md&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;I do most of my task management in &lt;a href=&#34;https://neovim.io/&#34; target=&#34;_blank&#34;&gt;neovim&lt;/a&gt;
+. I wrote some syntax highlighting rules to extend the basic Markdown syntax highlighting in vim, by placing a file at &lt;code&gt;~/.config/nvim/after/syntax/mardown.vim&lt;/code&gt;. The file contains:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-viml&#34; data-lang=&#34;viml&#34;&gt;&lt;span style=&#34;color:#000&#34;&gt;syntax&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;match&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoDate&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;\d\{2,4\}-\d\{2\}-\d\{2\}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;syntax&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;match&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoDue&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;due:\d\{2,4\}-\d\{2\}-\d\{2\}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;syntax&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;match&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoProject&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;\(^\|\W\)+[^[:blank:]]\+&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;syntax&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;match&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoContext&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;\(^\|\W\)@[^[:blank:]]\+&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoDate&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Type&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoDue&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Constant&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoProject&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Comment&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoContext&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Statement&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;So when I open my &lt;code&gt;todo.md&lt;/code&gt; it looks like this:&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/todo_txt/scrot.png&#34;&gt;&lt;img
+          alt=&#34;Screenshot of todo.md showing syntax highlighting&#34;
+          title=&#34;Screenshot of todo.md showing syntax highlighting&#34;src=&#34;http://johngodlee.xyz/img/todo_txt/scrot.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
     <item>
       <title>PhD thesis</title>
       <link>http://johngodlee.xyz/posts/2022-06-15-thesis/</link>
@@ -1851,43 +1883,6 @@ $$&lt;/p&gt;
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-</description>
-    </item>
-    
-    <item>
-      <title>Extracting pages with colour from a PDF</title>
-      <link>http://johngodlee.xyz/posts/2021-10-26-colour_pdf/</link>
-      <pubDate>2021-10-26T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2021-10-26-colour_pdf/</guid>
-      <description>&lt;p&gt;I wanted to print my PhD thesis so I could have a version to annotate before my viva. The cost at my local copy shop to print a full colour version of the thesis would have been somewhere around £60, while a black and white copy only cost about £15. It wasn&amp;rsquo;t necessary to print the whole document in colour as only pages with figures contained any colour, so I wanted to find a way to automatically extract the pages which did contain colour and create a new document containing only those pages, so I could print those in colour separately.&lt;/p&gt;
-&lt;p&gt;I created a shell script that uses &lt;a href=&#34;https://ghostscript.com/&#34; target=&#34;_blank&#34;&gt;ghostscript (gs)&lt;/a&gt;
- to find the colour pages, and &lt;a href=&#34;https://github.com/rrthomas/pdfjam&#34; target=&#34;_blank&#34;&gt;pdfjam&lt;/a&gt;
- to extract those pages and create a new document:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env sh
-&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Extract colour pages from a PDF, then create a new PDF containing only those pages. Useful for saving on printing costs.&lt;/span&gt;
-
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$#&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; -ne &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-	&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Usage: &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$0&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; &amp;lt;input.pdf&amp;gt; &amp;lt;output.pdf&amp;gt;&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; ! -f &lt;span style=&#34;color:#000&#34;&gt;$1&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-    &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Input file not found&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-
-&lt;span style=&#34;color:#000&#34;&gt;pages&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;gs -o - -sDEVICE&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;inkcov &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; tail -n +6 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/^Page*/N;s/\n//&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sed -E &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/Page [0-9]+ 0.00000  0.00000  0.00000  / d&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep -Eo &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;^Page\s[0-9]+&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; tr &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;,&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/,$//g&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
-
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; -z &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;pages&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-	&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;File has no colour pages&amp;#34;&lt;/span&gt;
-	&lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;
-&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-
-pdfjam &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;pages&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; -o &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&amp;gt; /dev/null
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The first part of the script with the &lt;code&gt;if&lt;/code&gt; statements simply checks whether the parameters passed to the script are valid. The script needs to be fed an existing input file, and an output file name.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;pages&lt;/code&gt; variable is created by using the &lt;code&gt;inkcov&lt;/code&gt; device provided in &lt;code&gt;gs&lt;/code&gt; &amp;gt;v9.05. The &lt;code&gt;inkcov&lt;/code&gt; device displays the ink coverage separately for each page, so all that needs to be done is to exclude pages which contain only black, and then format the page numbers in the way that &lt;code&gt;pdfjam&lt;/code&gt; expects. If no colour pages are found then the script exits without creating a new PDF. &lt;code&gt;pdfjam&lt;/code&gt; then takes the input filename, the page range, and the output filename and creates a new PDF document.&lt;/p&gt;
 </description>
     </item>
     
