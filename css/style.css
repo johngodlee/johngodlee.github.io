@@ -41,11 +41,7 @@ h5 { font-size: 1.12em; }
 h6 { font-size: 1em; }
 
 /* lists */
-ul {
-	padding-left: 2em;
-}
-
-ol {
+ul, ol {
 	padding-left: 2em;
 }
 
