@@ -3,11 +3,14 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2022-08-16T00:00:00+00:00</lastmod>
+    <lastmod>2022-08-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2022-08-16T00:00:00+00:00</lastmod>
+    <lastmod>2022-08-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2022-08-27-gps_xy/</loc>
+    <lastmod>2022-08-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/2022-08-16-meals_year/</loc>
     <lastmod>2022-08-16T00:00:00+00:00</lastmod>

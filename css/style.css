@@ -1,7 +1,6 @@
 :root {
 	--lightgrey-color: #eee;
 	--darkgrey-color: #999;
-	--black-color: #333;
 	--highlight-color: #366;
 }
 
@@ -57,14 +56,12 @@ pre {
 	border: 1px solid var(--darkgrey-color);
 	padding: 1em;
 	overflow-x: auto;
+	background-color: var(--lightgrey-color);
 }
 
-code { 
-	background: var(--lightgrey-color);
-}
-
-pre code { 
-	background: none;
+:not(pre) > code {
+	background-color: var(--lightgrey-color);
+	padding: 0.1em;
 }
 
 /* misc elements */
@@ -73,7 +70,7 @@ a {
 }
 a:hover {
    color: var(--lightgrey-color);
-   background: var(--highlight-color);
+   background-color: var(--highlight-color);
 }
 
 img, iframe, video { 
@@ -87,7 +84,7 @@ main {
 }
 
 blockquote {
-	background: var(--lightgrey-color);
+	background-color: var(--lightgrey-color);
 	border-left: 5px solid var(--darkgrey-color);
 	padding: 0.25em 1em;
 }
@@ -107,5 +104,6 @@ th, td {
 }
 
 thead, tfoot, tr:nth-child(even) { 
-	background: var(--lightgrey-color);
+	background-color: var(--lightgrey-color);
 }
+
