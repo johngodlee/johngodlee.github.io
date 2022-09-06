@@ -14,8 +14,8 @@
       
       <guid>http://johngodlee.xyz/posts/2022-08-27-gps_xy/</guid>
       <description>&lt;p&gt;In 2018 and 2019 I set up some 100x100 m (1 ha) permanent vegetation monitoring plots in Bicuar National Park, southwest Angola. We measured the stem diameter of each tree stem &amp;gt;5 cm diameter and attached a numbered metal tag to each of these stems so we could track the growth and mortality of each stem over time. At the same time as measuring the stem diameters and attaching the tags, I also took a quick GPS point with a Garmin GPSMAP 65s Handheld GPS unit.&lt;/p&gt;
-&lt;p&gt;There are two principle reasons to record the location of each stem in the plot. The first is to make it easier to relocate stems in the future. Sometimes tags fall off or stems are completely vaporised by fire. If we know the location of the stem, we can visit that location and confirm what has happened to the stem since the last survey. The second reason is that if we understand the spatial distribution of stems, we can better understand competitive (or facilitative) interactions among individuals, and look at how these interactions affect growth rates.&lt;/p&gt;
-&lt;p&gt;When I revisited the plots in 2022, my goal was to collect lots of auxiliary data, to enrich our picture of the ecosystem. Alongside collecting data on woody debris, herbaceous biomass, and tree leaf traits, I also decided to record the position of tree stems that had recruited since the initial survey back in 2018/2019. Instead of using a GPS, this time I used tape measures to record the position of each stem, using an XY coordinate system.&lt;/p&gt;
+&lt;p&gt;There are two main reasons to record the location of each stem in the plot. The first is to make it easier to relocate stems in the future. Sometimes tags fall off or stems are completely vaporised by fire. If we know the location of the stem, we can visit that location and confirm what has happened to the stem since the last survey. The second reason is that if we understand the spatial distribution of stems, we can better understand competitive (or facilitative) interactions among individuals, and look at how these interactions affect biomass dynamics.&lt;/p&gt;
+&lt;p&gt;When I revisited the plots in 2022, my goal was to collect lots of auxiliary data, to enrich our picture of the ecosystem. Alongside collecting data on woody debris, herbaceous biomass, and tree leaf traits, I also recorded the position of stems that had recruited since the initial survey back in 2018/2019. Instead of using a GPS, this time I used tape measures to record the position of each stem, using an XY coordinate system.&lt;/p&gt;
 &lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/gps_xy/diag.png&#34;&gt;&lt;img
           alt=&#34;Diagram showing the XY grid coordinate system in a 1 ha plot.&#34;
           title=&#34;Diagram showing the XY grid coordinate system in a 1 ha plot.&#34;src=&#34;http://johngodlee.xyz/img/gps_xy/diag.png&#34; 
@@ -214,9 +214,6 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;The first this was to transform the table to a long format:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This is a blockquote&lt;/p&gt;
-&lt;/blockquote&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;%&amp;gt;%&lt;/span&gt;
   &lt;span style=&#34;color:#000&#34;&gt;pivot_longer&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
     &lt;span style=&#34;color:#000&#34;&gt;names_to&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;meal&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
