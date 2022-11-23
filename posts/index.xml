@@ -6,13 +6,35 @@
     <description>Recent content in Blog archive on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2022-09-18T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2022-11-23T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>`BIOMASS::getWoodDensity()` description</title>
+      <link>http://johngodlee.xyz/posts/2022-11-23-get_wood_density/</link>
+      <pubDate>2022-11-23T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2022-11-23-get_wood_density/</guid>
+      <description>&lt;p&gt;I looked through the code for the &lt;code&gt;getWoodDensity()&lt;/code&gt; function from the &lt;a href=&#34;https://cran.r-project.org/web/packages/BIOMASS/index.html&#34; target=&#34;_blank&#34;&gt;&amp;lt;code&amp;gt;{BIOMASS}&amp;lt;/code&amp;gt; R package&lt;/a&gt;
+, to get a better idea of how it estimates tree wood density.&lt;/p&gt;
+&lt;p&gt;The function uses the wood density database from the &lt;a href=&#34;https://datadryad.org/stash/dataset/doi:10.5061/dryad.234&#34; target=&#34;_blank&#34;&gt;Zanne et al. (2009) global wood density database&lt;/a&gt;
+. The database contains 16467 records from 8388 taxa.&lt;/p&gt;
+&lt;p&gt;You feed the function a set of species names, and optionally family names, stand IDs (plots), extra wood density data supplied by the user, and a geographic region with which to subset the wood density database.&lt;/p&gt;
+&lt;p&gt;First, &lt;code&gt;getWoodDensity()&lt;/code&gt; calculates mean wood density at the species level.&lt;/p&gt;
+&lt;p&gt;For species-level indets (e.g. &lt;em&gt;Ochna indet&lt;/em&gt;) it then calculates mean wood density for the genus, using only those species submitted to the function with matches in the wood density database.&lt;/p&gt;
+&lt;p&gt;For genus-level indets (e.g. Fabaceae indet) it calculates mean wood density for the family, again using only those species submitted to the function with matches in the wood density database.&lt;/p&gt;
+&lt;p&gt;For family-level indets (i.e. no taxonomic information) it calculates mean wood density for the plot, using all the species-level wood density estimates generated in previous steps.&lt;/p&gt;
+&lt;p&gt;In the case where no wood density estimates have been generated for that plot, i.e. no stems on the plot have taxonomic information, the mean of all other species-level wood density estimates generated for other plots is used.&lt;/p&gt;
+&lt;p&gt;In the case where no wood density estimates have been generated for any plots, because none of the submitted taxa have records in the database, the function fails.&lt;/p&gt;
+&lt;p&gt;The way the function is written it makes sense that if you are generating wood density estimates for multiple sites, which might differ in their species pool, you should run the function site by site in a loop or a &lt;code&gt;lapply()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In the event that the function fails due to lack of data, it might still be possible to generate an estimate of wood density for the site, either the regional mean, or even the global mean.&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Low bandwidth radio</title>
-      <link>http://johngodlee.xyz/posts/2022-09-18_low_radio/</link>
+      <link>http://johngodlee.xyz/posts/2022-09-18-low_radio/</link>
       <pubDate>2022-09-18T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2022-09-18_low_radio/</guid>
+      <guid>http://johngodlee.xyz/posts/2022-09-18-low_radio/</guid>
       <description>&lt;p&gt;When I&amp;rsquo;m on fieldwork I sometimes have to do lab work back in the city, grinding soils, or weighing grass biomass samples. A lot of this work is quite mindless, repeating the same protocol hundreds of times. It&amp;rsquo;s nice to have some music, podcasts, or an audiobook to listen to while I&amp;rsquo;m doing this work, to pass the time. I also like listening to the radio, mainly through internet radio stations. I wrote a &lt;a href=&#34;http://johngodlee.xyz/2020/03/25/radio.html&#34;&gt;post&lt;/a&gt;
  a while back demonstrating a small &lt;a href=&#34;https://github.com/junegunn/fzf&#34; target=&#34;_blank&#34;&gt;fzf&lt;/a&gt;
  script I use to play radio stations through &lt;a href=&#34;https://mpv.io/&#34; target=&#34;_blank&#34;&gt;mpv&lt;/a&gt;
@@ -1909,36 +1931,6 @@ $$&lt;/p&gt;
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-</description>
-    </item>
-    
-    <item>
-      <title>Pros and cons of conducting ecological fieldwork with ODK</title>
-      <link>http://johngodlee.xyz/posts/2021-12-30-odk_pro_con/</link>
-      <pubDate>2021-12-30T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2021-12-30-odk_pro_con/</guid>
-      <description>&lt;p&gt;I constantly flip back and forth on using mobile data collection methods for ecological fieldwork. I put a decent amount of effort into making &lt;a href=&#34;https://seosaw.github.io/manuals.html&#34; target=&#34;_blank&#34;&gt;ODK forms for the SEOSAW project&lt;/a&gt;
-, and when they were rolled out to remote project partners they worked pretty well. However, I&amp;rsquo;ve yet to drag myself away from using conventional pen and paper for my own fieldwork.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/odk_pro_con/odk_example.png&#34;&gt;&lt;img
-          alt=&#34;Example of an ODK form used to collect vegetation plot metadata.&#34;
-          title=&#34;Example of an ODK form used to collect vegetation plot metadata.&#34;src=&#34;http://johngodlee.xyz/img/odk_pro_con/odk_example.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;Here, I&amp;rsquo;m going to briefly lay out some pros and cons of using mobile data collection methods for ecological fieldwork. There are many different mobile data collection software, but I&amp;rsquo;ll use ODK as an example here, because it&amp;rsquo;s one of the most ubiquitous and it&amp;rsquo;s the one I&amp;rsquo;ve used most in the past.&lt;/p&gt;
-&lt;h2 id=&#34;pros&#34;&gt;Pros&lt;/h2&gt;
-&lt;p&gt;Using ODK forms eliminates errors introduced during data transcription from paper to computer. Data collection on paper can get quite messy, especially if it&amp;rsquo;s raining or you&amp;rsquo;re in a rush. On the other hand, the data transcription phase can help to identify potential data recording errors, which can be fixed the next day if transcription is done each evening after work.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ve read a few articles which suggest that the speed of data recording is improved when using ODK. I actually think that&amp;rsquo;s debatable. It depends on how well trained the data recorder is and how well the ODK form is designed. It&amp;rsquo;s easy to design an unintuitive ODK form. Data entry by paper can be very quick, especially if you make use of shorthand, symbols and diagrams.&lt;/p&gt;
-&lt;p&gt;Our work involves rolling out the same data collection protocol to many different project partners, so they can collect data at their field sites and send it back to us for analysis. With a pen and paper, there&amp;rsquo;s no consistency among data collectors in how they record their data, which can lead to data being collected in the wrong way, and can make it difficult to figure out the formatting of the original paper tables. It&amp;rsquo;s easy to cut corners during data recording with paper forms, telling yourself that you will remember what various squiggles and poorly written notes mean, but this can backfire.&lt;/p&gt;
-&lt;p&gt;ODK forms can be programmed to check data entry in real time. For example, when recording tree stem diameters, there are some logical checks, like if a stem is lt5 cm diameter it should not be recorded, and if a stem is gt100 cm diameter it is likely to be a mistake and should be double checked. Similarly, when a plot is being recensused, it is possible to check newly recorded data against data recorded in previous years. So if a stem suddenly grows by an unrealistic amount, the data recorder can be notified. Data checking can also be done on paper forms, but with ODK forms it can be enforced with warnings and error messages.&lt;/p&gt;
-&lt;h2 id=&#34;cons&#34;&gt;Cons&lt;/h2&gt;
-&lt;p&gt;Although ODK helps to enforce some structure in data collection, it necessarily reduces the flexibility of data entry. It&amp;rsquo;s often useful to annotate data points on a paper form, e.g. &amp;ldquo;this diameter measurement was taken in two parts with a long piece of string because the tree was very big&amp;rdquo;. If an ODK form is poorly designed, it might not have anywhere to record this extra information, and so it will be lost. Even with a &amp;ldquo;notes&amp;rdquo; question in the ODK form, I still get the feeling that the data recorder is less likely to record these annotations on an ODK form than on a more flexible paper form.&lt;/p&gt;
-&lt;p&gt;Waterproof paper is more robust in the field than a mobile phone or a tablet. With waterproof paper you don&amp;rsquo;t have to worry about sun glaring off the screen making it impossible to read, you don&amp;rsquo;t have to worry about it getting wet and damaging the electronics or making the screen difficult to use, and you don&amp;rsquo;t have to worry about it running out of battery in the middle of the day. Ultimately, electronics are much more likely to break than paper.&lt;/p&gt;
-&lt;p&gt;Although most people around the world now have access to an Android smartphone, it&amp;rsquo;s still a consideration that there is some extra cost in rolling out mobile data collection among project partners.&lt;/p&gt;
-&lt;p&gt;There will be extra training involved in teaching data collectors how to set up ODKCollect or KoboCollect on their Android device, and this can be hard to do properly if there is a language barrier and the training is being done remotely. Although ODK promises a simple interface to record data, getting the blank forms downloaded to your device and uploading the collected data to a remote server cab be a hassle, requiring detailed &lt;a href=&#34;https://bitbucket.org/miombo/seosaw/raw/master/doc/forms/odk/filling_forms.txt&#34; target=&#34;_blank&#34;&gt;step by step instructions&lt;/a&gt;
-. Often our fieldsites don&amp;rsquo;t have a reliable mobile data connection, so form data can&amp;rsquo;t be uploaded to the remote server immediately. This means that the data needs to be manually sent from the Android device to a laptop every few days as a backup, using software like &lt;a href=&#34;https://docs.getodk.org/briefcase-intro/&#34; target=&#34;_blank&#34;&gt;ODK Briefcase&lt;/a&gt;
-, just in case the phone is damaged or lost, and this requires more training. I get the sense that people place undue trust in digital data storage as compared to paper, or rather the digital data is out of sight and so out of mind, and this might lead to data not getting backed up as often as it should in the field.&lt;/p&gt;
 </description>
     </item>
     
