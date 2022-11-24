@@ -13,16 +13,16 @@
       <pubDate>2022-11-23T00:00:00+0000</pubDate>
       
       <guid>http://johngodlee.xyz/posts/2022-11-23-get_wood_density/</guid>
-      <description>&lt;p&gt;I looked through the code for the &lt;code&gt;getWoodDensity()&lt;/code&gt; function from the &lt;a href=&#34;https://cran.r-project.org/web/packages/BIOMASS/index.html&#34; target=&#34;_blank&#34;&gt;&amp;lt;code&amp;gt;{BIOMASS}&amp;lt;/code&amp;gt; R package&lt;/a&gt;
+      <description>&lt;p&gt;I looked through the code for the &lt;code&gt;getWoodDensity()&lt;/code&gt; function from the &lt;code&gt;{BIOMASS}&lt;/code&gt; &lt;a href=&#34;https://cran.r-project.org/web/packages/BIOMASS/index.html&#34; target=&#34;_blank&#34;&gt;R package&lt;/a&gt;
 , to get a better idea of how it estimates tree wood density.&lt;/p&gt;
 &lt;p&gt;The function uses the wood density database from the &lt;a href=&#34;https://datadryad.org/stash/dataset/doi:10.5061/dryad.234&#34; target=&#34;_blank&#34;&gt;Zanne et al. (2009) global wood density database&lt;/a&gt;
 . The database contains 16467 records from 8388 taxa.&lt;/p&gt;
 &lt;p&gt;You feed the function a set of species names, and optionally family names, stand IDs (plots), extra wood density data supplied by the user, and a geographic region with which to subset the wood density database.&lt;/p&gt;
 &lt;p&gt;First, &lt;code&gt;getWoodDensity()&lt;/code&gt; calculates mean wood density at the species level.&lt;/p&gt;
-&lt;p&gt;For species-level indets (e.g. &lt;em&gt;Ochna indet&lt;/em&gt;) it then calculates mean wood density for the genus, using only those species submitted to the function with matches in the wood density database.&lt;/p&gt;
-&lt;p&gt;For genus-level indets (e.g. Fabaceae indet) it calculates mean wood density for the family, again using only those species submitted to the function with matches in the wood density database.&lt;/p&gt;
-&lt;p&gt;For family-level indets (i.e. no taxonomic information) it calculates mean wood density for the plot, using all the species-level wood density estimates generated in previous steps.&lt;/p&gt;
-&lt;p&gt;In the case where no wood density estimates have been generated for that plot, i.e. no stems on the plot have taxonomic information, the mean of all other species-level wood density estimates generated for other plots is used.&lt;/p&gt;
+&lt;p&gt;For species-level indets (e.g. &lt;em&gt;Ochna indet&lt;/em&gt;) it then calculates mean wood density for the genus, using all available genus-level matches in the database.&lt;/p&gt;
+&lt;p&gt;For genus-level indets (e.g. Fabaceae indet) it calculates mean wood density for the family, again using all available genus-level matches in the database.&lt;/p&gt;
+&lt;p&gt;For family-level indets (i.e. no taxonomic information) it calculates mean wood density for the plot, using the best wood density estimates generated for each individual in previous steps.&lt;/p&gt;
+&lt;p&gt;In the case where no wood density estimates have been generated for that plot, i.e. no stems on the plot have taxonomic information, the mean of all other best wood density estimates generated for other plots is used.&lt;/p&gt;
 &lt;p&gt;In the case where no wood density estimates have been generated for any plots, because none of the submitted taxa have records in the database, the function fails.&lt;/p&gt;
 &lt;p&gt;The way the function is written it makes sense that if you are generating wood density estimates for multiple sites, which might differ in their species pool, you should run the function site by site in a loop or a &lt;code&gt;lapply()&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;In the event that the function fails due to lack of data, it might still be possible to generate an estimate of wood density for the site, either the regional mean, or even the global mean.&lt;/p&gt;
