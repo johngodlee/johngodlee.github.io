@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>CMUS colour scheme and persistent settings</h1>
+
+<h2>2022-12-08</h2>
+</div>
+
+<main>
+<p><a href="https://cmus.github.io/" target="_blank">cmus</a>
+ uses a file called <code>autosave</code> (<code>~/.config/cmus/autosave</code>) to store configuration settings. This file is loaded every time cmus is launched. Settings changed during a session will be written to <code>autosave</code> on exit. This can make changing settings a bit finicky. A few times I&rsquo;ve accidentally changed a setting by pressing the wrong hotkey, and then not been able to change it back. There is another file called <code>rc</code> (<code>~/.config/cmus/rc</code>) which can store persistent settings. These settings are loaded after <code>autosave</code> and will not be overwritten on exit.</p>
+<p>In my cmus <code>rc</code> I only have a few settings:</p>
+<ul>
+<li><code>set aaa_mode=all</code> - play all tracks, alternatively <code>artist</code> or <code>album</code> for all songs in the current artist or album.</li>
+<li><code>set stop_after_queue=true</code> - after the play queue has finished, stop playing</li>
+<li><code>set continue=true</code> - Play the next song automatically</li>
+<li><code>bind -f common q quit</code> - rebind <code>q</code> to not ask for confirmation on exit</li>
+<li><code>unbind -f common C </code> - unbind <code>C</code>, which normally toggles playing the next song automatically. I never want to disable continuous mode.</li>
+</ul>
+<p>All settings can be found in the <a href="https://github.com/cmus/cmus/blob/master/Doc/cmus.txt" target="_blank">cmus manual</a>
+.</p>
+<p>The rest is colour settings:</p>
+<ul>
+<li><code>set color_separator=white</code> - separator colour between artist and track view in tree view</li>
+<li><code>set color_statusline_bg=gray</code> - statusline background</li>
+<li><code>set color_statusline_fg=black</code> - statusline foreground</li>
+<li><code>set color_win_title_bg=gray</code> - background of window title</li>
+<li><code>set color_win_title_fg=black</code> - foreground of window title</li>
+<li><code>set color_titleline_bg=default</code> - background of currently playing track</li>
+<li><code>set color_titleline_fg=white</code> - foreground of currently playing track</li>
+<li><code>set color_win_sel_bg=gray</code> - background of selected row when not currently playing</li>
+<li><code>set color_win_sel_fg=black</code> - foreground of selected row when not currently playing</li>
+<li><code>set color_win_inactive_sel_bg=darkgray</code> - background of selected row when not in that window and not currently playing</li>
+<li><code>set color_win_inactive_sel_fg=black</code> - foreground of selected row when not in that window and not currently playing</li>
+<li><code>set color_win_cur_sel_bg=gray</code> - background of currently playing track when selected</li>
+<li><code>set color_win_cur_sel_fg=black</code> - foreground of currently playing track when selected</li>
+<li><code>set color_win_inactive_cur_sel_bg=darkgray</code> - background of currently playing track when row selected but not in that window</li>
+<li><code>set color_win_inactive_cur_sel_fg=black</code> - foreground of currently playing track when row selected but not in that window</li>
+<li><code>set color_win_cur=green</code> - text colour of currently playing track when not selected</li>
+</ul>
+<figure><a href="/img_full/cmus_colours/scrot.png"><img
+          alt="Annotated screenshot of cmus showing colour settings"
+          title="Annotated screenshot of cmus showing colour settings"src="/img/cmus_colours/scrot.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

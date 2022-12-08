@@ -6,7 +6,53 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2022-12-02T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2022-12-08T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CMUS colour scheme and persistent settings</title>
+      <link>http://johngodlee.xyz/posts/2022-12-08-cmus_colours/</link>
+      <pubDate>2022-12-08T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2022-12-08-cmus_colours/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://cmus.github.io/&#34; target=&#34;_blank&#34;&gt;cmus&lt;/a&gt;
+ uses a file called &lt;code&gt;autosave&lt;/code&gt; (&lt;code&gt;~/.config/cmus/autosave&lt;/code&gt;) to store configuration settings. This file is loaded every time cmus is launched. Settings changed during a session will be written to &lt;code&gt;autosave&lt;/code&gt; on exit. This can make changing settings a bit finicky. A few times I&amp;rsquo;ve accidentally changed a setting by pressing the wrong hotkey, and then not been able to change it back. There is another file called &lt;code&gt;rc&lt;/code&gt; (&lt;code&gt;~/.config/cmus/rc&lt;/code&gt;) which can store persistent settings. These settings are loaded after &lt;code&gt;autosave&lt;/code&gt; and will not be overwritten on exit.&lt;/p&gt;
+&lt;p&gt;In my cmus &lt;code&gt;rc&lt;/code&gt; I only have a few settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;set aaa_mode=all&lt;/code&gt; - play all tracks, alternatively &lt;code&gt;artist&lt;/code&gt; or &lt;code&gt;album&lt;/code&gt; for all songs in the current artist or album.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set stop_after_queue=true&lt;/code&gt; - after the play queue has finished, stop playing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set continue=true&lt;/code&gt; - Play the next song automatically&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bind -f common q quit&lt;/code&gt; - rebind &lt;code&gt;q&lt;/code&gt; to not ask for confirmation on exit&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;unbind -f common C &lt;/code&gt; - unbind &lt;code&gt;C&lt;/code&gt;, which normally toggles playing the next song automatically. I never want to disable continuous mode.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All settings can be found in the &lt;a href=&#34;https://github.com/cmus/cmus/blob/master/Doc/cmus.txt&#34; target=&#34;_blank&#34;&gt;cmus manual&lt;/a&gt;
+.&lt;/p&gt;
+&lt;p&gt;The rest is colour settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;set color_separator=white&lt;/code&gt; - separator colour between artist and track view in tree view&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_statusline_bg=gray&lt;/code&gt; - statusline background&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_statusline_fg=black&lt;/code&gt; - statusline foreground&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_title_bg=gray&lt;/code&gt; - background of window title&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_title_fg=black&lt;/code&gt; - foreground of window title&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_titleline_bg=default&lt;/code&gt; - background of currently playing track&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_titleline_fg=white&lt;/code&gt; - foreground of currently playing track&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_sel_bg=gray&lt;/code&gt; - background of selected row when not currently playing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_sel_fg=black&lt;/code&gt; - foreground of selected row when not currently playing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_inactive_sel_bg=darkgray&lt;/code&gt; - background of selected row when not in that window and not currently playing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_inactive_sel_fg=black&lt;/code&gt; - foreground of selected row when not in that window and not currently playing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_cur_sel_bg=gray&lt;/code&gt; - background of currently playing track when selected&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_cur_sel_fg=black&lt;/code&gt; - foreground of currently playing track when selected&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_inactive_cur_sel_bg=darkgray&lt;/code&gt; - background of currently playing track when row selected but not in that window&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_inactive_cur_sel_fg=black&lt;/code&gt; - foreground of currently playing track when row selected but not in that window&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set color_win_cur=green&lt;/code&gt; - text colour of currently playing track when not selected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cmus_colours/scrot.png&#34;&gt;&lt;img
+          alt=&#34;Annotated screenshot of cmus showing colour settings&#34;
+          title=&#34;Annotated screenshot of cmus showing colour settings&#34;src=&#34;http://johngodlee.xyz/img/cmus_colours/scrot.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
     <item>
       <title>Cider making</title>
       <link>http://johngodlee.xyz/posts/2022-12-02-cider_2022/</link>
@@ -1878,56 +1924,6 @@ $$&lt;/p&gt;
 &lt;p&gt;I made the leek sauce, filling for the &lt;em&gt;en croute&lt;/em&gt;, pesto, pearl barley and lentils, and lentil salad dressing the day before.&lt;/p&gt;
 &lt;p&gt;The pesto oxidised a bit in the fridge, turning the surface black. This wasn&amp;rsquo;t a problem for the taste, but made it look a bit less fresh.&lt;/p&gt;
 &lt;p&gt;I tried to make the gnocchi in advance, but the texture of the gnocchi dough became more sloppy after a few hours in the fridge. To fix it I had to add a lot more flour, which probably changed the texture.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Atom notebooks</title>
-      <link>http://johngodlee.xyz/posts/2022-01-10-atom_notebook/</link>
-      <pubDate>2022-01-10T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2022-01-10-atom_notebook/</guid>
-      <description>&lt;p&gt;Atom Notebook laptops haven&amp;rsquo;t been cool in about 12 years. Even when they first came out, the low-power Atom CPU had fairly low performance with software of the time. Now, as the web continues to bloat up more and more, and desktop applications continue to demand more and more resources, Atom notebooks really struggle to run a conventional operating system and common desktop applications, particularly web browsers. Along with a restrictive Intel Atom CPU, most Atom notebooks don&amp;rsquo;t have much RAM, normally 1-2 GB. Notebooks were pushed to the sidelines when the iPad and other tablet PCs came along, and partly by smartphones, because there was no longer a need for an ultra-portable laptop with a long battery life.&lt;/p&gt;
-&lt;p&gt;I now have two Toshiba NB-series Atom notebooks, gifted to me by people who were going to throw them away. The first I was given is the Toshiba NB100, and recently I was given a Toshiba NB200.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ve haven&amp;rsquo;t changed any components on the NB100, mainly because I find it really difficult to use the keyboard. The keys are very small and cramped, with some dodgy key location choices on the bottom left and right. The keys are also very squishy. Maybe I could get used to it, but in reality I will never have need to use one of these laptops. The NB100 uses a 1.6 GHz N270 CPU, comes with a 120 GB 5400 rpm hard drive, 1 GB DDR2 RAM, and a 8.9&amp;quot; display.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb100_keyboard.jpg&#34;&gt;&lt;img
-          alt=&#34;Toshiba NB100 keyboard&#34;
-          title=&#34;Toshiba NB100 keyboard&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb100_keyboard.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb100_outside.jpg&#34;&gt;&lt;img
-          alt=&#34;Toshiba NB100 outside&#34;
-          title=&#34;Toshiba NB100 outside&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb100_outside.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb100_inside.jpg&#34;&gt;&lt;img
-          alt=&#34;Toshiba NB100 inside&#34;
-          title=&#34;Toshiba NB100 inside&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb100_inside.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;For the NB200 I found a spare 256GB SSD, and a stick of 2GB DDR2 RAM, so I installed those to see if the laptop would run a bit faster. It does run quite snappy using a Linux distribution with a minimal window manager, but running Windows XP is still quite sluggish. Besides I would never run Windows XP now, as it&amp;rsquo;s been retired for a few years. The NB200 uses the slightly faster N280 CPU. The keyboard on the NB200 is much easier to use, with a comfortable amount of space between keys, though still with some awkward key positions on the bottom right of the keyboard to save space. The NB200 also looks a lot more modern. It&amp;rsquo;s thinner than the NB100, and feels less boxy. It&amp;rsquo;s surprising these laptops look so different given that the NB200 was only released ~6 months after the NB100, in January and July 2009, respectively. Inside though, the two models are quite similar.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb200_outside.jpg&#34;&gt;&lt;img
-          alt=&#34;Toshiba NB200 outside&#34;
-          title=&#34;Toshiba NB200 outside&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb200_outside.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/atom_notebook/nb200_inside.jpg&#34;&gt;&lt;img
-          alt=&#34;Toshiba NB200 inside&#34;
-          title=&#34;Toshiba NB200 inside&#34;src=&#34;http://johngodlee.xyz/img/atom_notebook/nb200_inside.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;I tend to install Debian on these old notebooks. There are &lt;a href=&#34;https://www.debian.org/releases/stable/i386/&#34; target=&#34;_blank&#34;&gt;Debian i386 images&lt;/a&gt;
-, which are necessary for the N270 CPU which can only run a 32-bit OS. Debian also has a minimal installer, so I can choose not to install lots of programs I know I&amp;rsquo;ll never need.&lt;/p&gt;
-&lt;p&gt;For a window manager I tend to default to using &lt;a href=&#34;https://i3wm.org/&#34; target=&#34;_blank&#34;&gt;i3&lt;/a&gt;
- or &lt;a href=&#34;https://github.com/baskerville/bspwm&#34; target=&#34;_blank&#34;&gt;bspwm&lt;/a&gt;
-, because they are easy to setup and have pretty low overheads. Occasionally I&amp;rsquo;ve dabbled with &lt;a href=&#34;https://dwm.suckless.org/&#34; target=&#34;_blank&#34;&gt;dwm&lt;/a&gt;
-, but life is too short to pursue it to perfection.&lt;/p&gt;
-&lt;p&gt;I do like the look of these old notebooks, and I&amp;rsquo;d love an excuse to use them, like if I was travelling and didn&amp;rsquo;t have a job and the only emails I needed to send were to my family and friends. But I have a decent laptop, and at the moment I spend so much of my day sat at a desk using a computer it really doesn&amp;rsquo;t make sense to switch to a different laptop to gain a small amount of portability. So in the end they are just novelties. Maybe if I have small kids then I can boot one of them into a TTY to teach them how computers work.&lt;/p&gt;
 </description>
     </item>
     
