@@ -6,7 +6,99 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2022-12-23T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2022-12-29T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shell script to extract colours from macOS Terminal.app themes</title>
+      <link>http://johngodlee.xyz/posts/2022-12-29-terminal_colours/</link>
+      <pubDate>2022-12-29T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2022-12-29-terminal_colours/</guid>
+      <description>&lt;p&gt;On macOS, configuration profiles for Terminal.app are stored as &lt;code&gt;plist&lt;/code&gt; files with the extension &lt;code&gt;.terminal&lt;/code&gt;. These files contain XML or binary data. The profiles contain, among other settings, the colour scheme for the terminal.&lt;/p&gt;
+&lt;p&gt;I wrote a shell script to extract the colour scheme information as RGB255 values for each colour scheme value. The function uses a combination of &lt;a href=&#34;https://xmlstar.sourceforge.net/&#34; target=&#34;_blank&#34;&gt;xmlstarlet&lt;/a&gt;
+, &lt;a href=&#34;https://www.gnu.org/software/gawk/manual/gawk.html&#34; target=&#34;_blank&#34;&gt;awk&lt;/a&gt;
+, and some programs which come with macOS, like &lt;code&gt;tr&lt;/code&gt;, &lt;code&gt;base64&lt;/code&gt;, and &lt;code&gt;plutil&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;First, I define a function to extract colour values:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt; dict_search&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# If colour code found in file&lt;/span&gt;
+	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; grep -q &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+		xml sel --net -t -v &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;//key[.=\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;\&amp;#34;]/following-sibling::data[1]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
+			tr -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[:space:]&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
+			base64 --decode &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
+			plutil -convert xml1 - -o - &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
+			xml sel --net -t -v &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;//dict/array/dict/key[.=&amp;#39;NSRGB&amp;#39;]/following-sibling::data[1]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
+			tr -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[:space:]&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
+			base64 --decode &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
+			awk -v &lt;span style=&#34;color:#000&#34;&gt;var&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;BEGIN{ ORS=&amp;#34; &amp;#34;; print var } 
+&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;					{ for(i=1;i&amp;lt;=3;i++) { printf &amp;#34;%.0f &amp;#34;, $i*255 }; printf &amp;#34;\n&amp;#34; }&amp;#39;&lt;/span&gt; 
+	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Going line by line:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;if grep ...&lt;/code&gt; will only run the rest of the function if the chosen colour ID is found in the &lt;code&gt;.terminal&lt;/code&gt; file.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xml sel ...&lt;/code&gt; searches for the &lt;code&gt;key&lt;/code&gt; (i.e. the chosen colour ID), then pulls the contents of the &lt;code&gt;data&lt;/code&gt; node which comes directly after it.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tr -d ...&lt;/code&gt; removes all spaces, including new lines, effectively concatenating the contents of the node.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;base64 ...&lt;/code&gt; converts the base64 encoded data into text&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;plutil -convert ...&lt;/code&gt; converts that into XML&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xml sel ...&lt;/code&gt; extracts the RGB values in the XML&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tr -d ...&lt;/code&gt; as above, removes all spaces and new lines&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;base64 ...&lt;/code&gt; as above, converts base64 encoded data into text&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;awk ...&lt;/code&gt; prints the name of the colour ID, and the three RGB components multiplied by 255 and rounded to convert from a 0-1 decimal to a 0-255 integer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then I create an array containing all the colour IDs of interest:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#000&#34;&gt;colArray&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBlackColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBlueColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSICyanColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIGreenColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIMagentaColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIRedColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIWhiteColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIYellowColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightBlackColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightBlueColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightCyanColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightGreenColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightMagentaColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightRedColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightWhiteColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightYellowColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;BackgroundColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;CursorColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;SelectionColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;TextBoldColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;TextColor&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally, to construct the output of the script, firstly printing the filename, then running the function for each colour ID, and only printing the result to stdout if the function output is not empty:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Print filepath of theme&lt;/span&gt;
+&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;%s\n&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# For each in array, run function&lt;/span&gt;
+&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; i in &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;colArray&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[@]&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt;
+	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Run function&lt;/span&gt;
+	&lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;dict_search &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+
+	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# If output not empty, print &lt;/span&gt;
+	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; -n &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+		&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;%s\n&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;done&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This produces, for example for my tweaked version of the &lt;a href=&#34;https://color.smyck.org/&#34; target=&#34;_blank&#34;&gt;Smyck&lt;/a&gt;
+ colour scheme, which I use every day:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;smyck.terminal
+ANSIBlackColor 0 0 0
+ANSIBlueColor 64 125 153
+ANSICyanColor 32 115 131
+ANSIGreenColor 125 169 0
+ANSIMagentaColor 186 138 204
+ANSIRedColor 184 65 49
+ANSIWhiteColor 161 161 161
+ANSIYellowColor 196 165 7
+ANSIBrightBlackColor 75 75 75
+ANSIBrightBlueColor 141 207 240
+ANSIBrightCyanColor 106 217 207
+ANSIBrightGreenColor 196 241 55
+ANSIBrightMagentaColor 247 154 255
+ANSIBrightRedColor 214 131 124
+ANSIBrightWhiteColor 247 247 247
+ANSIBrightYellowColor 254 225 77
+BackgroundColor 18 21 28
+CursorColor 32 115 130
+SelectionColor 32 115 131
+TextBoldColor 247 247 247
+TextColor 247 247 247
+&lt;/code&gt;&lt;/pre&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/terminal_colours/smyck.png&#34;&gt;&lt;img
+          alt=&#34;Smyck colour scheme.&#34;
+          title=&#34;Smyck colour scheme.&#34;src=&#34;http://johngodlee.xyz/img/terminal_colours/smyck.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/terminal_colours/smyck_term.png&#34;&gt;&lt;img
+          alt=&#34;Smyck colour scheme in the terminal.&#34;
+          title=&#34;Smyck colour scheme in the terminal.&#34;src=&#34;http://johngodlee.xyz/img/terminal_colours/smyck_term.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
     <item>
       <title>R function to find nearest named colour</title>
       <link>http://johngodlee.xyz/posts/2022-12-23-named_colour/</link>
@@ -1850,50 +1942,6 @@ $$&lt;/p&gt;
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-</description>
-    </item>
-    
-    <item>
-      <title>Ecology projects and acronyms</title>
-      <link>http://johngodlee.xyz/posts/2022-01-19-project_acronyms/</link>
-      <pubDate>2022-01-19T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2022-01-19-project_acronyms/</guid>
-      <description>&lt;p&gt;We had our first big meeting of the &lt;a href=&#34;https://blogs.ed.ac.uk/seco-project/&#34; target=&#34;_blank&#34;&gt;SECO Project&lt;/a&gt;
- last week, where the different core working groups shared their ideas and did some planning for the year ahead. During the meeting, I started noting down the many acronyms that were being banded about to describe networks of survey plots, researchers, and databases.&lt;/p&gt;
-&lt;h1 id=&#34;seco&#34;&gt;SECO&lt;/h1&gt;
-&lt;p&gt;re&lt;strong&gt;S&lt;/strong&gt;olving th&lt;strong&gt;E&lt;/strong&gt; current and future &lt;strong&gt;C&lt;/strong&gt;arbon dynamics of the dry tr&lt;strong&gt;O&lt;/strong&gt;pics. &lt;a href=&#34;https://blogs.ed.ac.uk/seco-project/&#34; target=&#34;_blank&#34;&gt;SECO&lt;/a&gt;
- isn&amp;rsquo;t really a real acronym, but the word SECO is the Spanish word for &amp;ldquo;dried&amp;rdquo;, which makes sense because the project aims to improve understanding of the carbon cycle, particularly the woody biomass component, in &amp;ldquo;dry tropical&amp;rdquo; vegetation, i.e. savannas, dry forests, possibly shrublands, across the world.&lt;/p&gt;
-&lt;h1 id=&#34;seosaw&#34;&gt;SEOSAW&lt;/h1&gt;
-&lt;p&gt;the &lt;strong&gt;S&lt;/strong&gt;ocio-&lt;strong&gt;E&lt;/strong&gt;cological &lt;strong&gt;O&lt;/strong&gt;bservatory for &lt;strong&gt;S&lt;/strong&gt;outhern &lt;strong&gt;A&lt;/strong&gt;frican &lt;strong&gt;W&lt;/strong&gt;oodlands. &lt;a href=&#34;https://seosaw.github.io/&#34; target=&#34;_blank&#34;&gt;SEOSAW&lt;/a&gt;
- is a network of researchers and plots across southern African savanna/woodlands. The remit is broad, simply to understand the response of southern African woodlands to global change, to provide an infrastructure for researchers to conduct their research across the region, and to facilitate collaborative research. I&amp;rsquo;ve spent a lot of time working on SEOSAW stuff. My PhD used the SEOSAW database, and I was employed for about 6 months as a research assistant to work on databasing for the project.&lt;/p&gt;
-&lt;h1 id=&#34;rainfor&#34;&gt;RAINFOR&lt;/h1&gt;
-&lt;p&gt;Not really an acronym, but is used as a shorthand for the &lt;a href=&#34;http://www.rainfor.org&#34; target=&#34;_blank&#34;&gt;Amazon Forest Inventory Network&lt;/a&gt;
-. The project has developed a very rigorous framework for long-term monitoring of rainforest ecosystems, based around repeat inventory of permanent forest plots. They work with partners across Amazonia to maintain these plots and to train scientists in the relevant methodologies. RAINFOR developed the mortality codes which are used as a base for the SEOSAW and ForestPlots.net databases to record mortality.&lt;/p&gt;
-&lt;h1 id=&#34;dryflor&#34;&gt;DRYFLOR&lt;/h1&gt;
-&lt;p&gt;More focussed on floristics than biomass dynamics, the &lt;a href=&#34;http://www.dryflor.info/&#34; target=&#34;_blank&#34;&gt;DRYFLOR&lt;/a&gt;
- project is a network of researchers aiming to improve understanding of seasonally dry tropical forests (SDTF) in Latin America. Dry forests are very poorly protected compared to wet forests, and as a result are highly fragmented and often degraded by agriculture, yet they contain many endemic species and are highly diverse. DRYFLOR aims to promote conservation of these under-appreciated ecosystems.&lt;/p&gt;
-&lt;h1 id=&#34;dryfour&#34;&gt;DRYFour&lt;/h1&gt;
-&lt;p&gt;A bit of a pun on the more well-known DRYFLOR. I heard &lt;a href=&#34;https://cbs.umn.edu/contacts/jennifer-s-powers&#34; target=&#34;_blank&#34;&gt;Jennifer Powers&lt;/a&gt;
- talking about her DRYFour network of four dry forest monitoring sites in Central America during a seminar she was giving. The plots are located in Mexico, Costa Rica, Puerto Rico and Colombia. They did lots of hydraulic trait measurements and measured dry forest structure to understand how hydraulics varied across different dry forests.&lt;/p&gt;
-&lt;h1 id=&#34;trobit&#34;&gt;TROBIT&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;TRO&lt;/strong&gt;pical &lt;strong&gt;B&lt;/strong&gt;iomes &lt;strong&gt;I&lt;/strong&gt;n &lt;strong&gt;T&lt;/strong&gt;ransition was a NERC funded project which ended in 2009 that looked at what drives changes in vegetation structure across wet-dry transitions in the dry tropics. Basically the transitions from wet forest to savanna. I think they did a lot of work on CO2 exchange and eco-physiological measurements. I don&amp;rsquo;t think they established plots during the project, but I don&amp;rsquo;t know much about it.&lt;/p&gt;
-&lt;h1 id=&#34;afritron&#34;&gt;AfriTRON&lt;/h1&gt;
-&lt;p&gt;the &lt;strong&gt;Afri&lt;/strong&gt;can &lt;strong&gt;T&lt;/strong&gt;ropical &lt;strong&gt;R&lt;/strong&gt;ainforest &lt;strong&gt;O&lt;/strong&gt;bservation &lt;strong&gt;N&lt;/strong&gt;etwork. &lt;a href=&#34;http://www.afritron.org/&#34; target=&#34;_blank&#34;&gt;AfriTRON&lt;/a&gt;
- is similar to RAINFOR in that they aim to do long-term monitoring of rainforests through repeat plots, but they operate mainly in West Africa and the Congo Basin, with a few plots in Tanzania. Another interesting aspect of AfriTRON is that they work on peatlands which are a major carbon store in the central Congo basin.&lt;/p&gt;
-&lt;h1 id=&#34;forestplotsnet&#34;&gt;ForestPlots.net&lt;/h1&gt;
-&lt;p&gt;While not an acronym, it&amp;rsquo;s important to include this in the list, as many of the other projects listed have some connection to &lt;a href=&#34;https://www.forestplots.net/&#34; target=&#34;_blank&#34;&gt;ForestPlots.net&lt;/a&gt;
-. FP hosts data from AfriTRON, RAINFOR, SEOSAW, other networks, and many individual researchers. FP provides a database for storing tree plot data, metadata about the plots, and some auxiliary data like soils and traits.&lt;/p&gt;
-&lt;h1 id=&#34;natt&#34;&gt;NATT&lt;/h1&gt;
-&lt;p&gt;the &lt;strong&gt;N&lt;/strong&gt;orth &lt;strong&gt;A&lt;/strong&gt;ustralian &lt;strong&gt;T&lt;/strong&gt;ropical &lt;strong&gt;T&lt;/strong&gt;ransect. The &lt;a href=&#34;https://www.tern.org.au/natt-the-backbone-of-nt-research/&#34; target=&#34;_blank&#34;&gt;NATT&lt;/a&gt;
- is one of TERN&amp;rsquo;s plot transects which runs from near Darwin south through the Northern Territory down to what I think is just a line of latitude, or possibly a mean annual precipitation contour at about 500 mm/yr, not really sure.&lt;/p&gt;
-&lt;h1 id=&#34;tern&#34;&gt;TERN&lt;/h1&gt;
-&lt;p&gt;the &lt;strong&gt;T&lt;/strong&gt;errestrial &lt;strong&gt;E&lt;/strong&gt;cosystem &lt;strong&gt;R&lt;/strong&gt;esearch &lt;strong&gt;N&lt;/strong&gt;etwork. Operating in Australia, &lt;a href=&#34;https://www.tern.org.au/&#34; target=&#34;_blank&#34;&gt;TERN&lt;/a&gt;
- combines many different data collection techniques to monitor Australia&amp;rsquo;s ecosystems, including permanent tree survey plots, eddy flux towers, phenology cameras, LiDAR, soil, hydrology, all sorts. TERN is supported by the Australian government and at least from my limited experience with their platform is an incredibly well developed monitoring system. I suppose it is easier to achieve when the whole continent is one country.&lt;/p&gt;
-&lt;p&gt;TERN run &lt;a href=&#34;http://www.ausplots.org/our-transects-atn&#34; target=&#34;_blank&#34;&gt;AusPlots&lt;/a&gt;
-, also known as the ATN (Australian Transect Network), a subsidiary that maintain a national network of permanent plots, which are divided into transects, of which the NATT is one.&lt;/p&gt;
-&lt;h1 id=&#34;tmfo&#34;&gt;TmFO&lt;/h1&gt;
-&lt;p&gt;the &lt;strong&gt;T&lt;/strong&gt;ropical &lt;strong&gt;m&lt;/strong&gt;anaged &lt;strong&gt;F&lt;/strong&gt;orests &lt;strong&gt;O&lt;/strong&gt;bservatory is unusual compared to other networks operating in the same moist tropical forest vegetation in that they focus only on understanding the long term effects of logging on these ecosystems. Thus, their plots are spread across managed forests, plantations, areas previously felled, areas likely to be felled, and they also have plenty of experimental sites. This is one of the few networks with a decent number of sites in southeast Asia.&lt;/p&gt;
 </description>
     </item>
     
