@@ -6,7 +6,26 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2022-12-29T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2023-01-03T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Command line tools I&#39;d like to use but can&#39;t</title>
+      <link>http://johngodlee.xyz/posts/2023-01-03-cli_like_use/</link>
+      <pubDate>2023-01-03T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2023-01-03-cli_like_use/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/johnkerl/miller&#34; target=&#34;_blank&#34;&gt;miller&lt;/a&gt;
+ is a command line tool and scripting language that can be used to manipulate, transform and summarise structured data from CSV, JSON and other formats. Miller is fast and can handle pretty large datasets by streaming data rather than loading it all into RAM. I&amp;rsquo;d always hoped to use it for quickly exploring a new dataset, or for extracting data subsets for &lt;a href=&#34;https://seosaw.github.io/&#34; target=&#34;_blank&#34;&gt;SEOSAW&lt;/a&gt;
+ data requests. What has held me back is that I know how to do basically everything that miller can do in an interactive R session. Maybe if I was in a role that only required data munging, rather than munging plus statistical analysis I would use miller more.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.gnuplot.info/&#34; target=&#34;_blank&#34;&gt;gnuplot&lt;/a&gt;
+ is a command line graphing tool. It supports loads of different types of plot, and the output is highly customisable. The syntax is quite terse, but building up a library of examples over time helps. I think the plots produced by gnuplot are very pretty. Similar to miller, the reason I haven&amp;rsquo;t used gnuplot more is that I reckon I can accomplish nearly every type of data visualisation I need to using R. Using the same programming environment for data manipulation, analysis and visualisation makes managing my data analysis workflow a lot easier.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.lightandmatter.com/when/when.html&#34; target=&#34;_blank&#34;&gt;when&lt;/a&gt;
+ is a command line calendar program. It&amp;rsquo;s very simple on the surface but with deep functionality. It uses a simple plain text file containing events stored by the user. This file can then be queried to show events within certain time periods. It&amp;rsquo;s also possible to set recurring events. What holds me back from using When is that at my work most of my colleagues use Microsoft Outlook to share events and manage RSVPs. I don&amp;rsquo;t want to have to manually duplicate every event in my Outlook calendar in When.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://neomutt.org/&#34; target=&#34;_blank&#34;&gt;neomutt&lt;/a&gt;
+ is a command line mail reader. A few years ago I did actually go through the rigmarole of setting up NeoMutt, and used it for about 6 months at the start of my PhD. One problem I ran into was that when using multiple email accounts it&amp;rsquo;s only possible to view one account at a time. On macOS it&amp;rsquo;s also hard to set up notifications for incoming emails. It&amp;rsquo;s also becoming increasingly difficult to use Gmail and Outlook email accounts with NeoMutt, as they don&amp;rsquo;t use standard IMAP and require ever more complicated authentication procedures. If I ever move away from working at Universities and only have to manage my personal email address, I&amp;rsquo;d probably move to something like &lt;a href=&#34;https://www.fastmail.com/&#34; target=&#34;_blank&#34;&gt;FastMail&lt;/a&gt;
+ and go back to using NeoMutt with IMAP.&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Shell script to extract colours from macOS Terminal.app themes</title>
       <link>http://johngodlee.xyz/posts/2022-12-29-terminal_colours/</link>
@@ -1902,43 +1921,6 @@ $$&lt;/p&gt;
 &lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/permanent_plots/plot_loc.jpg&#34;&gt;&lt;img
           alt=&#34;A potential plot location&#34;
           title=&#34;A potential plot location&#34;src=&#34;http://johngodlee.xyz/img/permanent_plots/plot_loc.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-</description>
-    </item>
-    
-    <item>
-      <title>Omajowa mushrooms</title>
-      <link>http://johngodlee.xyz/posts/2022-02-18-omajowa/</link>
-      <pubDate>2022-02-18T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2022-02-18-omajowa/</guid>
-      <description>&lt;p&gt;While driving from Windhoek to Etosha National Park, in Namibia, there were lots of vendors at the side of the road holding up mushrooms for sale. Specifically, they were selling the Omajowa mushroom, pronounced omayova, &lt;em&gt;Termitomyces schimperi&lt;/em&gt;. In Afrikaans and German they are also referred to as Termitenpilz. They are in the family Agaricales.&lt;/p&gt;
-&lt;p&gt;Omajowa grows on termite mounds of the species &lt;em&gt;Macrotermes michaelseni&lt;/em&gt;. These mushrooms grow across southern Africa, but I think are particularly common in northern Namibia. The mushroom was first described in Ethiopia by Patouillard in 1891.&lt;/p&gt;
-&lt;p&gt;The mushrooms are very large. The ones I saw were up to 30 cm diameter when fully opened.&lt;/p&gt;
-&lt;p&gt;They need to be picked quickly once they have emerged, otherwise they get infested by insects and get sand blown into the gills.&lt;/p&gt;
-&lt;p&gt;[van der Westhuizen and Eicker (1991)](&lt;a href=&#34;https://doi.org/10.1016/S0254-6299%2816%2930986-3%29&#34; target=&#34;_blank&#34;&gt;https://doi.org/10.1016/S0254-6299(16%2930986-3)&lt;/a&gt;
- describe the mushroom as having a firm and fleshy pileus, expanding to convex-applanate, with crowded free gills creamy white to pinkish. The spore print is brownish-pink. The emerging mushroom is about the size of a fist. The fully emerged mushroom can be up to 50 cm tall.&lt;/p&gt;
-&lt;p&gt;The mushrooms emerge after heavy rains, mostly between January and March. The mushrooms are very common around Otjiwarongo and Okahandja.&lt;/p&gt;
-&lt;p&gt;The name Omajowa is used by both the Herero and Ovambo people.&lt;/p&gt;
-&lt;p&gt;People from Windhoek often pick up these mushrooms from vendors on the road between Windhoek and Okahandja. The mushrooms have a fleshy texture and a strong nutty taste. The mushrooms can be barbecued as steaks, like portobello mushrooms, or chopped up and fried with lots of butter, salt and pepper then eaten on toast.&lt;/p&gt;
-&lt;p&gt;The large mushroom in the picture below was being sold for 20 namibian dollars, or about £1.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/omajowa/open.jpg&#34;&gt;&lt;img
-          alt=&#34;Fully open mushroom&#34;
-          title=&#34;Fully open mushroom&#34;src=&#34;http://johngodlee.xyz/img/omajowa/open.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/omajowa/closed.jpg&#34;&gt;&lt;img
-          alt=&#34;Closed mushroom&#34;
-          title=&#34;Closed mushroom&#34;src=&#34;http://johngodlee.xyz/img/omajowa/closed.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/omajowa/omajowa.jpg&#34;&gt;&lt;img
-          alt=&#34;More omajowa mushrooms&#34;
-          title=&#34;More omajowa mushrooms&#34;src=&#34;http://johngodlee.xyz/img/omajowa/omajowa.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
