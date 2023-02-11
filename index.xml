@@ -1164,8 +1164,7 @@ $$&lt;/p&gt;
 
 &lt;p&gt;In this example, it looks like stems are generally more clustered than expected at all observed distances. Clustering effects are especially prominent up to ~2.5 m. This may actually be due to some trees having multiple stems growing from the same root stock, but were not observed to connect above the ground, and were thus recorded as separate individuals.&lt;/p&gt;
 &lt;h2 id=&#34;winkelmass&#34;&gt;Winkelmass&lt;/h2&gt;
-&lt;p&gt;I wrote about the Uniform Angle Index, or winkelmass, in &lt;a href=&#34;http://johngodlee.xyz/2021/05/10/winkelmass.html&#34;&gt;previous post&lt;/a&gt;
-. The winkelmass (&lt;a href=&#34;https://doi.org/10.1016/j.foreco.2005.12.039&#34; target=&#34;_blank&#34;&gt;Pommerening 2006&lt;/a&gt;
+&lt;p&gt;I wrote about the Uniform Angle Index, or winkelmass, in a previous post. The winkelmass (&lt;a href=&#34;https://doi.org/10.1016/j.foreco.2005.12.039&#34; target=&#34;_blank&#34;&gt;Pommerening 2006&lt;/a&gt;
 ) measures the spatial distribution of trees according to the angles between neighbouring trees. For this experiment I calculated the plot level mean and the coefficient of variation of the winkelmass. I won&amp;rsquo;t go into massive detail about how the winkelmass works, as I&amp;rsquo;ve talked about it before, but here is a diagram which shows how trees are scored based on the spatial distribution of their four nearest neighbours. Higher scores imply clustering, while lower scores imply regularity.&lt;/p&gt;
 &lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/voronoi/winkelmass.png&#34;&gt;&lt;img
           alt=&#34;Diagram showing how the winkelmass varies with spatial arrangement of trees.&#34;
