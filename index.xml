@@ -6,7 +6,41 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2023-03-01T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2023-03-13T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Importing data layers into Avenza Maps Android app</title>
+      <link>http://johngodlee.xyz/posts/2023-03-13-avenza/</link>
+      <pubDate>2023-03-13T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2023-03-13-avenza/</guid>
+      <description>&lt;p&gt;I had a go with the &lt;a href=&#34;https://store.avenza.com/pages/app-features&#34; target=&#34;_blank&#34;&gt;Avenza Maps&lt;/a&gt;
+ Android app during fieldwork to visualise my position within the landscape. I had access to a vegetation map and I wanted to see how close I was to transition zones between vegetation units, and also where I could walk to find a good place to install a vegetation monitoring plot.&lt;/p&gt;
+&lt;p&gt;It was a bit of a faff, but I worked out a method for importing raster and vector data into Avenza Maps. I used the free version of the Avenza Maps app:&lt;/p&gt;
+&lt;p&gt;To import a raster layer:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In QGIS:&lt;/li&gt;
+&lt;li&gt;Choose to export the chosen raster layer&lt;/li&gt;
+&lt;li&gt;Choose GeoTIFF&lt;/li&gt;
+&lt;li&gt;Choose &amp;ldquo;Rendered Image&amp;rdquo; when exporting&lt;/li&gt;
+&lt;li&gt;Increase the resolution as desired&lt;/li&gt;
+&lt;li&gt;Put the exported .tif on Android phone&lt;/li&gt;
+&lt;li&gt;Open Avenza Maps&lt;/li&gt;
+&lt;li&gt;Add the .tif as a Map&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Avenza (free) only supports KML/KMZ and GPX, which don&amp;rsquo;t support polygons. To import point (vector) data:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In QGIS:&lt;/li&gt;
+&lt;li&gt;Ensure that the chosen point features only have one attribute &amp;ldquo;name&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Choose to export the chosen features&lt;/li&gt;
+&lt;li&gt;Choose GPX&lt;/li&gt;
+&lt;li&gt;Select GPX_USE_EXTENSIONS = YES&lt;/li&gt;
+&lt;li&gt;Put the exported .gpx on Android phone&lt;/li&gt;
+&lt;li&gt;Open Avenza Maps&lt;/li&gt;
+&lt;li&gt;Add the .gpx as a Layer in the chosen map&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
     <item>
       <title>Yoga routine for fieldwork</title>
       <link>http://johngodlee.xyz/posts/2023-03-01-field_yoga/</link>
@@ -1873,35 +1907,6 @@ $$&lt;/p&gt;
       <guid>http://johngodlee.xyz/posts/2022-06-01-canopy_photography/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve been slowly putting together a set of notes on analysing forest canopy photos to measure canopy structure. Most of the guide is focussed on hemispherical photography, but much of the processing chain can be used to analyse digital cover photos taken with a conventional camera as well. I use a combination of ImageJ, R, and shell scripting to analyse the images. I also provide some thoughts on how to take good hemispherical photos in the field, and an ideal set of equipment. The notes can be found in this &lt;a href=&#34;https://github.com/johngodlee/canopy_photo&#34; target=&#34;_blank&#34;&gt;Github repository&lt;/a&gt;
 .&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Measuring stick for DBH measurements</title>
-      <link>http://johngodlee.xyz/posts/2022-05-12-dbh_stick/</link>
-      <pubDate>2022-05-12T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2022-05-12-dbh_stick/</guid>
-      <description>&lt;p&gt;When measuring the diameter of tree stems to estimate above ground woody biomass, it’s important to avoid stem features which might skew the diameter estimate and misrepresent the stem diameter. Burls, swelling at branching nodes, and large wounds should be avoided if possible. It’s convention to measure stem diameter at 1.3 m (DBH, diameter at breast height), but sometimes this will need to be changed to avoid these idiosyncratic features.&lt;/p&gt;
-&lt;p&gt;Recording the height of the stem diameter measurement becomes even more important when estimating biomass change over time. If the diameter is measured at different heights in different years then any biomass change estimates will be unrealistic. Tree stems tend to taper upwards, so a diameter measurement at 1 m will generally be larger than a measurement at 1.5 m.&lt;/p&gt;
-&lt;p&gt;In the field instead of using a tape measure every time you want to measure the height of the stem diameter measurement, I recommend using a measuring stick.&lt;/p&gt;
-&lt;p&gt;I use a 2 m long piece of thick walled PVC pipe with duct tape markings every 10 cm, starting from 1 m and ending at 2 m. Many rolls of duct tape are exactly 5 cm wide, so conveniently I can also measure in increments of 5 cm if necessary. I mark 1.3 m using a different colour duct tape to the rest as this is the most common height for diameter measurements. Then I can hold the measuring stick up to each stem and quickly choose the appropriate height for the diameter measurement.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/dbh_stick/dbh_stick_close.jpg&#34;&gt;&lt;img
-          alt=&#34;Close up of the measuring scale on the DBH stick using duct tape.&#34;
-          title=&#34;Close up of the measuring scale on the DBH stick using duct tape.&#34;src=&#34;http://johngodlee.xyz/img/dbh_stick/dbh_stick_close.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/dbh_stick/dbh_stick_full.jpg&#34;&gt;&lt;img
-          alt=&#34;The DBH measuring stick, made from PVC.&#34;
-          title=&#34;The DBH measuring stick, made from PVC.&#34;src=&#34;http://johngodlee.xyz/img/dbh_stick/dbh_stick_full.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;The stick also comes in handy for knocking leaves out of trees for species identification, removing spider’s webs, and probing long grass for snakes. I tend to carry it with me everywhere in the plot.&lt;/p&gt;
-&lt;p&gt;Additionally, I use the stick for other measurements in the plots. Counting tree saplings along 2 m wide belt transects is easy by holding the stick in the middle of the transect. Any sapling which touches the stick is counted.&lt;/p&gt;
-&lt;p&gt;The stick is also useful as a way to make yourself more visible to other people in the plot when the grass is very long. When we arrive at a plot generally the first thing we do is lay out tape measures to mark the plot perimeter. To ensure these tapes are straight it’s necessary to have one person standing at the corner so the person holding the tape can walk in a straight line to them. Waving the bright green measuring stick in the air makes you much more visible. I normally attach some orange flagging tape to the top of the stick, or balance my hat on it to make it even more visible.&lt;/p&gt;
-&lt;p&gt;I’ve gone back and forth on writing this brief post for a few years now. I thought that maybe it was far too obvious that a measuring stick would be useful for measuring the appropriate height for a DBH measurement. What changed my mind was having some early stage PhD students with me on fieldwork last month. They seemed to think it was a genuinely good idea, and they hadn’t already thought of it themselves, so I figured I would share it here.&lt;/p&gt;
 </description>
     </item>
     
