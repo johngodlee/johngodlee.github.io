@@ -6,7 +6,19 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2023-03-13T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2023-03-14T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog post on fieldwork in Ongava Game Reserve</title>
+      <link>http://johngodlee.xyz/posts/2023-03-14-ongava_blog/</link>
+      <pubDate>2023-03-14T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2023-03-14-ongava_blog/</guid>
+      <description>&lt;p&gt;I wrote a blog post for Ongava Research Centre on our recent fieldwork in Ongava Game Reserve, where we established 11 vegetation monitoring plots in dry forest, shrubland, woodland and grassland vegetation:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&#34; target=&#34;_blank&#34;&gt;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&lt;/a&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Importing data layers into Avenza Maps Android app</title>
       <link>http://johngodlee.xyz/posts/2023-03-13-avenza/</link>
@@ -1896,17 +1908,6 @@ $$&lt;/p&gt;
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-</description>
-    </item>
-    
-    <item>
-      <title>Guide for analysing forest canopy photos</title>
-      <link>http://johngodlee.xyz/posts/2022-06-01-canopy_photography/</link>
-      <pubDate>2022-06-01T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2022-06-01-canopy_photography/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;ve been slowly putting together a set of notes on analysing forest canopy photos to measure canopy structure. Most of the guide is focussed on hemispherical photography, but much of the processing chain can be used to analyse digital cover photos taken with a conventional camera as well. I use a combination of ImageJ, R, and shell scripting to analyse the images. I also provide some thoughts on how to take good hemispherical photos in the field, and an ideal set of equipment. The notes can be found in this &lt;a href=&#34;https://github.com/johngodlee/canopy_photo&#34; target=&#34;_blank&#34;&gt;Github repository&lt;/a&gt;
-.&lt;/p&gt;
 </description>
     </item>
     
