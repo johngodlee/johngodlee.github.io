@@ -39,7 +39,7 @@
 <p>So I have a folder full of markdown files in <code>_posts/</code>, each one of which is a blog post. In the YAML metadata at the top I have the type of page, the title, and the date:</p>
 <pre tabindex="0"><code>---
 layout: post
-title: &quot;Rebuilding a bike&quot;
+title: &#34;Rebuilding a bike&#34;
 date: 2018-07-25
 ---
 </code></pre><p>I can use pandoc to convert these markdown files to HTML with a css file to style the HTML. The CSS file can be seen <a href="/files/site_gen/site_gen.css">here</a>
@@ -54,65 +54,65 @@ date: 2018-07-25
 
 <p>To do this on a folder of markdown files I have to name some variables and put it in a for loop:</p>
 <pre tabindex="0"><code># Define location of assets
-css=&quot;site_gen.css&quot;
+css=&#34;site_gen.css&#34;
 
-head=&quot;header.html&quot;
+head=&#34;header.html&#34;
 
 # Pandoc md posts to html with css and proper filenames
 for i in _posts/*.md; do
 	name=$(echo ${i##*/})
-	filename=$(echo &quot;$name&quot; | cut -f 1 -d '.')
-	pandoc -f markdown -t html5 --standalone --css=$css --include-before-body=$head -H $css -o &quot;site/posts/${filename}.html&quot; $i 
+	filename=$(echo &#34;$name&#34; | cut -f 1 -d &#39;.&#39;)
+	pandoc -f markdown -t html5 --standalone --css=$css --include-before-body=$head -H $css -o &#34;site/posts/${filename}.html&#34; $i 
 done
 </code></pre><p>Note that in this version I&rsquo;ve chosen to add the contents of <code>header.html</code> to the top of the main body of each generated HTML file using the <code>--include-before-body</code> command. <code>header.html</code> looks like this:</p>
-<pre tabindex="0"><code>&lt;a class='header' href=&quot;../index.html&quot;&gt;HOME&lt;/a&gt;
+<pre tabindex="0"><code>&lt;a class=&#39;header&#39; href=&#34;../index.html&#34;&gt;HOME&lt;/a&gt;
 </code></pre><p>This adds a link to <code>index.html</code>, the homepage of the site at the top of each blog post.</p>
 <p>I&rsquo;m also adding the contents of the CSS file to the top of the HTML file as a <code>&lt;style&gt;&lt;/style&gt;</code> block, so each page appears with its styling even if it&rsquo;s taken out of the website and emailed for example, using the <code>-H</code> flag.</p>
 <p>Now I need to generate <code>index.html</code>, which is basically going to be a list of the blog posts:</p>
 <pre tabindex="0"><code># Generate index page
 ls -1 site/posts | sort -r | cat | while read string; do 
-	echo -e &quot;&lt;p&gt;\n &lt;h1 class='home'&gt;&lt;a href=posts/$string&gt;$string&lt;/a&gt;&lt;/h1&gt;\n&lt;/p&gt;&quot;
+	echo -e &#34;&lt;p&gt;\n &lt;h1 class=&#39;home&#39;&gt;&lt;a href=posts/$string&gt;$string&lt;/a&gt;&lt;/h1&gt;\n&lt;/p&gt;&#34;
 done &gt; site/index.html 
 
 # Prepend css style to index page
 cat $css site/index.html &gt; $$.tmp &amp;&amp; mv $$.tmp site/index.html
 
 # Delete line containing link to index page
-sed -i '' '/index/d' site/index.html
+sed -i &#39;&#39; &#39;/index/d&#39; site/index.html
 </code></pre><p>So the whole script (<code>gen.sh</code>) now looks like this:</p>
 <pre tabindex="0"><code>#!/bin/bash
 
 # Generate a very simple website from a collection of markdown files
 
 # Start from scratch
-rm -r &quot;site/&quot;
+rm -r &#34;site/&#34;
 
-mkdir &quot;site/&quot;
+mkdir &#34;site/&#34;
 
-mkdir &quot;site/posts/&quot;
+mkdir &#34;site/posts/&#34;
 
 # Define location of assets
-css=&quot;site_gen.css&quot;
+css=&#34;site_gen.css&#34;
 
-head=&quot;header.html&quot;
+head=&#34;header.html&#34;
 
 # Pandoc md posts to html with css and proper filenames
 for i in _posts/*.md; do
 	name=$(echo ${i##*/})
-	filename=$(echo &quot;$name&quot; | cut -f 1 -d '.')
-	pandoc -f markdown -t html5 --standalone --css=$css --include-before-body=$head -H $css -o &quot;site/posts/${filename}.html&quot; $i 
+	filename=$(echo &#34;$name&#34; | cut -f 1 -d &#39;.&#39;)
+	pandoc -f markdown -t html5 --standalone --css=$css --include-before-body=$head -H $css -o &#34;site/posts/${filename}.html&#34; $i 
 done
 
 # Generate index page
 ls -1 site/posts | sort -r | cat | while read string; do 
-	echo -e &quot;&lt;p&gt;\n &lt;h1 class='home'&gt;&lt;a href=posts/$string&gt;$string&lt;/a&gt;&lt;/h1&gt;\n&lt;/p&gt;&quot;
+	echo -e &#34;&lt;p&gt;\n &lt;h1 class=&#39;home&#39;&gt;&lt;a href=posts/$string&gt;$string&lt;/a&gt;&lt;/h1&gt;\n&lt;/p&gt;&#34;
 done &gt; site/index.html 
 
 # Prepend css style to index page
 cat $css site/index.html &gt; $$.tmp &amp;&amp; mv $$.tmp site/index.html
 
 # Delete line containing link to index page
-sed -i '' '/index/d' site/index.html
+sed -i &#39;&#39; &#39;/index/d&#39; site/index.html
 </code></pre><p>and the directory of files looks like this:</p>
 <pre tabindex="0"><code>.
 ├── _posts

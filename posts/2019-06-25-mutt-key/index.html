@@ -32,7 +32,7 @@
 
 <main>
 <p>I wanted to be able to press a key in <code>mutt</code> which would run <code>offlineimap</code> in the background to get new messages, then ask Mutt to put them on screen. This line goes in my <code>.muttrc</code>:</p>
-<pre tabindex="0"><code>macro index,pager @ &quot;&lt;enter-command&gt;unset wait_key&lt;enter&gt;&lt;shell-escape&gt;offlineimap -o -u quiet &amp;&lt;enter&gt;&lt;sync-mailbox&gt;&quot; &quot;Run offlineimap&quot;
+<pre tabindex="0"><code>macro index,pager @ &#34;&lt;enter-command&gt;unset wait_key&lt;enter&gt;&lt;shell-escape&gt;offlineimap -o -u quiet &amp;&lt;enter&gt;&lt;sync-mailbox&gt;&#34; &#34;Run offlineimap&#34;
 </code></pre><p>It defines a macro which can be run in the index or the pager of <code>mutt</code> by pressing the <code>@</code> key.</p>
 <p>First it stops <code>mutt</code> from asking the user to <code>press any key to continue</code> once the shell command is finished.</p>
 <p>Next it invokes <code>offlineimap</code> in the background (<code>&amp;</code>). Then afterwards it syncs <code>mutt</code> with its mailboxes (<code>:sync-mailbox</code>).</p>

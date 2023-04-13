@@ -41,13 +41,13 @@ http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_vlo
  to neatly display the radio station names, then uses <code>sed</code> and <code>grep</code> to send the URL to the ncurses version of VLC, which on macOS at least is stored in <code>/Applications/VLC.app/Contents/MacOS/VLC -I ncurses</code> when VLC is installed using Homebrew.</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/sh
 
-stations=&quot;$HOME/.radio.txt&quot;
+stations=&#34;$HOME/.radio.txt&#34;
 
-sel=$(sed 's/^.*,//' ${stations} | fzf)
+sel=$(sed &#39;s/^.*,//&#39; ${stations} | fzf)
 
-url=$(grep &quot;${sel}&quot; ${stations} | sed 's/,.*$//')
+url=$(grep &#34;${sel}&#34; ${stations} | sed &#39;s/,.*$//&#39;)
 
-vlc &quot;${url}&quot;
+vlc &#34;${url}&#34;
 </code></pre><h2 id="update-2021-04-18">Update 2021-04-18</h2>
 <p>The BBC changed their radio streaming URLs which prompted me to also change how this script worked a bit. The radio streaming URLs are now stored in a .pls file, which makes it more compatible with other music players. I&rsquo;ve included the full .pls file here because these URLs are hard to come by online:</p>
 <pre tabindex="0"><code>playlist
@@ -84,9 +84,9 @@ File10=http://stream-relay-geo.ntslive.net/stream
 
 rfile=~/.radio.pls
 
-station=$(grep '^Title' ${rfile} | sed 's/^Title\([0-9]\+\)=\(.*\)/\1 - \2/' | fzf | sed 's/\(^[0-9]\+\).*/\1/')
+station=$(grep &#39;^Title&#39; ${rfile} | sed &#39;s/^Title\([0-9]\+\)=\(.*\)/\1 - \2/&#39; | fzf | sed &#39;s/\(^[0-9]\+\).*/\1/&#39;)
 
-url=$(grep &quot;File${station}=&quot; $rfile | sed 's/.*=//')
+url=$(grep &#34;File${station}=&#34; $rfile | sed &#39;s/.*=//&#39;)
 
 /Applications/VLC.app/Contents/MacOS/VLC -I rc --no-color $url
 </code></pre><h2 id="update-2021-06-03">Update 2021-06-03</h2>
@@ -95,13 +95,13 @@ url=$(grep &quot;File${station}=&quot; $rfile | sed 's/.*=//')
 
 rfile=~/.radio.pls
 
-grep '^Title' ${rfile} |\
-	sed 's/^Title\([0-9]\+\)=\(.*\)/\1 - \2/' |\
-	fzf --bind=&quot;enter:execute;echo {} | sed 's/\(^[0-9]\+\).*/\1/' | 
-	sed 's/\(.*\)/File\1=/' |
+grep &#39;^Title&#39; ${rfile} |\
+	sed &#39;s/^Title\([0-9]\+\)=\(.*\)/\1 - \2/&#39; |\
+	fzf --bind=&#34;enter:execute;echo {} | sed &#39;s/\(^[0-9]\+\).*/\1/&#39; | 
+	sed &#39;s/\(.*\)/File\1=/&#39; |
 	grep -f - ${rfile} |
-	sed 's/.*=//' |
-	mpv --playlist=- ;&quot;
+	sed &#39;s/.*=//&#39; |
+	mpv --playlist=- ;&#34;
 </code></pre>
 </main>
 

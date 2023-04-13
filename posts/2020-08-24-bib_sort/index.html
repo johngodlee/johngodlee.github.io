@@ -38,10 +38,10 @@
 # $1 = .tex file to find citations 
 # $2 = .bib file to grab entries
 
-match=($(rg -o '\\cite.*?\{.*?\}' $1 | sed -E &quot;s/\\\\cite.*?\{(.*)\}/\1/g&quot; | sed 's/,\s\+/\n/g' | sort | uniq))
+match=($(rg -o &#39;\\cite.*?\{.*?\}&#39; $1 | sed -E &#34;s/\\\\cite.*?\{(.*)\}/\1/g&#34; | sed &#39;s/,\s\+/\n/g&#39; | sort | uniq))
 
-for i in &quot;${match[@]}&quot;; do 
-	rg -N --color never --multiline --multiline-dotall &quot;\{$i.*?^\}&quot; $2
+for i in &#34;${match[@]}&#34;; do 
+	rg -N --color never --multiline --multiline-dotall &#34;\{$i.*?^\}&#34; $2
 done 
 </code></pre><p>The script takes two arguments, the first is a <code>.tex</code> file which is searched to find all instances or <code>\citep{.*}</code>, <code>\citealt{.*}</code> etc., the second is a <code>.bib</code> file which is used to grab the references found in the <code>.tex</code> file.</p>
 <p>Going line by line, first I create an array variable which contains all the BibTeX reference keys from the <code>.tex</code> file. It sorts these entries alphabetically and removes duplicates to create a tidy list. Next I loop over the array variable and search for each BibTeX entry in the <code>.bib</code> file, which is then printed to <code>stdout</code> so the user can do what they want with it, usually send to a new <code>.bib</code> file.</p>

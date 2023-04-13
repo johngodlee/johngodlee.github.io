@@ -40,9 +40,9 @@ Cameron	Cameron Green	cameron@gmail.com
 </code></pre><p>I used a shell script like this, to manipulate this format into what Mutt likes:</p>
 <pre tabindex="0"><code>#!/bin/bash
 
-address=$(cat ~/.addressbook | grep -v &quot;^ :&quot;) 
+address=$(cat ~/.addressbook | grep -v &#34;^ :&#34;) 
 
-book_length=$(echo &quot;$address&quot; | wc -l)
+book_length=$(echo &#34;$address&#34; | wc -l)
 
 rm ~/.mutt/aliases
 touch ~/.mutt/aliases
@@ -50,32 +50,32 @@ touch ~/.mutt/aliases
 # Create alias for start of every line
 alias=$(for i in `seq 1 $book_length`;
 do 
-    echo 'alias '
+    echo &#39;alias &#39;
 done)
 
 # Get nickname from addressbook
-nickname=$(echo &quot;$address&quot; | awk '{print $1}') 
+nickname=$(echo &#34;$address&#34; | awk &#39;{print $1}&#39;) 
 
 # Get full name from addressbook
 # everything before @, then before last space, then remove first word 
-fullname=$(echo &quot;$address&quot; | grep -o '^.*\S@' | gsed  's/\S*$//g' | gsed 's/^\w*\ *//')
+fullname=$(echo &#34;$address&#34; | grep -o &#39;^.*\S@&#39; | gsed  &#39;s/\S*$//g&#39; | gsed &#39;s/^\w*\ *//&#39;)
 
 # Get email address from addressbook
 # Get email address, then add space after comma
-email=$(echo &quot;$address&quot; | grep -E -o &quot;\b\S+@\S+\.[A-Za-z]{2,6}\b&quot; | gsed 's/, */, /g')
+email=$(echo &#34;$address&#34; | grep -E -o &#34;\b\S+@\S+\.[A-Za-z]{2,6}\b&#34; | gsed &#39;s/, */, /g&#39;)
 
 opb=$(for i in `seq 1 $book_length`;
 do 
-    echo '&lt;'
+    echo &#39;&lt;&#39;
 done)
 
 clb=$(for i in `seq 1 $book_length`;
 do
-    echo '&gt;'
+    echo &#39;&gt;&#39;
 done)
 
 # Paste together
-paste  -d '\0' &lt;(echo &quot;$alias&quot;) &lt;(echo &quot;$nickname&quot;) &lt;(echo &quot;$fullname&quot;) &lt;(echo &quot;$opb&quot;) &lt;(echo &quot;$email&quot;) &lt;(echo &quot;$clb&quot;)  | gsed 's/\s+*/ /g' &gt; ~/.mutt/aliases 
+paste  -d &#39;\0&#39; &lt;(echo &#34;$alias&#34;) &lt;(echo &#34;$nickname&#34;) &lt;(echo &#34;$fullname&#34;) &lt;(echo &#34;$opb&#34;) &lt;(echo &#34;$email&#34;) &lt;(echo &#34;$clb&#34;)  | gsed &#39;s/\s+*/ /g&#39; &gt; ~/.mutt/aliases 
 </code></pre><p>The outputted alias file looks like this:</p>
 <pre tabindex="0"><code>alias Aidan Aidan Dude &lt;aidan.dude@email.com&gt;
 alias Alan_H Alan Holey &lt;alan.holey@email.com&gt;

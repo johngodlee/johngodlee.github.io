@@ -114,7 +114,7 @@ hA HTTP link to another server	URL:http://sdf.lonestar.org/
 </tbody>
 </table>
 <p>One extra itemtype that I haven&rsquo;t found documented ANYWHERE is <code>=</code>. This can be used to start a shell command on the server. For example, to show the current date and time:</p>
-<pre tabindex="0"><code class="language-gopher" data-lang="gopher">=echo &quot;`date`&quot;
+<pre tabindex="0"><code class="language-gopher" data-lang="gopher">=echo &#34;`date`&#34;
 </code></pre><p>This could come in really useful if hosting a server on your own machine, where you could point the shell to a script to do basically anything you want. This makes gopher more extensible than I originally thought. Maybe if Gopher had remained popular for a long time, we might have ended up with gopher developers abusing <code>=</code> to gather data on users and subversively advertise to us.</p>
 <p>The full syntax of the whole line is, for a text file for example:</p>
 <pre tabindex="0"><code class="language-gopher" data-lang="gopher">0Description of file&lt;TAB&gt;/path/to/content.md&lt;TAB&gt;domain.org&lt;TAB&gt;port_number
@@ -133,7 +133,7 @@ hA HTTP link to another server	URL:http://sdf.lonestar.org/
 <pre tabindex="0"><code class="language-gopher" data-lang="gopher">i      _       _            _         _____           _ _           	/
 i     | |     | |          | |       / ____|         | | |          	/
 i     | | ___ | |__  _ __  | |      | |  __  ___   __| | | ___  ___ 	/
-i _   | |/ _ \| '_ \| '_ \ | |      | | |_ |/ _ \ / _` | |/ _ \/ _ \	/
+i _   | |/ _ \| &#39;_ \| &#39;_ \ | |      | | |_ |/ _ \ / _` | |/ _ \/ _ \	/
 i| |__| | (_) | | | | | | || |___ _ | |__| | (_) | (_| | |  __/  __/	/
 i \____/ \___/|_| |_|_| |_||_____(_) \_____|\___/ \__,_|_|\___|\___|	/
                                                                        
@@ -188,12 +188,12 @@ for (( i=${#all[@]}-1; i&gt;=0; i-- )); do
 done
 
 # Get 10 most recent posts
-recent=&quot;${rev_all[@]:0:10}&quot;
+recent=&#34;${rev_all[@]:0:10}&#34;
 
 # Add recent post links to gophermap
 for i in $recent; do
 	line=$(head -n 1 $i)
-	printf &quot;0$line\t$i\n&quot; &gt;&gt; gophermap
+	printf &#34;0$line\t$i\n&#34; &gt;&gt; gophermap
 done
 </code></pre><p>Those were just simplified examples, it&rsquo;s easy to add header material from another file or format the link text differently.</p>
 <h1 id="update-2019_12_25">Update 2019_12_25</h1>

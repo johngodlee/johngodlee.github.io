@@ -40,27 +40,27 @@
 </code></pre><p>The <code>linkhandler</code> looks like this:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
 
-case &quot;$1&quot; in
+case &#34;$1&#34; in
 	*mkv|*webm|*mp4|*mp3|*flac|*opus|*mp3?source*|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*)
-		youtube-dl -o &quot;~/Downloads/%(title)s.%(ext)s&quot; &quot;$1&quot; ;;
+		youtube-dl -o &#34;~/Downloads/%(title)s.%(ext)s&#34; &#34;$1&#34; ;;
 	*png|*jpg|*jpeg|*gif|*svg)
-		wget -P ~/Downloads/ &quot;$1&quot;
-		open -a preview &quot;Downloads/${1##*/}&quot; ;;
+		wget -P ~/Downloads/ &#34;$1&#34;
+		open -a preview &#34;Downloads/${1##*/}&#34; ;;
 	*pdf)
-		wget -P ~/Downloads/ &quot;$1&quot;
-		open -a skim &quot;Downloads/${1##*/}&quot; ;;
+		wget -P ~/Downloads/ &#34;$1&#34;
+		open -a skim &#34;Downloads/${1##*/}&#34; ;;
 	*)
 		open -a qutebrowser $1 ;;
 esac
 </code></pre><p>It takes the URL as its first and only argument, provided by <code>urlview</code> then depending on the name of the URL it performs different actions using a <code>case</code> statement. If the URL ends in common video or audio extensions (<code>*mkv, *webm ...</code>) it uses <code>youtube-dl</code> to download the file in the URL. If it is an image it <code>wget</code>s it and then opens it in Preview.app, and if it&rsquo;s a <code>.pdf</code> it does the same but opens it in <code>skim</code>. Finally, if none of the above tests were true, it simply opens the link in my web browser, <code>qutebrowser</code>.</p>
 <p>To use urlview in <code>newsboat</code> I can set some options in <code>~/.config/newsboat/config</code>:</p>
-<pre tabindex="0"><code>external-url-viewer &quot;urlview&quot;
+<pre tabindex="0"><code>external-url-viewer &#34;urlview&#34;
 bind-key U show-urls
 </code></pre><p>This allows me to press <code>U</code> in the article view of <code>newsboat</code> to view the URLs and use <code>linkhandler</code> to determine how they are opened.</p>
 <p>The nice thing about this setup with <code>urlview</code> is I can replicate it across many programs. In <code>vim</code> I can put this in my <code>~/.vimrc</code> to use <code>urlview</code> by pressing <code>&lt;Leader&gt;u</code>:</p>
 <pre tabindex="0"><code>nnoremap &lt;Leader&gt;u :w&lt;Home&gt;silent &lt;End&gt; !urlview&lt;CR&gt;
 </code></pre><p>I can also use it in Mutt by adding this to my <code>muttrc</code>:</p>
-<pre tabindex="0"><code>macro index,pager U &quot;&lt;enter-command&gt;set pipe_decode = yes&lt;enter&gt;&lt;pipe-message&gt;urlview&lt;enter&gt;&lt;enter-command&gt;set pipe_decode = no&lt;enter&gt;&quot;&quot;view URLs&quot;
+<pre tabindex="0"><code>macro index,pager U &#34;&lt;enter-command&gt;set pipe_decode = yes&lt;enter&gt;&lt;pipe-message&gt;urlview&lt;enter&gt;&lt;enter-command&gt;set pipe_decode = no&lt;enter&gt;&#34;&#34;view URLs&#34;
 </code></pre><p>and there is a <a href="https://github.com/tmux-plugins/tmux-urlview" target="_blank">&lt;code&gt;tmux&lt;/code&gt; plugin</a>
  as well! Though I haven&rsquo;t looked at that properly yet.</p>
 

@@ -32,16 +32,16 @@
 
 <main>
 <p>I have been using <a href="https://github.com/Tishacy/SciDownl" target="_blank">scidownl</a>
- to download scientific papers using that I find on the web. It&rsquo;s quicker than using the journals' own pdf download interface, which often requires multiple button clicks and validating through my university.</p>
+ to download scientific papers using that I find on the web. It&rsquo;s quicker than using the journals&rsquo; own pdf download interface, which often requires multiple button clicks and validating through my university.</p>
 <p>With scidownl I can copy a DOI that I find on the web and download the paper:</p>
-<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">scidownl -D &quot;10.2307/3236848&quot;
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">scidownl -D &#34;10.2307/3236848&#34;
 </code></pre><p>To further streamline the process, I wrote a little keybinding for <a href="https://qutebrowser.org/" target="_blank">qutebrowser</a>
 , my web browser, which allows me to highlight a DOI on the webpage, hit the keybinding (<code>,d</code>), and download the paper to my <code>~/Downloads</code> directory in the background for reading later:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">config</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">bind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;,d&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;enter-mode caret ;; yank selection ;; spawn ~/bin/scidownl_qb </span><span style="color:#4e9a06">{clipboard}</span><span style="color:#4e9a06">&#39;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p><code>scidownl_qb</code> is just a shell script which downloads the file to the right location:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">config</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">bind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;,d&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;enter-mode caret ;; yank selection ;; spawn ~/bin/scidownl_qb </span><span style="color:#4e9a06">{clipboard}</span><span style="color:#4e9a06">&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p><code>scidownl_qb</code> is just a shell script which downloads the file to the right location:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/usr/bin/env sh
 
-/usr/local/bin/./scidownl -D &quot;$1&quot; -o /Users/johngodlee/Downloads
+/usr/local/bin/./scidownl -D &#34;$1&#34; -o /Users/johngodlee/Downloads
 </code></pre><p>Note that I had to include the full path to the scidownl executable in the shell script. This is because <a href="https://github.com/qutebrowser/qutebrowser/issues/4273" target="_blank">qutebrowser uses a different &lt;code&gt;$PATH&lt;/code&gt; to the rest of the OS</a>
 .</p>
 

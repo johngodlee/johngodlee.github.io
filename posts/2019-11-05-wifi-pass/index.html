@@ -35,28 +35,28 @@
 <p>The script is below:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
 
-ssid=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep &quot; SSID:&quot; | awk -F': ' '{print $2}')
+ssid=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep &#34; SSID:&#34; | awk -F&#39;: &#39; &#39;{print $2}&#39;)
 
-while getopts &quot;:n:&quot; opt; do
+while getopts &#34;:n:&#34; opt; do
 	case $opt in 
 		n)
 			# If flag is given with argument
-			ssid=&quot;$OPTARG&quot;
+			ssid=&#34;$OPTARG&#34;
 			;;
 		\?)
 			# If incorrect flag given
-			echo &quot;-$OPTARG is not a valid option&quot; &gt;&amp;2
+			echo &#34;-$OPTARG is not a valid option&#34; &gt;&amp;2
 			exit 1
 			;;
 		:)
 			# If flag is given without argument
-			echo &quot;-$OPTARG requires an argument&quot; &gt;&amp;2
+			echo &#34;-$OPTARG requires an argument&#34; &gt;&amp;2
 			exit 1
 			;;
 	esac
 done
 
-security find-generic-password -wga &quot;$ssid&quot;
+security find-generic-password -wga &#34;$ssid&#34;
 </code></pre><p>If I run <code>./wifi.sh -n SSID</code> the script will look for a network with the SSID <code>SSID</code> then return its password. If I run <code>./wifi.sh -n</code> I will get the response: <code>-n requires an argument</code>. If I run <code>./wifi.sh -a</code> I will get the response: <code>-a is not a valid option</code>. If I run <code>./wifi.sh</code> I will get the password for the WiFi network I am currently attached to.</p>
 
 </main>

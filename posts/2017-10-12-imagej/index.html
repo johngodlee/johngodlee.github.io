@@ -98,14 +98,14 @@
 // 120.006px/cm a4-300dpi.
 // Change `size min` to analyse smaller objects, but increase noise
 
-run(&quot;8-bit&quot;);
-setAutoThreshold(&quot;Default&quot;);
-//run(&quot;Threshold...&quot;);
+run(&#34;8-bit&#34;);
+setAutoThreshold(&#34;Default&#34;);
+//run(&#34;Threshold...&#34;);
 //setThreshold(0, 146);
-setOption(&quot;BlackBackground&quot;, false);
-run(&quot;Convert to Mask&quot;);
-run(&quot;Set Scale...&quot;, &quot;distance=120.006 known=1 pixel=1 unit=cm global&quot;);
-run(&quot;Analyze Particles...&quot;, &quot;size=0.70-Infinity show=Outlines display add&quot;);
+setOption(&#34;BlackBackground&#34;, false);
+run(&#34;Convert to Mask&#34;);
+run(&#34;Set Scale...&#34;, &#34;distance=120.006 known=1 pixel=1 unit=cm global&#34;);
+run(&#34;Analyze Particles...&#34;, &#34;size=0.70-Infinity show=Outlines display add&#34;);
 setOption(“Display Label”, true)
 </code></pre><ol start="5">
 <li>Under &ldquo;Output Format&rdquo; selecgt &ldquo;8 bit TIFF&rdquo; to generate a file for each image containing outlines of all objects analysed. Use these to check that the macro worked properly.</li>

@@ -58,41 +58,41 @@ open -a Preview.app
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">open -a preview example.pdf
 </code></pre><p>This same syntax can be applied to <code>rifle.conf</code> to open specific apps for specific file types with Ranger.</p>
 <p>The simplest condition to use is the file extension (<code>ext</code>):</p>
-<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">ext pdf = open -a preview &quot;$@&quot;
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">ext pdf = open -a preview &#34;$@&#34;
 </code></pre><p>Where <code>&quot;$@&quot;</code> is the file path of the file highlighted in Ranger The above there says, if the file extension is <code>.pdf</code>, open the file with Preview.app.</p>
 <h2 id="regex">Regex</h2>
 <p>Regular expressions can be used to make more complex conditions, e.g. using <code>|</code> to include multiple file extensions in one line, or <code>[]</code> and <code>?</code> to list similar extensions without repetition. Try to work out what the conditions below mean.</p>
-<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">ext jpe?g|png|gif = open -a preview &quot;$@&quot;
-ext od[dfgpst] = open -a libreoffice &quot;$@&quot;
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">ext jpe?g|png|gif = open -a preview &#34;$@&#34;
+ext od[dfgpst] = open -a libreoffice &#34;$@&#34;
 </code></pre><h2 id="mime-types">MIME types</h2>
 <p>IME types are a good last resort for catching any files with unusual extensions, I normally put them at the bottom of a list of preferred applications, to open with a program I know will be installed, for example:</p>
-<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">ext xml|json|py|pl|rb|js|sh|php|m[ark]d[own]|txt = vim &quot;$@&quot; 
-ext tex = open -a texworks &quot;$@&quot;
-mime ^text = nano &quot;$@&quot;
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">ext xml|json|py|pl|rb|js|sh|php|m[ark]d[own]|txt = vim &#34;$@&#34; 
+ext tex = open -a texworks &#34;$@&#34;
+mime ^text = nano &#34;$@&#34;
 </code></pre><h2 id="the-has-condition">The <code>has</code> condition</h2>
 <p>For the majority of GUI applications on a Mac, the <code>has</code> condition does not work, for the same reason that calling applications directly from the terminal by typing their name doesn&rsquo;t work, because Ranger can&rsquo;t find them. As far as I know, there isn&rsquo;t any way to get around this. Maybe if you could check for the presence of the named directory in <code>~/Applications</code>, but I haven&rsquo;t worked that out yet.</p>
 <h2 id="taking-advantage-of-launchservices-defaults">Taking advantage of LaunchServices defaults</h2>
 <p>Finally, a good line to keep at the end of <code>rifle.conf</code> is:</p>
-<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">flag f = open &quot;$@&quot;
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">flag f = open &#34;$@&#34;
 </code></pre><p>This takes advantage of <code>open</code> using macOS <code>LaunchServices</code> to decide the default application when the user doesn&rsquo;t specify one using <code>-a</code>. This should catch everything that you haven&rsquo;t listed specifically. I suppose you could just have a <code>rifle.conf</code> with only this line and everything would still work as if you were using a GUI, files would be opened with the default Mac GUI application as if you had double clicked on it in <code>Finder</code>.</p>
 <h2 id="formatting">Formatting</h2>
 <p>To increase readability I try to split my <code>rifle.conf</code> into sections, so I don&rsquo;t get mixed up with my program heirarchies, for example:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#-------------------------------------------
 # Web material
 #-------------------------------------------
-ext x?html?, X, flag f = open -a Safari &quot;$@&quot;
-ext x?html?, has w3m, terminal = w3m &quot;$@&quot;
+ext x?html?, X, flag f = open -a Safari &#34;$@&#34;
+ext x?html?, has w3m, terminal = w3m &#34;$@&#34;
 
 #-------------------------------------------
 # Text files
 #-------------------------------------------
-ext xml|json|tex|py|pl|rb|js|sh|php|m[ark]d[own]|txt = vim &quot;$@&quot;
-mime ^text = vim &quot;$@&quot;
+ext xml|json|tex|py|pl|rb|js|sh|php|m[ark]d[own]|txt = vim &#34;$@&#34;
+mime ^text = vim &#34;$@&#34;
 
 #--------------------------------------------
 # Audio without X
 #-------------------------------------------
-ext mp3 = /Applications/VLC.app/Contents/MacOS/VLC --intf ncurses  &quot;$@&quot;
+ext mp3 = /Applications/VLC.app/Contents/MacOS/VLC --intf ncurses  &#34;$@&#34;
 </code></pre><h1 id="a-final-tip">A final tip</h1>
 <p>If you find yourself switching between Finder and Ranger a lot, especially as you transition to the terminal, adding this keybinding to <code>~/.config/ranger/rc.conf</code> will allow you to open Finder on the highlighted file with <code>%</code>:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">map % shell open -R %s

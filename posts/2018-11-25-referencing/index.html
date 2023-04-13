@@ -71,7 +71,7 @@
 </code></pre><p>Whenever I read an article of interest, or want to save any reference for that matter, it goes in <code>lib.bib</code>. I normally keep notes for the articles I&rsquo;ve read in a separate set of files related to whatever project I&rsquo;m working on, so I search those to find references that I can&rsquo;t quite remember the details of. Papers are all stored in a <code>papers/</code> directory which gets backed up regularly, it&rsquo;s just a flat directory. I suppose I could make it into a heirarchy based on theme, but I feel that would get complicated too fast, for example, if a paper should be included in two themes, or papers should be retro-actively added to emerging themes.</p>
 <p>Typing all the BibTeX markup by hand is very laborious. I use Vim for text editing and I felt it was time to learn about snippets, which are just small chunks of customisable text that can be entered into documents by typing a keyword and hitting tab. I use the &lsquo;SirVer/ultisnips&rsquo; plugin, which you can find <a href="https://github.com/SirVer/ultisnips" target="_blank">here</a>
 . An example of a .bib snippet that I use to generate an article template:</p>
-<pre tabindex="0"><code>snippet article &quot;Bibtex for article&quot; b
+<pre tabindex="0"><code>snippet article &#34;Bibtex for article&#34; b
 @article{$1,
   author = {$2},
   title = {$3},
@@ -85,7 +85,7 @@
 }
 endsnippet
 </code></pre><p>The <code>$1</code> codes are placeholders which are filled by the user, these placeholders can be quickly traversed using <code>C-l</code> and <code>C-h</code>. Some, like the page numbers, contain example text to remind me how to format certain inputs. Here is the snippet for a book:</p>
-<pre tabindex="0"><code>snippet book &quot;Bibtex for book&quot; b
+<pre tabindex="0"><code>snippet book &#34;Bibtex for book&#34; b
 @book{$1,
   ${2:author/editor} = {$3},
   title = {$4},
@@ -95,13 +95,13 @@ endsnippet
 }
 endsnippet
 </code></pre><p>Here are the <code>.vimrc</code> settings I have for UltiSnips:</p>
-<pre tabindex="0"><code>let g:UltiSnipsExpandTrigger=&quot;&lt;tab&gt;&quot;
-let g:UltiSnipsJumpForwardTrigger=&quot;&lt;c-l&gt;&quot;
-let g:UltiSnipsJumpBackwardTrigger=&quot;&lt;c-h&gt;&quot;
+<pre tabindex="0"><code>let g:UltiSnipsExpandTrigger=&#34;&lt;tab&gt;&#34;
+let g:UltiSnipsJumpForwardTrigger=&#34;&lt;c-l&gt;&#34;
+let g:UltiSnipsJumpBackwardTrigger=&#34;&lt;c-h&gt;&#34;
 
-let g:UltiSnipsEditSplit=&quot;vertical&quot;
+let g:UltiSnipsEditSplit=&#34;vertical&#34;
 
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/Ultisnips']
+let g:UltiSnipsSnippetDirectories=[$HOME.&#39;/.vim/Ultisnips&#39;]
 </code></pre>
 </main>
 

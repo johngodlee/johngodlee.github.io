@@ -33,35 +33,35 @@
 <main>
 <p>I had a list of species names written up by a colleague, but the colleague had abbreviated subsequent adjacent instances of a genus in the list to the first letter of the genus with a dot after it, which is common in written prose, but is pretty daft in a dataset.</p>
 <p>Instead of going through and manually writing in all the genus names, I wrote a function in R to do it for me:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">fill.genus</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">abbrev</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;.&#34;</span><span style="color:#000;font-weight:bold">){</span>
-	<span style="color:#000">rel_enc</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">as.character</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">))</span>
-	<span style="color:#000">empty</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">which</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\\.&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">rel_enc</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">value</span><span style="color:#000;font-weight:bold">))</span>
-	<span style="color:#000">rel_enc</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">values[empty]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rel_enc</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">value[empty</span><span style="color:#0000cf;font-weight:bold">-1</span><span style="color:#000">]</span>
-	<span style="color:#000">inverse.rle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rel_enc</span><span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><p>So if the dataset looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">genus</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Tapiphyllum&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Terminalia&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;T.&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#4e9a06">&#34;Tortuga&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#4e9a06">&#34;T.&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Vangueriopsis&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;V.&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;V.&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Xeroderris&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Xylopia&#34;</span><span style="color:#000;font-weight:bold">,</span>
-</code></pre></div><p>The output of <code>fill.genus(genus)</code> would look like:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Tapiphyllum&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Terminalia&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Terminalia&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#4e9a06">&#34;Tortuga&#34;</span><span style="color:#000;font-weight:bold">,</span>
-    <span style="color:#4e9a06">&#34;Tortuga&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Vangueriopsis&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Vangueriopsis&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Vangueriopsis&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Xeroderris&#34;</span><span style="color:#000;font-weight:bold">,</span>
-	<span style="color:#4e9a06">&#34;Xylopia&#34;</span><span style="color:#000;font-weight:bold">,</span>
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">fill.genus</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">abbrev</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;.&#34;</span><span style="color:#000;font-weight:bold">){</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">rel_enc</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">as.character</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">empty</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">which</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\\.&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">rel_enc</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">value</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">rel_enc</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">values[empty]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rel_enc</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">value[empty</span><span style="color:#0000cf;font-weight:bold">-1</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">inverse.rle</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rel_enc</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>So if the dataset looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">genus</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Tapiphyllum&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Terminalia&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;T.&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;Tortuga&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;T.&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Vangueriopsis&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;V.&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;V.&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Xeroderris&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Xylopia&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span></code></pre></div><p>The output of <code>fill.genus(genus)</code> would look like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Tapiphyllum&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Terminalia&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Terminalia&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;Tortuga&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;Tortuga&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Vangueriopsis&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Vangueriopsis&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Vangueriopsis&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Xeroderris&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#4e9a06">&#34;Xylopia&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span></code></pre></div>
 </main>
 
   <footer>

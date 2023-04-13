@@ -437,8 +437,8 @@ shopt -s nullglob
 # For each image
 for i in img_full/*/*.{jpg,JPG,jpeg,png,PNG}; do
 
-	# If the directory in the compressed images directory doesn't exist, create it
-	new_dir=$(dirname ${i} | sed &quot;s/img_full/img/g&quot;)
+	# If the directory in the compressed images directory doesn&#39;t exist, create it
+	new_dir=$(dirname ${i} | sed &#34;s/img_full/img/g&#34;)
 
 	if [ ! -d $new_dir ]; then
   		mkdir -p $new_dir;
@@ -447,7 +447,7 @@ for i in img_full/*/*.{jpg,JPG,jpeg,png,PNG}; do
 	echo $dir
 
 	# Create new file path for output
-	new_path=$(echo &quot;${i}&quot; | sed &quot;s/img_full/img/g&quot;)
+	new_path=$(echo &#34;${i}&#34; | sed &#34;s/img_full/img/g&#34;)
 
 	echo $new_path
 

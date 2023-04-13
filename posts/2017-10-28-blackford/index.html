@@ -32,22 +32,22 @@
 
 <main>
 <p>At the weekend I took the train from Edinburgh to Bridge of Allan and went for a cycle with a friend. We went from Bridge of Allan along the Sheriffmuir Road to Blackford, a small village along the A9. Here is an elevation profile and the R code I used to make it:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#8f5902;font-style:italic"># Plotting elevation profile Bridge of Allan to Blackford</span>
-<span style="color:#8f5902;font-style:italic"># Data from https://www.doogal.co.uk/RouteElevation.php</span>
-
-<span style="color:#8f5902;font-style:italic"># Packages</span>
-<span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
-
-<span style="color:#8f5902;font-style:italic"># Import data</span>
-<span style="color:#000">route</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">read.csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;route.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000">str</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">route</span><span style="color:#000;font-weight:bold">)</span>
-
-<span style="color:#8f5902;font-style:italic"># Make plot</span>
-<span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">route</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">distance_km</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">elevation_m</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
-	<span style="color:#000">geom_area</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;#4BA8AD&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">alpha</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.7</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
-	<span style="color:#000">geom_line</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
-	<span style="color:#000">theme_bw</span><span style="color:#000;font-weight:bold">()</span>
-</code></pre></div><figure><a href="/img_full/blackford/elev.png"><img
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Plotting elevation profile Bridge of Allan to Blackford</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Data from https://www.doogal.co.uk/RouteElevation.php</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Import data</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">route</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">read.csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;route.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">str</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">route</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Make plot</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">route</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">distance_km</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">elevation_m</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">geom_area</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;#4BA8AD&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">alpha</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.7</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">geom_line</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">theme_bw</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><figure><a href="/img_full/blackford/elev.png"><img
           alt="Elevation profile"
           title="Elevation profile"src="/img/blackford/elev.png" 
       /></a></figure>

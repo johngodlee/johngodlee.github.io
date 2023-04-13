@@ -136,9 +136,9 @@
 
 <p>Just to prove how tiny the files are, here is a breakdown of their file sizes. Also, I&rsquo;ve been learning AWK:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">du -b * |\
-awk '
-	BEGIN {printf(&quot;%20s  %5s\n&quot;, &quot;file&quot;, &quot;bytes&quot;)} 
-	{printf(&quot;%20s  %5s\n&quot;,  $2, $1)}' |\
+awk &#39;
+	BEGIN {printf(&#34;%20s  %5s\n&#34;, &#34;file&#34;, &#34;bytes&#34;)} 
+	{printf(&#34;%20s  %5s\n&#34;,  $2, $1)}&#39; |\
 sort -nk2
 </code></pre><pre tabindex="0"><code>                file  bytes
  small_cyan_tile.gif     69

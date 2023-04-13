@@ -54,54 +54,54 @@
 └── test.tex
 </code></pre><p>At the top level I have the <code>Makefile</code>, <code>test.tex</code> and <code>test.bib</code> which have the text and references for my report, respectively. Below that I have a directory containing R scripts called <code>analysis</code> with subdirectories grouped by what the output type of the R script is. I also have currently empty directories which will eventually hold Figures (<code>fig</code>) and LaTeX formatted tables (<code>tab</code>) after the <code>Makefile</code> has run.</p>
 <p>This is the <code>Makefile</code> I came up with:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-make" data-lang="make"><span style="color:#8f5902;font-style:italic"># LaTeX Makefile
-</span><span style="color:#8f5902;font-style:italic"></span>
-<span style="color:#8f5902;font-style:italic"># Basic TeX file prefix
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">PROJ</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">test</span>
-
-<span style="color:#8f5902;font-style:italic"># R input paths for figures and tables
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">RIPATH</span> <span style="color:#ce5c00;font-weight:bold">=</span> analysis/fig
-<span style="color:#000">RTPATH</span> <span style="color:#ce5c00;font-weight:bold">=</span> analysis/tab
-
-<span style="color:#8f5902;font-style:italic"># Output paths for generated figures and tables
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">IPATH</span> <span style="color:#ce5c00;font-weight:bold">=</span> img
-<span style="color:#000">TPATH</span> <span style="color:#ce5c00;font-weight:bold">=</span> tab
-
-<span style="color:#8f5902;font-style:italic"># Gather files from input paths
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">RIFILES</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">$(</span>wildcard <span style="color:#204a87;font-weight:bold">$(</span>RIPATH:<span style="color:#ce5c00;font-weight:bold">=</span>/*.R<span style="color:#204a87;font-weight:bold">))</span>
-<span style="color:#000">RTFILES</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">$(</span>wildcard <span style="color:#204a87;font-weight:bold">$(</span>RTPATH:<span style="color:#ce5c00;font-weight:bold">=</span>/*.R<span style="color:#204a87;font-weight:bold">))</span>
-
-<span style="color:#8f5902;font-style:italic"># Create paths of output .pdf files by changing suffix from .R to .pdf
-</span><span style="color:#8f5902;font-style:italic"># and prefix from `analysis` (RPATH) to `img` (IPATH)
-</span><span style="color:#8f5902;font-style:italic"># These files don&#39;t exist yet but the list of files in FIGS is needed 
-</span><span style="color:#8f5902;font-style:italic"># as a dependency for $(PROJ).pdf  
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">FIGS</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">$(</span>subst <span style="color:#204a87;font-weight:bold">$(</span>RIPATH<span style="color:#204a87;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">$(</span>IPATH<span style="color:#204a87;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">$(</span>RIFILES:.R<span style="color:#ce5c00;font-weight:bold">=</span>.pdf<span style="color:#204a87;font-weight:bold">))</span>
-
-<span style="color:#8f5902;font-style:italic"># Create paths of output table files by changing suffixes and prefixes,
-</span><span style="color:#8f5902;font-style:italic"># same as above
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">TABS</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">$(</span>subst <span style="color:#204a87;font-weight:bold">$(</span>RTPATH<span style="color:#204a87;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">$(</span>TPATH<span style="color:#204a87;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">$(</span>RTFILES:.R<span style="color:#ce5c00;font-weight:bold">=</span>.tex<span style="color:#204a87;font-weight:bold">))</span>
-
-<span style="color:#8f5902;font-style:italic"># Main 
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">all</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">PROJ</span><span style="color:#204a87;font-weight:bold">)</span>.<span style="color:#000">pdf</span> 
-
-<span style="color:#8f5902;font-style:italic"># Create pdf
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">$(PROJ).pdf</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">PROJ</span><span style="color:#204a87;font-weight:bold">)</span>.<span style="color:#000">tex</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">FIGS</span><span style="color:#204a87;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">TABS</span><span style="color:#204a87;font-weight:bold">)</span>
-	latexmk -pdf -quiet -bibtex <span style="color:#204a87;font-weight:bold">$(</span>PROJ<span style="color:#204a87;font-weight:bold">)</span>.tex
-
-<span style="color:#8f5902;font-style:italic"># Create figures
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">$(IPATH)/%.pdf</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">RIPATH</span><span style="color:#204a87;font-weight:bold">)</span>/%.<span style="color:#000">R</span>
-	Rscript $&lt;
-
-<span style="color:#8f5902;font-style:italic"># Create tables
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">$(TPATH)/%.tex</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">RTPATH</span><span style="color:#204a87;font-weight:bold">)</span>/%.<span style="color:#000">R</span>
-	Rscript $&lt;
-
-<span style="color:#8f5902;font-style:italic"># Remove generated latex files and generated figures and tables
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">clean</span><span style="color:#ce5c00;font-weight:bold">:</span>
-	latexmk -C 
-	rm -f <span style="color:#204a87;font-weight:bold">$(</span>IPATH<span style="color:#204a87;font-weight:bold">)</span>/*.pdf
-	rm -f <span style="color:#204a87;font-weight:bold">$(</span>TPATH<span style="color:#204a87;font-weight:bold">)</span>/*.tex
-</code></pre></div><p><code>PROJ = test</code> defines the prefix for the TeX document which will be compiled.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># LaTeX Makefile
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Basic TeX file prefix
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">PROJ</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">test</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># R input paths for figures and tables
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">RIPATH</span> <span style="color:#ce5c00;font-weight:bold">=</span> analysis/fig
+</span></span><span style="display:flex;"><span><span style="color:#000">RTPATH</span> <span style="color:#ce5c00;font-weight:bold">=</span> analysis/tab
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Output paths for generated figures and tables
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">IPATH</span> <span style="color:#ce5c00;font-weight:bold">=</span> img
+</span></span><span style="display:flex;"><span><span style="color:#000">TPATH</span> <span style="color:#ce5c00;font-weight:bold">=</span> tab
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Gather files from input paths
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">RIFILES</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">$(</span>wildcard <span style="color:#204a87;font-weight:bold">$(</span>RIPATH:<span style="color:#ce5c00;font-weight:bold">=</span>/*.R<span style="color:#204a87;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">RTFILES</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">$(</span>wildcard <span style="color:#204a87;font-weight:bold">$(</span>RTPATH:<span style="color:#ce5c00;font-weight:bold">=</span>/*.R<span style="color:#204a87;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create paths of output .pdf files by changing suffix from .R to .pdf
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># and prefix from `analysis` (RPATH) to `img` (IPATH)
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># These files don&#39;t exist yet but the list of files in FIGS is needed 
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># as a dependency for $(PROJ).pdf  
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">FIGS</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">$(</span>subst <span style="color:#204a87;font-weight:bold">$(</span>RIPATH<span style="color:#204a87;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">$(</span>IPATH<span style="color:#204a87;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">$(</span>RIFILES:.R<span style="color:#ce5c00;font-weight:bold">=</span>.pdf<span style="color:#204a87;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create paths of output table files by changing suffixes and prefixes,
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># same as above
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">TABS</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">$(</span>subst <span style="color:#204a87;font-weight:bold">$(</span>RTPATH<span style="color:#204a87;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">$(</span>TPATH<span style="color:#204a87;font-weight:bold">)</span>, <span style="color:#204a87;font-weight:bold">$(</span>RTFILES:.R<span style="color:#ce5c00;font-weight:bold">=</span>.tex<span style="color:#204a87;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Main 
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">all</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">PROJ</span><span style="color:#204a87;font-weight:bold">)</span>.<span style="color:#000">pdf</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create pdf
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">$(PROJ).pdf</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">PROJ</span><span style="color:#204a87;font-weight:bold">)</span>.<span style="color:#000">tex</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">FIGS</span><span style="color:#204a87;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">TABS</span><span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>	latexmk -pdf -quiet -bibtex <span style="color:#204a87;font-weight:bold">$(</span>PROJ<span style="color:#204a87;font-weight:bold">)</span>.tex
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create figures
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">$(IPATH)/%.pdf</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">RIPATH</span><span style="color:#204a87;font-weight:bold">)</span>/%.<span style="color:#000">R</span>
+</span></span><span style="display:flex;"><span>	Rscript $&lt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create tables
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">$(TPATH)/%.tex</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#000">RTPATH</span><span style="color:#204a87;font-weight:bold">)</span>/%.<span style="color:#000">R</span>
+</span></span><span style="display:flex;"><span>	Rscript $&lt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Remove generated latex files and generated figures and tables
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">clean</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>	latexmk -C 
+</span></span><span style="display:flex;"><span>	rm -f <span style="color:#204a87;font-weight:bold">$(</span>IPATH<span style="color:#204a87;font-weight:bold">)</span>/*.pdf
+</span></span><span style="display:flex;"><span>	rm -f <span style="color:#204a87;font-weight:bold">$(</span>TPATH<span style="color:#204a87;font-weight:bold">)</span>/*.tex
+</span></span></code></pre></div><p><code>PROJ = test</code> defines the prefix for the TeX document which will be compiled.</p>
 <p><code>RIPATH = analysis/fig</code> and <code>RTPATH = analysis/tab</code> define paths where R scripts are located. The reason these two are split up into different variables is that I will use suffix replacement to create <code>.pdf</code> and <code>.tex</code> files with the same names as the scripts later on, in two different target-dependency operations.</p>
 <p><code>IPATH = img</code> and <code>TPATH = tab</code> define ouput paths where the generated images and tables will be stored.</p>
 <p><code>RIFILES = $(wildcard $(RIPATH:=/*.R))</code> and <code>RTFILES = $(wildcard $(RTPATH:=/*.R))</code> create variables holding the names of R scripts which will be transformed later to variables holding paths to files which don&rsquo;t yet exist as they haven&rsquo;t been created, but are necessary to give as dependencies to the <code>.pdf</code> target.</p>

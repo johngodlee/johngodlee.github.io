@@ -38,35 +38,35 @@
 
 touch ~/.w3m/bookmark.html
 
-echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Bookmarks&lt;/title&gt;&lt;/head&gt;
+echo &#34;&lt;html&gt;&lt;head&gt;&lt;title&gt;Bookmarks&lt;/title&gt;&lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;Quickmarks&lt;/h1&gt;
-&lt;ul&gt;&quot; &gt; ~/.w3m/bookmark.html
+&lt;ul&gt;&#34; &gt; ~/.w3m/bookmark.html
 
 while read line; do
-    if [[ $line != *&quot;qute&quot;* ]]; then
-        url=$(echo $line | sed 's@.* @@')
-        desc=$(echo $line | sed 's/\(.*\) .*/\1/') 
-        echo &quot;&lt;li&gt;&lt;a href=\&quot;$url\&quot;&gt;$desc&lt;/a&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+    if [[ $line != *&#34;qute&#34;* ]]; then
+        url=$(echo $line | sed &#39;s@.* @@&#39;)
+        desc=$(echo $line | sed &#39;s/\(.*\) .*/\1/&#39;) 
+        echo &#34;&lt;li&gt;&lt;a href=\&#34;$url\&#34;&gt;$desc&lt;/a&gt;&#34; &gt;&gt; ~/.w3m/bookmark.html
     fi
 done &lt; ~/.qutebrowser/quickmarks 
 
-echo &quot;&lt;/ul&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+echo &#34;&lt;/ul&gt;&#34; &gt;&gt; ~/.w3m/bookmark.html
 
-echo &quot;&lt;h1&gt;Other bookmarks&lt;/h1&gt;
-&lt;ul&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+echo &#34;&lt;h1&gt;Other bookmarks&lt;/h1&gt;
+&lt;ul&gt;&#34; &gt;&gt; ~/.w3m/bookmark.html
 
 while read line; do
-    if [[ $line != *&quot;qute&quot;* ]]; then
-        url=$(echo $line | cut -d &quot; &quot; -f 1) 
+    if [[ $line != *&#34;qute&#34;* ]]; then
+        url=$(echo $line | cut -d &#34; &#34; -f 1) 
         desc=$(echo ${line#* }) 
-        echo &quot;&lt;li&gt;&lt;a href=\&quot;$url\&quot;&gt;$desc&lt;/a&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+        echo &#34;&lt;li&gt;&lt;a href=\&#34;$url\&#34;&gt;$desc&lt;/a&gt;&#34; &gt;&gt; ~/.w3m/bookmark.html
     fi
 done &lt; ~/.qutebrowser/bookmarks/urls 
 
-echo &quot;&lt;/ul&gt;
+echo &#34;&lt;/ul&gt;
 &lt;/body&gt;
-&lt;/html&gt;&quot; &gt;&gt; ~/.w3m/bookmark.html
+&lt;/html&gt;&#34; &gt;&gt; ~/.w3m/bookmark.html
 </code></pre><p>Firstly it creates a new <code>bookmark.html</code>, then echos some preamble HTML, then loops through each line of <code>quickmarks</code> then <code>urls</code>, cutting the line into the URL and the description of that URL, and forwards it to <code>bookmark.html</code>, then it puts in the footer HTML material. Importantly, it doesn&rsquo;t include any bookmarks with the string <code>qute</code> in them, which all refer to Qutebrowser only special URIs, it does this with an if statement <code>if [[ $line != *&quot;qute&quot;* ]]; then</code>.</p>
 <p>In w3m, I can then open <code>bookmark.html</code> with <code>Esc-b</code>.</p>
 <p>For the record, <code>.qutebrowser/bookmarks/urls</code> looks like this:</p>

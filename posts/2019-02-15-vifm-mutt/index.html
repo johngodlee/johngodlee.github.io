@@ -42,9 +42,9 @@
 <p>Vifm has the ability to pipe the name of the selected file to standard output by using <code>vifm --choose-files -</code>. <code>-</code> is what tells vifm not to send the output to a file, but instead to standard output. I wrote a small shell script which pipes the output of vifm using the above command and adds <code>Attach:</code> to the start of the line, and <code>echo</code>es that whole line. This is the shell script:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
 
-file=&quot;$(vifm --choose-files -)&quot;
+file=&#34;$(vifm --choose-files -)&#34;
 
-echo &quot;Attach: $file&quot;
+echo &#34;Attach: $file&#34;
 </code></pre><p>Then it&rsquo;s easy enough to call this shell script (which is stored in my <code>$PATH</code>) in vim and paste the output to line 7 in the vim email composer, which is the line directly below the final header. This is the relevant <code>.vimrc</code> section:</p>
 <pre tabindex="0"><code>nnoremap &lt;Leader&gt;A :6r !vifm_attach &lt;CR&gt;
 </code></pre><p>The nice thing about this method is that I can add multiple files by simply running the command again. There can be multiple lines with the header <code>Attach:</code> and all of them will be read by Mutt. I can also leverage all the normal functionality of vifm, like jumping to directories, regex, sorting etc.</p>

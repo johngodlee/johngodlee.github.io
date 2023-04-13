@@ -82,26 +82,26 @@
 
 
 <p>which is very ugly, and not particularly easy to read, either in the <code>vimrc</code> or in the statusline itself. First, let&rsquo;s rectify this in the <code>.vimrc</code>. I like to separate out my statusline code so that each item or group of items is on its own line. The syntax used below is similar to that used to design a prompt in the bash shell:</p>
-<pre tabindex="0"><code>set statusline=%t	&quot; file name
-set statusline+=%m	&quot; modified?
-set statusline+=%y	&quot; file type
-set statusline+=%p	&quot; percentage through file
-set statusline+=%l	&quot; line number
-set statusline+=%c	&quot; column number
+<pre tabindex="0"><code>set statusline=%t	&#34; file name
+set statusline+=%m	&#34; modified?
+set statusline+=%y	&#34; file type
+set statusline+=%p	&#34; percentage through file
+set statusline+=%l	&#34; line number
+set statusline+=%c	&#34; column number
 </code></pre><p>Source your <code>.vimrc</code> to see that nothing has changed in the statusline, but the <code>.vimrc</code> is much easier to read.</p>
 <p>Now we can break up the information in the statusline a bit, using spaces and special characters.</p>
 <p>First, I want a space between certain items, which I can add by adding <code>set statusline+=\ </code> lines to my statusline code. Note the actual space after the <code>\ </code>. You can also add normal characters to the statusline. For instance, to break up the line and column number you could add a <code>:</code> by adding <code>set statusline+=:</code>:</p>
-<pre tabindex="0"><code>set statusline=%t	&quot; file name
-set statusline+=\ 	&quot; space
-set statusline+=%m	&quot; modified?
-set statusline+=\ 	&quot; space
-set statusline+=%y	&quot; file type
-set statusline+=\ 	&quot; space
-set statusline+=%p	&quot; percentage through file
-set statusline+=\ 	&quot; space
-set statusline+=%l	&quot; line number
-set statusline+=:	&quot; colon separator
-set statusline+=%c	&quot; column number
+<pre tabindex="0"><code>set statusline=%t	&#34; file name
+set statusline+=\ 	&#34; space
+set statusline+=%m	&#34; modified?
+set statusline+=\ 	&#34; space
+set statusline+=%y	&#34; file type
+set statusline+=\ 	&#34; space
+set statusline+=%p	&#34; percentage through file
+set statusline+=\ 	&#34; space
+set statusline+=%l	&#34; line number
+set statusline+=:	&#34; colon separator
+set statusline+=%c	&#34; column number
 </code></pre><figure><a href="/img_full/lightline/status_space.png"><img
           alt="Status line with spacing between content"
           title="Status line with spacing between content"src="/img/lightline/status_space.png" 
@@ -109,20 +109,20 @@ set statusline+=%c	&quot; column number
 
 
 <p>Now. I don&rsquo;t really want the information about my position in the file on the left side, I&rsquo;d rather have it on the right side. I can switch to the right side of the statusline by adding <code>set statusline+=%=</code> before the lines you want to appear on the right side:</p>
-<pre tabindex="0"><code>set statusline=%t	&quot; file name
-set statusline+=\ 	&quot; space
-set statusline+=%m	&quot; modified?
-set statusline+=\ 	&quot; space
-set statusline+=%y	&quot; file type
-set statusline+=\ 	&quot; space
+<pre tabindex="0"><code>set statusline=%t	&#34; file name
+set statusline+=\ 	&#34; space
+set statusline+=%m	&#34; modified?
+set statusline+=\ 	&#34; space
+set statusline+=%y	&#34; file type
+set statusline+=\ 	&#34; space
 
-set statusline+=%=      &quot; switch to right side
+set statusline+=%=      &#34; switch to right side
 
-set statusline+=%p	&quot; percentage through file
-set statusline+=\ 	&quot; space
-set statusline+=%l	&quot; line number
-set statusline+=:	&quot; colon separator
-set statusline+=%c	&quot; column number
+set statusline+=%p	&#34; percentage through file
+set statusline+=\ 	&#34; space
+set statusline+=%l	&#34; line number
+set statusline+=:	&#34; colon separator
+set statusline+=%c	&#34; column number
 </code></pre><figure><a href="/img_full/lightline/status_right.png"><img
           alt="Status line split left and right"
           title="Status line split left and right"src="/img/lightline/status_right.png" 
@@ -135,49 +135,49 @@ set statusline+=%c	&quot; column number
 <h3 id="display-the-mode">Display the mode</h3>
 <p>First let&rsquo;s do the mode, which is fairly easy, because VIM already has a global variable called <code>currentmode</code>, so I just need to give the default outputs some aliases that are easier to read:</p>
 <pre tabindex="0"><code>let g:currentmode={
-    \ 'n'  : 'Normal',
-    \ 'no' : 'N·Operator Pending',
-    \ 'v'  : 'Visual',
-    \ 'V'  : 'V·Line',
-    \ '^V' : 'V·Block',
-    \ 's'  : 'Select',
-    \ 'S'  : 'S·Line',
-    \ '^S' : 'S·Block',
-    \ 'i'  : 'Insert',
-    \ 'R'  : 'R',
-    \ 'Rv' : 'V·Replace',
-    \ 'c'  : 'Command',
-    \ 'cv' : 'Vim Ex',
-    \ 'ce' : 'Ex',
-    \ 'r'  : 'Prompt',
-    \ 'rm' : 'More',
-    \ 'r?' : 'Confirm',
-    \ '!'  : 'Shell',
-    \ 't'  : 'Terminal'
+    \ &#39;n&#39;  : &#39;Normal&#39;,
+    \ &#39;no&#39; : &#39;N·Operator Pending&#39;,
+    \ &#39;v&#39;  : &#39;Visual&#39;,
+    \ &#39;V&#39;  : &#39;V·Line&#39;,
+    \ &#39;^V&#39; : &#39;V·Block&#39;,
+    \ &#39;s&#39;  : &#39;Select&#39;,
+    \ &#39;S&#39;  : &#39;S·Line&#39;,
+    \ &#39;^S&#39; : &#39;S·Block&#39;,
+    \ &#39;i&#39;  : &#39;Insert&#39;,
+    \ &#39;R&#39;  : &#39;R&#39;,
+    \ &#39;Rv&#39; : &#39;V·Replace&#39;,
+    \ &#39;c&#39;  : &#39;Command&#39;,
+    \ &#39;cv&#39; : &#39;Vim Ex&#39;,
+    \ &#39;ce&#39; : &#39;Ex&#39;,
+    \ &#39;r&#39;  : &#39;Prompt&#39;,
+    \ &#39;rm&#39; : &#39;More&#39;,
+    \ &#39;r?&#39; : &#39;Confirm&#39;,
+    \ &#39;!&#39;  : &#39;Shell&#39;,
+    \ &#39;t&#39;  : &#39;Terminal&#39;
     \}
 </code></pre><p>then call the variable in the statusline code:</p>
-<pre tabindex="0"><code>set statusline=%{g:currentmode[mode()]}	&quot; mode
-set statusline+=\ 	&quot; space
-set statusline+=%t	&quot; file name
-set statusline+=\ 	&quot; space
-set statusline+=%m	&quot; modified?
-set statusline+=\ 	&quot; space
-set statusline+=%y	&quot; file type
-set statusline+=\ 	&quot; space
+<pre tabindex="0"><code>set statusline=%{g:currentmode[mode()]}	&#34; mode
+set statusline+=\ 	&#34; space
+set statusline+=%t	&#34; file name
+set statusline+=\ 	&#34; space
+set statusline+=%m	&#34; modified?
+set statusline+=\ 	&#34; space
+set statusline+=%y	&#34; file type
+set statusline+=\ 	&#34; space
 
-set statusline+=%=      &quot; switch to right side
+set statusline+=%=      &#34; switch to right side
 
-set statusline+=%p	&quot; percentage through file
-set statusline+=\ 	&quot; space
-set statusline+=%l	&quot; line number
-set statusline+=:	&quot; colon separator
-set statusline+=%c	&quot; column number
+set statusline+=%p	&#34; percentage through file
+set statusline+=\ 	&#34; space
+set statusline+=%l	&#34; line number
+set statusline+=:	&#34; colon separator
+set statusline+=%c	&#34; column number
 </code></pre><h3 id="git-branch">Git branch</h3>
 <p>The git branch is a bit harder, requiring vim script and running some shell commands in the <code>.vimrc</code>. Here is my code to define a function to show the git branch in the statusline:</p>
 <pre tabindex="0"><code>function CurrentGitBranch()
-    let gitoutput = system('git status -b '.shellescape(expand('%')).' | head -1 | grep -oE &quot;[^ ]+$&quot; | tr -d &quot;[:cntrl:]&quot;')
-    if gitoutput =~ &quot;invalid&quot;
-        let b:gitstatus = ''
+    let gitoutput = system(&#39;git status -b &#39;.shellescape(expand(&#39;%&#39;)).&#39; | head -1 | grep -oE &#34;[^ ]+$&#34; | tr -d &#34;[:cntrl:]&#34;&#39;)
+    if gitoutput =~ &#34;invalid&#34;
+        let b:gitstatus = &#39;&#39;
     else
         let b:gitstatus = gitoutput
     endif
@@ -197,23 +197,23 @@ autocmd BufEnter,BufWritePost * call CurrentGitBranch()
 <li><code>autocmd BufEnter,BufWritePost * call CurrentGitBranch()</code> runs the function.</li>
 </ul>
 <p>To add <code>b:gitstatus</code> to the statusline, follow the same rules as for the current mode function we did earlier.</p>
-<pre tabindex="0"><code>set statusline=%{g:currentmode[mode()]}	&quot; mode
-set statusline+=\ 	&quot; space
-set statusline+=%t	&quot; file name
-set statusline+=\ 	&quot; space	
-set statusline+=%{b:gitstatus}		&quot; git branch
-set statusline+=%m	&quot; modified?
-set statusline+=\ 	&quot; space
-set statusline+=%y	&quot; file type
-set statusline+=\ 	&quot; space
+<pre tabindex="0"><code>set statusline=%{g:currentmode[mode()]}	&#34; mode
+set statusline+=\ 	&#34; space
+set statusline+=%t	&#34; file name
+set statusline+=\ 	&#34; space	
+set statusline+=%{b:gitstatus}		&#34; git branch
+set statusline+=%m	&#34; modified?
+set statusline+=\ 	&#34; space
+set statusline+=%y	&#34; file type
+set statusline+=\ 	&#34; space
 
-set statusline+=%=      &quot; switch to right side
+set statusline+=%=      &#34; switch to right side
 
-set statusline+=%p	&quot; percentage through file
-set statusline+=\ 	&quot; space
-set statusline+=%l	&quot; line number
-set statusline+=:	&quot; colon separator
-set statusline+=%c	&quot; column number
+set statusline+=%p	&#34; percentage through file
+set statusline+=\ 	&#34; space
+set statusline+=%l	&#34; line number
+set statusline+=:	&#34; colon separator
+set statusline+=%c	&#34; column number
 </code></pre><figure><a href="/img_full/lightline/status_git.png"><img
           alt="Status line with git repository"
           title="Status line with git repository"src="/img/lightline/status_git.png" 
@@ -223,34 +223,34 @@ set statusline+=%c	&quot; column number
 <h3 id="conditional-colour-changing">Conditional colour changing</h3>
 <p>For the colour changing status bar you can use another function:</p>
 <pre tabindex="0"><code>function! ChangeStatuslineColor()
-  if (mode() ==# 'i')
-    exe 'hi User1 ctermfg=black ctermbg=white'
+  if (mode() ==# &#39;i&#39;)
+    exe &#39;hi User1 ctermfg=black ctermbg=white&#39;
   else
-    exe 'hi User1 ctermfg=white ctermbg=black'
+    exe &#39;hi User1 ctermfg=white ctermbg=black&#39;
   endif
-  return ''
+  return &#39;&#39;
 endfunction
 </code></pre><p>This defines the <code>User1</code> colour palette, with foreground (text) and background colours, reversing the colours depending on the current mode. To add it to the statusline:</p>
-<pre tabindex="0"><code>set statusline=%{ChangeStatuslineColor()}	&quot; Load function
-set statusline+=%1*	&quot; Change colour palette to `User1`
-set statusline+=%{g:currentmode[mode()]}	&quot; Display the mode
-set statusline+=%0*	&quot; Return to default colour palette
-set statusline+=\ 	&quot; space
-set statusline+=%t	&quot; file name
-set statusline+=\ 	&quot; space	
-set statusline+=%{b:gitstatus}		&quot; git branch
-set statusline+=%m	&quot; modified?
-set statusline+=\ 	&quot; space
-set statusline+=%y	&quot; file type
-set statusline+=\ 	&quot; space
+<pre tabindex="0"><code>set statusline=%{ChangeStatuslineColor()}	&#34; Load function
+set statusline+=%1*	&#34; Change colour palette to `User1`
+set statusline+=%{g:currentmode[mode()]}	&#34; Display the mode
+set statusline+=%0*	&#34; Return to default colour palette
+set statusline+=\ 	&#34; space
+set statusline+=%t	&#34; file name
+set statusline+=\ 	&#34; space	
+set statusline+=%{b:gitstatus}		&#34; git branch
+set statusline+=%m	&#34; modified?
+set statusline+=\ 	&#34; space
+set statusline+=%y	&#34; file type
+set statusline+=\ 	&#34; space
 
-set statusline+=%=      &quot; switch to right side
+set statusline+=%=      &#34; switch to right side
 
-set statusline+=%p	&quot; percentage through file
-set statusline+=\ 	&quot; space
-set statusline+=%l	&quot; line number
-set statusline+=:	&quot; colon separator
-set statusline+=%c	&quot; column number
+set statusline+=%p	&#34; percentage through file
+set statusline+=\ 	&#34; space
+set statusline+=%l	&#34; line number
+set statusline+=:	&#34; colon separator
+set statusline+=%c	&#34; column number
 </code></pre><figure><a href="/img_full/lightline/status_colour.png"><img
           alt="Status line with colour"
           title="Status line with colour"src="/img/lightline/status_colour.png" 
@@ -260,49 +260,49 @@ set statusline+=%c	&quot; column number
 <p>Obviously you can change the colours to whatever you desire, using ANSI colour codes to extend the colour range, and if you have an X terminal, just change <code>cterm</code> to <code>xterm</code> and you can then use Xterm colour codes. You could also add extra <code>elseif</code> statements to add other modes. Lightline for example turns orange when in visual mode.</p>
 <h2 id="my-actual-statusline">My actual statusline</h2>
 <p>While the above has all the basic functionality, it&rsquo;s very ugly. For my real statusline I tweaked things a little bit more:</p>
-<pre tabindex="0"><code>&quot; statusline always showing, even when NERDTree is hidden
+<pre tabindex="0"><code>&#34; statusline always showing, even when NERDTree is hidden
 set laststatus=2
 
-&quot; Map of modes and their codes for statusline
+&#34; Map of modes and their codes for statusline
 let g:currentmode={
-    \ 'n'  : 'Normal',
-    \ 'no' : 'N·Operator Pending',
-    \ 'v'  : 'Visual',
-    \ 'V'  : 'V·Line',
-    \ '^V' : 'V·Block',
-    \ 's'  : 'Select',
-    \ 'S'  : 'S·Line',
-    \ '^S' : 'S·Block',
-    \ 'i'  : 'Insert',
-    \ 'R'  : 'R',
-    \ 'Rv' : 'V·Replace',
-    \ 'c'  : 'Command',
-    \ 'cv' : 'Vim Ex',
-    \ 'ce' : 'Ex',
-    \ 'r'  : 'Prompt',
-    \ 'rm' : 'More',
-    \ 'r?' : 'Confirm',
-    \ '!'  : 'Shell',
-    \ 't'  : 'Terminal'
+    \ &#39;n&#39;  : &#39;Normal&#39;,
+    \ &#39;no&#39; : &#39;N·Operator Pending&#39;,
+    \ &#39;v&#39;  : &#39;Visual&#39;,
+    \ &#39;V&#39;  : &#39;V·Line&#39;,
+    \ &#39;^V&#39; : &#39;V·Block&#39;,
+    \ &#39;s&#39;  : &#39;Select&#39;,
+    \ &#39;S&#39;  : &#39;S·Line&#39;,
+    \ &#39;^S&#39; : &#39;S·Block&#39;,
+    \ &#39;i&#39;  : &#39;Insert&#39;,
+    \ &#39;R&#39;  : &#39;R&#39;,
+    \ &#39;Rv&#39; : &#39;V·Replace&#39;,
+    \ &#39;c&#39;  : &#39;Command&#39;,
+    \ &#39;cv&#39; : &#39;Vim Ex&#39;,
+    \ &#39;ce&#39; : &#39;Ex&#39;,
+    \ &#39;r&#39;  : &#39;Prompt&#39;,
+    \ &#39;rm&#39; : &#39;More&#39;,
+    \ &#39;r?&#39; : &#39;Confirm&#39;,
+    \ &#39;!&#39;  : &#39;Shell&#39;,
+    \ &#39;t&#39;  : &#39;Terminal&#39;
     \}
 
-&quot; Change statusline colour based on mode 
+&#34; Change statusline colour based on mode 
 function! ChangeStatuslineColor()
-  if (mode() ==# 'i')
-    exe 'hi StatusLine ctermbg=black ctermfg=032'
-  elseif (mode() =~# '\v(v|V)')
-    exe 'hi StatusLine ctermbg=black ctermfg=172'
+  if (mode() ==# &#39;i&#39;)
+    exe &#39;hi StatusLine ctermbg=black ctermfg=032&#39;
+  elseif (mode() =~# &#39;\v(v|V)&#39;)
+    exe &#39;hi StatusLine ctermbg=black ctermfg=172&#39;
   else    
-    exe 'hi Statusline ctermbg=white ctermfg=black'
+    exe &#39;hi Statusline ctermbg=white ctermfg=black&#39;
   endif
-  return ''
+  return &#39;&#39;
 endfunction
 
-&quot; Get git branch in statusline
+&#34; Get git branch in statusline
 function CurrentGitBranch()
-    let gitoutput = system('git status -b '.shellescape(expand('%')).' | head -1 | grep -oE &quot;[^ ]+$&quot; | tr -d &quot;[:cntrl:]&quot;') 
-    if gitoutput =~ &quot;invalid&quot;
-        let b:gitstatus = ''
+    let gitoutput = system(&#39;git status -b &#39;.shellescape(expand(&#39;%&#39;)).&#39; | head -1 | grep -oE &#34;[^ ]+$&#34; | tr -d &#34;[:cntrl:]&#34;&#39;) 
+    if gitoutput =~ &#34;invalid&#34;
+        let b:gitstatus = &#39;&#39;
     else
         let b:gitstatus = gitoutput 
     endif
@@ -310,25 +310,25 @@ endfunc
 
 autocmd BufEnter,BufWritePost * call CurrentGitBranch()
 
-&quot; Statusline
-&quot; left side
-set statusline=%{ChangeStatuslineColor()}	&quot; Change colour
-set statusline+=\ %-8.{toupper(g:currentmode[mode()])} 	&quot; Current mode
-set statusline+=\ \|\  	&quot; Vert-line and space   
-set statusline+=%t	&quot; File name
-set statusline+=\ \|\  	&quot; Vert-line and space   
-set statusline+=%{b:gitstatus}		&quot; git branch
-set statusline+=%=	&quot; Switch to right side
+&#34; Statusline
+&#34; left side
+set statusline=%{ChangeStatuslineColor()}	&#34; Change colour
+set statusline+=\ %-8.{toupper(g:currentmode[mode()])} 	&#34; Current mode
+set statusline+=\ \|\  	&#34; Vert-line and space   
+set statusline+=%t	&#34; File name
+set statusline+=\ \|\  	&#34; Vert-line and space   
+set statusline+=%{b:gitstatus}		&#34; git branch
+set statusline+=%=	&#34; Switch to right side
 
-&quot; right side
-set statusline+=%m%r &quot; Modified and read only flags
-set statusline+=\ 		&quot;Space
-set statusline+=%y	&quot; File type
-set statusline+=\ \|\ 	&quot; Space, Vert-line and space
-set statusline+=%3.p%%	&quot; Percentage through file - min size 3
-set statusline+=\ \|\ 	&quot; Vert-line and Space
-set statusline+=%8.(%4.l:%-3.c%)	&quot; Line and column number in group
-set statusline+=\ 		&quot; Space
+&#34; right side
+set statusline+=%m%r &#34; Modified and read only flags
+set statusline+=\ 		&#34;Space
+set statusline+=%y	&#34; File type
+set statusline+=\ \|\ 	&#34; Space, Vert-line and space
+set statusline+=%3.p%%	&#34; Percentage through file - min size 3
+set statusline+=\ \|\ 	&#34; Vert-line and Space
+set statusline+=%8.(%4.l:%-3.c%)	&#34; Line and column number in group
+set statusline+=\ 		&#34; Space
 </code></pre><figure><a href="/img_full/lightline/status_my.png"><img
           alt="My status line"
           title="My status line"src="/img/lightline/status_my.png" 
@@ -359,27 +359,27 @@ set statusline+=\ 		&quot; Space
 <p>I don&rsquo;t entirely understand how the tabline works at the moment, so I borrowed this tabline function from <a href="http://dhruvasagar.com/2014/04/06/vim-custom-tabline" target="_blank">this website</a>
 :</p>
 <pre tabindex="0"><code>function! MyTabLine()
-  let s = ''
-  for i in range(tabpagenr('$'))
-    let tabnr = i + 1 &quot; range() starts at 0
+  let s = &#39;&#39;
+  for i in range(tabpagenr(&#39;$&#39;))
+    let tabnr = i + 1 &#34; range() starts at 0
     let winnr = tabpagewinnr(tabnr)
     let buflist = tabpagebuflist(tabnr)
     let bufnr = buflist[winnr - 1]
-    let bufname = fnamemodify(bufname(bufnr), ':t')
+    let bufname = fnamemodify(bufname(bufnr), &#39;:t&#39;)
 
-    let s .= '%' . tabnr . 'T'
-    let s .= (tabnr == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
-    let s .= ' ' . tabnr
+    let s .= &#39;%&#39; . tabnr . &#39;T&#39;
+    let s .= (tabnr == tabpagenr() ? &#39;%#TabLineSel#&#39; : &#39;%#TabLine#&#39;)
+    let s .= &#39; &#39; . tabnr
 
-    let n = tabpagewinnr(tabnr,'$')
-    if n &gt; 1 | let s .= ':' . n | endif
+    let n = tabpagewinnr(tabnr,&#39;$&#39;)
+    if n &gt; 1 | let s .= &#39;:&#39; . n | endif
 
-    let s .= empty(bufname) ? ' [No Name] ' : ' ' . bufname . ' '
+    let s .= empty(bufname) ? &#39; [No Name] &#39; : &#39; &#39; . bufname . &#39; &#39;
 
-    let bufmodified = getbufvar(bufnr, &quot;&amp;mod&quot;)
-    if bufmodified | let s .= '+ ' | endif
+    let bufmodified = getbufvar(bufnr, &#34;&amp;mod&#34;)
+    if bufmodified | let s .= &#39;+ &#39; | endif
   endfor
-  let s .= '%#TabLineFill#'
+  let s .= &#39;%#TabLineFill#&#39;
   return s
 endfunction
 </code></pre><p>Then to run it:</p>

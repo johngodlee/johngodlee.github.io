@@ -46,17 +46,17 @@ mossy_bottom
 </code></pre><p>Then I made a shell script which lives in my path, called <code>insta_dl</code>:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
 
-# Make directory if it doesn't exist
+# Make directory if it doesn&#39;t exist
 mkdir -p $HOME/Downloads/ig
 
 # make newlines the only separator
-IFS=$'\n' 
+IFS=$&#39;\n&#39; 
 
 # disable globbing
 set -f          
 
 # Loop
-for i in $(cat &lt; &quot;$HOME/.ig_subs.txt&quot;); do
+for i in $(cat &lt; &#34;$HOME/.ig_subs.txt&#34;); do
   instalooter user $i $HOME/Downloads/ig/ -n 1 -N -T {username}.{date}.{id} 
 done
 </code></pre><p><code>instalooter user $i</code> downloads photos from each user <code>i</code>. <code>-n 1</code> only downloads the most recent post, whether that post is one photo or multiple. <code>-N</code> only downloads images which don&rsquo;t already exist in the destination directory (<code>$HOME/Downloads/ig/</code>), based on the filename. <code>-T {username}.{date}.{id}</code> sets the filename of each photo. <code>{id}</code> is unique for each photo on Instagram, so it uniquely identifies each file downloaded for use by <code>-N</code>. The filenames then look something like this:</p>
@@ -77,24 +77,24 @@ zedoutdoors.2019-10-02.2145942922787735607.jpg
 <p>I updated the <code>insta_dl</code> shell script so that it also grabs the caption of each instagram post downloaded and stores it in a text file. InstaLooter can download post metadata as a JSON file by adding the <code>-d</code> flag (<code>--dump-json</code>). Then I use <code>jq</code> to parse the JSON file for each post to extract the full name of the account (<code>.owner.full_name</code>), the @username of the account (<code>.owner.username</code>) and the content of the caption of the post (<code>.edge_media_to_caption[][][].text</code>). Then I use sed to put a blank line between each caption to make it easier to read and delete the original JSON files:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
 
-# Make directory if it doesn't exist
+# Make directory if it doesn&#39;t exist
 mkdir -p $HOME/Downloads/ig
 
 DIR=$HOME/Downloads/ig
 
 # make newlines the only separator
-IFS=$'\n' 
+IFS=$&#39;\n&#39; 
 
 # Loop
-for i in $(cat &lt; &quot;$HOME/.ig_subs.txt&quot;); do
+for i in $(cat &lt; &#34;$HOME/.ig_subs.txt&#34;); do
 	instalooter user $i $DIR -v -d -n 1 -N -T {username}.{date}.{id} 
 done
 
 for i in $DIR/*json ; do
-	cat $i | jq '(.owner.full_name + &quot; (&quot; + .owner.username + &quot;): &quot; + .edge_media_to_caption[][][].text)'
+	cat $i | jq &#39;(.owner.full_name + &#34; (&#34; + .owner.username + &#34;): &#34; + .edge_media_to_caption[][][].text)&#39;
 done &gt; $DIR/description.txt
 
-sed -i 'G' $DIR/description.txt
+sed -i &#39;G&#39; $DIR/description.txt
 
 rm $HOME/Downloads/ig/*.json
 </code></pre>

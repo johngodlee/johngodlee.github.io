@@ -35,92 +35,92 @@
 <h1 id="define-macros-for-formatted-blocks">Define macros for formatted blocks</h1>
 <p>Sometimes I have to write a document like a CV or a set of handout notes which require reuse of a complex formatted block of text. For example, below, where I want to create a timeline of events with the date of the event on the left of the page, with a description of the event on the right. I can define a macro for this instead of writing the same boilerplate code every time. I stole this from a <a href="https://www.youtube.com/watch?v=rvgP7IMeUn8" target="_blank">Luke Smith youtube video</a>
 .</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\newcommand</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\entry</span><span style="color:#204a87">}</span>[4]<span style="color:#204a87">{</span>
-
-<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>minipage<span style="color:#204a87">}</span>[t]<span style="color:#204a87">{</span>0.15<span style="color:#204a87;font-weight:bold">\textwidth</span><span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\hfill</span><span style="color:#204a87">{}</span> <span style="color:#204a87;font-weight:bold">\textsc</span><span style="color:#204a87">{</span>#1<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>minipage<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\vline\hfill</span><span style="color:#204a87">{}</span>
-<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>minipage<span style="color:#204a87">}</span>[t]<span style="color:#204a87">{</span>0.8<span style="color:#204a87;font-weight:bold">\textwidth</span><span style="color:#204a87">}</span>
-#2
-
-<span style="color:#204a87;font-weight:bold">\textit</span><span style="color:#204a87">{</span>#3<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\footnotesize</span><span style="color:#204a87">{</span>#4<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>minipage<span style="color:#204a87">}</span><span style="color:#204a87;font-weight:bold">\\</span> <span style="color:#204a87;font-weight:bold">\vspace</span><span style="color:#204a87">{</span>0.25cm<span style="color:#204a87">}</span>
-<span style="color:#204a87">}</span>
-</code></pre></div><p>This macro has four insertion points for user input, defined in the square brackets and called with <code>#n</code> arguments. The macro places a small area to the left of the vertical line, then a larger one to the right.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\newcommand</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\entry</span><span style="color:#204a87">}</span>[4]<span style="color:#204a87">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>minipage<span style="color:#204a87">}</span>[t]<span style="color:#204a87">{</span>0.15<span style="color:#204a87;font-weight:bold">\textwidth</span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\hfill</span><span style="color:#204a87">{}</span> <span style="color:#204a87;font-weight:bold">\textsc</span><span style="color:#204a87">{</span>#1<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>minipage<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\vline\hfill</span><span style="color:#204a87">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>minipage<span style="color:#204a87">}</span>[t]<span style="color:#204a87">{</span>0.8<span style="color:#204a87;font-weight:bold">\textwidth</span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>#2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\textit</span><span style="color:#204a87">{</span>#3<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\footnotesize</span><span style="color:#204a87">{</span>#4<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>minipage<span style="color:#204a87">}</span><span style="color:#204a87;font-weight:bold">\\</span> <span style="color:#204a87;font-weight:bold">\vspace</span><span style="color:#204a87">{</span>0.25cm<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">}</span>
+</span></span></code></pre></div><p>This macro has four insertion points for user input, defined in the square brackets and called with <code>#n</code> arguments. The macro places a small area to the left of the vertical line, then a larger one to the right.</p>
 <p>To call the macro and give the user input:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\entry</span><span style="color:#204a87">{</span>2014--2016<span style="color:#204a87">}{</span>Web dev<span style="color:#204a87">}{</span>More text<span style="color:#204a87">}{</span>This is a description<span style="color:#204a87">}</span>
-</code></pre></div><figure><a href="/img_full/tips_latex/format_block.png"><img
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\entry</span><span style="color:#204a87">{</span>2014--2016<span style="color:#204a87">}{</span>Web dev<span style="color:#204a87">}{</span>More text<span style="color:#204a87">}{</span>This is a description<span style="color:#204a87">}</span>
+</span></span></code></pre></div><figure><a href="/img_full/tips_latex/format_block.png"><img
           alt="Formatted block for CV"
           title="Formatted block for CV"src="/img/tips_latex/format_block.png" 
       /></a></figure>
 
 
 <h1 id="globally-set-image-size">Globally set image size</h1>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>graphicx<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\setkeys</span><span style="color:#204a87">{</span>Gin<span style="color:#204a87">}{</span>width=<span style="color:#204a87;font-weight:bold">\linewidth</span>, height=10cm, keepaspectratio<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#204a87">{</span>test.png<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
-</code></pre></div><h1 id="globally-center-images">Globally center images</h1>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>graphicx<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\makeatletter</span>
-<span style="color:#204a87;font-weight:bold">\g</span>@addto@macro<span style="color:#204a87;font-weight:bold">\@</span>floatboxreset<span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\centering</span><span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\makeatother</span>
-
-<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#204a87">{</span>test.png<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
-</code></pre></div><h1 id="figures-in-wrapped-text">Figures in wrapped text</h1>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>graphicx<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\setkeys</span><span style="color:#204a87">{</span>Gin<span style="color:#204a87">}{</span>width=<span style="color:#204a87;font-weight:bold">\linewidth</span>, height=10cm, keepaspectratio<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#204a87">{</span>test.png<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</span></span></code></pre></div><h1 id="globally-center-images">Globally center images</h1>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>graphicx<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\makeatletter</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\g</span>@addto@macro<span style="color:#204a87;font-weight:bold">\@</span>floatboxreset<span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\centering</span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\makeatother</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#204a87">{</span>test.png<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
+</span></span></code></pre></div><h1 id="figures-in-wrapped-text">Figures in wrapped text</h1>
 <p>This uses the <code>wrapfig</code> package to make a right-aligned figure. The figure itself is 5 cm width and the image inside the figure is also 5 cm.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>graphicx<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>wrapfig<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>blindtext<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\blindtext</span>
-
-<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>wrapfigure<span style="color:#204a87">}{</span>r<span style="color:#204a87">}{</span>5cm<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\centering</span><span style="color:#204a87">{}</span>
-<span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#c4a000">[width=5cm]</span><span style="color:#204a87">{</span>img<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{</span>This is a caption<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>right<span style="color:#204a87">_</span>img<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>wrapfigure<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\blindtext</span>
-
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
-</code></pre></div><h1 id="custom-directory-for-bst-files">Custom directory for .bst files</h1>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>graphicx<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>wrapfig<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>blindtext<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\blindtext</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>wrapfigure<span style="color:#204a87">}{</span>r<span style="color:#204a87">}{</span>5cm<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\centering</span><span style="color:#204a87">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#c4a000">[width=5cm]</span><span style="color:#204a87">{</span>img<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{</span>This is a caption<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>right<span style="color:#204a87">_</span>img<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>wrapfigure<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\blindtext</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</span></span></code></pre></div><h1 id="custom-directory-for-bst-files">Custom directory for .bst files</h1>
 <p><code>.bst</code> files are used to hold custom BibTeX reference styles. I have one that is based on the <code>agsm</code> style, but I&rsquo;ve set it to not include URLs in the reference list, it&rsquo;s called <code>agsmnourl.bst</code>. In my LaTeX document I can use this style file with:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>natbib<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\bibliographystyle</span><span style="color:#204a87">{</span>agsmnourl<span style="color:#204a87">}</span>  <span style="color:#8f5902;font-style:italic">% Use custom template 
-</span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>cite<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\citep</span><span style="color:#204a87">{</span>test<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\bibliography</span><span style="color:#204a87">{</span>test<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
-</code></pre></div><p>Previously I had kept <code>agsmnourl.bst</code> in the same directory as the project, but my laptop was quickly filling up with duplicates of the style file. I found out that <code>latexmk</code> which I use to compile LaTeX documents, can take a <code>~/latexmkrc</code> file where certain variables can be defined. I can define a custom directory which holds these custom <code>.bst</code> files:</p>
-<pre tabindex="0"><code>$ENV{'TEXINPUTS'}='~/.texmf//:' . $ENV{'TEXINPUTS'};
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>natbib<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\bibliographystyle</span><span style="color:#204a87">{</span>agsmnourl<span style="color:#204a87">}</span>  <span style="color:#8f5902;font-style:italic">% Use custom template 
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">\usepackage</span><span style="color:#204a87">{</span>cite<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\citep</span><span style="color:#204a87">{</span>test<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\bibliography</span><span style="color:#204a87">{</span>test<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</span></span></code></pre></div><p>Previously I had kept <code>agsmnourl.bst</code> in the same directory as the project, but my laptop was quickly filling up with duplicates of the style file. I found out that <code>latexmk</code> which I use to compile LaTeX documents, can take a <code>~/latexmkrc</code> file where certain variables can be defined. I can define a custom directory which holds these custom <code>.bst</code> files:</p>
+<pre tabindex="0"><code>$ENV{&#39;TEXINPUTS&#39;}=&#39;~/.texmf//:&#39; . $ENV{&#39;TEXINPUTS&#39;};
 </code></pre><p>In this case the directory is <code>~/.texmf</code>.</p>
 <p>Then, the next time I run <code>latexmk</code> it will source <code>latexmkrc</code>.</p>
 

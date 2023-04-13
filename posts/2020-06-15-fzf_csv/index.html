@@ -36,9 +36,9 @@
 <p>I wrote a shell script which uses <code>fzf</code> to search the table and outputs the corrected name:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/usr/bin/env sh 
 
-csv=$(csvcut -c &quot;${2}&quot;,&quot;${3}&quot; &quot;${1}&quot; | sed 's/,/ -- /g' | tail -n +2)
+csv=$(csvcut -c &#34;${2}&#34;,&#34;${3}&#34; &#34;${1}&#34; | sed &#39;s/,/ -- /g&#39; | tail -n +2)
 
-echo &quot;${csv}&quot; | fzf | sed 's/.*--\ //'
+echo &#34;${csv}&#34; | fzf | sed &#39;s/.*--\ //&#39;
 </code></pre><pre tabindex="0"><code>fzf_csv test.csv orig corr
 </code></pre>
 </main>

@@ -32,21 +32,21 @@
 
 <main>
 <p>Here is the relevant part of my <code>.vimrc</code> which deals with <code>vimdiff</code>. Annoyingly, but maybe necessarilly, <code>vimdiff</code> uses a lot of different options to normal <code>vim</code>.</p>
-<pre tabindex="0"><code>&quot; Disable folding
+<pre tabindex="0"><code>&#34; Disable folding
 set diffopt+=context:99999
 
-&quot; Disable diffing on whitespace
+&#34; Disable diffing on whitespace
 set diffopt+=iwhite
 
-&quot; Softwrap lines
-au VimEnter * if &amp;diff | execute 'windo set wrap' | endif
+&#34; Softwrap lines
+au VimEnter * if &amp;diff | execute &#39;windo set wrap&#39; | endif
 
-&quot; Disable syntax highlighting
+&#34; Disable syntax highlighting
 if &amp;diff
     syntax off
 endif
 
-&quot; Change highlight colours so they are less garish
+&#34; Change highlight colours so they are less garish
 hi DiffAdd      cterm=none ctermfg=NONE ctermbg=Red
 hi DiffChange   cterm=none ctermfg=NONE ctermbg=Gray
 hi DiffDelete   cterm=none ctermfg=NONE ctermbg=Red

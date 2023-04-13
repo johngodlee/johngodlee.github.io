@@ -36,46 +36,46 @@
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/usr/bin/env bash
 
 # Define colours and fonts
-boxcol=&quot;[36m&quot;
-default=&quot;[0m&quot;
-bold=&quot;[1m&quot;
-underline=&quot;[4m&quot;
-reverse=&quot;[7m&quot;
-black=&quot;[30m&quot;
-red=&quot;[31m&quot;
-green=&quot;[32m&quot;
-yellow=&quot;[33m&quot;
-blue=&quot;[34m&quot;
-magenta=&quot;[35m&quot;
-cyan=&quot;[36m&quot;
-white=&quot;[37m&quot;
+boxcol=&#34;[36m&#34;
+default=&#34;[0m&#34;
+bold=&#34;[1m&#34;
+underline=&#34;[4m&#34;
+reverse=&#34;[7m&#34;
+black=&#34;[30m&#34;
+red=&#34;[31m&#34;
+green=&#34;[32m&#34;
+yellow=&#34;[33m&#34;
+blue=&#34;[34m&#34;
+magenta=&#34;[35m&#34;
+cyan=&#34;[36m&#34;
+white=&#34;[37m&#34;
 
 # Card items, in line order
 inputs=()
-inputs+=(&quot;${red}${underline}John L. Godlee&quot;)
-inputs+=(&quot;${blue}PhD Student, University of Edinburgh&quot;)
-inputs+=(&quot;&quot;)
-inputs+=(&quot;${bold}Email: ${default}johngodlee@gmail.com&quot;)
-inputs+=(&quot;${bold}Blog: ${default}https://johngodlee.github.io&quot;)
-inputs+=(&quot;${bold}GitHub: ${default}https://github.com/johngodlee&quot;)
-inputs+=(&quot;${bold}ORCiD: ${default}https://orcid.org/0000-0001-5595-255X&quot;)
-inputs+=(&quot;&quot;)
-inputs+=(&quot;${yellow}curl -sL https://johngodlee.github.io/files/card&quot;)
+inputs+=(&#34;${red}${underline}John L. Godlee&#34;)
+inputs+=(&#34;${blue}PhD Student, University of Edinburgh&#34;)
+inputs+=(&#34;&#34;)
+inputs+=(&#34;${bold}Email: ${default}johngodlee@gmail.com&#34;)
+inputs+=(&#34;${bold}Blog: ${default}https://johngodlee.github.io&#34;)
+inputs+=(&#34;${bold}GitHub: ${default}https://github.com/johngodlee&#34;)
+inputs+=(&#34;${bold}ORCiD: ${default}https://orcid.org/0000-0001-5595-255X&#34;)
+inputs+=(&#34;&#34;)
+inputs+=(&#34;${yellow}curl -sL https://johngodlee.github.io/files/card&#34;)
 
 # Define left-padding
-leftpad='    '
+leftpad=&#39;    &#39;
 
 # Define box drawing chars
-vbord=&quot;│&quot;
-hbord=&quot;─&quot;
-tlcor=&quot;╭&quot;
-trcor=&quot;╮&quot;
-brcor=&quot;╯&quot;
-blcor=&quot;╰&quot;
+vbord=&#34;│&#34;
+hbord=&#34;─&#34;
+tlcor=&#34;╭&#34;
+trcor=&#34;╮&#34;
+brcor=&#34;╯&#34;
+blcor=&#34;╰&#34;
 
 # Get length of longest line 
-linel=$(for i in &quot;${inputs[@]}&quot;; do
-	echo $i | sed 's/\x1b\[[0-9;]*m//g'| wc -c
+linel=$(for i in &#34;${inputs[@]}&#34;; do
+	echo $i | sed &#39;s/\x1b\[[0-9;]*m//g&#39;| wc -c
 done | sort -nr | head -n 1)
 
 # Get width of card, with padding
@@ -85,69 +85,69 @@ inwidth=$(($linel + 4*2))
 leftpadl=${#leftpad}
 
 # Print top line
-printf &quot;$boxcol&quot;
-printf &quot;$tlcor&quot;
+printf &#34;$boxcol&#34;
+printf &#34;$tlcor&#34;
 for ((i=1; i&lt;=inwidth; i++)); do
-	printf &quot;$hbord&quot; 
+	printf &#34;$hbord&#34; 
 done
-printf &quot;$trcor&quot;
-printf &quot;\n&quot;
-printf &quot;$boxcol&quot;
-printf &quot;$vbord&quot;
+printf &#34;$trcor&#34;
+printf &#34;\n&#34;
+printf &#34;$boxcol&#34;
+printf &#34;$vbord&#34;
 for ((i=1; i&lt;=inwidth; i++)); do
-	printf &quot; &quot; 
+	printf &#34; &#34; 
 done
-printf &quot;$vbord&quot;
-printf &quot;\n&quot;
+printf &#34;$vbord&#34;
+printf &#34;\n&#34;
 
 # Print each card item
 for ((i = 0; i &lt; ${#inputs[@]}; i++))
 do
 	# Get length of string
-	stringcl=$(echo ${inputs[$i]} | sed 's/\x1b\[[0-9;]*m//g')
+	stringcl=$(echo ${inputs[$i]} | sed &#39;s/\x1b\[[0-9;]*m//g&#39;)
 	stringl=${#stringcl}
 
 	# Get length of right padding 
 	rightpadl=$(($inwidth-$stringl-$leftpadl))
 
 	# Print border
-	printf &quot;$boxcol$vbord&quot; 
+	printf &#34;$boxcol$vbord&#34; 
 
 	# Print left-padding
-	printf &quot;$leftpad&quot;
+	printf &#34;$leftpad&#34;
 		
 	# Print string
-	printf &quot;$default${inputs[$i]}$default&quot;
+	printf &#34;$default${inputs[$i]}$default&#34;
 
 	# Print right-padding
 	for ((j=1; j&lt;=rightpadl; j++))
 	do
-		printf &quot; &quot;
+		printf &#34; &#34;
 	done
 
 	# Print border
-	printf &quot;$boxcol$vbord&quot;
+	printf &#34;$boxcol$vbord&#34;
 
 	# New-line
-	printf &quot;\n&quot;
+	printf &#34;\n&#34;
 done
 
 # Print bottom line
-printf &quot;$boxcol&quot;
-printf &quot;$vbord&quot;
+printf &#34;$boxcol&#34;
+printf &#34;$vbord&#34;
 for ((i=1; i&lt;=inwidth; i++)); do
-	printf &quot; &quot; 
+	printf &#34; &#34; 
 done
-printf &quot;$vbord&quot;
-printf &quot;\n&quot;
-printf &quot;$boxcol$blcor&quot;
+printf &#34;$vbord&#34;
+printf &#34;\n&#34;
+printf &#34;$boxcol$blcor&#34;
 for ((i=1; i&lt;=inwidth; i++)); do
-	printf &quot;$hbord&quot; 
+	printf &#34;$hbord&#34; 
 done
-printf &quot;$brcor&quot;
-printf &quot;\n&quot;
+printf &#34;$brcor&#34;
+printf &#34;\n&#34;
 </code></pre><p>The customisation comes from the <code>inputs</code> array, which contains the contents of the contact card, and uses the variables for font and colour to style the text, e.g.:</p>
-<pre tabindex="0"><code>inputs+=(&quot;${red}${underline}John L. Godlee&quot;)
+<pre tabindex="0"><code>inputs+=(&#34;${red}${underline}John L. Godlee&#34;)
 </code></pre><p>The script requires <code>bash</code> rather than a standard POSIX shell, because it uses bash arithmetic, but this could probably be ported to use <code>bc</code> or something. Also not that some of the escape sequences might not have rendered properly on the web, like <code>^[</code>.</p>
 <figure><a href="/img_full/card/card.png"><img
           alt="Contact card screenshot"

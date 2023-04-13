@@ -52,23 +52,23 @@
 <p><code>frontmatter/</code> contains various <code>.tex</code> snippets used in the frontmatter of the main thesis: title page (<code>ttl.tex</code>), acknowledgements (<code>ack.tex</code>), etc.</p>
 <p><code>img/</code> contains common images used in the thesis.</p>
 <p><code>chapters/</code> contains subdirectories each referring to a thesis chapter or an appendix. The directory name of each chapter should match the name of the main <code>.tex</code> file for that chapter. Each chapter directory should have a <code>*_defin.tex</code> where the asterisk expands to the directory name, which defines the <code>\chaptertitle{}</code> variable for that chapter. Chapters can have their own <code>img/</code> (images) and <code>inc/</code> (included <code>.tex</code> files, e.g. tables) directories which will be incorporated into the thesis and standalone chapters. Chapter <code>.tex</code> content should be wrapped in the following boilerplate, to ensure that references come at the end of the chapter, rather than the end of the thesis:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>refsection<span style="color:#204a87">}</span>
-
-<span style="color:#204a87;font-weight:bold">\input</span><span style="color:#204a87">{</span>chaptername<span style="color:#204a87">_</span>defin.tex<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\chapter</span><span style="color:#c4a000">[\chaptertitle]</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\chaptertitle</span><span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\chaptermark</span><span style="color:#204a87">{</span>Introduction<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>ch:chaptername<span style="color:#204a87">}</span>
-
-<span style="color:#8f5902;font-style:italic">% CONTENT HERE
-</span><span style="color:#8f5902;font-style:italic"></span>
-<span style="color:#204a87;font-weight:bold">\newpage</span><span style="color:#204a87">{}</span>
-<span style="color:#204a87;font-weight:bold">\begingroup</span>
-<span style="color:#204a87;font-weight:bold">\setstretch</span><span style="color:#204a87">{</span>1.0<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\printbibliography</span><span style="color:#c4a000">[heading=subbibintoc]</span>
-<span style="color:#204a87;font-weight:bold">\endgroup</span>
-
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>refsection<span style="color:#204a87">}</span>
-</code></pre></div><p><code>out/</code> contains all compiled <code>.pdf</code> files.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>refsection<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\input</span><span style="color:#204a87">{</span>chaptername<span style="color:#204a87">_</span>defin.tex<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\chapter</span><span style="color:#c4a000">[\chaptertitle]</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\chaptertitle</span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\chaptermark</span><span style="color:#204a87">{</span>Introduction<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>ch:chaptername<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">% CONTENT HERE
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\newpage</span><span style="color:#204a87">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begingroup</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\setstretch</span><span style="color:#204a87">{</span>1.0<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\printbibliography</span><span style="color:#c4a000">[heading=subbibintoc]</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\endgroup</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>refsection<span style="color:#204a87">}</span>
+</span></span></code></pre></div><p><code>out/</code> contains all compiled <code>.pdf</code> files.</p>
 <p><code>snippets/</code> contains bits of code used to compile the thesis:</p>
 <ul>
 <li><code>preamble.tex</code> contains all the preamble material used for the thesis. It is also called by <code>chapter.tex</code>.</li>
@@ -89,22 +89,22 @@
 <p><code>float</code> for managing floats with <code>[H]</code>.</p>
 <p><code>caption</code> for custom caption formatting.</p>
 <p><code>subcaption</code> for compound figures:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>[H]
-	<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>[h]<span style="color:#204a87">{</span>0.45<span style="color:#204a87;font-weight:bold">\linewidth</span><span style="color:#204a87">}</span>
-		<span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#c4a000">[width=\linewidth]</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>a<span style="color:#204a87">}</span>
-		<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{}</span>
-		<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>a<span style="color:#204a87">}</span>
-	<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>
-	<span style="color:#204a87;font-weight:bold">\hfill</span>
-	<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>[h]<span style="color:#204a87">{</span>0.45<span style="color:#204a87;font-weight:bold">\linewidth</span><span style="color:#204a87">}</span>
-		<span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#c4a000">[width=\linewidth]</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>b<span style="color:#204a87">}</span>
-		<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{}</span>
-		<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>b<span style="color:#204a87">}</span>
-	<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>
-	<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{</span>caption text<span style="color:#204a87">}</span>
-	<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>a<span style="color:#204a87">_</span>b<span style="color:#204a87">}</span>
-<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
-</code></pre></div><p><code>multirow</code> and <code>longtable</code> allow for more flexible table formatting,</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>[H]
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>[h]<span style="color:#204a87">{</span>0.45<span style="color:#204a87;font-weight:bold">\linewidth</span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#c4a000">[width=\linewidth]</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>a<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>a<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\hfill</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>[h]<span style="color:#204a87">{</span>0.45<span style="color:#204a87;font-weight:bold">\linewidth</span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#c4a000">[width=\linewidth]</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>b<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>b<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{</span>caption text<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>a<span style="color:#204a87">_</span>b<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
+</span></span></code></pre></div><p><code>multirow</code> and <code>longtable</code> allow for more flexible table formatting,</p>
 <p><code>booktabs</code> subtly improves table aesthetics.</p>
 <p><code>biblatex</code> handles referencing.</p>
 <p><code>textcomp</code>, <code>siunitx</code>, <code>amsmath</code>, and <code>amssymb</code> provide many symbols and extended text characters.</p>

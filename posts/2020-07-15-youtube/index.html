@@ -35,12 +35,12 @@
 <p>I use <a href="https://qutebrowser.org/" target="_blank">Qutebrowser</a>
  as my web browser. I configured qutebrowser to pipe videos to <a href="https://www.videolan.org/vlc" target="_blank">VLC</a>
  using this keybinding in my 	<code>~/.qutebrowser/config.py</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000">config</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">bind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;,m&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;hint --rapid links spawn open -a VLC.app {hint-url}&#39;</span><span style="color:#000;font-weight:bold">)</span>
-</code></pre></div><p>This allows me to press <code>,m</code> while on a youtube page which displays thumbnails for videos, then select a video, which opens VLC and plays the video. This gets rid of any adverts.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#000">config</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">bind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;,m&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#39;hint --rapid links spawn open -a VLC.app {hint-url}&#39;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>This allows me to press <code>,m</code> while on a youtube page which displays thumbnails for videos, then select a video, which opens VLC and plays the video. This gets rid of any adverts.</p>
 <p>To pipe the video to my Chromecast I can use the menu bar in VLC to select &ldquo;Playback&rdquo; -&gt; &ldquo;Renderer&rdquo;, then my Chromecast, which is listed as an option if both are on the same local network.</p>
 <p>To adjust the volume on the chromecast I use <a href="https://github.com/barnybug/go-cast" target="_blank">go-cast</a>
  from the terminal:</p>
-<pre tabindex="0"><code>cast -name &quot;CHROMECAST NAME&quot; volume 0.6
+<pre tabindex="0"><code>cast -name &#34;CHROMECAST NAME&#34; volume 0.6
 </code></pre>
 </main>
 

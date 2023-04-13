@@ -39,11 +39,11 @@
  though, which I included in my $PATH by adding it to <code>~/bin</code>.</p>
 <p>Then, I edited my <code>muttrc</code> to include this macro:</p>
 <pre tabindex="0"><code># Search using notmuch
-macro index \\ &quot;&lt;enter-command&gt;unset wait_key&lt;enter&gt;&lt;shell-escape&gt;mutt-notmuch-py ~/.mail/temporary/search&lt;enter&gt;&lt;change-folder-readonly&gt;+temporary/search&lt;enter&gt;&quot; &quot;search mail (using notmuch)&quot;
+macro index \\ &#34;&lt;enter-command&gt;unset wait_key&lt;enter&gt;&lt;shell-escape&gt;mutt-notmuch-py ~/.mail/temporary/search&lt;enter&gt;&lt;change-folder-readonly&gt;+temporary/search&lt;enter&gt;&#34; &#34;search mail (using notmuch)&#34;
 </code></pre><p>It calls <code>mutt-notmuch-py</code> and puts results based on your query in <code>~/.mail/temporary/search</code> as a mailbox, then switches to that temporary mailbox.</p>
 <p>I also wanted to make search results appear in my sidebar, to be visible until I ran the macro again, so I added it to my sidebar mailbox creation:</p>
 <pre tabindex="0"><code># Notmuch search mailbox
-mailboxes &quot;+--- search --------&quot;
+mailboxes &#34;+--- search --------&#34;
 mailboxes +temporary/search
 </code></pre>
 </main>

@@ -120,19 +120,19 @@
 </tbody>
 </table>
 <p>Technically this file is invalid in its specification. It can be awkward to produce XForm <code>.xml</code> from an invalid <code>.xls</code>. I used <code>xls2xform</code> from <code>pyxform</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">xls2xform --pretty_print --skip_validate pets.xls pets.xml
-</code></pre></div><p><code>pretty_print</code> creates un-minified .xml that is easier to edit, <code>--skip_validate</code> allows the <code>.xml</code> file to be produced, where otherwise it would be discarded.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>xls2xform --pretty_print --skip_validate pets.xls pets.xml
+</span></span></code></pre></div><p><code>pretty_print</code> creates un-minified .xml that is easier to edit, <code>--skip_validate</code> allows the <code>.xml</code> file to be produced, where otherwise it would be discarded.</p>
 <p>After the XML is created it is necessary to edit it. These are the offending lines:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#204a87;font-weight:bold">&lt;itemset</span> <span style="color:#c4a000">nodeset=</span><span style="color:#4e9a06">&#34;..[position() != ./pos and animal_type != &#39;&#39;]&#34;</span><span style="color:#204a87;font-weight:bold">&gt;</span>
-<span style="color:#204a87;font-weight:bold">&lt;value</span> <span style="color:#c4a000">ref=</span><span style="color:#4e9a06">&#34;animal_type&#34;</span><span style="color:#204a87;font-weight:bold">/&gt;</span>
-<span style="color:#204a87;font-weight:bold">&lt;label</span> <span style="color:#c4a000">ref=</span><span style="color:#4e9a06">&#34;animal_type&#34;</span><span style="color:#204a87;font-weight:bold">/&gt;</span>
-<span style="color:#204a87;font-weight:bold">&lt;/itemset&gt;</span>
-</code></pre></div><p>Which must be amended to:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#204a87;font-weight:bold">&lt;itemset</span> <span style="color:#c4a000">nodeset=</span><span style="color:#4e9a06">&#34;/data/pet[position() != current()/../pos and pet_group/animal_type != &#39;&#39;]&#34;</span><span style="color:#204a87;font-weight:bold">&gt;</span>
-    <span style="color:#204a87;font-weight:bold">&lt;value</span> <span style="color:#c4a000">ref=</span><span style="color:#4e9a06">&#34;pet_group/animal_type&#34;</span><span style="color:#204a87;font-weight:bold">/&gt;</span>
-    <span style="color:#204a87;font-weight:bold">&lt;label</span> <span style="color:#c4a000">ref=</span><span style="color:#4e9a06">&#34;pet_group/animal_type&#34;</span><span style="color:#204a87;font-weight:bold">/&gt;</span>
-<span style="color:#204a87;font-weight:bold">&lt;/itemset&gt;</span>
-</code></pre></div><p>This update basically changes the references to take into account the nested grouping within the repeat, and changes where the <code>pos</code> item updates from.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">&lt;itemset</span> <span style="color:#c4a000">nodeset=</span><span style="color:#4e9a06">&#34;..[position() != ./pos and animal_type != &#39;&#39;]&#34;</span><span style="color:#204a87;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">&lt;value</span> <span style="color:#c4a000">ref=</span><span style="color:#4e9a06">&#34;animal_type&#34;</span><span style="color:#204a87;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">&lt;label</span> <span style="color:#c4a000">ref=</span><span style="color:#4e9a06">&#34;animal_type&#34;</span><span style="color:#204a87;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">&lt;/itemset&gt;</span>
+</span></span></code></pre></div><p>Which must be amended to:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">&lt;itemset</span> <span style="color:#c4a000">nodeset=</span><span style="color:#4e9a06">&#34;/data/pet[position() != current()/../pos and pet_group/animal_type != &#39;&#39;]&#34;</span><span style="color:#204a87;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">&lt;value</span> <span style="color:#c4a000">ref=</span><span style="color:#4e9a06">&#34;pet_group/animal_type&#34;</span><span style="color:#204a87;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">&lt;label</span> <span style="color:#c4a000">ref=</span><span style="color:#4e9a06">&#34;pet_group/animal_type&#34;</span><span style="color:#204a87;font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">&lt;/itemset&gt;</span>
+</span></span></code></pre></div><p>This update basically changes the references to take into account the nested grouping within the repeat, and changes where the <code>pos</code> item updates from.</p>
 
 </main>
 

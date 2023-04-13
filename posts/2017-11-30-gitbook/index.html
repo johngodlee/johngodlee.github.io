@@ -34,52 +34,52 @@
 <p>I&rsquo;ve been wanting to write up my recipes into a book for a while, but for the longest time I couldn&rsquo;t find a decent way to automate the process, and I wasn&rsquo;t about to do it manually. Then I found out about <a href="https://github.com/GitbookIO/gitbook" target="_blank">gitbooks</a>
 , which are normally used for online documentation by the looks of it, but seemed perfect for my needs. THe following is a short post about how I used gitbooks and why I think they are great for keeping recipe books, scrapbooks, journals, etc.</p>
 <p>I have all my recipes as markdown files nested inside folders like <code>Dessert</code> and <code>Bread/Foccacia</code>. A <code>tree</code> command of my recipes folder reveals something like this:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Recipes
-    ├── Dessert
-    │   ├── Baked_pumpkin_with_apple.md
-    │   ├── Biscuit_variation.jpg
-    │   ├── Chia_Seed_Chocolate_Pudding.md
-    │   ├── Victoria_Sponge_Cake.md
-    │   └── vegan_brownie.md
-    ├── Drinks
-    │   ├── Beech_Leaf_Gin.md
-    │   ├── Blackberry_Wine.md
-    │   ├── Blackcurrant_cordial.md
-    └── Main_Dishes
-        ├── Basil_Sage_Gnocchi.md
-        ├── Beans_with_charred_chillies.md
-        └── Chorizo_and_white_bean_stew.md
-</code></pre></div><p>Each <code>.md</code> file looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"><span style="color:#000080;font-weight:bold"># Brown Loaf
-</span><span style="color:#000080;font-weight:bold"></span>
-<span style="color:#800080;font-weight:bold">## Ingredients
-</span><span style="color:#800080;font-weight:bold"></span><span style="color:#204a87;font-weight:bold">*</span> 400 g brown flour
-<span style="color:#204a87;font-weight:bold">*</span> 100 g white bread flour
-<span style="color:#204a87;font-weight:bold">*</span> 7 g sachet of yeast
-<span style="color:#204a87;font-weight:bold">*</span> 1 tsp salt
-<span style="color:#204a87;font-weight:bold">*</span> 2.5 tsp olive oil
-<span style="color:#204a87;font-weight:bold">*</span> 300 ml warm water
-
-<span style="color:#800080;font-weight:bold">## Method
-</span><span style="color:#800080;font-weight:bold"></span><span style="color:#204a87;font-weight:bold">1.</span> Mix together flour, yeast, salt
-<span style="color:#204a87;font-weight:bold">2.</span> Rub in olive oil, removing lumps
-<span style="color:#204a87;font-weight:bold">3.</span> Pour in water and mix to dough
-<span style="color:#204a87;font-weight:bold">4.</span> Knead for about 10 minutes
-<span style="color:#204a87;font-weight:bold">5.</span> Cover with some oil and return to bowl
-<span style="color:#204a87;font-weight:bold">6.</span> Cover with plastic and leave to rise for 1.5 hours
-<span style="color:#204a87;font-weight:bold">7.</span> Put into loaf tin, or don&#39;t
-<span style="color:#204a87;font-weight:bold">8.</span> Leave for another 30 minutes
-<span style="color:#204a87;font-weight:bold">9.</span> Score and dust with flour
-<span style="color:#204a87;font-weight:bold">10.</span> Bake at 180C for 35-40 minutes
-</code></pre></div><p>At first I tried using pandoc to compile all of the files together as a <code>.html</code> or <code>.pdf</code>, and that worked to a degree. I came up with this little bash script to compile the files when I was in the root of the <code>Recipes</code> folder:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#8f5902;font-style:italic">#!/bin/bash
-</span><span style="color:#8f5902;font-style:italic"></span>
-<span style="color:#8f5902;font-style:italic"># Pandoc call</span>
-<span style="color:#204a87;font-weight:bold">for</span> dir in ./* <span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">cd</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$dir</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> pandoc *.md --toc --toc-depth<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1</span> --template<span style="color:#ce5c00;font-weight:bold">=</span>default.latex -V geometry:margin<span style="color:#ce5c00;font-weight:bold">=</span>40pt -V <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#000">$dir</span><span style="color:#4e9a06">&#34;</span> -o result.pdf<span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">done</span>
-
-<span style="color:#8f5902;font-style:italic"># Concatenate .pdf files</span>
-pdfjoin */*.pdf
-</code></pre></div><p>This dives into each directory in turn, makes one <code>.pdf</code> per directory and gives it a title page, then joins them all together, so I end up with a book that has chapters named according to the folder the recipes were in. Not bad, but a couple of things kapt me unsatisfied. First, where a recipe is short, another recipe would get tacked onto the bottom, whereas really I would have liked a page break after each recipe. Second, the table of contents appears for each chapter, whereas I would have liked one table of contents.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Recipes
+</span></span><span style="display:flex;"><span>    ├── Dessert
+</span></span><span style="display:flex;"><span>    │   ├── Baked_pumpkin_with_apple.md
+</span></span><span style="display:flex;"><span>    │   ├── Biscuit_variation.jpg
+</span></span><span style="display:flex;"><span>    │   ├── Chia_Seed_Chocolate_Pudding.md
+</span></span><span style="display:flex;"><span>    │   ├── Victoria_Sponge_Cake.md
+</span></span><span style="display:flex;"><span>    │   └── vegan_brownie.md
+</span></span><span style="display:flex;"><span>    ├── Drinks
+</span></span><span style="display:flex;"><span>    │   ├── Beech_Leaf_Gin.md
+</span></span><span style="display:flex;"><span>    │   ├── Blackberry_Wine.md
+</span></span><span style="display:flex;"><span>    │   ├── Blackcurrant_cordial.md
+</span></span><span style="display:flex;"><span>    └── Main_Dishes
+</span></span><span style="display:flex;"><span>        ├── Basil_Sage_Gnocchi.md
+</span></span><span style="display:flex;"><span>        ├── Beans_with_charred_chillies.md
+</span></span><span style="display:flex;"><span>        └── Chorizo_and_white_bean_stew.md
+</span></span></code></pre></div><p>Each <code>.md</code> file looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold"># Brown Loaf
+</span></span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold"></span>
+</span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold">## Ingredients
+</span></span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold"></span><span style="color:#204a87;font-weight:bold">*</span> 400 g brown flour
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> 100 g white bread flour
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> 7 g sachet of yeast
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> 1 tsp salt
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> 2.5 tsp olive oil
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> 300 ml warm water
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold">## Method
+</span></span></span><span style="display:flex;"><span><span style="color:#800080;font-weight:bold"></span><span style="color:#204a87;font-weight:bold">1.</span> Mix together flour, yeast, salt
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">2.</span> Rub in olive oil, removing lumps
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">3.</span> Pour in water and mix to dough
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">4.</span> Knead for about 10 minutes
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">5.</span> Cover with some oil and return to bowl
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">6.</span> Cover with plastic and leave to rise for 1.5 hours
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">7.</span> Put into loaf tin, or don&#39;t
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">8.</span> Leave for another 30 minutes
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">9.</span> Score and dust with flour
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">10.</span> Bake at 180C for 35-40 minutes
+</span></span></code></pre></div><p>At first I tried using pandoc to compile all of the files together as a <code>.html</code> or <code>.pdf</code>, and that worked to a degree. I came up with this little bash script to compile the files when I was in the root of the <code>Recipes</code> folder:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Pandoc call</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">for</span> dir in ./* <span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87">cd</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$dir</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> pandoc *.md --toc --toc-depth<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">1</span> --template<span style="color:#ce5c00;font-weight:bold">=</span>default.latex -V geometry:margin<span style="color:#ce5c00;font-weight:bold">=</span>40pt -V <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#000">$dir</span><span style="color:#4e9a06">&#34;</span> -o result.pdf<span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Concatenate .pdf files</span>
+</span></span><span style="display:flex;"><span>pdfjoin */*.pdf
+</span></span></code></pre></div><p>This dives into each directory in turn, makes one <code>.pdf</code> per directory and gives it a title page, then joins them all together, so I end up with a book that has chapters named according to the folder the recipes were in. Not bad, but a couple of things kapt me unsatisfied. First, where a recipe is short, another recipe would get tacked onto the bottom, whereas really I would have liked a page break after each recipe. Second, the table of contents appears for each chapter, whereas I would have liked one table of contents.</p>
 <figure><a href="/img_full/gitbook/pandoc_pdf.png"><img
           alt="Pandoc output pdf recipe"
           title="Pandoc output pdf recipe"src="/img/gitbook/pandoc_pdf.png" 
@@ -89,27 +89,27 @@ pdfjoin */*.pdf
 <p>So for a long time this little project sat at the bottom of my to do list, waiting for a better option to come along. That&rsquo;s when I found out about gitbook.</p>
 <p>I actually found out about AsciiDoc first, a friend showed me how they had been using AsciiDoc to make manuals for some software they had been writing, and was due to be distributed around their department in a few weeks. But I found that AsciiDoc works much better with the AsciiDoc markup language, whereas I already had all my recipes written in markdown, so I did some googling and quickly came up with gitbook, which seems to be built with markdown and git control in mind. It actually reminded me a lot of Jekyll in the way it works, which I use to make websites, so it was a good fit.</p>
 <p>The first thing I needed to do was install gitbook on the command line:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install gitbook-cli -g
-</code></pre></div><p>Then because I already have all my markdown files. All I needed to do was make a <code>SUMMARY.md</code> in the root directory, then build the book. But building a <code>SUMMARY.md</code> isn&rsquo;t trivial, and in fact can be very tedious.So I installed another npm package to help with that:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">npm install 
-</code></pre></div><p>Then to generate the <code>SUMMARY.md</code> I can type:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">book sm
-</code></pre></div><p>A <code>SUMMARY.md</code> looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"><span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Introduction</span>](<span style="color:#c4a000">README.md</span>)
-<span style="color:#204a87;font-weight:bold">*</span> Bread
-    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Brown Loaf</span>](<span style="color:#c4a000">Bread/Brown_Loaf.md</span>)
-    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Ciabatta</span>](<span style="color:#c4a000">Bread/Ciabatta.md</span>)
-    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Olive Rosemary Foccacia</span>](<span style="color:#c4a000">Bread/Olive_Rosemary_Foccacia.md</span>)
-    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Rosemary Sweet Potato Rolls</span>](<span style="color:#c4a000">Bread/Rosemary_Sweet_Potato_Rolls.md</span>)
-    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Stuffing Rolls</span>](<span style="color:#c4a000">Bread/Stuffing_Rolls.md</span>)
-    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Sweet Potato Crescent Rolls</span>](<span style="color:#c4a000">Bread/Sweet_Potato_Crescent_Rolls.md</span>)
-<span style="color:#204a87;font-weight:bold">*</span> Dessert
-    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Baked Pumpkin With Apple</span>](<span style="color:#c4a000">Dessert/Baked_pumpkin_with_apple.md</span>)
-    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Chia Seed Chocolate Pudding</span>](<span style="color:#c4a000">Dessert/Chia_Seed_Chocolate_Pudding.md</span>)
-</code></pre></div><p>With the displayed name of the recipe (chapter) in square brackets, with the actual filepath next to it in curved brackets. By default, each chapter takes its name from the <code># HEADER</code> at the top of each <code>.md</code> file, but can be changed manually by editing <code>SUMMARY.md</code>. The sections are bullet points above the chapters. <code>README.md</code> is the file which is displayed when you first navigate to the root of the compiled book, so can contain a description of the book, acknowledgements etc.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>npm install gitbook-cli -g
+</span></span></code></pre></div><p>Then because I already have all my markdown files. All I needed to do was make a <code>SUMMARY.md</code> in the root directory, then build the book. But building a <code>SUMMARY.md</code> isn&rsquo;t trivial, and in fact can be very tedious.So I installed another npm package to help with that:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>npm install 
+</span></span></code></pre></div><p>Then to generate the <code>SUMMARY.md</code> I can type:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>book sm
+</span></span></code></pre></div><p>A <code>SUMMARY.md</code> looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Introduction</span>](<span style="color:#c4a000">README.md</span>)
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> Bread
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Brown Loaf</span>](<span style="color:#c4a000">Bread/Brown_Loaf.md</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Ciabatta</span>](<span style="color:#c4a000">Bread/Ciabatta.md</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Olive Rosemary Foccacia</span>](<span style="color:#c4a000">Bread/Olive_Rosemary_Foccacia.md</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Rosemary Sweet Potato Rolls</span>](<span style="color:#c4a000">Bread/Rosemary_Sweet_Potato_Rolls.md</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Stuffing Rolls</span>](<span style="color:#c4a000">Bread/Stuffing_Rolls.md</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Sweet Potato Crescent Rolls</span>](<span style="color:#c4a000">Bread/Sweet_Potato_Crescent_Rolls.md</span>)
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> Dessert
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Baked Pumpkin With Apple</span>](<span style="color:#c4a000">Dessert/Baked_pumpkin_with_apple.md</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">*</span> [<span style="color:#204a87;font-weight:bold">Chia Seed Chocolate Pudding</span>](<span style="color:#c4a000">Dessert/Chia_Seed_Chocolate_Pudding.md</span>)
+</span></span></code></pre></div><p>With the displayed name of the recipe (chapter) in square brackets, with the actual filepath next to it in curved brackets. By default, each chapter takes its name from the <code># HEADER</code> at the top of each <code>.md</code> file, but can be changed manually by editing <code>SUMMARY.md</code>. The sections are bullet points above the chapters. <code>README.md</code> is the file which is displayed when you first navigate to the root of the compiled book, so can contain a description of the book, acknowledgements etc.</p>
 <p>Now the book can be built:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">gitbook build
-</code></pre></div><p>You can navigate to the locally hosted root of the book by going to:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gitbook build
+</span></span></code></pre></div><p>You can navigate to the locally hosted root of the book by going to:</p>
 <pre tabindex="0"><code>http://localhost:4000
 </code></pre><p>Gitbook.com](<a href="http://www.gitbook.com" target="_blank">http://www.gitbook.com</a>
 ) offers a fairly decent option for hosting your gitbook for free, and if you already have a Github account you can upload the gitbook as a git repo to Github, and then link that Github repo to Gitbook.com, for continuous deployment, with a URL that you can share with others. [Here is my Gitbook of recipes</p>

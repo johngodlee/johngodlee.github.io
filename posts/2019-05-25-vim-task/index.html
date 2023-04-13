@@ -33,41 +33,41 @@
 <main>
 <p>I&rsquo;m slowly trying to emulate parts of the <a href="https://orgmode.org/guide/" target="_blank">Emacs Org-mode syntax</a>
 . Particularly, when I write TODO lists, having <code>[ ]</code> or <code>[*]</code> at the beginning of a line to indicate whether that task is &lsquo;pending&rsquo; or &lsquo;done&rsquo;, respectively. I&rsquo;m not ready to dive straight into a Vim Org-mode plugin, but I have started to write little functions to make editing the files slightly more efficient. One such keybinding is simply to toggle whether a task is marked as &lsquo;done&rsquo; or &lsquo;pending&rsquo;:</p>
-<pre tabindex="0"><code>&quot; Toggle task as done
+<pre tabindex="0"><code>&#34; Toggle task as done
 autocmd Filetype text,markdown nnoremap &lt;Leader&gt;D :call ToggleTask()&lt;CR&gt;
 
 function! ToggleTask()
-	if (getline('.') =~ '^\[\*\]')&gt;0      &quot; If you find [*] at line start
+	if (getline(&#39;.&#39;) =~ &#39;^\[\*\]&#39;)&gt;0      &#34; If you find [*] at line start
 		.s/^\[\*\]/[ ]/g
-	elseif (getline('.') =~ '^\[\ \]')&gt;0  &quot; OR If you find [ ] at line start
+	elseif (getline(&#39;.&#39;) =~ &#39;^\[\ \]&#39;)&gt;0  &#34; OR If you find [ ] at line start
 		.s/^\[\ \]/[*]/g
-	else								  &quot; OR if neither
-		echom 'Not a task line'
+	else								  &#34; OR if neither
+		echom &#39;Not a task line&#39;
 	endif
 endfunction
 </code></pre><p>The keybinding applies to <code>text</code> and <code>markdown</code> files and is called by <code>&lt;Leader&gt;d</code>. This calls a function named <code>ToggleTask()</code>. The function searches the current cursor line to see if it contains <code>[*]</code> and if it does, replaces it with <code>[ ]</code>, then if <code>[*]</code> isn&rsquo;t found it does the opposite, searching for <code>[ ]</code> and changing it to <code>[*]</code>, finally if neither of the abov regexes are matched, a message <code>echom</code> is displayed stating that the cursor line is not a task.</p>
 <p>Similarly, I have the line below which makes a line a task line simply by prepending it with <code>[ ] </code>:</p>
 <pre tabindex="0"><code>autocmd Filetype text,markdown nnoremap &lt;Leader&gt;T :s/^/[ ] /g &lt;CR&gt;
-</code></pre><p>These aren&rsquo;t perfect by any stretch, it would be nicer to roll the whole lot into a more intelligent single function that can toggle between &lsquo;not a task&rsquo;, &lsquo;task to do&rsquo;, &lsquo;finished task&rsquo;, that would also take into account common line prefixes like enumerated lists.</p>
+</code></pre><p>These aren&rsquo;t perfect by any stretch, it would be nicer to roll the whole lot into a more intelligent single function that can toggle between &rsquo;not a task&rsquo;, &rsquo;task to do&rsquo;, &lsquo;finished task&rsquo;, that would also take into account common line prefixes like enumerated lists.</p>
 <h1 id="update---2019_06_06">Update - 2019_06_06</h1>
 <p>I did what I said I would do and rolled it all into one function:</p>
-<pre tabindex="0"><code>&quot; Create and toggle done status of task lines
+<pre tabindex="0"><code>&#34; Create and toggle done status of task lines
 autocmd Filetype text,markdown nnoremap &lt;Leader&gt;z :call ToggleTask()&lt;CR&gt;
 
 function! ToggleTask()
-	if (getline('.') =~ '^\[x\]')&gt;0       &quot; IF you find [x] at line start
+	if (getline(&#39;.&#39;) =~ &#39;^\[x\]&#39;)&gt;0       &#34; IF you find [x] at line start
 		.s/^\[x\]/[ ]/g
-	elseif (getline('.') =~ '^\[\ \]')&gt;0  &quot; OR if you find [ ] at line start
+	elseif (getline(&#39;.&#39;) =~ &#39;^\[\ \]&#39;)&gt;0  &#34; OR if you find [ ] at line start
 		.s/^\[\ \]/[x]/g
-	elseif (getline('.') =~ '^\d\+\.\ \[\ \]')&gt;0  &quot; OR if the line begins with 1. [ ]
+	elseif (getline(&#39;.&#39;) =~ &#39;^\d\+\.\ \[\ \]&#39;)&gt;0  &#34; OR if the line begins with 1. [ ]
 		.s/\[\ \]/[x]/g
-	elseif (getline('.') =~ '^\d\+\.\ \[x\]')&gt;0  &quot; OR if the line begins with 1. [x]
+	elseif (getline(&#39;.&#39;) =~ &#39;^\d\+\.\ \[x\]&#39;)&gt;0  &#34; OR if the line begins with 1. [x]
 		.s/\[x\]/[ ]/g
-	elseif (getline('.') =~ '^\d\+\.')&gt;0  &quot; OR if the line begins with a 1.
+	elseif (getline(&#39;.&#39;) =~ &#39;^\d\+\.&#39;)&gt;0  &#34; OR if the line begins with a 1.
 		.s/\d\+\./&amp; [ ]/
-	elseif (getline('.') =~ '^\*\|-')&gt;0	  &quot; OR if the line begins with a * or -
+	elseif (getline(&#39;.&#39;) =~ &#39;^\*\|-&#39;)&gt;0	  &#34; OR if the line begins with a * or -
 		.s/^\*\|-/[ ]/
-	else								  &quot; OR if none
+	else								  &#34; OR if none
 		.s/^/[ ] /g
 	endif
 endfunction
