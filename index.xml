@@ -6,7 +6,33 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2023-05-18T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2023-05-24T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>An email about estimating productivity</title>
+      <link>http://johngodlee.xyz/posts/2023-05-24-productivity_email/</link>
+      <pubDate>2023-05-24T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2023-05-24-productivity_email/</guid>
+      <description>&lt;p&gt;I had a student ask me something along the lines of:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;How do I calculate woody productivity in a woodland plot? I have seen others calculate the difference in standing biomass between censuses as net primary productivity. Is this right?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In our lab group we use a lot of repeat inventory tree growth data, from plots in forests, savannas, and woodlands, to understand rates of biomass dynamics and land-atmosphere carbon exchange. I wrote quite a long email in response, so I thought I would share it here:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There are lots of subtly different approaches to quantifying woody &amp;ldquo;productivity&amp;rdquo;. The literature is not always totally precise in their definitions of productivity, which can make it all a bit confusing.&lt;/p&gt;
+&lt;p&gt;Generally, Net Primary Productivity (NPP) is defined as the atmospheric carbon uptake by vegetation after subtracting the CO2 emitted via plant respiration, i.e. GPP minus autotrophic respiration, where GPP is Gross Primary Productivity, the rate of atmospheric carbon uptake by plants over a given time period.&lt;/p&gt;
+&lt;p&gt;Crucially, NPP doesn&amp;rsquo;t account for carbon losses from the system via the mortality and subsequent decomposition of woody stems, i.e. heterotrophic respiration, or loss of carbon from woody stems due to disturbances like fire.&lt;/p&gt;
+&lt;p&gt;So, to measure NPP you can&amp;rsquo;t simply calculate the difference in living woody biomass between censuses. This calculation of living woody biomass change would be more readily termed Net Biome Productivity (NBP).&lt;/p&gt;
+&lt;p&gt;Instead, to measure NPP you would have to sum all the woody growth that has occurred within the census interval, including woody stems which have died within the census interval. This is not straightforward, as in our fire-prone system in Bicuar sometimes trees sometimes die and burn away within the census interval. Feasibly, trees may also germinate, grow to sufficient size to be measured, and die within a single census interval. There are ways to estimate this unmeasured productivity, e.g. Talbot et al. (&lt;a href=&#34;https://doi.org/10.1016/j.foreco.2014.02.021&#34; target=&#34;_blank&#34;&gt;2014&lt;/a&gt;
+), and Kohyama et al. (&lt;a href=&#34;https://doi.org/10.1016/j.foreco.2018.11.010&#34; target=&#34;_blank&#34;&gt;2019&lt;/a&gt;
+).&lt;/p&gt;
+&lt;p&gt;The next thing to think about then, is whether you actually want to measure NPP (the rate of woody growth in living stems), or NBP (the rate of ecosystem-level woody biomass change, including mortality losses). I will leave you to consider this.&lt;/p&gt;
+&lt;p&gt;I have written R code to estimate both &lt;a href=&#34;https://github.com/johngodlee/ProdVital&#34; target=&#34;_blank&#34;&gt;NPP and calculate NBP&lt;/a&gt;
+, using the methods in Kohyama et al. (2019). Let me know if you would like me to send it over.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
     <item>
       <title>R functions to download data from KoboToolbox</title>
       <link>http://johngodlee.xyz/posts/2023-05-18-kobo_functions/</link>
@@ -1448,38 +1474,6 @@ TextColor 247 247 247
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;TRUE&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;stem_status&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Todo lists in Vim, syntax highlighting</title>
-      <link>http://johngodlee.xyz/posts/2022-06-20-todo/</link>
-      <pubDate>2022-06-20T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2022-06-20-todo/</guid>
-      <description>&lt;p&gt;I keep a todo list on my computer, which contains tasks for work and home. It also contains items where I&amp;rsquo;m waiting for someone to do something, and I use it as a scratchpad for bits of pertinent information that might be useful in the near future. The file is written in &lt;a href=&#34;https://daringfireball.net/projects/markdown/&#34; target=&#34;_blank&#34;&gt;Markdown&lt;/a&gt;
-. Items in the list are written as bullet points (-), and sometimes I group items together under headers (#). Sometimes I have headers for each day of the week, and sometimes for a particular project I&amp;rsquo;m working on. The bullet point list of tasks is sometimes nested to include extra information about each task, or to add subtasks below a main task.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ve known about the &lt;a href=&#34;http://todotxt.org/&#34; target=&#34;_blank&#34;&gt;todo.txt&lt;/a&gt;
- file format for a long time, and I see the logic in it. todo.txt is very flexible and has a number of optional features. You can specify due dates and creation dates (&lt;code&gt;2022-05-05&lt;/code&gt;, &lt;code&gt;due:2022-05-05&lt;/code&gt;), prioritise tasks using a letter system (&lt;code&gt;(A)&lt;/code&gt;, &lt;code&gt;(B)&lt;/code&gt;), group tasks by project (&lt;code&gt;@project&lt;/code&gt;) or context (&lt;code&gt;+context&lt;/code&gt;), mark tasks as done (&lt;code&gt;[ ]&lt;/code&gt;, &lt;code&gt;[x]&lt;/code&gt;) and optionally move completed tasks to a separate &lt;code&gt;done.txt&lt;/code&gt; file. In my current system I already move tasks to &amp;ldquo;done&amp;rdquo; files, one per day, and I often add creation dates and due dates, especially on tasks where I&amp;rsquo;m waiting for someone to do something.&lt;/p&gt;
-&lt;p&gt;The thing that has always put me off using todo.txt is the inability to add longer descriptions or subtasks to a task. Each task must occupy a single line. I also like having the ability to group tasks under headers as this allows me to plan my time, but todo.txt requires each line to be a task. Whenever I&amp;rsquo;ve dabbled with todo.txt in the past, it&amp;rsquo;s always given me tunnel vision, making it so I can only focus on the next few short tasks ahead of me, at the expense of understanding the wider context of my work. That being said, I would like to start making use of the context and project tags from todo.txt to organise tasks in my &lt;code&gt;todo.md&lt;/code&gt; file.&lt;/p&gt;
-&lt;p&gt;I do most of my task management in &lt;a href=&#34;https://neovim.io/&#34; target=&#34;_blank&#34;&gt;neovim&lt;/a&gt;
-. I wrote some syntax highlighting rules to extend the basic Markdown syntax highlighting in vim, by placing a file at &lt;code&gt;~/.config/nvim/after/syntax/mardown.vim&lt;/code&gt;. The file contains:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-viml&#34; data-lang=&#34;viml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;syntax&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;match&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoDate&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;\d\{2,4\}-\d\{2\}-\d\{2\}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;syntax&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;match&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoDue&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;due:\d\{2,4\}-\d\{2\}-\d\{2\}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;syntax&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;match&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoProject&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;\(^\|\W\)+[^[:blank:]]\+&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;syntax&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;match&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoContext&lt;/span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;\(^\|\W\)@[^[:blank:]]\+&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoDate&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Type&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoDue&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Constant&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoProject&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Comment&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;highlight&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;default&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;link&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;TodoContext&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;Statement&lt;/span&gt;&lt;span style=&#34;color:#a40000&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;So when I open my &lt;code&gt;todo.md&lt;/code&gt; it looks like this:&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/todo/scrot.png&#34;&gt;&lt;img
-          alt=&#34;Screenshot of todo.md showing syntax highlighting&#34;
-          title=&#34;Screenshot of todo.md showing syntax highlighting&#34;src=&#34;http://johngodlee.xyz/img/todo/scrot.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-</description>
     </item>
     
   </channel>
