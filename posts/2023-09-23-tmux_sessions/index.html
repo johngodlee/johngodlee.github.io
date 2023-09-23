@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>tmux grouped sessions</h1>
+
+<h2>2023-09-23</h2>
+</div>
+
+<main>
+<p>I have two monitors at work. Normally I have a terminal running tmux open full screen on the right-hand monitor, in portrait, and use the left monitor in landscape for everything else. Occasionally however, I want to also have a terminal open on the left monitor, and to move windows easily between terminals. To make it easier to share windows across terminals, I have adjusted my tmux setup to take advantage of the grouped-sessions feature.</p>
+<p>At the bottom of my <code>.tmux.conf</code> I have this chunk, which starts a new session called &ldquo;main&rdquo;, as a daemon.</p>
+<pre tabindex="0"><code>new-session -s main -d
+</code></pre><p>Then, at the bottom of my <code>.bashrc</code> I have this chunk. First it checks if tmux is already running (<code>if [ -z &quot;$TMUX&quot; ]</code>). Then if tmux isn&rsquo;t running, it creates a new session within the same group as session &ldquo;main&rdquo; (<code>new-session -t main</code>). It then sets the option <code>destroy-unnattached</code>, which removes clients when you detach from them, ensuring that the automatically created sessions don&rsquo;t pile up when they are detached from.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -z <span style="color:#4e9a06">&#34;</span><span style="color:#000">$TMUX</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    /usr/local/bin/tmux new-session -t main <span style="color:#4e9a06">\;</span> set-option destroy-unattached
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span></code></pre></div><p>The result is that when I open a terminal, tmux checks if the &ldquo;main&rdquo; session exists, creates it if it doesn&rsquo;t and attaches a client to that session.</p>
+<p>All sessions in the same group share the same set of windows, but you can move freely between windows in each session.</p>
+<video controls>
+    <source src="/vid/tmux_sessions/tmux_sessions.mp4" type="video/webm">
+</video>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
