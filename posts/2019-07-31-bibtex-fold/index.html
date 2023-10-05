@@ -31,7 +31,7 @@
 </div>
 
 <main>
-<p>I wanted to be able to fold long BibTeX files to display a condensed list of the references so I could quickly scan the contents of the file. To do this, I created a function in my <code>.vimrc</code> which folds <code>.bib</code> files on the <code>@</code> symbol which prepends each reference entry in the file. THis is the excerpt from my <code>.vimrc</code>:</p>
+<p>I wanted to be able to fold long BibTeX files to display a condensed list of the references so I could quickly scan the contents of the file. To do this, I created a function in my <code>.vimrc</code> which folds <code>.bib</code> files on the <code>@</code> symbol which prepends each reference entry in the file. This is the excerpt from my <code>.vimrc</code>:</p>
 <pre tabindex="0"><code>&#34; Set folding function for bibtex entries
 function! BibTeXFold()
 	if getline(v:lnum) =~ &#39;^@.*$&#39;
