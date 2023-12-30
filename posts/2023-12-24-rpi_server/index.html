@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Raspberry Pi home server</h1>
+
+<h2>2023-12-24</h2>
+</div>
+
+<main>
+<p>When we lived in London we had an old HP Compaq Elite 8300 desktop tower that we used as a home server. The server ran Ubuntu minimal server 18.04. I used the server to back up important documents, and used Samba to connect our laptops to access music, movies etc.</p>
+<p>The server was very convenient for me, but it was a bit awkward for others to connect to if they weren&rsquo;t familiar with network shares or SSH. Additionally, the server was quite power hungry. I set it up to wake on LAN, but this meant I was the only one in the house who could turn it on.</p>
+<p>In our new flat I aimed to upgrade the home server setup to reduce power consumption, increase storage capacity, and improve accessibility for less techy people.</p>
+<h2 id="hardware">Hardware</h2>
+<ul>
+<li><a href="https://www.raspberrypi.com/products/raspberry-pi-4-model-b/" target="_blank">Raspberry Pi 4 Model B 8 GB</a>
+</li>
+<li><a href="https://www.integralmemory.com/product/slimxpress-portable-ssd/" target="_blank">Integral SlimXpress 1TB USB External SSD</a>
+ - 1050 MB/s Read, 1000 MB/s Write</li>
+<li><a href="https://www.gl-inet.com/products/gl-a1300/" target="_blank">GL.iNet GL-A1300</a>
+ (Slate Plus) Wireless Travel Router</li>
+</ul>
+<p>The RPi is connected to the router via a short ethernet cable, and to the SSD via USB. The RPi boots from a 64 GB Micro SD.</p>
+<p>I used zipties to mount the three bits of hardware onto a section from a plastic crate, the kind used to hold fruits and vegetables. I then hung the &ldquo;rack&rdquo; under a gateleg table using screw-in hooks.</p>
+<p>To play music in the living room the RPi is connected to a Yamaha CRX-M170 micro Hi-Fi system via a 3.5 mm to phono cable. Unfortunately, the 3.5 mm jack in the RPi 4 is terrible. The sound comes through very tinny with lots of interference. To get decent audio quality I had to buy an <a href="https://thepihut.com/products/iqaudio-dac-pro" target="_blank">IQaudIO DAC Pro hat</a>
+ for the RPi. The DAC Pro connects via the GPIO pins to the RPi.</p>
+<figure><a href="/img_full/rpi_server/server.jpg"><img
+          alt="Server setup mounted to plastic tray &#39;rack&#39;."
+          title="Server setup mounted to plastic tray &#39;rack&#39;."src="/img/rpi_server/server.png" 
+      /></a></figure>
+
+
+<h2 id="software">Software</h2>
+<p>We don&rsquo;t have internet in our new flat, instead we just use our mobile phones. The GL-A1300 router has a USB port that can connect an Android phone to use it for USB tethering. On the rare occasion that we need to connect the home LAN network to the internet we can tether a phone, but mostly we can remain offline.</p>
+<p>The RPi runs <a href="https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-32-bit" target="_blank">Raspberry Pi OS Lite</a>
+ version 2023-12-05. This version of the OS doesn&rsquo;t include a desktop environment and works well as a server.</p>
+<p>I installed <a href="https://jellyfin.org/" target="_blank">Jellyfin</a>
+ to serve video and audio from the RPi to all our devices. Jellyfin has an app for Android that works quite well, and a web app that is accessible over the local network that works well on laptops. Jellyfin can cast directly to a TV using DLNA.</p>
+<p>I installed <a href="https://mopidy.com/" target="_blank">Mopidy</a>
+ to play audio on the Hi-Fi from the RPi. I installed the <a href="https://mopidy.com/ext/mpd/" target="_blank">Mopidy MPD extension</a>
+, which allows MPD clients like <a href="https://f-droid.org/en/packages/org.gateshipone.malp/" target="_blank">M.A.L.P.</a>
+ to connect to the Mopidy instance. I installed the <a href="https://mopidy.com/ext/musicbox-webclient/" target="_blank">Mopidy MusicBox extension</a>
+ to provide a web client music player. I ran into a problem where Raspberry Pi OS wouldn&rsquo;t let me install any python packages via pip, including the Mopidy Jellyfin extension. All I had to do to fix the issue was to delete this file:</p>
+<pre tabindex="0"><code>sudo rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
+</code></pre><p>It took me some time to figure out how to get Mopidy and Jellyfin to both access <code>.m3u8</code> playlists. Playlists are stored in <code>Music/Playlists/</code>, where <code>Music/</code> is the directory where all other music is stored. I don&rsquo;t use the <a href="https://mopidy.com/ext/jellyfin/" target="_blank">Mopidy Jellyfin extension</a>
+, because I can&rsquo;t get it to play well with playlists. Playlists show up in both Jellyfin and Mopidy, but I have to create the playlists manually in the terminal. Mopidy doesn&rsquo;t have the ability to create playlists, and Jellyfin stores playlists as <code>.xml</code> files which Mopidy can&rsquo;t read. Yet, Jellyfin will happily add songs to an existing <code>.m3u8</code> playlist; weird. It seems others have had similar problems judging by <a href="https://github.com/jellyfin/mopidy-jellyfin/issues/104" target="_blank">various</a>
+ <a href="https://github.com/jellyfin/mopidy-jellyfin/issues/133" target="_blank">Github</a>
+ <a href="https://github.com/jellyfin/mopidy-jellyfin/issues/111" target="_blank">issues</a>
+.</p>
+<p>I installed <a href="https://www.samba.org/" target="_blank">Samba</a>
+ to make it easier for others to add media from their devices, and I installed <a href="https://www.qbittorrent.org/" target="_blank">qBittorrent</a>
+ (-nox variant with no X-server) to download media directly onto the server when it&rsquo;s connected to the internet.</p>
+<p>To create backups I have an additional 1TB SSD which is synced using <a href="https://github.com/WayneD/rsync" target="_blank">rsync</a>
+ once a week. I have a third SSD that is synced every month, which I keep at work.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
