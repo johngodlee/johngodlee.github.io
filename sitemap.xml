@@ -830,6 +830,8 @@
   </url><url>
     <loc>http://johngodlee.xyz/recipes/bread/</loc>
   </url><url>
+    <loc>http://johngodlee.xyz/recipes/breakfast/</loc>
+  </url><url>
     <loc>http://johngodlee.xyz/recipes/drinks/buckwheat_saison/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/butter_chicken/</loc>
@@ -838,11 +840,11 @@
   </url><url>
     <loc>http://johngodlee.xyz/recipes/dessert/chia_seed_chocolate_pudding/</loc>
   </url><url>
-    <loc>http://johngodlee.xyz/recipes/misc/chickpea_carrot_crepes/</loc>
+    <loc>http://johngodlee.xyz/recipes/mains/chickpea_carrot_crepes/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/chickpea_pastry_slice/</loc>
   </url><url>
-    <loc>http://johngodlee.xyz/recipes/misc/chilaquiles/</loc>
+    <loc>http://johngodlee.xyz/recipes/breakfast/chilaquiles/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/dessert/chocolate_brownies/</loc>
   </url><url>
@@ -884,7 +886,7 @@
   </url><url>
     <loc>http://johngodlee.xyz/recipes/bread/pinello_dough/</loc>
   </url><url>
-    <loc>http://johngodlee.xyz/recipes/misc/freezer_vegan_breakfast_burritos/</loc>
+    <loc>http://johngodlee.xyz/recipes/breakfast/freezer_vegan_breakfast_burritos/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/dessert/gajar_burfi/</loc>
   </url><url>
@@ -910,8 +912,6 @@
   </url><url>
     <loc>http://johngodlee.xyz/recipes/misc/</loc>
   </url><url>
-    <loc>http://johngodlee.xyz/recipes/mains/mushroom_chilli/</loc>
-  </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/mushroom_fricassee/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/mushroom_pithivier/</loc>
@@ -931,6 +931,8 @@
     <loc>http://johngodlee.xyz/recipes/bread/pizza_margherita/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/drinks/plum_wine/</loc>
+  </url><url>
+    <loc>http://johngodlee.xyz/recipes/breakfast/porridge/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/potato_leek_pies/</loc>
   </url><url>
