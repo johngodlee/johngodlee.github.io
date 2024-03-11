@@ -3,11 +3,65 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2022-12-29T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2022-12-29T00:00:00+00:00</lastmod>
+    <lastmod>2023-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2024-03-07_square_plots/</loc>
+    <lastmod>2023-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-12-24-rpi_server/</loc>
+    <lastmod>2023-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-10-05-fp_scrape/</loc>
+    <lastmod>2023-10-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-09-23-tmux_sessions/</loc>
+    <lastmod>2023-09-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-09-13-growth_workshop/</loc>
+    <lastmod>2023-09-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-08-12-bike_refurb/</loc>
+    <lastmod>2023-08-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-06-10-land_tax/</loc>
+    <lastmod>2023-06-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-06-01-teixeira_georef/</loc>
+    <lastmod>2023-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-05-24-productivity_email/</loc>
+    <lastmod>2023-05-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-05-18-kobo_functions/</loc>
+    <lastmod>2023-05-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-05-15-teixeira_bicuar/</loc>
+    <lastmod>2023-05-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-04-13-job_interview/</loc>
+    <lastmod>2023-04-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-03-14-ongava_blog/</loc>
+    <lastmod>2023-03-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-03-13-avenza/</loc>
+    <lastmod>2023-03-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-03-01-field_yoga/</loc>
+    <lastmod>2023-03-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-02-15-ongava/</loc>
+    <lastmod>2023-02-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-02-12-field_bumbag/</loc>
+    <lastmod>2023-02-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2023-01-03-cli_like_use/</loc>
+    <lastmod>2023-01-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/2022-12-29-terminal_colours/</loc>
     <lastmod>2022-12-29T00:00:00+00:00</lastmod>
