@@ -32,7 +32,7 @@
     </item>
     
     <item>
-      <title>Chocolate brownies </title>
+      <title>Chocolate brownies</title>
       <link>http://johngodlee.xyz/recipes/dessert/chocolate_brownies/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
@@ -55,6 +55,37 @@
 &lt;li&gt;Mix until combined&lt;/li&gt;
 &lt;li&gt;Spoon into tin and spread evenly&lt;/li&gt;
 &lt;li&gt;Bake for 40-45 minutes&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Chocolate Chip Cookies</title>
+      <link>http://johngodlee.xyz/recipes/dessert/chocolate_chip_cookies/</link>
+      <pubDate>0001-01-01T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/recipes/dessert/chocolate_chip_cookies/</guid>
+      <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;1 cup white, oat, or spelt flour&lt;/li&gt;
+&lt;li&gt;0.5 tsp baking soda&lt;/li&gt;
+&lt;li&gt;0.25 tsp salt&lt;/li&gt;
+&lt;li&gt;0.25 cup white sugar&lt;/li&gt;
+&lt;li&gt;0.25 cup brown sugar or coconut sugar&lt;/li&gt;
+&lt;li&gt;0.33 cup chocolate chips&lt;/li&gt;
+&lt;li&gt;3 tbsp oat/soya milk&lt;/li&gt;
+&lt;li&gt;3 tbsp oil&lt;/li&gt;
+&lt;li&gt;0.25 tsp vanilla extract&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;method&#34;&gt;Method&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Combine flour, baking soda, salt, white sugar, brown sugar, chocolate chips in a bowl&lt;/li&gt;
+&lt;li&gt;Stir in milk, oil and vanilla extract to form a cohesive dough, add more milk if needed&lt;/li&gt;
+&lt;li&gt;Refrigerate at least 2 hours&lt;/li&gt;
+&lt;li&gt;Preheat oven to 170C&lt;/li&gt;
+&lt;li&gt;Form dough balls and place on a greased baking tray&lt;/li&gt;
+&lt;li&gt;Bake 11 minutes&lt;/li&gt;
+&lt;li&gt;Cool for at least 10 minutes until hardened up&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
@@ -166,7 +197,7 @@
     </item>
     
     <item>
-      <title>Quick microwave sponge pudding</title>
+      <title>Microwave sponge pudding</title>
       <link>http://johngodlee.xyz/recipes/dessert/quick_sponge/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
@@ -260,71 +291,6 @@
 &lt;li&gt;Boil then reduce heat and simmer for 5 minutes or until rhubarb is soft&lt;/li&gt;
 &lt;li&gt;Mix in vanilla extract, yoghurt, golden syrup&lt;/li&gt;
 &lt;li&gt;Serve warm with yoghurt&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Vegan brownies</title>
-      <link>http://johngodlee.xyz/recipes/dessert/vegan_brownie/</link>
-      <pubDate>0001-01-01T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/recipes/dessert/vegan_brownie/</guid>
-      <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;2 cups flour&lt;/li&gt;
-&lt;li&gt;1 cup water&lt;/li&gt;
-&lt;li&gt;1 cup brown sugar&lt;/li&gt;
-&lt;li&gt;1 cup white sugar&lt;/li&gt;
-&lt;li&gt;1 tsp salt&lt;/li&gt;
-&lt;li&gt;1 tsp vanilla extract&lt;/li&gt;
-&lt;li&gt;0.75 cup cocoa powder&lt;/li&gt;
-&lt;li&gt;0.5 cup vegetable oil&lt;/li&gt;
-&lt;li&gt;0.5 tsp baking powder&lt;/li&gt;
-&lt;li&gt;0.5 cup nuts (optional)&lt;/li&gt;
-&lt;li&gt;0.5 cup chocolate chips (optional)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;method&#34;&gt;Method&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;Preheat oven to 180C&lt;/li&gt;
-&lt;li&gt;Heat water and 1 cup of flour over low heat in a pan, until gooey&lt;/li&gt;
-&lt;li&gt;Cool completely&lt;/li&gt;
-&lt;li&gt;Mix sugar, salt, vanilla, cocoa powder, vegetable oil, add to flour mixture&lt;/li&gt;
-&lt;li&gt;Mix well&lt;/li&gt;
-&lt;li&gt;Add the remaining 1 cup flour, baking powder, nuts, chocolate chips, mix thoroughly&lt;/li&gt;
-&lt;li&gt;Grease baking pan&lt;/li&gt;
-&lt;li&gt;Bake for 25 minutes or until middle is cooked&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Vegan Chocolate Chip Cookies</title>
-      <link>http://johngodlee.xyz/recipes/dessert/chocolate_chip_cookies/</link>
-      <pubDate>0001-01-01T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/recipes/dessert/chocolate_chip_cookies/</guid>
-      <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;1 cup white, oat, or spelt flour&lt;/li&gt;
-&lt;li&gt;0.5 tsp baking soda&lt;/li&gt;
-&lt;li&gt;0.25 tsp salt&lt;/li&gt;
-&lt;li&gt;0.25 cup white sugar&lt;/li&gt;
-&lt;li&gt;0.25 cup brown sugar or coconut sugar&lt;/li&gt;
-&lt;li&gt;0.33 cup chocolate chips&lt;/li&gt;
-&lt;li&gt;3 tbsp oat/soya milk&lt;/li&gt;
-&lt;li&gt;3 tbsp oil&lt;/li&gt;
-&lt;li&gt;0.25 tsp vanilla extract&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;method&#34;&gt;Method&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;Combine flour, baking soda, salt, white sugar, brown sugar, chocolate chips in a bowl&lt;/li&gt;
-&lt;li&gt;Stir in milk, oil and vanilla extract to form a cohesive dough, add more milk if needed&lt;/li&gt;
-&lt;li&gt;Refrigerate at least 2 hours&lt;/li&gt;
-&lt;li&gt;Preheat oven to 170C&lt;/li&gt;
-&lt;li&gt;Form dough balls and place on a greased baking tray&lt;/li&gt;
-&lt;li&gt;Bake 11 minutes&lt;/li&gt;
-&lt;li&gt;Cool for at least 10 minutes until hardened up&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
