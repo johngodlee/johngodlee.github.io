@@ -3,11 +3,14 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2023-12-24T00:00:00+00:00</lastmod>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2023-12-24T00:00:00+00:00</lastmod>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2024-03-15_drylands/</loc>
+    <lastmod>2024-03-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/2024-03-07_square_plots/</loc>
     <lastmod>2023-12-24T00:00:00+00:00</lastmod>
@@ -891,7 +894,7 @@
   </url><url>
     <loc>http://johngodlee.xyz/recipes/bread/pinello_dough/</loc>
   </url><url>
-    <loc>http://johngodlee.xyz/recipes/breakfast/freezer_vegan_breakfast_burritos/</loc>
+    <loc>http://johngodlee.xyz/recipes/breakfast/freezer_breakfast_burritos/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/dessert/gajar_burfi/</loc>
   </url><url>
