@@ -9,10 +9,10 @@
     <lastBuildDate>2024-03-15T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Definitions of drylands</title>
-      <link>http://johngodlee.xyz/posts/2024-03-15_drylands/</link>
+      <link>http://johngodlee.xyz/posts/2024-03-15-drylands/</link>
       <pubDate>2024-03-15T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-03-15_drylands/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-03-15-drylands/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve read a few papers that refer to &amp;ldquo;drylands&amp;rdquo; and &amp;ldquo;semi-arid&amp;rdquo; ecosystems, and I became interested in the definitions of these terms, so here I&amp;rsquo;ve gathered together some notes on my reading, with the aim of tracing back the definitions through the literature.&lt;/p&gt;
 &lt;p&gt;Ahlstrom et al. (2015) is a DGVM modelling study that looks at the contribution of different regional terrestrial ecosystem types to the temporal trend and temporal variability of the global land carbon sink. They find that &amp;ldquo;semi-arid&amp;rdquo; ecosystems dominate the trend and inter-annual variability of the sink, with these temporal variations being strongly associated with inter-annual variation in precipitation. They define semi-arid ecosystems alongside five other land cover classes: tropical forest, extra-tropical forest, tundra and arctic shrubland, grassland and agriculture, and barren (sparsely vegetated). First they divide into forest, savanna and shrublands, and grasslands and croplands using the MODIS land cover classification (MCD12C1 type 3). They then divide the savanna and shrubland class into two based on latitude. Below 45N they class as semi-arid, and above 45N they class as tundra and arctic shrubland. Below is their map of land cover classes. Tropical forests in light green, extra-tropical forests in dark green, semi-arid in orange, tundra and arctic shrubland in grey, grassland and cops in blue, barren in white.&lt;/p&gt;
 &lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/ahlstrom_map.png&#34;&gt;&lt;img
@@ -67,10 +67,10 @@
     
     <item>
       <title>Methods to establish square vegetation monitoring plots</title>
-      <link>http://johngodlee.xyz/posts/2024-03-07_square_plots/</link>
-      <pubDate>2023-12-24T00:00:00+0000</pubDate>
+      <link>http://johngodlee.xyz/posts/2024-03-07-square_plots/</link>
+      <pubDate>2024-03-07T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-03-07_square_plots/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-03-07-square_plots/</guid>
       <description>&lt;p&gt;Creating perfectly square permanent plots in dense woodland ecosystems can be a challenge. It&amp;rsquo;s very easy to end up with something more like a diamond or a rhombus, unless care is taken to measure the diagonals of the plot.&lt;/p&gt;
 &lt;p&gt;Previously I have set up one hectare permanent woodland tree sampling plots by starting at the SW corner of the plot, then running tapes at 90° going N and E for 100 m to form the W and S edges, respectively. Then to ensure that the edges are actually at 90° you run a tape along the hypotenuse of those edges, which should be 141.42 m long. Then you construct the other two edges (N, E), ensuring that they meet at 100 m, and finally check the length of the other hypotenuse is 141.42 m. The principal drawback of this method is that it requires a tape measure that can cover 141.42 m, or else you have to mess about with two tapes or a long piece of string. Covering a straight distance of 141.42 m is difficult because you often can&amp;rsquo;t see the person standing at the opposite corner. Using 100 m tapes, this method requires a minimum of six tapes. Alternatively you can measure smaller hypotenuse angles at intermediate points along the edges, e.g. at 10 and 25 m, but this means you will have to do many more measurements.&lt;/p&gt;
 &lt;p&gt;Below I present an alternative method that I think overcomes these problems.&lt;/p&gt;
