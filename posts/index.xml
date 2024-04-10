@@ -94,7 +94,7 @@
       <pubDate>2023-12-24T00:00:00+0000</pubDate>
       
       <guid>http://johngodlee.xyz/posts/2023-12-24-rpi_server/</guid>
-      <description>&lt;p&gt;When we lived in London we had an old HP Compaq Elite 8300 desktop tower that we used as a home server. The server ran Ubuntu minimal server 18.04. I used the server to back up important documents, and used Samba to connect our laptops to access music, movies etc.&lt;/p&gt;
+      <description>&lt;p&gt;When we lived in London we had an HP Compaq Elite 8300 desktop tower that we used as a home server. The server ran Ubuntu minimal server 18.04. I used the server to back up important documents, and used Samba to connect our laptops to access music, movies etc.&lt;/p&gt;
 &lt;p&gt;The server was very convenient for me, but it was a bit awkward for others to connect to if they weren&amp;rsquo;t familiar with network shares or SSH. Additionally, the server was quite power hungry. I set it up to wake on LAN, but this meant I was the only one in the house who could turn it on.&lt;/p&gt;
 &lt;p&gt;In our new flat I aimed to upgrade the home server setup to reduce power consumption, increase storage capacity, and improve accessibility for less techy people.&lt;/p&gt;
 &lt;h2 id=&#34;hardware&#34;&gt;Hardware&lt;/h2&gt;
@@ -127,18 +127,71 @@
 , which allows MPD clients like &lt;a href=&#34;https://f-droid.org/en/packages/org.gateshipone.malp/&#34; target=&#34;_blank&#34;&gt;M.A.L.P.&lt;/a&gt;
  to connect to the Mopidy instance. I installed the &lt;a href=&#34;https://mopidy.com/ext/musicbox-webclient/&#34; target=&#34;_blank&#34;&gt;Mopidy MusicBox extension&lt;/a&gt;
  to provide a web client music player. I ran into a problem where Raspberry Pi OS wouldn&amp;rsquo;t let me install any python packages via pip, including the Mopidy Jellyfin extension. All I had to do to fix the issue was to delete this file:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It took me some time to figure out how to get Mopidy and Jellyfin to both access &lt;code&gt;.m3u8&lt;/code&gt; playlists. Playlists are stored in &lt;code&gt;Music/Playlists/&lt;/code&gt;, where &lt;code&gt;Music/&lt;/code&gt; is the directory where all other music is stored. I don&amp;rsquo;t use the &lt;a href=&#34;https://mopidy.com/ext/jellyfin/&#34; target=&#34;_blank&#34;&gt;Mopidy Jellyfin extension&lt;/a&gt;
-, because I can&amp;rsquo;t get it to play well with playlists. Playlists show up in both Jellyfin and Mopidy, but I have to create the playlists manually in the terminal. Mopidy doesn&amp;rsquo;t have the ability to create playlists, and Jellyfin stores playlists as &lt;code&gt;.xml&lt;/code&gt; files which Mopidy can&amp;rsquo;t read. Yet, Jellyfin will happily add songs to an existing &lt;code&gt;.m3u8&lt;/code&gt; playlist; weird. It seems others have had similar problems judging by &lt;a href=&#34;https://github.com/jellyfin/mopidy-jellyfin/issues/104&#34; target=&#34;_blank&#34;&gt;various&lt;/a&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;sudo rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It took me some time to figure out how to get Mopidy and Jellyfin to both access &lt;code&gt;.m3u8&lt;/code&gt; playlists. Playlists are stored in &lt;code&gt;/var/lib/jellyfin/data/playlists/&lt;/code&gt;. Playlists are created in Jellyfin and stored as &lt;code&gt;.xml&lt;/code&gt; files, which Mopidy can read with the &lt;a href=&#34;https://mopidy.com/ext/jellyfin/&#34; target=&#34;_blank&#34;&gt;Mopidy Jellyfin extension&lt;/a&gt;
+. Mopidy doesn&amp;rsquo;t have the ability to create playlists, and Jellyfin will happily add songs to an existing &lt;code&gt;.m3u8&lt;/code&gt; playlist; clearly this feature isn&amp;rsquo;t fully matured in either mopidy or Jellyfin. It seems others have had problems understanding the Jellyfin-mopidy playlist situation, judging by &lt;a href=&#34;https://github.com/jellyfin/mopidy-jellyfin/issues/104&#34; target=&#34;_blank&#34;&gt;various&lt;/a&gt;
  &lt;a href=&#34;https://github.com/jellyfin/mopidy-jellyfin/issues/133&#34; target=&#34;_blank&#34;&gt;Github&lt;/a&gt;
  &lt;a href=&#34;https://github.com/jellyfin/mopidy-jellyfin/issues/111&#34; target=&#34;_blank&#34;&gt;issues&lt;/a&gt;
 .&lt;/p&gt;
 &lt;p&gt;I installed &lt;a href=&#34;https://www.samba.org/&#34; target=&#34;_blank&#34;&gt;Samba&lt;/a&gt;
  to make it easier for others to add media from their devices, and I installed &lt;a href=&#34;https://www.qbittorrent.org/&#34; target=&#34;_blank&#34;&gt;qBittorrent&lt;/a&gt;
- (-nox variant with no X-server) to download media directly onto the server when it&amp;rsquo;s connected to the internet.&lt;/p&gt;
+ (&lt;code&gt;-nox&lt;/code&gt; variant with no X-server) to download media directly onto the server when it&amp;rsquo;s connected to the internet.&lt;/p&gt;
 &lt;p&gt;To create backups I have an additional 1TB SSD which is synced using &lt;a href=&#34;https://github.com/WayneD/rsync&#34; target=&#34;_blank&#34;&gt;rsync&lt;/a&gt;
  once a week. I have a third SSD that is synced every month, which I keep at work.&lt;/p&gt;
-</description>
+&lt;p&gt;I installed &lt;a href=&#34;https://calibre-ebook.com/&#34; target=&#34;_blank&#34;&gt;Calibre&lt;/a&gt;
+ to manage ebooks on the server. I run Calibre as a server using systemd. It would be wonderful if Jellyfin had a Calibre plugin, something that could read the Calibre database and serve it within the Jellyfin app, but I haven&amp;rsquo;t found anything yet. For now, I have placed the Calibre database in the Jellyfin directory structure, in &lt;code&gt;/mnt/media/Books/Books/&lt;/code&gt;. Mostly this system works fine. I use Calibre to download book metadata. Annoyingly, Calibre uses &lt;code&gt;cover.jpg&lt;/code&gt; as the filename for book cover images, while Jellyfin uses &lt;code&gt;folder.jpg&lt;/code&gt;. I wrote a bash script to run periodically that copies missing cover image files and renames them:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env bash
+
+# Define directory to search for PNG files
+search_dir=&amp;#34;/Users/johngodlee/Desktop/test&amp;#34;
+
+# Find PNG files recursively
+find &amp;#34;$search_dir&amp;#34; -type f -name &amp;#34;*.png&amp;#34; | while read -r png_file ; do
+    # Get directory and filename without extension
+    dir_path=&amp;#34;${png_file%/*}&amp;#34;
+    base_name=&amp;#34;${png_file##*/}&amp;#34;
+    base_name_without_ext=&amp;#34;${base_name%.png}&amp;#34;
+    
+    # Define path for converted JPG 
+    jpg_file=&amp;#34;$dir_path/$base_name_without_ext.jpg&amp;#34;
+    
+    # Convert PNG to JPG using ImageMagick
+    convert &amp;#34;$png_file&amp;#34; &amp;#34;$jpg_file&amp;#34; 
+
+    # Remove original PNG 
+    rm &amp;#34;$png_file&amp;#34;
+done
+
+# Find cover.jpg files recursively
+find &amp;#34;$search_dir&amp;#34; -type f -name &amp;#34;cover.jpg&amp;#34; | while read -r cover_file; do
+    # Get directory of cover.jpg 
+    dir_path=$(dirname &amp;#34;$cover_file&amp;#34;)
+    
+    # Check if folder.jpg exists in same directory
+    if [ ! -f &amp;#34;$dir_path/folder.jpg&amp;#34; ]; then
+        # Rename cover.jpg to folder.jpg
+        cp &amp;#34;$cover_file&amp;#34; &amp;#34;$dir_path/folder.jpg&amp;#34;
+        echo &amp;#34;Copied $cover_file to folder.jpg&amp;#34;
+    else
+        echo &amp;#34;folder.jpg already exists in $dir_path, skipping $cover_file&amp;#34;
+    fi
+done
+
+# Find folder.jpg files recursively
+find &amp;#34;$search_dir&amp;#34; -type f -name &amp;#34;folder.jpg&amp;#34; | while read -r folder_file; do
+    # Get directory of folder.jpg
+    dir_path=$(dirname &amp;#34;$folder_file&amp;#34;)
+    
+    # Check if cover.jpg exists in same directory
+    if [ ! -f &amp;#34;$dir_path/cover.jpg&amp;#34; ]; then
+        # Rename folder.jpg to cover.jpg
+        cp &amp;#34;$folder_file&amp;#34; &amp;#34;$dir_path/cover.jpg&amp;#34;
+        echo &amp;#34;Copied $folder_file to cover.jpg&amp;#34;
+    else
+        echo &amp;#34;cover.jpg already exists in $dir_path, skipping $folder_file&amp;#34;
+    fi
+done
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
