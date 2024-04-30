@@ -6,7 +6,40 @@
     <description>Recent content in Blog archive on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2024-03-15T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2024-04-30T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>An email about resprouting in the SEOSAW database</title>
+      <link>http://johngodlee.xyz/posts/2024-04-30-resprouting/</link>
+      <pubDate>2024-04-30T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2024-04-30-resprouting/</guid>
+      <description>&lt;p&gt;I help to manage the &lt;a href=&#34;https://seosaw.github.io/&#34; target=&#34;_blank&#34;&gt;SEOSAW database&lt;/a&gt;
+. A database of tree stem measurements from vegetation monitoring plots in African woodlands. We gather data on tree size (stem diameter, height, crown dimensions), floristic composition (species names), growth and mortality dynamics. A colleague of mine is conducting a study into the resprouting behaviour of trees using data from SEOSAW. We got into a long conversation about what constitutes resprouting and how that information is represented within the SEOSAW database. Here is an email I sent to clarify my thinking:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;stem_status&lt;/code&gt; can have four possible values:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;a&amp;rdquo; - the stem shows signs of life above the POM (point of measurement for stem diameter), for example green leaves or sap below the bark.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;r&amp;rdquo; - the stem has no signs of life above the POM, but there are signs of life elsewhere on the &lt;strong&gt;tree&lt;/strong&gt;. This could be signs of life on the same stem, or elsewhere on the individual.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;d&amp;rdquo; - the stem has no signs of life and there are no other signs of life elsewhere on the tree.&lt;/li&gt;
+&lt;li&gt;NA - data missing, unknown&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This info is in the SEOSAW field manual, section 4.5.&lt;/p&gt;
+&lt;p&gt;In our meeting the other day you asked whether stems with &lt;code&gt;stem_status&lt;/code&gt; &amp;ldquo;r&amp;rdquo; could be interpreted as &amp;ldquo;resprouting&amp;rdquo;. Indeed, the abbreviation &amp;ldquo;r&amp;rdquo; is derived from &amp;ldquo;resprouting&amp;rdquo;, but I find that definitions of resprouting vary and are not always clear, hence the very strict definitions of &lt;code&gt;stem_status&lt;/code&gt; in the SEOSAW database. I read through these papers to refamiliarise myself with common definitions of resprouting:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://doi.org/10.1007/s11258-011-9994-z&#34; target=&#34;_blank&#34;&gt;Lawes and Clarke (2011)&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://doi.org/10.1111/nph.12001&#34; target=&#34;_blank&#34;&gt;Clarke et al. (2012)&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Do you define a resprouting stem as one where the mature crown is dead and new shoots are growing from the same stem below the crown? These stems would be classified as &amp;ldquo;r&amp;rdquo; in the SEOSAW database.&lt;/p&gt;
+&lt;p&gt;Do you also include in your definition stems where the crown is dead and new shoots are growing from elsewhere on the tree, for example from belowground budbanks in the rootstock? These stems would also be classified as &amp;ldquo;r&amp;rdquo; in the SEOSAW database.&lt;/p&gt;
+&lt;p&gt;Do you also include in your definition stems where the crown is dead (stem A) and there is another mature (i.e. diameter larger than plot minimum diameter threshold) living stem (stem B) growing from the base of the same tree? Stem A would be classified as &amp;ldquo;r&amp;rdquo; and stem B would be classified as &amp;ldquo;a&amp;rdquo; in the SEOSAW database. Yet, it is unclear whether the tree is &amp;ldquo;resprouting&amp;rdquo; to produce stem B (i.e. regeneration following a disturbance) or if it is just &amp;ldquo;sprouting&amp;rdquo; another stem. Resprouting ultimately implies response to disturbance.&lt;/p&gt;
+&lt;p&gt;I think you should be able to say that single-stemmed trees with &lt;code&gt;stem_status&lt;/code&gt; &amp;ldquo;r&amp;rdquo; are definitely &amp;ldquo;resprouting&amp;rdquo;, by common definitions.&lt;/p&gt;
+&lt;p&gt;I think that for multi-stemmed trees you will also be able to say that the tree is resprouting if all stems have &lt;code&gt;stem_status&lt;/code&gt; &amp;ldquo;r&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;I think that if the multi-stemmed tree has some stems with &lt;code&gt;stem_status&lt;/code&gt; &amp;ldquo;r&amp;rdquo; and some &amp;ldquo;a&amp;rdquo;, then it is unclear if the tree has resprouted or is just multi-stemmed.&lt;/p&gt;
+&lt;p&gt;I hope that helps to decide whether &lt;code&gt;stem_status&lt;/code&gt; can be used to imply resprouting. Personally I think it can. Even if &lt;code&gt;stem_status&lt;/code&gt; &amp;ldquo;r&amp;rdquo; doesn&amp;rsquo;t always map perfectly to functional definitions of resprouting, it correlates pretty strongly.&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Definitions of drylands</title>
       <link>http://johngodlee.xyz/posts/2024-03-15-drylands/</link>
@@ -968,98 +1001,6 @@ done
 &lt;p&gt;&lt;a href=&#34;https://neomutt.org/&#34; target=&#34;_blank&#34;&gt;neomutt&lt;/a&gt;
  is a command line mail reader. A few years ago I did actually go through the rigmarole of setting up NeoMutt, and used it for about 6 months at the start of my PhD. One problem I ran into was that when using multiple email accounts it&amp;rsquo;s only possible to view one account at a time. On macOS it&amp;rsquo;s also hard to set up notifications for incoming emails. It&amp;rsquo;s also becoming increasingly difficult to use Gmail and Outlook email accounts with NeoMutt, as they don&amp;rsquo;t use standard IMAP and require ever more complicated authentication procedures. If I ever move away from working at Universities and only have to manage my personal email address, I&amp;rsquo;d probably move to something like &lt;a href=&#34;https://www.fastmail.com/&#34; target=&#34;_blank&#34;&gt;FastMail&lt;/a&gt;
  and go back to using NeoMutt with IMAP.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Shell script to extract colours from macOS Terminal.app themes</title>
-      <link>http://johngodlee.xyz/posts/2022-12-29-terminal_colours/</link>
-      <pubDate>2022-12-29T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2022-12-29-terminal_colours/</guid>
-      <description>&lt;p&gt;On macOS, configuration profiles for Terminal.app are stored as &lt;code&gt;plist&lt;/code&gt; files with the extension &lt;code&gt;.terminal&lt;/code&gt;. These files contain XML or binary data. The profiles contain, among other settings, the colour scheme for the terminal.&lt;/p&gt;
-&lt;p&gt;I wrote a shell script to extract the colour scheme information as RGB255 values for each colour scheme value. The function uses a combination of &lt;a href=&#34;https://xmlstar.sourceforge.net/&#34; target=&#34;_blank&#34;&gt;xmlstarlet&lt;/a&gt;
-, &lt;a href=&#34;https://www.gnu.org/software/gawk/manual/gawk.html&#34; target=&#34;_blank&#34;&gt;awk&lt;/a&gt;
-, and some programs which come with macOS, like &lt;code&gt;tr&lt;/code&gt;, &lt;code&gt;base64&lt;/code&gt;, and &lt;code&gt;plutil&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;First, I define a function to extract colour values:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt; dict_search&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# If colour code found in file&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; grep -q &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		xml sel --net -t -v &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;//key[.=\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;\&amp;#34;]/following-sibling::data[1]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			tr -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[:space:]&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			base64 --decode &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			plutil -convert xml1 - -o - &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			xml sel --net -t -v &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;//dict/array/dict/key[.=&amp;#39;NSRGB&amp;#39;]/following-sibling::data[1]&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			tr -d &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[:space:]&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			base64 --decode &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			awk -v &lt;span style=&#34;color:#000&#34;&gt;var&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;BEGIN{ ORS=&amp;#34; &amp;#34;; print var } 
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;					{ for(i=1;i&amp;lt;=3;i++) { printf &amp;#34;%.0f &amp;#34;, $i*255 }; printf &amp;#34;\n&amp;#34; }&amp;#39;&lt;/span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Going line by line:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;if grep ...&lt;/code&gt; will only run the rest of the function if the chosen colour ID is found in the &lt;code&gt;.terminal&lt;/code&gt; file.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;xml sel ...&lt;/code&gt; searches for the &lt;code&gt;key&lt;/code&gt; (i.e. the chosen colour ID), then pulls the contents of the &lt;code&gt;data&lt;/code&gt; node which comes directly after it.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tr -d ...&lt;/code&gt; removes all spaces, including new lines, effectively concatenating the contents of the node.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;base64 ...&lt;/code&gt; converts the base64 encoded data into text&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;plutil -convert ...&lt;/code&gt; converts that into XML&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;xml sel ...&lt;/code&gt; extracts the RGB values in the XML&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tr -d ...&lt;/code&gt; as above, removes all spaces and new lines&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;base64 ...&lt;/code&gt; as above, converts base64 encoded data into text&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;awk ...&lt;/code&gt; prints the name of the colour ID, and the three RGB components multiplied by 255 and rounded to convert from a 0-1 decimal to a 0-255 integer.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Then I create an array containing all the colour IDs of interest:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;colArray&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBlackColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBlueColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSICyanColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIGreenColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIMagentaColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIRedColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIWhiteColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIYellowColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightBlackColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightBlueColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightCyanColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightGreenColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightMagentaColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightRedColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightWhiteColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ANSIBrightYellowColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;BackgroundColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;CursorColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;SelectionColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;TextBoldColor&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;TextColor&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally, to construct the output of the script, firstly printing the filename, then running the function for each colour ID, and only printing the result to stdout if the function output is not empty:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Print filepath of theme&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;%s\n&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# For each in array, run function&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; i in &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;colArray&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[@]&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Run function&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;dict_search &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# If output not empty, print &lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; -n &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;%s\n&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;done&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This produces, for example for my tweaked version of the &lt;a href=&#34;https://color.smyck.org/&#34; target=&#34;_blank&#34;&gt;Smyck&lt;/a&gt;
- colour scheme, which I use every day:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;smyck.terminal
-ANSIBlackColor 0 0 0
-ANSIBlueColor 64 125 153
-ANSICyanColor 32 115 131
-ANSIGreenColor 125 169 0
-ANSIMagentaColor 186 138 204
-ANSIRedColor 184 65 49
-ANSIWhiteColor 161 161 161
-ANSIYellowColor 196 165 7
-ANSIBrightBlackColor 75 75 75
-ANSIBrightBlueColor 141 207 240
-ANSIBrightCyanColor 106 217 207
-ANSIBrightGreenColor 196 241 55
-ANSIBrightMagentaColor 247 154 255
-ANSIBrightRedColor 214 131 124
-ANSIBrightWhiteColor 247 247 247
-ANSIBrightYellowColor 254 225 77
-BackgroundColor 18 21 28
-CursorColor 32 115 130
-SelectionColor 32 115 131
-TextBoldColor 247 247 247
-TextColor 247 247 247
-&lt;/code&gt;&lt;/pre&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/terminal_colours/smyck.png&#34;&gt;&lt;img
-          alt=&#34;Smyck colour scheme.&#34;
-          title=&#34;Smyck colour scheme.&#34;src=&#34;http://johngodlee.xyz/img/terminal_colours/smyck.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/terminal_colours/smyck_term.png&#34;&gt;&lt;img
-          alt=&#34;Smyck colour scheme in the terminal.&#34;
-          title=&#34;Smyck colour scheme in the terminal.&#34;src=&#34;http://johngodlee.xyz/img/terminal_colours/smyck_term.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
 </description>
     </item>
     
