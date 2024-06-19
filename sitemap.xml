@@ -3,11 +3,14 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2024-06-12T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2024-06-12T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/2024-06-19-fitotrack/</loc>
+    <lastmod>2024-06-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/2024-06-12-xy_latlong/</loc>
     <lastmod>2024-06-12T00:00:00+00:00</lastmod>
@@ -866,8 +869,6 @@
   </url><url>
     <loc>http://johngodlee.xyz/recipes/dessert/peanut_butter_cups/</loc>
   </url><url>
-    <loc>http://johngodlee.xyz/recipes/misc/chocolate_protein_bar/</loc>
-  </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/chorizo_and_white_bean_stew/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/bread/ciabatta/</loc>
@@ -883,6 +884,8 @@
     <loc>http://johngodlee.xyz/recipes/mains/courgette_cheese_quiche/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/daal_makhani/</loc>
+  </url><url>
+    <loc>http://johngodlee.xyz/recipes/misc/protein_bars/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/dessert/</loc>
   </url><url>
