@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>R function to extract raster data</h1>
+
+<h2>2024-06-20</h2>
+</div>
+
+<main>
+<p>I have to extract lots of point estimates from raster layers to use as explanatory variables of biomass dynamics measured in vegetation monitoring plots across tropical savannas and dry forests. Some of these raster layers are quite coarse and some of the plot locations are close to the coast, meaning that occasionally a plot will not coincide with a non-NA pixel in a particular raster layer. Here is an example, showing the raster layer in blue and the plots as black dots.</p>
+<figure><a href="/img_full/nearextract/map.png"><img
+          alt="A map illustrating the coarse pixel issue."
+          title="A map illustrating the coarse pixel issue."src="/img/nearextract/map.png" 
+      /></a></figure>
+
+
+<p>I wrote an R function (<code>nearExtract()</code>) that sequentially increases the size of a circular buffer around the point until it overlaps a raster value. The function takes a SpatRaster object (<code>x</code>), an sf points object (<code>y</code>), a function used to aggregate cell values within the buffer (<code>fun</code>), optionally a buffer radius in metres (<code>b</code>), and optionally an increment by which to increase the buffer radius also in metres (<code>bstep</code>). Additional arguments can be passed to <code>terra::extract()</code> using <code>...</code>.</p>
+<p>If <code>b</code> is not supplied, the initial buffer radius is set to the mean cell width of the raster layer <code>x</code>.</p>
+<p>If <code>bstep</code> is not supplied, the buffer radius increment is set to the size of the initial buffer radius.</p>
+<p>If <code>b</code> is a vector with more that one element, only these buffer radii are used and <code>bstep</code> is ignored.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; Add a circular buffer to a point until a valid raster value is extracted</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param x raster layer</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param y sf points object </span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param b optional, inital buffer radius, or vector of buffer radii in metres</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param bstep optional, incremental buffer radius increase in metres</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param ... additional arguments passed to `terra::extract()`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @return A dataframe as returned by `terra::extract()` with an additional</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     column `b`, which specifies the radius of the buffer necessary to </span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     intersect a valid raster pixel.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; </span>
+</span></span><span style="display:flex;"><span><span style="color:#000">nearExtract</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fun</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">mean</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NULL</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">bstep</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NULL</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">...</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Function must be specified</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fun</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">stop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;fun must be a valid function&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># bstep ignored if length(b) &gt; 1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">b</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.null</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bstep</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">warning</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;length(b) &gt; 1, bstep ignored&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># If b is a vector</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">b</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># If buffer is a vector</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sort</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">b</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">b1</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">b[1]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">bstep</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NULL</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.null</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">b</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># If b is not specified, start with radius equal to raster mean cell size</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">b1</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unlist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sqrt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">global</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">cellSize</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">unit</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;km&#34;</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#4e9a06">&#34;mean&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#204a87;font-weight:bold">pi</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">b1</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">b</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># If bstep not specified, use the raster mean cell size</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.null</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bstep</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">bstep</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">b1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Attempt to extract</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">val</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">terra</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">extract</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fun</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">fun</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">na.rm</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">...</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">val</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA_real_</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># If extraction failed for any individual</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">any</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">ncol</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Set buffer to initial value</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">bi</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">b1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Sequentially increase buffer diameter until all NA filled</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">while </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">any</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">ncol</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#000;font-weight:bold">(</span><span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">b</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000">bi</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000">max</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">b</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#204a87;font-weight:bold">TRUE</span> <span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#8f5902;font-style:italic"># See progress</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">message</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bi</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#8f5902;font-style:italic"># Find missing values</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">val_fill</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">which</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">apply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">ncol</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000">any</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">}))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#8f5902;font-style:italic"># Apply buffer to values</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">yb</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">st_buffer</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y[val_fill</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">bi</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#8f5902;font-style:italic"># Attempt to extract</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">val_new</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">terra</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">extract</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">yb</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fun</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">fun</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">na.rm</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">...</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#8f5902;font-style:italic"># Add buffer size to successfully filled values</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">val_new</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">bi</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">val_new</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">b</span><span style="color:#000">[is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val_new[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA_real_</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#8f5902;font-style:italic"># Fill missing values </span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">val[val_fill</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">val_new</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#8f5902;font-style:italic"># Increase buffer size</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">if </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">b</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic"># If b is a vector,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic"># move to the next largest buffer size</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">bi</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">b</span><span style="color:#000">[which</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">b</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">bi</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000;font-weight:bold">}</span> <span style="color:#000">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic"># Otherwise add bstep</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">bi</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">bi</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">bstep</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Return</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
