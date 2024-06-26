@@ -102,6 +102,25 @@ grep &#39;^Title&#39; ${rfile} |\
 	grep -f - ${rfile} |
 	sed &#39;s/.*=//&#39; |
 	mpv --playlist=- ;&#34;
+</code></pre><h2 id="update-2024-06-26">Update 2024-06-26</h2>
+<p>I&rsquo;ve further simplified the FZF radio script. It now uses a file like this:</p>
+<pre tabindex="0"><code>http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_fourfm/bbc_radio_fourfm.isml/bbc_radio_fourfm-audio=128000.m3u8 BBC Radio 4 FM  
+http://stream.wqxr.org/wqxr WQXR 
+http://media-ice.musicradio.com:80/LBCNewsUK LBC
+http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_scotland_fm/bbc_radio_scotland_fm.isml/bbc_radio_scotland_fm-audio=128000.m3u8 BBC Radio Scotland
+http://ice2.somafm.com/defcon-128-aac Soma FM DEF CON Radio
+</code></pre><p>Where the streaming URL comes first, then everything after the first whitespace is the title of the stream.</p>
+<p>The script looks like this:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/usr/bin/env sh
+
+rfile=~/.radio.txt
+
+sed &#39;s/[^ ]* //&#39; ${rfile} | 
+	sort -f |
+	fzf --bind=&#34;enter:execute;echo {} | 
+		grep -f - ${rfile} |
+		sed &#39;s/\s.*//&#39; |
+		mpv --playlist=- ;&#34;
 </code></pre>
 </main>
 
