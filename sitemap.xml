@@ -4,7 +4,6 @@
   <url>
     <loc>http://johngodlee.xyz/</loc>
     <lastmod>2024-06-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url><url>
     <loc>http://johngodlee.xyz/posts/2024-06-26-ytdlp/</loc>
     <lastmod>2024-06-26T00:00:00+00:00</lastmod>
@@ -952,6 +951,8 @@
     <loc>http://johngodlee.xyz/recipes/mains/nut_roast/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/bread/olive_rosemary_foccacia/</loc>
+  </url><url>
+    <loc>http://johngodlee.xyz/recipes/breakfast/overnight_oats/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/pasta_with_vodka_and_sausage/</loc>
   </url><url>
