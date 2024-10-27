@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>GPX files for Edinburgh cycle loops</h1>
+
+<h2>2024-10-27</h2>
+</div>
+
+<main>
+<p>Here are some routes that I cycle fairly regularly in Edinburgh. I cycle them predominantly on my <!-- raw HTML omitted -->single speed<!-- raw HTML omitted -->. There are occasional sections where I would prefer something with wider tyres, but nothing that requires a proper mountain bike. Most of the tracks start around Holyrood Park, then head out of the city in different directions.</p>
+<p>I calculated the length of the GPX files in R:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sf</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">units</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Conversion factor: km to miles</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">km_mi</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">0.6213712</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># List GPX files</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">gpx_files_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list.files</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pattern</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;*.gpx&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Read GPX files</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">gpx_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">gpx_files_list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">st_read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">layer</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;tracks&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">})</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">gpx_list</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">gsub</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\\.gpx$&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">gpx_files_list</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Calculate lengths of GPX files</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">gpx_list</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">x_length</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">drop_units</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">st_length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">x_length_km</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x_length</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">0.001</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">x_length_mi</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x_length_km</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">km_mi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;km&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x_length_km</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;mi&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x_length_mi</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">})</span>
+</span></span></code></pre></div><h2 id="inverkeithing">Inverkeithing</h2>
+<p><a href="/files/cycle_edinburgh/inverkeithing.gpx">GPX track</a>
+</p>
+<p>Length: 52.2 km, 32.4 miles</p>
+<p>This route heads north from Haymarket via the Roseburn Path down to Granton, then west along the coast to Cramond along the promenade along National Cycle-route 1, which follows the Roseburn path from Haymarket. From Cramond the route then follows National Cycle-route 1 (NCR1) alongside the busy A90. Unfortunately there is a short section of fast road between the B294 and Dalmeny, which makes this route difficult after dark. The route then heads through Dalmeny to Inverkeithing over the old Forth Road Bridge and back again to Cramond. From Cramond back into town the route continues to follow NCR1 to Haymarket, then through Grassmarket and down Cowgate back towards Holyrood Park.</p>
+<figure><a href="/img_full/cycle_edinburgh/inverkeithing.png"><img
+          alt="Map of the Inverkeithing route."
+          title="Map of the Inverkeithing route."src="/img/cycle_edinburgh/inverkeithing.png" 
+      /></a></figure>
+
+
+<h2 id="musselburgh-to-roslin-via-the-penicuik-dalkeith-walkway">Musselburgh to Roslin via the Penicuik-Dalkeith Walkway</h2>
+<p><a href="/files/cycle_edinburgh/musselburgh_dalkeith_roslin.gpx">GPX track</a>
+</p>
+<p>Length: 47.4 km, 29.4 miles</p>
+<p>I got the idea for this route from <a href="https://www.cyclingscot.co.uk/blog/why-do-disused-railway-paths-always-seem-to-be-located-in-the-most-stunning-scenery-edinburgh-to-penicuik-cycle-route" target="_blank">another route</a>
+ which goes all the way down to Penicuik, but recently the Penicuik-Dalkeith Walkway has been partially closed for resurfacing work. The route starts by following NCR1 down toward the Jewel, then towards Musselburgh and Queen Margaret University through winding housing estates. Then towards Dalkeith and Bonnyrigg onto the Penicuik-Dalkeith Walkway. Going through Roslin Glen there are a few walking sections, then after Roslin village it&rsquo;s back on the cycle path, through Loanhead to Newton Village and past Shawfair train station. The landscape is very odd round here, with lots of abandoned farmland, abandoned roads and buildings. The section between Newton Village and the turn-off at Hilltown along the A6106 is quite nasty. I cycles along the pavement. Beyond Craighall Junction the route goes the same way as at the start.</p>
+<figure><a href="/img_full/cycle_edinburgh/musselburgh_dalkeith_roslin.png"><img
+          alt="Map of the Musselburgh to Roslin route."
+          title="Map of the Musselburgh to Roslin route."src="/img/cycle_edinburgh/musselburgh_dalkeith_roslin.png" 
+      /></a></figure>
+
+
+<h2 id="patina-bakery">Patina bakery</h2>
+<p><a href="/files/cycle_edinburgh/patina.gpx">GPX track</a>
+</p>
+<p>Length: 24.6 km, 15.3 miles</p>
+<p>This route worms through the middle of town towards Haymarket, then through Murrayfield on the cycle path that follows the tramline all the way to Edinburgh Park. Once in the business park there are various roads that never have any traffic on them, which are good for doing laps to extend the length of the ride a bit. Patina Bakery is a good stop for a pastry or a pint in the adjacent restaurant. The route through the centre of town could be varied, for example to avoid Princes Steet, or to avoid Cowgate.</p>
+<figure><a href="/img_full/cycle_edinburgh/patina.png"><img
+          alt="Map of the Patina bakery route."
+          title="Map of the Patina bakery route."src="/img/cycle_edinburgh/patina.png" 
+      /></a></figure>
+
+
+<h2 id="portobello-and-the-roseburn-path">Portobello and the Roseburn Path</h2>
+<p><a href="/files/cycle_edinburgh/portobello_roseburn_path.gpx">GPX track</a>
+</p>
+<p>Length: 26.8 km, 16.6 miles</p>
+<p>This is my most frequent after work route. It starts of the road down to Joppa, then along Portobello Road and onto the promenade to follow the bike path road to Seafield. This section of the ride isn&rsquo;t very pretty, but at least it&rsquo;s not on the busy road, as there is a wide bike path that runs alongside. Through the Shore towards the Roseburn Path is a fast road, but there&rsquo;s lots of space in the bus lane. Once on the Roseburn Path the route is very pleasant, though if doing this route at night it&rsquo;s vital to have a bright front light. From the end of the Roseburn Path back towards Holyrood the route is very urban. I normally head through Grassmarket and down Cowgate, but there are many ways of doing this section.</p>
+<figure><a href="/img_full/cycle_edinburgh/portobello_roseburn_path.png"><img
+          alt="Map of the Portobello and Roseburn Path route."
+          title="Map of the Portobello and Roseburn Path route."src="/img/cycle_edinburgh/portobello_roseburn_path.png" 
+      /></a></figure>
+
+
+<h2 id="slateford-climb-and-the-balerno-cycle-path">Slateford climb and the Balerno cycle path</h2>
+<p><a href="/files/cycle_edinburgh/slateford_balerno_path.gpx">GPX track</a>
+</p>
+<p>Length: 23.8 km, 14.8 miles</p>
+<p>The entire purpose of this route is to do the long climb from Slateford to Juniper Green along the A70. Much of this road now has a segregated cycle lane, which makes it more pleasant, but it&rsquo;s still a fast road. It&rsquo;s easy to miss the turn-off towards the Balerno cycle path. It&rsquo;s also necessary to carry your bike down the steps into the valley of the Water of Leith. Once on the Balerno cycle path, proceeded by the Union Canal Path, the route is very nice, though like the Roseburn Path it&rsquo;s important to have a bright front light if doing this route after dark. When I recorded this route I went up the hill to Bruntsfield Links before heading back down to the Meadows because I wanted another climb, but you could just take the junction at the end of Gilmore Place and onto the cycle link on Valleyfield Street straight on to the Meadows.</p>
+<figure><a href="/img_full/cycle_edinburgh/slateford_balerno_path.png"><img
+          alt="Map of the Slateford and Balerno cycle path route."
+          title="Map of the Slateford and Balerno cycle path route."src="/img/cycle_edinburgh/slateford_balerno_path.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

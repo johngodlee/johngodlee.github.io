@@ -6,7 +6,98 @@
     <description>Recent content in Blog archive on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2024-06-26T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2024-10-27T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GPX files for Edinburgh cycle loops</title>
+      <link>http://johngodlee.xyz/posts/2024-10-27-cycle_edinburgh/</link>
+      <pubDate>2024-10-27T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2024-10-27-cycle_edinburgh/</guid>
+      <description>&lt;p&gt;Here are some routes that I cycle fairly regularly in Edinburgh. I cycle them predominantly on my &lt;!-- raw HTML omitted --&gt;single speed&lt;!-- raw HTML omitted --&gt;. There are occasional sections where I would prefer something with wider tyres, but nothing that requires a proper mountain bike. Most of the tracks start around Holyrood Park, then head out of the city in different directions.&lt;/p&gt;
+&lt;p&gt;I calculated the length of the GPX files in R:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Packages&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;library&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sf&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;library&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;units&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Conversion factor: km to miles&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;km_mi&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0.6213712&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# List GPX files&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;gpx_files_list&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;list.files&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;pattern&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;*.gpx&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Read GPX files&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;gpx_list&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;lapply&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;gpx_files_list&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;st_read&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;layer&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;tracks&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;names&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;gpx_list&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;gsub&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\\.gpx$&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;gpx_files_list&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Calculate lengths of GPX files&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;lapply&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;gpx_list&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;x_length&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;drop_units&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;st_length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;x_length_km&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;x_length&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0.001&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;x_length_mi&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;x_length_km&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;km_mi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;km&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;x_length_km&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;mi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;x_length_mi&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;inverkeithing&#34;&gt;Inverkeithing&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/inverkeithing.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;Length: 52.2 km, 32.4 miles&lt;/p&gt;
+&lt;p&gt;This route heads north from Haymarket via the Roseburn Path down to Granton, then west along the coast to Cramond along the promenade along National Cycle-route 1, which follows the Roseburn path from Haymarket. From Cramond the route then follows National Cycle-route 1 (NCR1) alongside the busy A90. Unfortunately there is a short section of fast road between the B294 and Dalmeny, which makes this route difficult after dark. The route then heads through Dalmeny to Inverkeithing over the old Forth Road Bridge and back again to Cramond. From Cramond back into town the route continues to follow NCR1 to Haymarket, then through Grassmarket and down Cowgate back towards Holyrood Park.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/inverkeithing.png&#34;&gt;&lt;img
+          alt=&#34;Map of the Inverkeithing route.&#34;
+          title=&#34;Map of the Inverkeithing route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/inverkeithing.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;h2 id=&#34;musselburgh-to-roslin-via-the-penicuik-dalkeith-walkway&#34;&gt;Musselburgh to Roslin via the Penicuik-Dalkeith Walkway&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/musselburgh_dalkeith_roslin.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;Length: 47.4 km, 29.4 miles&lt;/p&gt;
+&lt;p&gt;I got the idea for this route from &lt;a href=&#34;https://www.cyclingscot.co.uk/blog/why-do-disused-railway-paths-always-seem-to-be-located-in-the-most-stunning-scenery-edinburgh-to-penicuik-cycle-route&#34; target=&#34;_blank&#34;&gt;another route&lt;/a&gt;
+ which goes all the way down to Penicuik, but recently the Penicuik-Dalkeith Walkway has been partially closed for resurfacing work. The route starts by following NCR1 down toward the Jewel, then towards Musselburgh and Queen Margaret University through winding housing estates. Then towards Dalkeith and Bonnyrigg onto the Penicuik-Dalkeith Walkway. Going through Roslin Glen there are a few walking sections, then after Roslin village it&amp;rsquo;s back on the cycle path, through Loanhead to Newton Village and past Shawfair train station. The landscape is very odd round here, with lots of abandoned farmland, abandoned roads and buildings. The section between Newton Village and the turn-off at Hilltown along the A6106 is quite nasty. I cycles along the pavement. Beyond Craighall Junction the route goes the same way as at the start.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/musselburgh_dalkeith_roslin.png&#34;&gt;&lt;img
+          alt=&#34;Map of the Musselburgh to Roslin route.&#34;
+          title=&#34;Map of the Musselburgh to Roslin route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/musselburgh_dalkeith_roslin.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;h2 id=&#34;patina-bakery&#34;&gt;Patina bakery&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/patina.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;Length: 24.6 km, 15.3 miles&lt;/p&gt;
+&lt;p&gt;This route worms through the middle of town towards Haymarket, then through Murrayfield on the cycle path that follows the tramline all the way to Edinburgh Park. Once in the business park there are various roads that never have any traffic on them, which are good for doing laps to extend the length of the ride a bit. Patina Bakery is a good stop for a pastry or a pint in the adjacent restaurant. The route through the centre of town could be varied, for example to avoid Princes Steet, or to avoid Cowgate.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/patina.png&#34;&gt;&lt;img
+          alt=&#34;Map of the Patina bakery route.&#34;
+          title=&#34;Map of the Patina bakery route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/patina.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;h2 id=&#34;portobello-and-the-roseburn-path&#34;&gt;Portobello and the Roseburn Path&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/portobello_roseburn_path.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;Length: 26.8 km, 16.6 miles&lt;/p&gt;
+&lt;p&gt;This is my most frequent after work route. It starts of the road down to Joppa, then along Portobello Road and onto the promenade to follow the bike path road to Seafield. This section of the ride isn&amp;rsquo;t very pretty, but at least it&amp;rsquo;s not on the busy road, as there is a wide bike path that runs alongside. Through the Shore towards the Roseburn Path is a fast road, but there&amp;rsquo;s lots of space in the bus lane. Once on the Roseburn Path the route is very pleasant, though if doing this route at night it&amp;rsquo;s vital to have a bright front light. From the end of the Roseburn Path back towards Holyrood the route is very urban. I normally head through Grassmarket and down Cowgate, but there are many ways of doing this section.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/portobello_roseburn_path.png&#34;&gt;&lt;img
+          alt=&#34;Map of the Portobello and Roseburn Path route.&#34;
+          title=&#34;Map of the Portobello and Roseburn Path route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/portobello_roseburn_path.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;h2 id=&#34;slateford-climb-and-the-balerno-cycle-path&#34;&gt;Slateford climb and the Balerno cycle path&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/slateford_balerno_path.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;Length: 23.8 km, 14.8 miles&lt;/p&gt;
+&lt;p&gt;The entire purpose of this route is to do the long climb from Slateford to Juniper Green along the A70. Much of this road now has a segregated cycle lane, which makes it more pleasant, but it&amp;rsquo;s still a fast road. It&amp;rsquo;s easy to miss the turn-off towards the Balerno cycle path. It&amp;rsquo;s also necessary to carry your bike down the steps into the valley of the Water of Leith. Once on the Balerno cycle path, proceeded by the Union Canal Path, the route is very nice, though like the Roseburn Path it&amp;rsquo;s important to have a bright front light if doing this route after dark. When I recorded this route I went up the hill to Bruntsfield Links before heading back down to the Meadows because I wanted another climb, but you could just take the junction at the end of Gilmore Place and onto the cycle link on Valleyfield Street straight on to the Meadows.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/slateford_balerno_path.png&#34;&gt;&lt;img
+          alt=&#34;Map of the Slateford and Balerno cycle path route.&#34;
+          title=&#34;Map of the Slateford and Balerno cycle path route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/slateford_balerno_path.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
     <item>
       <title>Bash script to download audio from Youtube</title>
       <link>http://johngodlee.xyz/posts/2024-06-26-ytdlp/</link>
@@ -1405,40 +1496,6 @@ done
       <description>&lt;p&gt;I wrote a blog post for Ongava Research Centre on our recent fieldwork in Ongava Game Reserve, where we established 11 vegetation monitoring plots in dry forest, shrubland, woodland and grassland vegetation:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&#34; target=&#34;_blank&#34;&gt;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&lt;/a&gt;
 &lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Importing data layers into Avenza Maps Android app</title>
-      <link>http://johngodlee.xyz/posts/2023-03-13-avenza/</link>
-      <pubDate>2023-03-13T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2023-03-13-avenza/</guid>
-      <description>&lt;p&gt;I had a go with the &lt;a href=&#34;https://store.avenza.com/pages/app-features&#34; target=&#34;_blank&#34;&gt;Avenza Maps&lt;/a&gt;
- Android app during fieldwork to visualise my position within the landscape. I had access to a vegetation map and I wanted to see how close I was to transition zones between vegetation units, and also where I could walk to find a good place to install a vegetation monitoring plot.&lt;/p&gt;
-&lt;p&gt;It was a bit of a faff, but I worked out a method for importing raster and vector data into Avenza Maps. I used the free version of the Avenza Maps app:&lt;/p&gt;
-&lt;p&gt;To import a raster layer:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;In QGIS:&lt;/li&gt;
-&lt;li&gt;Choose to export the chosen raster layer&lt;/li&gt;
-&lt;li&gt;Choose GeoTIFF&lt;/li&gt;
-&lt;li&gt;Choose &amp;ldquo;Rendered Image&amp;rdquo; when exporting&lt;/li&gt;
-&lt;li&gt;Increase the resolution as desired&lt;/li&gt;
-&lt;li&gt;Put the exported .tif on Android phone&lt;/li&gt;
-&lt;li&gt;Open Avenza Maps&lt;/li&gt;
-&lt;li&gt;Add the .tif as a Map&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Avenza (free) only supports KML/KMZ and GPX, which don&amp;rsquo;t support polygons. To import point (vector) data:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;In QGIS:&lt;/li&gt;
-&lt;li&gt;Ensure that the chosen point features only have one attribute &amp;ldquo;name&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;Choose to export the chosen features&lt;/li&gt;
-&lt;li&gt;Choose GPX&lt;/li&gt;
-&lt;li&gt;Select GPX_USE_EXTENSIONS = YES&lt;/li&gt;
-&lt;li&gt;Put the exported .gpx on Android phone&lt;/li&gt;
-&lt;li&gt;Open Avenza Maps&lt;/li&gt;
-&lt;li&gt;Add the .gpx as a Layer in the chosen map&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
