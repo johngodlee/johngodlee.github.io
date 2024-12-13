@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bread on John L. Godlee</title>
-    <link>http://johngodlee.xyz/recipes/bread/</link>
+    <link>http://localhost:1313/recipes/bread/</link>
     <description>Recent content in Bread on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-gb</language><atom:link href="http://johngodlee.xyz/recipes/bread/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-gb</language><atom:link href="http://localhost:1313/recipes/bread/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Basic loaf</title>
-      <link>http://johngodlee.xyz/recipes/bread/loaf/</link>
+      <link>http://localhost:1313/recipes/bread/loaf/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/loaf/</guid>
+      <guid>http://localhost:1313/recipes/bread/loaf/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;400 g brown flour&lt;/li&gt;
@@ -40,10 +40,10 @@
     
     <item>
       <title>Cheesy beer bread rolls</title>
-      <link>http://johngodlee.xyz/recipes/bread/beer_rolls/</link>
+      <link>http://localhost:1313/recipes/bread/beer_rolls/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/beer_rolls/</guid>
+      <guid>http://localhost:1313/recipes/bread/beer_rolls/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;815 g strong white flour&lt;/li&gt;
@@ -75,10 +75,10 @@
     
     <item>
       <title>Ciabatta (Yukon Magazine, Alpine Bakery)</title>
-      <link>http://johngodlee.xyz/recipes/bread/ciabatta/</link>
+      <link>http://localhost:1313/recipes/bread/ciabatta/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/ciabatta/</guid>
+      <guid>http://localhost:1313/recipes/bread/ciabatta/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;h3 id=&#34;poolish&#34;&gt;Poolish&lt;/h3&gt;
 &lt;ul&gt;
@@ -130,10 +130,10 @@
     
     <item>
       <title>Coriander stuffed paratha</title>
-      <link>http://johngodlee.xyz/recipes/bread/coriander_paratha/</link>
+      <link>http://localhost:1313/recipes/bread/coriander_paratha/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/coriander_paratha/</guid>
+      <guid>http://localhost:1313/recipes/bread/coriander_paratha/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;150 g plain flour&lt;/li&gt;
@@ -167,10 +167,10 @@
     
     <item>
       <title>Drop biscuits</title>
-      <link>http://johngodlee.xyz/recipes/bread/drop_biscuits/</link>
+      <link>http://localhost:1313/recipes/bread/drop_biscuits/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/drop_biscuits/</guid>
+      <guid>http://localhost:1313/recipes/bread/drop_biscuits/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;255 g all-purpose flour&lt;/li&gt;
@@ -195,10 +195,10 @@
     
     <item>
       <title>Everyday flatbreads</title>
-      <link>http://johngodlee.xyz/recipes/bread/everyday_flatbreads/</link>
+      <link>http://localhost:1313/recipes/bread/everyday_flatbreads/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/everyday_flatbreads/</guid>
+      <guid>http://localhost:1313/recipes/bread/everyday_flatbreads/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;150 g plain flour&lt;/li&gt;
@@ -223,10 +223,10 @@
     
     <item>
       <title>Frank Pinello pizza dough</title>
-      <link>http://johngodlee.xyz/recipes/bread/pinello_dough/</link>
+      <link>http://localhost:1313/recipes/bread/pinello_dough/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/pinello_dough/</guid>
+      <guid>http://localhost:1313/recipes/bread/pinello_dough/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;340 g water&lt;/li&gt;
@@ -250,10 +250,10 @@
     
     <item>
       <title>J. Kenji Lopez-Alt pizza dough</title>
-      <link>http://johngodlee.xyz/recipes/bread/lopez_alt_pizza_dough/</link>
+      <link>http://localhost:1313/recipes/bread/lopez_alt_pizza_dough/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/lopez_alt_pizza_dough/</guid>
+      <guid>http://localhost:1313/recipes/bread/lopez_alt_pizza_dough/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;500 g white bread flour&lt;/li&gt;
@@ -275,10 +275,10 @@
     
     <item>
       <title>Jalapeno cheese biscuits</title>
-      <link>http://johngodlee.xyz/recipes/bread/jalapeno_cheese_biscuits/</link>
+      <link>http://localhost:1313/recipes/bread/jalapeno_cheese_biscuits/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/jalapeno_cheese_biscuits/</guid>
+      <guid>http://localhost:1313/recipes/bread/jalapeno_cheese_biscuits/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;120 g butter&lt;/li&gt;
@@ -307,10 +307,10 @@
     
     <item>
       <title>Khachapuri - Georgian Cheese Bread </title>
-      <link>http://johngodlee.xyz/recipes/bread/khachapuri/</link>
+      <link>http://localhost:1313/recipes/bread/khachapuri/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/khachapuri/</guid>
+      <guid>http://localhost:1313/recipes/bread/khachapuri/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;1 tsp salt&lt;/li&gt;
@@ -349,10 +349,10 @@
     
     <item>
       <title>Meloui flatbreads</title>
-      <link>http://johngodlee.xyz/recipes/bread/meloui_bread/</link>
+      <link>http://localhost:1313/recipes/bread/meloui_bread/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/meloui_bread/</guid>
+      <guid>http://localhost:1313/recipes/bread/meloui_bread/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;400 ml warm water&lt;/li&gt;
@@ -386,10 +386,10 @@
     
     <item>
       <title>Naan </title>
-      <link>http://johngodlee.xyz/recipes/bread/naan/</link>
+      <link>http://localhost:1313/recipes/bread/naan/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/naan/</guid>
+      <guid>http://localhost:1313/recipes/bread/naan/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;0.25 cup warm water&lt;/li&gt;
@@ -415,10 +415,10 @@
     
     <item>
       <title>Olive Rosemary Foccacia</title>
-      <link>http://johngodlee.xyz/recipes/bread/olive_rosemary_foccacia/</link>
+      <link>http://localhost:1313/recipes/bread/olive_rosemary_foccacia/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/olive_rosemary_foccacia/</guid>
+      <guid>http://localhost:1313/recipes/bread/olive_rosemary_foccacia/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;500 g bread flour&lt;/li&gt;
@@ -451,10 +451,10 @@
     
     <item>
       <title>Pizza Margherita</title>
-      <link>http://johngodlee.xyz/recipes/bread/pizza_margherita/</link>
+      <link>http://localhost:1313/recipes/bread/pizza_margherita/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/pizza_margherita/</guid>
+      <guid>http://localhost:1313/recipes/bread/pizza_margherita/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;300 g Strong bread flour + extra for kneading&lt;/li&gt;
@@ -487,10 +487,10 @@
     
     <item>
       <title>Potato bread</title>
-      <link>http://johngodlee.xyz/recipes/bread/potato_bread/</link>
+      <link>http://localhost:1313/recipes/bread/potato_bread/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/bread/potato_bread/</guid>
+      <guid>http://localhost:1313/recipes/bread/potato_bread/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;385 g mashed potato&lt;/li&gt;

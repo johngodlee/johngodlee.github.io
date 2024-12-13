@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mains on John L. Godlee</title>
-    <link>http://johngodlee.xyz/recipes/mains/</link>
+    <link>http://localhost:1313/recipes/mains/</link>
     <description>Recent content in Mains on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-gb</language><atom:link href="http://johngodlee.xyz/recipes/mains/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-gb</language><atom:link href="http://localhost:1313/recipes/mains/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Aubergine tart</title>
-      <link>http://johngodlee.xyz/recipes/mains/aubergine_tart/</link>
+      <link>http://localhost:1313/recipes/mains/aubergine_tart/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/aubergine_tart/</guid>
+      <guid>http://localhost:1313/recipes/mains/aubergine_tart/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;320 g pre-rolled puff pastry&lt;/li&gt;
@@ -51,10 +51,10 @@
     
     <item>
       <title>Basic salad</title>
-      <link>http://johngodlee.xyz/recipes/mains/basic_salad/</link>
+      <link>http://localhost:1313/recipes/mains/basic_salad/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/basic_salad/</guid>
+      <guid>http://localhost:1313/recipes/mains/basic_salad/</guid>
       <description>&lt;p&gt;This includes a long list of possible ingredients for a green salad.&lt;/p&gt;
 &lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
@@ -73,10 +73,10 @@
     
     <item>
       <title>Bean chilli</title>
-      <link>http://johngodlee.xyz/recipes/mains/bean_chilli/</link>
+      <link>http://localhost:1313/recipes/mains/bean_chilli/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/bean_chilli/</guid>
+      <guid>http://localhost:1313/recipes/mains/bean_chilli/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -164,10 +164,10 @@
     
     <item>
       <title>Braised Leeks</title>
-      <link>http://johngodlee.xyz/recipes/mains/braised_leeks/</link>
+      <link>http://localhost:1313/recipes/mains/braised_leeks/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/braised_leeks/</guid>
+      <guid>http://localhost:1313/recipes/mains/braised_leeks/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;6-8 leeks&lt;/li&gt;
@@ -191,10 +191,10 @@
     
     <item>
       <title>Butter Chicken</title>
-      <link>http://johngodlee.xyz/recipes/mains/butter_chicken/</link>
+      <link>http://localhost:1313/recipes/mains/butter_chicken/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/butter_chicken/</guid>
+      <guid>http://localhost:1313/recipes/mains/butter_chicken/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;3-4 boneless chicken thighs, trimmed and cut into large chunks&lt;/li&gt;
@@ -234,10 +234,10 @@
     
     <item>
       <title>Chicken and cashew salad</title>
-      <link>http://johngodlee.xyz/recipes/mains/chicken_cashew_salad/</link>
+      <link>http://localhost:1313/recipes/mains/chicken_cashew_salad/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/chicken_cashew_salad/</guid>
+      <guid>http://localhost:1313/recipes/mains/chicken_cashew_salad/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;h3 id=&#34;marinade&#34;&gt;Marinade&lt;/h3&gt;
 &lt;ul&gt;
@@ -280,10 +280,10 @@
     
     <item>
       <title>Chickpea and carrot crepes</title>
-      <link>http://johngodlee.xyz/recipes/mains/chickpea_carrot_crepes/</link>
+      <link>http://localhost:1313/recipes/mains/chickpea_carrot_crepes/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/chickpea_carrot_crepes/</guid>
+      <guid>http://localhost:1313/recipes/mains/chickpea_carrot_crepes/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;250 g chickpea flour&lt;/li&gt;
@@ -314,10 +314,10 @@
     
     <item>
       <title>Chickpea pastry slice</title>
-      <link>http://johngodlee.xyz/recipes/mains/chickpea_pastry_slice/</link>
+      <link>http://localhost:1313/recipes/mains/chickpea_pastry_slice/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/chickpea_pastry_slice/</guid>
+      <guid>http://localhost:1313/recipes/mains/chickpea_pastry_slice/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;2 vegan puff pastry sheets&lt;/li&gt;
@@ -356,10 +356,10 @@
     
     <item>
       <title>Chorizo and white bean stew</title>
-      <link>http://johngodlee.xyz/recipes/mains/chorizo_and_white_bean_stew/</link>
+      <link>http://localhost:1313/recipes/mains/chorizo_and_white_bean_stew/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/chorizo_and_white_bean_stew/</guid>
+      <guid>http://localhost:1313/recipes/mains/chorizo_and_white_bean_stew/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;2 tbsp olive oil + extra for drizzling&lt;/li&gt;
@@ -390,10 +390,10 @@
     
     <item>
       <title>Cornish Pasties</title>
-      <link>http://johngodlee.xyz/recipes/mains/cornish_pasties/</link>
+      <link>http://localhost:1313/recipes/mains/cornish_pasties/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/cornish_pasties/</guid>
+      <guid>http://localhost:1313/recipes/mains/cornish_pasties/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -464,10 +464,10 @@
     
     <item>
       <title>Courgette Cheese Quiche</title>
-      <link>http://johngodlee.xyz/recipes/mains/courgette_cheese_quiche/</link>
+      <link>http://localhost:1313/recipes/mains/courgette_cheese_quiche/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/courgette_cheese_quiche/</guid>
+      <guid>http://localhost:1313/recipes/mains/courgette_cheese_quiche/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;h3 id=&#34;pastry&#34;&gt;Pastry&lt;/h3&gt;
 &lt;ul&gt;
@@ -508,10 +508,10 @@
     
     <item>
       <title>Daal Makhani</title>
-      <link>http://johngodlee.xyz/recipes/mains/daal_makhani/</link>
+      <link>http://localhost:1313/recipes/mains/daal_makhani/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/daal_makhani/</guid>
+      <guid>http://localhost:1313/recipes/mains/daal_makhani/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;1 400 g can green or urad lentils&lt;/li&gt;
@@ -549,10 +549,10 @@
     
     <item>
       <title>Eggs Benedict</title>
-      <link>http://johngodlee.xyz/recipes/mains/eggs_benedict/</link>
+      <link>http://localhost:1313/recipes/mains/eggs_benedict/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/eggs_benedict/</guid>
+      <guid>http://localhost:1313/recipes/mains/eggs_benedict/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;12 tbsp butter&lt;/li&gt;
@@ -589,10 +589,10 @@
     
     <item>
       <title>Halloumi with honey and chilli</title>
-      <link>http://johngodlee.xyz/recipes/mains/honey_halloumi/</link>
+      <link>http://localhost:1313/recipes/mains/honey_halloumi/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/honey_halloumi/</guid>
+      <guid>http://localhost:1313/recipes/mains/honey_halloumi/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;500 g halloumi&lt;/li&gt;
@@ -619,10 +619,10 @@
     
     <item>
       <title>Lemon green bean pasta</title>
-      <link>http://johngodlee.xyz/recipes/mains/lemon_green_bean_pasta/</link>
+      <link>http://localhost:1313/recipes/mains/lemon_green_bean_pasta/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/lemon_green_bean_pasta/</guid>
+      <guid>http://localhost:1313/recipes/mains/lemon_green_bean_pasta/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;250 g dried pasta&lt;/li&gt;
@@ -654,10 +654,10 @@
     
     <item>
       <title>Lentil wellington </title>
-      <link>http://johngodlee.xyz/recipes/mains/lentil_wellington/</link>
+      <link>http://localhost:1313/recipes/mains/lentil_wellington/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/lentil_wellington/</guid>
+      <guid>http://localhost:1313/recipes/mains/lentil_wellington/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;1 frozen puff pastry sheet&lt;/li&gt;
@@ -702,10 +702,10 @@
     
     <item>
       <title>Mushroom fricassee</title>
-      <link>http://johngodlee.xyz/recipes/mains/mushroom_fricassee/</link>
+      <link>http://localhost:1313/recipes/mains/mushroom_fricassee/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/mushroom_fricassee/</guid>
+      <guid>http://localhost:1313/recipes/mains/mushroom_fricassee/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;25g butter&lt;/li&gt;
@@ -741,10 +741,10 @@
     
     <item>
       <title>Mushroom Pithivier</title>
-      <link>http://johngodlee.xyz/recipes/mains/mushroom_pithivier/</link>
+      <link>http://localhost:1313/recipes/mains/mushroom_pithivier/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/mushroom_pithivier/</guid>
+      <guid>http://localhost:1313/recipes/mains/mushroom_pithivier/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;3 tbsp olive oil&lt;/li&gt;
@@ -794,10 +794,10 @@
     
     <item>
       <title>Nut Roast</title>
-      <link>http://johngodlee.xyz/recipes/mains/nut_roast/</link>
+      <link>http://localhost:1313/recipes/mains/nut_roast/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/nut_roast/</guid>
+      <guid>http://localhost:1313/recipes/mains/nut_roast/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;200 g spinach&lt;/li&gt;
@@ -849,10 +849,10 @@
     
     <item>
       <title>Pasta with vodka and sausage</title>
-      <link>http://johngodlee.xyz/recipes/mains/pasta_with_vodka_and_sausage/</link>
+      <link>http://localhost:1313/recipes/mains/pasta_with_vodka_and_sausage/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/mains/pasta_with_vodka_and_sausage/</guid>
+      <guid>http://localhost:1313/recipes/mains/pasta_with_vodka_and_sausage/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;1 tbsp olive oil&lt;/li&gt;

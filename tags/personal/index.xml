@@ -1,0 +1,2176 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Personal on John L. Godlee</title>
+    <link>http://localhost:1313/tags/personal/</link>
+    <description>Recent content in Personal on John L. Godlee</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>2024-06-26T00:00:00+0000</lastBuildDate><atom:link href="http://localhost:1313/tags/personal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bash script to download audio from Youtube</title>
+      <link>http://localhost:1313/posts/2024-06-26-ytdlp/</link>
+      <pubDate>2024-06-26T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2024-06-26-ytdlp/</guid>
+      <description>&lt;p&gt;This post is actually about a trick I learned that allows bash scripts to accept input either as a string or from &lt;code&gt;stdin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here is the code. It first checks whether at least one argument is provided to the script. If an argument is found it creates a variable containing all the arguments. If no arguments are found, then it waits for input from &lt;code&gt;stdin&lt;/code&gt;, which can either come from a pipe or can be typed in after the script is called.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# If argument provided&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$#&lt;/span&gt; -gt &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;input&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$*&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Read from stdin &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;IFS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;read&lt;/span&gt; -r line&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;input&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$line&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$input&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I used this trick to write a script to download audio files from Youtube using &lt;a href=&#34;https://github.com/yt-dlp/yt-dlp&#34; target=&#34;_blank&#34;&gt;yt-dlp&lt;/a&gt;
+. I wanted to be able to integrate the script with &lt;a href=&#34;https://ytfzf.github.io/&#34; target=&#34;_blank&#34;&gt;ytfzf&lt;/a&gt;
+, which can search Youtube from the terminal using FZF and optionally print the URL of the selected video.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Download audio only using yt-dlp&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# If argument provided&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$#&lt;/span&gt; -gt &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;input&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$*&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Read from stdin &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;IFS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;read&lt;/span&gt; -r line&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;input&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$line&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Download &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yt-dlp &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;	-f bestaudio &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;	--extract-audio &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;	--audio-format m4a &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;	-S +size,+br &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;	-o &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$PWD&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;/%(title)s.%(ext)s&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;	--external-downloader aria2c &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;	--external-downloader-args &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;-x 5 -s 5 -j 5 -c -k 1M&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$input&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The script can be called in various ways.&lt;/p&gt;
+&lt;p&gt;Passing an argument:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yt_audio https://www.youtube.com/watch?v&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;Atkp8mklOh0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Using &lt;code&gt;stdin&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;https://www.youtube.com/watch?v=Atkp8mklOh0&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; yt_audio
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Using &lt;code&gt;stdin&lt;/code&gt; with &lt;code&gt;ytfzf&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ytfzf -L Terry Barentsen Hotline Cooper Ray &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; yt_audio
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;With multiple URLs as arguments:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yt_audio https://www.youtube.com/watch?v&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;WyV894c8oqI https://www.youtube.com/watch?v&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;Atkp8mklOh0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;With multiple URLs from &lt;code&gt;stdin&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;https://www.youtube.com/watch?v=WyV894c8oqI https://www.youtube.com/watch?v=Atkp8mklOh0&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; yt_audio
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Flatbreads</title>
+      <link>http://localhost:1313/posts/2021-04-05-flatbreads/</link>
+      <pubDate>2021-04-05T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2021-04-05-flatbreads/</guid>
+      <description>&lt;p&gt;I tried to make flatbreads for the first time at secondary school in food tech class, when I was about 13. We were doing a module on world bread and each student had to pick a culture / country, learn about their bread, and cook some examples. I chose India as my case study and tried to create Thepla. &lt;a href=&#34;https://en.wikipedia.org/wiki/Thepla&#34; target=&#34;_blank&#34;&gt;Thepla&lt;/a&gt;
+ is a Gujarati bread made usually with yoghurt, ghee, wheat flour, fenugreek and green chillies. I remember the breads I made turned out quite stodgy and greasy, probably because the pan wasn&amp;rsquo;t hot enough.&lt;/p&gt;
+&lt;p&gt;Now I make flatbreads frequently in all sorts of guises. Here I&amp;rsquo;m defining flatbreads as any bread which is much wider than it is tall. Basically anything that isn&amp;rsquo;t a loaf or roll of some kind. The most generic flatbread I make uses plain flour, vegetable oil, salt and water. It is dry fried in a very hot pan. I make these flatbreads to serve with eggs for breakfast, as wraps for lunch, or to pair with a stew for supper. The recipe I use varies a bit depending on the exact type of bread that I want, but roughly it is:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ingredients&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;150 g plain flour&lt;/li&gt;
+&lt;li&gt;60 ml water&lt;/li&gt;
+&lt;li&gt;2 tbsp oil&lt;/li&gt;
+&lt;li&gt;0.75 tsp salt&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Method&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Mix all the dry ingredients together thoroughly in a bowl.&lt;/li&gt;
+&lt;li&gt;Mix in more or less water bit by bit with a wooden spoon or paddle until the dough forms a cohesive, supple, non-sticky ball&lt;/li&gt;
+&lt;li&gt;Knead on a lightly floured work surface until the dough isn&amp;rsquo;t shaggy and sticky.&lt;/li&gt;
+&lt;li&gt;Divide the dough into four and shape into balls.&lt;/li&gt;
+&lt;li&gt;Flatten the balls to form a disc.&lt;/li&gt;
+&lt;li&gt;Roll the balls out on a very lightly flowered surface until they are about 1-2 mm thick.&lt;/li&gt;
+&lt;li&gt;Heat a shallow thin-bottomed pan until it is almost smoking.&lt;/li&gt;
+&lt;li&gt;Fry each bread until bubbles start to form on the surface, then flip and fry the other side until lightly browned, with darker patches where the bubbles are.&lt;/li&gt;
+&lt;li&gt;Stack the breads and possibly cover with a towel to steam them for a couple of minutes.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/dough.JPG&#34;&gt;&lt;img
+          alt=&#34;Dough&#34;
+          title=&#34;Dough&#34;src=&#34;http://localhost:1313/img/flatbreads/dough.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/bubbles.JPG&#34;&gt;&lt;img
+          alt=&#34;Bubbles just before flipping&#34;
+          title=&#34;Bubbles just before flipping&#34;src=&#34;http://localhost:1313/img/flatbreads/bubbles.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/flip.JPG&#34;&gt;&lt;img
+          alt=&#34;Browned surface just after flipping&#34;
+          title=&#34;Browned surface just after flipping&#34;src=&#34;http://localhost:1313/img/flatbreads/flip.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/stack.JPG&#34;&gt;&lt;img
+          alt=&#34;Stacked flatbreads to keep them steamy&#34;
+          title=&#34;Stacked flatbreads to keep them steamy&#34;src=&#34;http://localhost:1313/img/flatbreads/stack.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Tips and variations&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If I want to make the bread thinner I add more oil. Adding a lot of oil can make the bread flakey.&lt;/li&gt;
+&lt;li&gt;If I want the bread to be more fluffy, which is nice for sopping up a stew, I add some baking powder and roll a bit thicker.&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;ve found that if I leave the dough to rest for 10 minutes before rolling it becomes much more pliable. This allows me to make the breads thinner and use less flour, more like tortillas.&lt;/li&gt;
+&lt;li&gt;A good pan is key. I use a large shallow aluminium pan which I&amp;rsquo;ve seasoned over many years to build up a non-stick layer of black carbon and oil. I would avoid pans with a teflon or similar non-stick surface. They often can&amp;rsquo;t handle getting so hot and can impart an unpleasant flavour to the bread.&lt;/li&gt;
+&lt;li&gt;Basic additions to these flat breads include:
+&lt;ul&gt;
+&lt;li&gt;dried green herbs like fenugreek or oregano&lt;/li&gt;
+&lt;li&gt;olive oil instead of vegetable oil&lt;/li&gt;
+&lt;li&gt;nigella seeds (onion seeds)&lt;/li&gt;
+&lt;li&gt;finely minced garlic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Adding yoghurt to the dough makes the resulting bread much more chewy and stretchy, which makes it perfect for wraps which resemble &lt;a href=&#34;https://en.wikipedia.org/wiki/Gyro_%28food%29&#34; target=&#34;_blank&#34;&gt;gyros&lt;/a&gt;
+. Make sure to reduce the amount of water.&lt;/li&gt;
+&lt;li&gt;Leavened flatbreads similar to naan are nice if you have more time available. use the above recipe but add 1 tsp dried yeast, knead for 5-10 minutes, then leave to prove for an hour or more before rolling out. Proving overnight in the fridge gives the bread a nice tangy flavour. Then cook in a hot pan as with the normal recipe.&lt;/li&gt;
+&lt;li&gt;Make thin breads and add a bit of margerine, ghee, butter, or vegetable oil to the pan to make something that resembles an Indian &lt;a href=&#34;https://en.wikipedia.org/wiki/Parotta&#34; target=&#34;_blank&#34;&gt;parotta&lt;/a&gt;
+. Make sure to pick an oil with a high smoke point.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/pan.JPG&#34;&gt;&lt;img
+          alt=&#34;Aluminium pan&#34;
+          title=&#34;Aluminium pan&#34;src=&#34;http://localhost:1313/img/flatbreads/pan.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/parotta.JPG&#34;&gt;&lt;img
+          alt=&#34;A parotta style fltabread, fried in foamy butter&#34;
+          title=&#34;A parotta style fltabread, fried in foamy butter&#34;src=&#34;http://localhost:1313/img/flatbreads/parotta.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;As I&amp;rsquo;ve travelled for fieldwork or holidays I&amp;rsquo;ve encountered flatbreads in many other contexts which have influenced the way I make flatbreads. In southern Tanzania it&amp;rsquo;s common to have oily &lt;a href=&#34;https://en.wikipedia.org/wiki/Chapati&#34; target=&#34;_blank&#34;&gt;chapatis&lt;/a&gt;
+ with bean stew for breakfast and lunch. Some people tear up the chapati and mix it through the beans. In northern Brazil I saw flatbreads made with cassava flour (manioca) called &lt;a href=&#34;https://en.wikipedia.org/wiki/Mbeju&#34; target=&#34;_blank&#34;&gt;beiju&lt;/a&gt;
+, which have a grainy sticky texture a bit like a bao bun. They can be served sweet (e.g. with jam) or savoury (e.g. with pulled pork). In the southwest of the United States there are the wheat and corn tortillas. In central Europe and towards Turkey there are a multitude of flat breads like &lt;a href=&#34;https://en.wikipedia.org/wiki/Pita&#34; target=&#34;_blank&#34;&gt;pide&lt;/a&gt;
+, &lt;a href=&#34;https://en.wikipedia.org/wiki/Bazlama&#34; target=&#34;_blank&#34;&gt;bazlama&lt;/a&gt;
+, and &lt;a href=&#34;https://en.wikipedia.org/wiki/Manakish&#34; target=&#34;_blank&#34;&gt;manakish&lt;/a&gt;
+ which are often flavoured with fresh herbs or spread with meat and sharp cheese.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/eggs.JPG&#34;&gt;&lt;img
+          alt=&#34;South-western style breakfast eggs with salsa, hot sauce and avocado&#34;
+          title=&#34;South-western style breakfast eggs with salsa, hot sauce and avocado&#34;src=&#34;http://localhost:1313/img/flatbreads/eggs.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>Planting 10 acres of woodland</title>
+      <link>http://localhost:1313/posts/2021-03-25-planting/</link>
+      <pubDate>2021-03-25T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2021-03-25-planting/</guid>
+      <description>&lt;p&gt;This post describes the process I went through with the &lt;a href=&#34;https://www.woodlandtrust.org.uk/plant-trees/large-scale-planting/morewoods/&#34; target=&#34;_blank&#34;&gt;Woodland Trust MOREWoods&lt;/a&gt;
+ tree planting scheme, to plant 10 acres (4.05 hectares) on some farmland in North Yorkshire.&lt;/p&gt;
+&lt;p&gt;I found historical maps through the &lt;a href=&#34;https://digimap.edina.ac.uk/&#34; target=&#34;_blank&#34;&gt;University of Edinburgh Digimap&lt;/a&gt;
+ service which showed that some of the pasture on our farm had previously been woodland. The images below show what the woodland looked like in 1892, 1919, 1957, and 2018. Clearly at some point between 1919 and 1957 a large portion of the woodland was felled. This is the area I aimed to re-plant. Since at least 1957, the land has only been used as rough pasture for sheep and cattle.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/historic.png&#34;&gt;&lt;img
+          alt=&#34;Maps of the woodland in 1892, 1919, 1957, and 2018&#34;
+          title=&#34;Maps of the woodland in 1892, 1919, 1957, and 2018&#34;src=&#34;http://localhost:1313/img/planting/historic.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;In addition to previously being woodland, the other main reason I wanted to plant this area was to increase the size of the existing woodland. Some plant and bird species require the darkness and humidity of a deep woodland interior to thrive, which they weren&amp;rsquo;t getting in the current woodland. Finally, I wanted to make better use of the land than rough pasture. The soil is relatively thin, with a well-drained gravel pan only about 30-50 cm below the surface. The grass has never been particularly productive and contains a lot of moss, probably a result of over-grazing.&lt;/p&gt;
+&lt;p&gt;Although I started to think seriously about woodland planting in summer 2018, we didn&amp;rsquo;t officially lodge our application with the MOREWoods scheme until May 2019. We looked around a few schemes which provide subsidies for tree planting. Some of the larger grants weren&amp;rsquo;t suitable for us because of complications caused by renting the land out to a tenant farmer at the time of application. MOREWoods was a good option for me because I am a novice at land management and the grant provides guidance from a qualified consultant who can help with planning what species to plant, where to plant them, and how to manage the trees after planting. The initial application was fairly easy. We had to provide a map of the area to be planted, and confirm things about land tenure and current land usage. MOREWoods agreed to pay for 80% of the cost of trees and guards because we are within the Woodland Trust&amp;rsquo;s &lt;a href=&#34;https://www.woodlandtrust.org.uk/about-us/what-we-do/we-plant-trees/the-northern-forest/&#34; target=&#34;_blank&#34;&gt;Northern Forest&lt;/a&gt;
+ region.&lt;/p&gt;
+&lt;p&gt;After we passed the initial Woodland Trust (WT) screening process we started to look at how we would take the land back from the farm tenancy. For many years the pasture and arable fields on the farm have been rented out to tenant farmers. Farm tenancies have much longer notice periods than houses, we had to give a notice period of almost a full year to take back the land, and the handover had to happen on the 1st January, to fit with the farming calendar and the subsidy payment schedule. Also, according to the tenancy, we were only allowed to reclaim up to 10 acres per year, unless we gave notice for the entire farm, which entails its own difficulties.&lt;/p&gt;
+&lt;p&gt;The farm tenants were quite worried about correctly marking the fencing line which would divide the field so we could plant one part of it. Apparently the farming subsidies can be quite strict about misrepresenting field sizes, and often impose penalties if a field has been measured incorrectly. To mark the field I used &lt;a href=&#34;https://www.qgis.org/en/site/&#34; target=&#34;_blank&#34;&gt;QGIS&lt;/a&gt;
+ to draw an area of exactly 10 acres, using an &lt;a href=&#34;https://www.gov.uk/government/publications/land-registry-plans-the-basis-of-land-registry-applications/land-registry-plans-the-basis-of-land-registry-plans-practice-guide-40-supplement-1&#34; target=&#34;_blank&#34;&gt;OS 1:2500 map&lt;/a&gt;
+ as a guide for the field boundaries. I tried initially to use satellite imagery, but because of the overhang of hedges and trees I found it difficult to accurately determine the boundaries of the field. I measured the distance from known points along the existing fence lines to determine the new fence line. On-site we used a &lt;a href=&#34;https://en.wikipedia.org/wiki/Trundle_wheel&#34; target=&#34;_blank&#34;&gt;trundle wheel&lt;/a&gt;
+ to measure those distances and marked the new fence line at both ends with iron rods driven deep into the ground. In hind-sight, we should have used a tape measure rather than a trundle wheel, because the uneven ground messed up the distance measures a bit, but eventually we came to a fence line that everybody agreed on.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/fenceline.png&#34;&gt;&lt;img
+          alt=&#34;Map of the new fence line, with measurements&#34;
+          title=&#34;Map of the new fence line, with measurements&#34;src=&#34;http://localhost:1313/img/planting/fenceline.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/fence.jpg&#34;&gt;&lt;img
+          alt=&#34;The new fence&#34;
+          title=&#34;The new fence&#34;src=&#34;http://localhost:1313/img/planting/fence.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Unfortunately even though the Woodland Trust approved our application in August 2019, it took until April 2020 to organise a consultant to survey the land and discuss species mixes. Then after we sent off the report based on the consultation, it took the WT until August 2020 to realise that they actually needed an &lt;a href=&#34;https://www.gov.uk/guidance/environmental-impact-assessments-for-woodland-overview&#34; target=&#34;_blank&#34;&gt;Environmental Impact Assessment&lt;/a&gt;
+ (EIA) from the Forestry Commission, because the new woodland is &amp;gt;3 ha. The process for the EIA was slow. We had to consult &amp;ldquo;local stakeholders&amp;rdquo; via the Parish Council, adjacent land-owners, and also the local authority archaeology department. The archaeology people had an issue with a small part of the planting site which appeared from a satellite image to have an old &lt;a href=&#34;https://en.wikipedia.org/wiki/Ridge_and_furrow&#34; target=&#34;_blank&#34;&gt;ridge-and-furrow&lt;/a&gt;
+ (rigg and furr) system. We were skeptical of this assessment, especially as they hadn&amp;rsquo;t conducted an on-site survey, but to avoid further delay we complied with their wishes and left part of the planting area as open ground. After gathering all these consultations the EIA took until December 2020 to be approved, then until mid-January 2021 to actually sign the contract from the WT. I think the WT offices had difficulty processing applications because of COVID restrictions which meant their staff were sometimes working from home. On the whole however, I was disappointed with the service from the WT. It seemed like a lot of stress could have been avoided if the WT had pushed the process along a bit quicker, rather than waiting for months between each stage. I was also disturbed that although our application was described &amp;ldquo;approved&amp;rdquo; in 2019, it clearly wasn&amp;rsquo;t and there were many more hoops we had to jump through before there was truly no going back. It would have been very annoying if we had taken back the land from the farm tenancy only to later find out that the MOREWoods grant wouldn&amp;rsquo;t pay out.&lt;/p&gt;
+&lt;p&gt;I was given a lot of control over the species mix of the new woodland. I opted for two main zones (compartments). The larger compartment is dominated by pedunculate oak (&lt;em&gt;Quercus robur&lt;/em&gt;) and Hornbeam (&lt;em&gt;Carpinus betulus&lt;/em&gt;), both large canopy trees with long lifespans and which provide decent hardwood for building and firewood. The smaller compartment is dominated by silver birch (&lt;em&gt;Betula pendula&lt;/em&gt;) and hazel (&lt;em&gt;Coryllus avellana&lt;/em&gt;), shorter lived species which coppice well and can provide us with smaller poles and canes, which are useful for making hurdles, or for smaller firewood. We weren&amp;rsquo;t allowed to plant ash (&lt;em&gt;Fraxinus excelsior&lt;/em&gt;) because of the likelihood of it succumbing to ash dieback, though there is a lot in the existing adjacent woodland. In addition to the principal species, we also included shrubs and other species at lower percentages scattered throughout the compartments, simply to increase biodiversity and to have a bit of variety.&lt;/p&gt;
+&lt;p&gt;Below is the full breakdown of species and which compartment they go in:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Compartment&lt;/th&gt;
+          &lt;th&gt;Alder&lt;/th&gt;
+          &lt;th&gt;Blackthorn&lt;/th&gt;
+          &lt;th&gt;Birch&lt;/th&gt;
+          &lt;th&gt;Alder buckthorn&lt;/th&gt;
+          &lt;th&gt;Hazel&lt;/th&gt;
+          &lt;th&gt;Hawthorn&lt;/th&gt;
+          &lt;th&gt;Hornbeam&lt;/th&gt;
+          &lt;th&gt;Holly&lt;/th&gt;
+          &lt;th&gt;Wild cherry&lt;/th&gt;
+          &lt;th&gt;Oak&lt;/th&gt;
+          &lt;th&gt;TOTAL&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Short Rotation Coppice&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;300&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;400&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;75&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;50&lt;/td&gt;
+          &lt;td&gt;825&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Long Rotation Coppice&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;150&lt;/td&gt;
+          &lt;td&gt;500&lt;/td&gt;
+          &lt;td&gt;75&lt;/td&gt;
+          &lt;td&gt;350&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;950&lt;/td&gt;
+          &lt;td&gt;75&lt;/td&gt;
+          &lt;td&gt;350&lt;/td&gt;
+          &lt;td&gt;900&lt;/td&gt;
+          &lt;td&gt;3350&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Edge Shelter Belt&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;100&lt;/td&gt;
+          &lt;td&gt;150&lt;/td&gt;
+          &lt;td&gt;25&lt;/td&gt;
+          &lt;td&gt;100&lt;/td&gt;
+          &lt;td&gt;75&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;50&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;500&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Alder Carr&lt;/td&gt;
+          &lt;td&gt;50&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;50&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;ndash;&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;mdash;&amp;mdash;-&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;ndash;&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;ndash;&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;mdash;&amp;ndash;&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;mdash;&amp;ndash;&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;ndash;&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&lt;/td&gt;
+          &lt;td&gt;&amp;mdash;&amp;ndash;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;TOTAL&lt;/td&gt;
+          &lt;td&gt;50&lt;/td&gt;
+          &lt;td&gt;250&lt;/td&gt;
+          &lt;td&gt;950&lt;/td&gt;
+          &lt;td&gt;100&lt;/td&gt;
+          &lt;td&gt;850&lt;/td&gt;
+          &lt;td&gt;75&lt;/td&gt;
+          &lt;td&gt;950&lt;/td&gt;
+          &lt;td&gt;200&lt;/td&gt;
+          &lt;td&gt;350&lt;/td&gt;
+          &lt;td&gt;950&lt;/td&gt;
+          &lt;td&gt;4725&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;To generate these numbers I started off by calculating how many trees would fit in each compartment based on the compartment area and the 2.5 m distance between each tree. Then for each species in each compartment, I decided what percentage of the trees I would like from each species in each compartment. Then I divided the total number of trees by the percentage to get the number of trees per species. Because the trees come in bundles of 25, I then had to round up or down to the nearest 25.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/planting_map.png&#34;&gt;&lt;img
+          alt=&#34;Planting map&#34;
+          title=&#34;Planting map&#34;src=&#34;http://localhost:1313/img/planting/planting_map.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;The alder area is located in a patch which gets flooded seasonally. Alder (&lt;em&gt;Alnus glutinosa&lt;/em&gt;) can deal very well with wet conditions, so I thought it would be the best species for that area. We left a bit of a marshy pond bit in the middle which can act as a habitat as the woodland grows. We left a couple of open glades in the woodland in the hope that these will also increase biodiversity by providing open but sheltered areas, popular with butterflies and bees.&lt;/p&gt;
+&lt;p&gt;The edge belt is there primarily to provide some shelter at the edge of the woodland, so that the wind doesn&amp;rsquo;t blast through the understorey. Planting a shelter belt can drastically alter the micro-climate in the understorey, hopefully providing a warmer and wetter environment that is more suitable for insects, small mammals, and wildflowers. It also means there is more of a natural barrier should any livestock eventually break through a fence.&lt;/p&gt;
+&lt;p&gt;Finally there is a wedge-shaped patch at the southern end of the site near the gate which we have left empty so that we can use it for other things. Helpfully this patch coincides with most of the area the archaeology people wanted to leave un-planted. I&amp;rsquo;m hoping to install some bays that we can use to process and keep wood in before it is transported nearer the house for drying. Also I&amp;rsquo;d like to have a bay for wood-chippings, which we are going to use as mulch around the base of the trees to keep weeds down.&lt;/p&gt;
+&lt;p&gt;By the time we got to mid-December 2020 it was clear that having volunteer groups in to plant the trees, as had been the original plan, was untenable because of COVID restrictions that meant we couldn&amp;rsquo;t safely house or feed the volunteers if they needed to stay overnight. Instead we opted to use a professional tree-planting company who are based nearby and who came recommended by a family friend. The tree-planting company cost a lot of money, but under the circumstances it was the only safe option. I still feel guilty for not involving the community more, but circumstance forced my hand.&lt;/p&gt;
+&lt;p&gt;Our trees were delivered on pallets by a lorry with a forklift on the back. We loaded as much as possible onto a trailer, and transported it in batches over to the planting site. Most of the volume of the delivery consisted of tree guards and stakes. The 4725 trees all fitted onto one large pallet. The trees arrived bare rooted in plastic bags, which meant they had to be planted ideally within about 7-10 days.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/delivery.jpg&#34;&gt;&lt;img
+          alt=&#34;Tree delivery&#34;
+          title=&#34;Tree delivery&#34;src=&#34;http://localhost:1313/img/planting/delivery.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;The tree-planting company marked out the different compartments of the planting site with bamboo canes with flagging tape attached. I helped with this process because there were a few adjustments and judgement calls to be made since the gate holes and therefore the 10 m wide track had changed position from when I made the planting map. The tree planting company used an Android mapping app with an overlay of the planting area I had sent them to mark out the different areas. I thought this worked well, but I felt that they relied on it a bit too much and I had to pull them back a couple of times on common sense issues. See the image below where some trees have been planted under an overhanging hedge tree, which is probably not the best idea.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/overhang.jpg&#34;&gt;&lt;img
+          alt=&#34;A hedging tree overhanging some of the new planting&#34;
+          title=&#34;A hedging tree overhanging some of the new planting&#34;src=&#34;http://localhost:1313/img/planting/overhang.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/marking.jpg&#34;&gt;&lt;img
+          alt=&#34;Marking out the planting area&#34;
+          title=&#34;Marking out the planting area&#34;src=&#34;http://localhost:1313/img/planting/marking.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;I helped with some of the planting, and learned a lot about how to find the rhythm when planting many hundreds of trees, but mostly I left the professionals to it and just checked in every day to see if they had questions or problems. They planted in rows to allow easy access for mowers, but offset each row so that from most angles the trees appear more naturally distributed. I thought this was very effective at breaking the visual lines. See the photo below. Mostly the tree planters didn&amp;rsquo;t use any special equipment, only tree-planting spades, hammers, and bamboo canes, but one incredibly useful addition to their arsenal was a &lt;a href=&#34;https://www.deere.co.uk/en/gator-utility-vehicles/&#34; target=&#34;_blank&#34;&gt;John Deere Gator Utility Vehicle&lt;/a&gt;
+, which looks a bit like an off-road golf cart. It allowed them to quickly move stuff around the site without churning up the wet ground. If they had relied on wheelbarrows instead it would have taken much longer to get set up.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/planted.jpg&#34;&gt;&lt;img
+          alt=&#34;The planted trees&#34;
+          title=&#34;The planted trees&#34;src=&#34;http://localhost:1313/img/planting/planted.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;After the tree planters had left, we did a few checks to make sure everything was in order. We walked through each tree and looked for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Trees without guards&lt;/li&gt;
+&lt;li&gt;Guards with too few zip-ties&lt;/li&gt;
+&lt;li&gt;Trees with bent over main stems&lt;/li&gt;
+&lt;li&gt;Trees where the main stem or a substantial branch was threaded through the zip-tie&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Fixing all these small issues, while tedious, is definitely worth it, as without correction they will severely impact the growth of the tree. Trees without guards will only last a few days before the rabbits and deer snip off them growing tip. Guards without the correct number of zip-ties are likely to blow over in the wind and snap the tree they are guarding. Trees with bent over stems will likely die because it will mess with the gravity flow of auxin down the stem. If the stem is threaded through a zip-tie the zip-tie will choke off the main growing tip as the stem thickens.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/ziptie.jpg&#34;&gt;&lt;img
+          alt=&#34;A tree with the main stem threaded through the zip-tie&#34;
+          title=&#34;A tree with the main stem threaded through the zip-tie&#34;src=&#34;http://localhost:1313/img/planting/ziptie.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;I think the next project for the farm is to plant some more fruit trees and expand the orchard. There is an old goose garth which is adjacent to the existing orchard, but has been used for sheep grazing for many years. I&amp;rsquo;d like to plant apple trees, plum trees, and maybe some cherry trees. We have a couple of cherry trees on the farm, but they only produce a crop every few years. I imagine this planting will be very different to the woodland planting. The fruit trees will likely be larger when we buy them, and will require more substantial guards as losing 1 of a total of 10 fruit trees is more detrimental than losing 10 out of a total of 100 woodland trees.&lt;/p&gt;
+&lt;p&gt;In the next few years our main concern in the new woodland is going to be keeping the grass mown around the trees, which without the sheep to graze it will grow very fast. If we don&amp;rsquo;t keep on top of the grass it could overshadow the trees and affect their growth. It could also cause the land to become shrubby thicket, which we don&amp;rsquo;t want.&lt;/p&gt;
+&lt;p&gt;The project was expensive, but most of this cost came from the tree planting company, and the MOREWoods scheme helped enormously to keep the cost of the trees down:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Item&lt;/th&gt;
+          &lt;th&gt;Cost (£)&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Fencing&lt;/td&gt;
+          &lt;td&gt;2508.00&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Trees&lt;/td&gt;
+          &lt;td&gt;1584.00&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Planting&lt;/td&gt;
+          &lt;td&gt;5858.40&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Observing how a professional tree-planting company organises planting a woodland has given me a lot of confidence that if I choose to do something like this again, I could easily make up for the lack of expertise by having more volunteers and managing them properly. I would have to spend a lot of time teaching to make sure everybody knew &lt;em&gt;how&lt;/em&gt; to plant a tree and make sure that the planting area was marked out properly, but it would be worth it. It seems like giving each person a small job, like laying out stakes in the right place, or distributing trees to other volunteers is the best way to make the job more efficient.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Fixing a stool</title>
+      <link>http://localhost:1313/posts/2021-03-15-stool/</link>
+      <pubDate>2021-03-15T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2021-03-15-stool/</guid>
+      <description>&lt;p&gt;About a year and a half ago I made a stool from a piece of oak, with alder legs. I had just been given a new drawknife for Christmas and wanted to test it out by shaping some pole lengths.&lt;/p&gt;
+&lt;p&gt;The seat of the stool was shaped from a tangential section of a large log. First the log was split down the middle using a splitting maul, then the backside of the log was taken off with a chainsaw, ripping down the grain of the wood, which is slow-going compared to cutting across the grain. Using a tangential section meant that there was some lovely colour difference between the dark heartwood and the pale sapwood.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/stool/seat.jpg&#34;&gt;&lt;img
+          alt=&#34;Seat of the stool&#34;
+          title=&#34;Seat of the stool&#34;src=&#34;http://localhost:1313/img/stool/seat.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;I drilled four holes with a brace-and-bit drill and an auger through the seat, to fit the legs. I shaped the alder legs with the drawknife into octagonal shapes, purposely leaving some bits of bark on the corners, which I think adds a nice effect.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/stool/legs.jpg&#34;&gt;&lt;img
+          alt=&#34;Stool legs&#34;
+          title=&#34;Stool legs&#34;src=&#34;http://localhost:1313/img/stool/legs.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;To fit the legs into the seat I shaped the top of the legs down to pegs which could then be tapped into the holes in the seat, and finally wedged with thin slivers of hard yew. I made sure the seat was wet and the legs were dry, so the seat would tighten around the legs.&lt;/p&gt;
+&lt;p&gt;To make the pegs I sawed into the legs then used a flat chisel to split off the wood up to the saw cut, bit by bit. To fine tune I used the chisel to shave down the pegs.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/stool/peg.jpg&#34;&gt;&lt;img
+          alt=&#34;Shaping the leg pegs&#34;
+          title=&#34;Shaping the leg pegs&#34;src=&#34;http://localhost:1313/img/stool/peg.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Clearly I cut too deep on one of the saw cuts for the pegs, because recently the leg snapped off.&lt;/p&gt;
+&lt;p&gt;Instead of shaping new legs I decided to shape a new peg for the broken leg, and just have a shorter stool. I actually think the shorter legs look better, as one of the legs was previously quite bowed and looked a bit silly.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/stool/short.jpg&#34;&gt;&lt;img
+          alt=&#34;New shortened legs&#34;
+          title=&#34;New shortened legs&#34;src=&#34;http://localhost:1313/img/stool/short.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>Playfair cipher in R</title>
+      <link>http://localhost:1313/posts/2021-01-25-playfair/</link>
+      <pubDate>2021-01-25T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2021-01-25-playfair/</guid>
+      <description>&lt;p&gt;I was designing a treasure hunt as a Christmas present. I wanted to create a Playfair cipher as the final clue which when decoded would reveal the location of the Christmas present.&lt;/p&gt;
+&lt;p&gt;I used R to construct a function which produces a cipher matrix and key lookup table, and an encoded message. Here is a brief description of how the playfair cipher works:&lt;/p&gt;
+&lt;p&gt;Start with a matrix of letters:&lt;/p&gt;
+&lt;p&gt;a|J|N|G|o|k
+S|R|h|B|Z|b
+x|E|w|z|u|f
+d|l|t|W|H|p
+r|K|n|I|c|M
+s|q|g|P|T|D&lt;/p&gt;
+&lt;p&gt;and a lookup table:&lt;/p&gt;
+&lt;p&gt;keypair|letter
+wD|A
+bM|B
+aq|C
+sB|T&lt;/p&gt;
+&lt;p&gt;and an encoded message: &lt;code&gt;sJgfSP&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Find each pair of characters in the encoded message in the matrix, here starting with &lt;code&gt;aq&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;a&lt;/em&gt;|&lt;strong&gt;J&lt;/strong&gt;|N|G|o|k
+S|R|h|B|Z|b
+x|E|w|z|u|f
+d|l|t|W|H|p
+r|K|n|I|c|M
+&lt;strong&gt;s&lt;/strong&gt;|&lt;em&gt;q&lt;/em&gt;|g|P|T|D&lt;/p&gt;
+&lt;p&gt;and take the &amp;ldquo;opposite&amp;rdquo; corners of the box formed by the keypair. In this case the answers are &lt;code&gt;aq&lt;/code&gt;, &lt;code&gt;wD&lt;/code&gt;, and &lt;code&gt;sB&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Then take the output keypairs and match them in the lookup table. The answer here is &lt;code&gt;CAT&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;My function actually uses a slightly adapted version of the Playfair cipher. The differences are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In my version if two key values are on the same row or column in the matrix they are simply swapped round, rather than transposed to the right or down.&lt;/li&gt;
+&lt;li&gt;In my version the matrix is 6x6 rather than 5x5 and uses a sample of 36 uppercase and lowercase letters rather than 25 (-J) uppercase letters.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here is the function, which takes the message to be encoded as its single argument. It returns the encoded message, the matrix and the key lookup table:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; Create a playfair-style cipher&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; @param x character string to encode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; @return list with three slots: (1) encoded message (2) decoder matrix &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;     (3) decoder lookup table&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; @details Creates a cipher based on the original playfair cipher. &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;     Unlike the original playfair cipher this method produces a &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;     6x6 grid of upper and lowercase letters. Additionally, the &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;     behaviour when a keypair appear on the same row or column of &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;     the decoder matrix is different. In this version keypairs which&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;     appear on the same row or column are merely swapped rather than&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;     transposed as in the original cipher. &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;     Messages to be encoded are converted to uppercase and all&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;     non-alphabet characters are stripped out.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; @examples&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; x &amp;lt;- &amp;#34;This is a test&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; playfair(x)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; @export&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#&amp;#39; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;playfair&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# List all letters, upper and lowercase (52 chr)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;all_chr&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;letters&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;LETTERS&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Create 6x6 matrix of distinct letters&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;mat&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;matrix&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sample&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;all_chr&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;6&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;6&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;6&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;6&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Get all pairwise combinations of grid positions&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;locs_pairs&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;matrix&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;combn&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;seq&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;mat&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)),&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ncol&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;locs_clean&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;unique&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;locs_pairs[locs_pairs[&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;locs_pairs[&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Randomly sample pairs of grid positions &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# 26 times to create windows for each letter&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;locs_letters&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;locs_clean&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;[sample&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;nrow&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;locs_clean&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;26&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Order the pairs to always take the top left of each pair&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;locs_pairs&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;apply&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;locs_letters&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;min&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;max&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Search matrix for grid positions to get letter combinations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;combins&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;apply&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;locs_pairs&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;paste0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;mat[y[1]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;mat[y[2]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Make tidy dataframe of letter codes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;code_df&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;data.frame&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;input&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;combins&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;output&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;LETTERS&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Split x into component characters, &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# remove spaces and non-letter characters&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;x_string&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;unlist&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;strsplit&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;toupper&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;split&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;x_string_clean&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;x_string[x_string&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;%in%&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;LETTERS&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;decoded&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;code_df&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;[match&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x_string_clean&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;code_df&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;output&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;input&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# For each character, encode&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;unlist&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;lapply&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;decoded&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;function&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Split string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;i_split&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;unlist&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;strsplit&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;split&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Find locations in matrix&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;letter_one&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;which&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;mat&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i_split[1]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;arr.ind&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;letter_two&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;which&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;mat&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;i_split[2]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;arr.ind&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Get opposite locations&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;letter_one[1]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;letter_two[1]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;opp_one&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;mat[letter_one[1]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;letter_two[2]]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;opp_two&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;mat[letter_two[1]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;letter_one[2]]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;opp_one&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;mat[letter_two[1]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;letter_one[2]]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#000&#34;&gt;opp_two&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;mat[letter_one[1]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;letter_two[2]]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Combine into one string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;paste0&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;opp_one&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;opp_two&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;list&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;code&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;matrix&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;mat&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;key&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;code_df&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Pandoc LaTeX shopping list template</title>
+      <link>http://localhost:1313/posts/2021-01-05-shopping_list/</link>
+      <pubDate>2021-01-05T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2021-01-05-shopping_list/</guid>
+      <description>&lt;p&gt;I wanted to be able to create a printable shopping list with nice formatting, mainly as an exercise in practicing Pandoc templating, but also maybe to try and automate some of the recurring struggles with buying enough groceries and the correct items. Here is the LaTeX template:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;[a4paper, 12pt, twocolumn]&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Language
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;[utf8]&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;inputenc&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;[UKenglish]&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;babel&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% List items with boxes
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;enumitem&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;amssymb&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\labelitemi&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$$&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;\Box&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\labelitemii&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$$&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;\Box&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\labelitemiii&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$$&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;\Box&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Page geometry
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;geometry&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\geometry&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;left=2.2cm,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	right=2.2cm,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	top=1.5cm,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	bottom=2cm&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Pandoc specific
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;hyperref&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\providecommand&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\tightlist&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\setlength&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\itemsep&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;0pt&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\setlength&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\parskip&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;0pt&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Title 
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\makeatletter&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\maketitle&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\bgroup\setlength&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\parindent&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;0pt&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;flushleft&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\textbf&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\large&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\@&lt;/span&gt;title&lt;span style=&#34;color:#204a87&#34;&gt;}}&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\@&lt;/span&gt;date&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\rule&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\textwidth&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;1pt&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;flushleft&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\egroup&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\makeatother&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Section titles
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;titlesec&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\titleformat&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\section&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\large\bfseries&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\thesection&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;1em&lt;span style=&#34;color:#204a87&#34;&gt;}{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\titleformat&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\normalfont\bfseries&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\thesubsection&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;1em&lt;span style=&#34;color:#204a87&#34;&gt;}{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\titleformat&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\subsubsection&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\normalfont\itshape&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\thesubsubsection&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;1em&lt;span style=&#34;color:#204a87&#34;&gt;}{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;%\titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\titlespacing\section&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;0pt&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;12pt&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;4pt&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\titlespacing\subsection&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;0pt&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;14pt&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;4pt&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\titlespacing\subsubsection&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;0pt&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;14pt&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;4pt&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Prevent section breaking across pages (columns)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\let\oldsection\section&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\section&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\filbreak&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\oldsection&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Text formatting
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\setcounter&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;secnumdepth&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;0&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Remove section numbers
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\pagenumbering&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;gobble&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Remove page numbers
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\setlength&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\parindent&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}{&lt;/span&gt;0pt&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;  &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Stop indenting paragraphs
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;% Pandoc arguments
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;title&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\title&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;title&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\title&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;Shopping List&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;endif&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;date&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;date&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\today&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;endif&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\twocolumn&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;[\maketitle{}]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;body&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;$&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Key features are a redefined title section so it doesn&amp;rsquo;t take up so much space, tickable boxes instead of bullet points, and some trickery with the section headings so they take up less space, and so that a section never breaks across two columns or pages.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/shopping_list/list.png&#34;&gt;&lt;img
+          alt=&#34;Example shopping list&#34;
+          title=&#34;Example shopping list&#34;src=&#34;http://localhost:1313/img/shopping_list/list.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>Tiling wallpapers</title>
+      <link>http://localhost:1313/posts/2020-12-10-tiling/</link>
+      <pubDate>2020-12-10T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-12-10-tiling/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve recently become enamoured with tiling desktop wallpapers. These are wallpapers where the image is repeated across the screen in a regular grid to produce the illusion of a continuous texture. Tiling wallpapers used to be a necessity when hard drive space and memory were limited. Now they&amp;rsquo;re more of a curiosity and source of nostalgia. One benefit of tiling wallpapers is that I can store them in my dotfiles repo and the repo will still stay small, while some other wallpapers I have can be up to 50MB.&lt;/p&gt;
+&lt;p&gt;I was initially inspired by &lt;a href=&#34;https://old.reddit.com/r/unixporn/comments/7ivelb/xfce_got_obsessed_with_tiling_wallpapers/&#34; target=&#34;_blank&#34;&gt;this post on reddit&lt;/a&gt;
+ which uses a retro looking XFCE window manager setup. It almost looks more like FVWM.&lt;/p&gt;
+&lt;p&gt;I scoured a few different sources for my favourite tiling wallpapers. Here are a few places where there are a bunch of tiling wallpapers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://cs.gettysburg.edu/~duncjo01/archive/patterns/&#34; target=&#34;_blank&#34;&gt;Index of /~duncjo01/archive/patterns&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/dkeg/bitmap-walls&#34; target=&#34;_blank&#34;&gt;dkeg/bitmap-walls: Collection of tiled bitmap walls for xsetroot&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/BenjaminHCCarr/PropagandaTiles&#34; target=&#34;_blank&#34;&gt;BenjaminHCCarr/PropagandaTiles&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I wanted to showcase a few of my favourite tiling wallpapers, which can be seen below. The way this website renders dithered images will probably make some of the screenshots look terrible at this resolution, so click the images to see them full size. All the images below were captured wit hthe same pixel dimensions by the way, and so are directly comparable:&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/blue_rivet.png&#34;&gt;&lt;img
+          alt=&#34;Blue rivets&#34;
+          title=&#34;Blue rivets&#34;src=&#34;http://localhost:1313/img/tiling/blue_rivet.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/cyan_diag_tile.png&#34;&gt;&lt;img
+          alt=&#34;Cyan diagonal tiles&#34;
+          title=&#34;Cyan diagonal tiles&#34;src=&#34;http://localhost:1313/img/tiling/cyan_diag_tile.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/forest.png&#34;&gt;&lt;img
+          alt=&#34;Forest&#34;
+          title=&#34;Forest&#34;src=&#34;http://localhost:1313/img/tiling/forest.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/blue_wave.png&#34;&gt;&lt;img
+          alt=&#34;Blue wave&#34;
+          title=&#34;Blue wave&#34;src=&#34;http://localhost:1313/img/tiling/blue_wave.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/weave.png&#34;&gt;&lt;img
+          alt=&#34;Weave&#34;
+          title=&#34;Weave&#34;src=&#34;http://localhost:1313/img/tiling/weave.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/grey_tile.png&#34;&gt;&lt;img
+          alt=&#34;Grey tile&#34;
+          title=&#34;Grey tile&#34;src=&#34;http://localhost:1313/img/tiling/grey_tile.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/narrow_cyan_diag.png&#34;&gt;&lt;img
+          alt=&#34;Narrow cyan diagonal lines&#34;
+          title=&#34;Narrow cyan diagonal lines&#34;src=&#34;http://localhost:1313/img/tiling/narrow_cyan_diag.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/wide_cyan_diag.png&#34;&gt;&lt;img
+          alt=&#34;Wide cyan diagonal tiles&#34;
+          title=&#34;Wide cyan diagonal tiles&#34;src=&#34;http://localhost:1313/img/tiling/wide_cyan_diag.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/neg_grey_box.png&#34;&gt;&lt;img
+          alt=&#34;Negative grey box&#34;
+          title=&#34;Negative grey box&#34;src=&#34;http://localhost:1313/img/tiling/neg_grey_box.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/small_cyan_tile.png&#34;&gt;&lt;img
+          alt=&#34;Small cyan tile&#34;
+          title=&#34;Small cyan tile&#34;src=&#34;http://localhost:1313/img/tiling/small_cyan_tile.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/mid_cyan_tile.png&#34;&gt;&lt;img
+          alt=&#34;Medium cyan tile&#34;
+          title=&#34;Medium cyan tile&#34;src=&#34;http://localhost:1313/img/tiling/mid_cyan_tile.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/large_cyan_tile.png&#34;&gt;&lt;img
+          alt=&#34;Large cyan tile&#34;
+          title=&#34;Large cyan tile&#34;src=&#34;http://localhost:1313/img/tiling/large_cyan_tile.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/blue_tile.png&#34;&gt;&lt;img
+          alt=&#34;Blue tile&#34;
+          title=&#34;Blue tile&#34;src=&#34;http://localhost:1313/img/tiling/blue_tile.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/purple_wave.png&#34;&gt;&lt;img
+          alt=&#34;Purple wave&#34;
+          title=&#34;Purple wave&#34;src=&#34;http://localhost:1313/img/tiling/purple_wave.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/purple.png&#34;&gt;&lt;img
+          alt=&#34;Purple texture&#34;
+          title=&#34;Purple texture&#34;src=&#34;http://localhost:1313/img/tiling/purple.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Just to prove how tiny the files are, here is a breakdown of their file sizes. Also, I&amp;rsquo;ve been learning AWK:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;du -b * |\
+awk &amp;#39;
+	BEGIN {printf(&amp;#34;%20s  %5s\n&amp;#34;, &amp;#34;file&amp;#34;, &amp;#34;bytes&amp;#34;)} 
+	{printf(&amp;#34;%20s  %5s\n&amp;#34;,  $2, $1)}&amp;#39; |\
+sort -nk2
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;                file  bytes
+ small_cyan_tile.gif     69
+   mid_cyan_tile.gif    107
+    neg_grey_box.gif    127
+       blue_wave.gif    140
+ large_cyan_tile.gif    170
+     purple_wave.gif    177
+narrow_cyan_diag.png    195
+  wide_cyan_diag.png    265
+          forest.png    325
+       blue_tile.png    373
+           weave.png    419
+  cyan_diag_tile.png    609
+      blue_rivet.bmp    630
+       grey_tile.bmp   1270
+          purple.png   2297
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The files for each of the wallpapers seen above &lt;a href=&#34;http://localhost:1313/files/tiling/tiles.zip&#34;&gt;can be found here&lt;/a&gt;
+.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Scripting qutebrowser to grab papers with scidownl</title>
+      <link>http://localhost:1313/posts/2020-10-17-scidownl/</link>
+      <pubDate>2020-10-17T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-10-17-scidownl/</guid>
+      <description>&lt;p&gt;I have been using &lt;a href=&#34;https://github.com/Tishacy/SciDownl&#34; target=&#34;_blank&#34;&gt;scidownl&lt;/a&gt;
+ to download scientific papers using that I find on the web. It&amp;rsquo;s quicker than using the journals&amp;rsquo; own pdf download interface, which often requires multiple button clicks and validating through my university.&lt;/p&gt;
+&lt;p&gt;With scidownl I can copy a DOI that I find on the web and download the paper:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;scidownl -D &amp;#34;10.2307/3236848&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To further streamline the process, I wrote a little keybinding for &lt;a href=&#34;https://qutebrowser.org/&#34; target=&#34;_blank&#34;&gt;qutebrowser&lt;/a&gt;
+, my web browser, which allows me to highlight a DOI on the webpage, hit the keybinding (&lt;code&gt;,d&lt;/code&gt;), and download the paper to my &lt;code&gt;~/Downloads&lt;/code&gt; directory in the background for reading later:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;bind&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;,d&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;enter-mode caret ;; yank selection ;; spawn ~/bin/scidownl_qb &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;{clipboard}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;scidownl_qb&lt;/code&gt; is just a shell script which downloads the file to the right location:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env sh
+
+/usr/local/bin/./scidownl -D &amp;#34;$1&amp;#34; -o /Users/johngodlee/Downloads
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Note that I had to include the full path to the scidownl executable in the shell script. This is because &lt;a href=&#34;https://github.com/qutebrowser/qutebrowser/issues/4273&#34; target=&#34;_blank&#34;&gt;qutebrowser uses a different &lt;code&gt;$PATH&lt;/code&gt; to the rest of the OS&lt;/a&gt;
+.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Propagating basil</title>
+      <link>http://localhost:1313/posts/2020-10-10-basil/</link>
+      <pubDate>2020-10-10T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-10-10-basil/</guid>
+      <description>&lt;p&gt;We have a basil plant in the kitchen, bought from a supermarket. They always die, but we use a lot of basil in our cooking and I dislike having to buy a new plant every few weeks. Over time these store-bought basil plants tend to get leggy and thin out. I looked around and found a &lt;a href=&#34;https://www.youtube.com/watch?v=byoEBdVoVpM&#34; target=&#34;_blank&#34;&gt;good video on Youtube&lt;/a&gt;
+ which demonstrates how to take cuttings from basil.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/basil/pot.jpeg&#34;&gt;&lt;img
+          alt=&#34;Original basil plant after pruning&#34;
+          title=&#34;Original basil plant after pruning&#34;src=&#34;http://localhost:1313/img/basil/pot.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;The key is to cut just below a stem node, to take advantage of the lateral meristem tissue found there to promote root growth.&lt;/p&gt;
+&lt;p&gt;I suspended the cuttings plants in water for two weeks on a windowsill, but didn&amp;rsquo;t add any rooting hormone or use growth lamps as the video suggested. After two weeks there was a good amount of root growth on most of the cuttings, ~2-4 cm. Out of 10 cuttings, two died, mainly because they weren&amp;rsquo;t suspended properly in the water and drowned.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/basil/cutting.jpeg&#34;&gt;&lt;img
+          alt=&#34;Cuttings growing in water&#34;
+          title=&#34;Cuttings growing in water&#34;src=&#34;http://localhost:1313/img/basil/cutting.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/basil/roots.jpeg&#34;&gt;&lt;img
+          alt=&#34;Root growth of cutting after two weeks in water&#34;
+          title=&#34;Root growth of cutting after two weeks in water&#34;src=&#34;http://localhost:1313/img/basil/roots.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Each cutting was planted in its own tin can, with holes punched in the bottom for drainage. One problem with the store-bought basil plants is that they group multiple plants together in the same pot to give the illusion of a lush, full plant. But this overcrowding promotes the leggy growth and eventual death.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/basil/can.jpeg&#34;&gt;&lt;img
+          alt=&#34;New cutting in tin can&#34;
+          title=&#34;New cutting in tin can&#34;src=&#34;http://localhost:1313/img/basil/can.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>Making playlists for cmus</title>
+      <link>http://localhost:1313/posts/2020-09-10-cmus_playlist/</link>
+      <pubDate>2020-09-10T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-09-10-cmus_playlist/</guid>
+      <description>&lt;p&gt;I use &lt;a href=&#34;https://github.com/cmus/cmus&#34; target=&#34;_blank&#34;&gt;cmus&lt;/a&gt;
+ as the music player on my laptop. I routinely use the track queue feature to create an immediate playlist of the next few songs, but never got to grips with creating persistent themed playlists. It turns out it&amp;rsquo;s not that hard, the documentation just seems a bit sparse.&lt;/p&gt;
+&lt;p&gt;Playlists are stored in plain text files, on my system inside &lt;code&gt;~/.config/cmus/playlists/&lt;/code&gt;. The &lt;code&gt;default&lt;/code&gt; playlist (filename and playlist name) is created by default. It&amp;rsquo;s merely a list of filepaths referencing song locations, one filepath per line. The filename can contain spaces and so can the filepaths, with no quoting or escape sequences required. New playlists can be added by adding files to the directory. An example playlist:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/Volumes/share/music/Ben Caplan/Birds With Broken Wings/12 Ben Caplan - Canary.mp3
+/Volumes/share/music/Bloc Party/Silent Alarm/07 This Modern Love.mp3
+/Volumes/share/music/Family Atlantica/Cosmic Unity/06 La Humanidad.mp3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;In cmus, it appears it is possible to add songs to the current playlist (&lt;code&gt;y&lt;/code&gt;), marked by an asterisk in the playlist view (view &lt;code&gt;3&lt;/code&gt;). To select a playlist, highlight it and press &lt;space&gt;. To create a new playlist, type &lt;code&gt;:pl-create &amp;lt;playlist_name&amp;gt;&lt;/code&gt;. It&amp;rsquo;s also possible to create the playlists outside of cmus using a file manager, then load them automatically when cmus starts.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Sort and filter .bib files</title>
+      <link>http://localhost:1313/posts/2020-08-24-bib_sort/</link>
+      <pubDate>2020-08-24T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-08-24-bib_sort/</guid>
+      <description>&lt;p&gt;I have a master &lt;code&gt;.bib&lt;/code&gt; file called &lt;code&gt;lib.bib&lt;/code&gt;, which contains all the BibTeX citations I&amp;rsquo;ve ever used. I use it as an index for organising which papers I&amp;rsquo;ve read and it means it&amp;rsquo;s easier to reuse references for new manuscripts. When I submit a manuscript to a journal however, I want to include a standalone &lt;code&gt;.bib&lt;/code&gt; file which only contains the references for the current manuscript. I wrote a little shell script which leverages &lt;a href=&#34;https://github.com/BurntSushi/ripgrep&#34; target=&#34;_blank&#34;&gt;ripgrep (rg)&lt;/a&gt;
+ to create a sorted and filtered &lt;code&gt;.bib&lt;/code&gt; file:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env sh
+
+# $1 = .tex file to find citations 
+# $2 = .bib file to grab entries
+
+match=($(rg -o &amp;#39;\\cite.*?\{.*?\}&amp;#39; $1 | sed -E &amp;#34;s/\\\\cite.*?\{(.*)\}/\1/g&amp;#34; | sed &amp;#39;s/,\s\+/\n/g&amp;#39; | sort | uniq))
+
+for i in &amp;#34;${match[@]}&amp;#34;; do 
+	rg -N --color never --multiline --multiline-dotall &amp;#34;\{$i.*?^\}&amp;#34; $2
+done 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The script takes two arguments, the first is a &lt;code&gt;.tex&lt;/code&gt; file which is searched to find all instances or &lt;code&gt;\citep{.*}&lt;/code&gt;, &lt;code&gt;\citealt{.*}&lt;/code&gt; etc., the second is a &lt;code&gt;.bib&lt;/code&gt; file which is used to grab the references found in the &lt;code&gt;.tex&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;Going line by line, first I create an array variable which contains all the BibTeX reference keys from the &lt;code&gt;.tex&lt;/code&gt; file. It sorts these entries alphabetically and removes duplicates to create a tidy list. Next I loop over the array variable and search for each BibTeX entry in the &lt;code&gt;.bib&lt;/code&gt; file, which is then printed to &lt;code&gt;stdout&lt;/code&gt; so the user can do what they want with it, usually send to a new &lt;code&gt;.bib&lt;/code&gt; file.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Exporting draw.io images to LaTeX</title>
+      <link>http://localhost:1313/posts/2020-07-22-drawio_latex/</link>
+      <pubDate>2020-07-22T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-07-22-drawio_latex/</guid>
+      <description>&lt;p&gt;I discovered and tweaked a nifty one-liner which allows me to take &lt;code&gt;.drawio&lt;/code&gt; files generated by &lt;a href=&#34;https://app.diagrams.net/&#34; target=&#34;_blank&#34;&gt;Draw.io&lt;/a&gt;
+ and export them as clean vector-based &lt;code&gt;.pdf&lt;/code&gt; files which I can then include in a LaTeX document:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env sh
+
+find . -name *.drawio -exec rm -f ../img/{}.pdf \; -exec /Applications/draw.io.app/Contents/MacOS/./draw.io --crop -x -o ../img/{}.pdf {} \;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This finds all &lt;code&gt;.drawio&lt;/code&gt; files in the current directory &lt;code&gt;.&lt;/code&gt; and runs the &lt;code&gt;draw.io&lt;/code&gt; executable on them to crop to the image and export as a &lt;code&gt;.pdf&lt;/code&gt; to the directory where all my images are stored &lt;code&gt;../img/&lt;/code&gt;. &lt;code&gt;\includegraphics{...}&lt;/code&gt; can then render the image in my LaTeX document. Note that this is on macOS, using the desktop version of draw.io, hence the funny executable.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How I cast Youtube videos to the TV</title>
+      <link>http://localhost:1313/posts/2020-07-15-youtube/</link>
+      <pubDate>2020-07-15T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-07-15-youtube/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve seen other people using a Chromecast and an Android phone to play Youtube videos on their TV. I wanted to do the same thing but instead I wanted to use my laptop. It turns out this is pretty difficult without using Google Chrome. I have since come up with a system which works reasonably well.&lt;/p&gt;
+&lt;p&gt;I use &lt;a href=&#34;https://qutebrowser.org/&#34; target=&#34;_blank&#34;&gt;Qutebrowser&lt;/a&gt;
+ as my web browser. I configured qutebrowser to pipe videos to &lt;a href=&#34;https://www.videolan.org/vlc&#34; target=&#34;_blank&#34;&gt;VLC&lt;/a&gt;
+ using this keybinding in my 	&lt;code&gt;~/.qutebrowser/config.py&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;config&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;bind&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;,m&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;hint --rapid links spawn open -a VLC.app {hint-url}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This allows me to press &lt;code&gt;,m&lt;/code&gt; while on a youtube page which displays thumbnails for videos, then select a video, which opens VLC and plays the video. This gets rid of any adverts.&lt;/p&gt;
+&lt;p&gt;To pipe the video to my Chromecast I can use the menu bar in VLC to select &amp;ldquo;Playback&amp;rdquo; -&amp;gt; &amp;ldquo;Renderer&amp;rdquo;, then my Chromecast, which is listed as an option if both are on the same local network.&lt;/p&gt;
+&lt;p&gt;To adjust the volume on the chromecast I use &lt;a href=&#34;https://github.com/barnybug/go-cast&#34; target=&#34;_blank&#34;&gt;go-cast&lt;/a&gt;
+ from the terminal:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cast -name &amp;#34;CHROMECAST NAME&amp;#34; volume 0.6
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>A weekend of consultations on woodland planting</title>
+      <link>http://localhost:1313/posts/2020-07-10-consultation/</link>
+      <pubDate>2020-07-10T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-07-10-consultation/</guid>
+      <description>&lt;p&gt;Over last weekend I had a couple of meetings about the woodland planting project I&amp;rsquo;m managing. I also had lots of time on the planting site to think about things. Being in the physical location helped massively to visualise how the planting might work and it gave me a lot of inspiration.&lt;/p&gt;
+&lt;p&gt;My goal is to extend an existing woodland, approximate doubling its size. I&amp;rsquo;m hoping to increase the ecological benefits of the woodland by increasing the woodland interior, and to turn the additional land into something more productive. At the moment it&amp;rsquo;s just rough sheep pasture, and doesn&amp;rsquo;t support a lot of grass, mostly because it&amp;rsquo;s over-grazed. In total we are planting about four hectares. We have managed to get a grant which will pay for 75% of the cost of the trees and tree-guards. We just have to pay for the fencing and to provide labour for the planting, which I am hoping to accomplish mostly with volunteers.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s the first time I have managed a project like this, though I&amp;rsquo;ve found that many previous experiences have set me up well for the new challenge. For example, the team delegation aspect I&amp;rsquo;ve found myself drawing on fieldwork experience from my PhD, and the same with marking out the area to be planted, which is very similar to the way I mark out woodland plots in southern Africa. I&amp;rsquo;ve been using lots of GIS skills to make maps and estimate planting density. It&amp;rsquo;s unfortunate that I can&amp;rsquo;t share the maps in this post, but I want to maintain some privacy. I have been thinking back to old conservation volunteer projects when considering the best way to organise the actual planting of the trees. I&amp;rsquo;m hoping that my old conservation volunteer group might be able to help with the tree planting when the time comes.&lt;/p&gt;
+&lt;p&gt;I met with the current tenant farmers on the first day, and a representative from the tree planting grant scheme the next day. The tenant farmers were concerned about correctly marking the area to be planted. They rely on area-based subsidies from the Rural Payments Agency (RPA) for part of their income, and the RPA are unfortunately known for often laying out heavy fines and causing a lot of trouble when land-owners don&amp;rsquo;t accurately describe their land area. The RPA also get it wrong themselves sometimes, but it&amp;rsquo;s hard to get them to admit fault. I brought along a map of the area to be planted, on which I had measured lines along certain key boundaries which would allow us to define the southern boundary of the planting area, which borders the land which is let to the tenants. We used a surveyors trundle wheel to measure the distances of the lines on the ground and hammered posts into the ground to mark where the fence would eventually be placed. We agreed with the tenant farmers that we would install the fence before the tree planting and allow them to graze right up until just before the planting started, in order to keep the grass as low as possible.&lt;/p&gt;
+&lt;p&gt;The second meeting was much more interesting. We talked about the management of the current woodland and agreed that a long-rotation coppice system might help to bring more light to the understorey, which might help to get rid of the brambles and allow more wildflowers. We would also get more useful timber from the woodland with a coppice system. In the new woodland I want to have two main areas, a smaller short-rotation coppice with smaller species like Hazel and Silver birch, which I can take poles and hurdles off, and a larger area of long-rotation coppice, which includes larger canopy tree species like Pedunculate oak, Small-leaved lime, and Hornbeam. The Hornbeam is a bit of a gamble, as it isn&amp;rsquo;t currently found in the woodland. After some research however, I found that it can grow this far north, and it is found natively, just less commonly than down in the southeast. I&amp;rsquo;ve left a few open glades, and there is a wetter patch in the southwest which I will plant with a few Alder trees, but mostly leave empty.&lt;/p&gt;
+&lt;p&gt;We decided that we should take out the fence separating the current woodland from the new woodland before the new trees are planted. Without the trees we can get in with a tractor and pull out the fence, rather than painstakingly unstaple the netting and dig out each post by hand.&lt;/p&gt;
+&lt;p&gt;I did some research on the historic land use of the planting area. I used Digimap, which is provided by my university to find historic Ordnance Survey maps going back to 1857. It turns out that part of the land used to be planted with coppice woodland, which I had suspected but never confirmed. It also explained a few faint ditch and mound features visible on the land, which turned out to be woodland/field boundaries. We were initially worried they may have archaeological significance or that they might be land drainage, so this is a relief.&lt;/p&gt;
+&lt;p&gt;The next stage of the project is to submit a report to the grant scheme with the species I want to plant, and then they will send a contract. After that I think the bureaucratic stuff is mostly over and I can focus on the more practical aspects.&lt;/p&gt;
+&lt;p&gt;For the planting I am thinking of having gangs of three people. One person will measure the distance from one hole to the next with an appropriately sized stick, then dig the hole, the second person will carry the trees and plant the tree, and the third person will add a tree-guard and a stake. To measure out each planting area I&amp;rsquo;m hoping to use string and stakes to mark the outline, then mark rows along one edge of the area with more small stakes. In lots of online guidance they recommend to plant in &amp;ldquo;wavy lines&amp;rdquo;, but I just cannot figure out how to create a wavy line without sacrificing a lot of efficiency. The main thing I am anxious about at the moment is whether I will be able to plant all the trees in time. They estimate that the trees must be planted within 2-3 weeks of delivery to ensure the roots don&amp;rsquo;t dry out, which kills the tree. In terms of equipment we will need:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Spades for planting&lt;/li&gt;
+&lt;li&gt;Buckets/bags for carrying trees&lt;/li&gt;
+&lt;li&gt;Straight poles or canes for measuring tree separation&lt;/li&gt;
+&lt;li&gt;Small stakes for stringing planting areas&lt;/li&gt;
+&lt;li&gt;String for marking rows&lt;/li&gt;
+&lt;li&gt;Tree guards&lt;/li&gt;
+&lt;li&gt;Zip ties for tree guards&lt;/li&gt;
+&lt;li&gt;Stakes for tree guards&lt;/li&gt;
+&lt;li&gt;Hammers for tree guards&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Vim HTML img tag to markdown</title>
+      <link>http://localhost:1313/posts/2020-06-30-vim-html-md/</link>
+      <pubDate>2020-06-30T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-06-30-vim-html-md/</guid>
+      <description>&lt;p&gt;I was quite proud of myself for figuring this one out in only about 2 minutes, in Vim. Starting with an HTML img tag:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;img/jetz_table.png&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Functional diversity measures&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;width&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;640&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And using this Vim regex:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-vim&#34; data-lang=&#34;vim&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;s&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;/&amp;lt;img src=&amp;#34;\(.\{-}\)&amp;#34;.*alt=&amp;#34;\(.\{-}\)&amp;#34;.*/&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!&lt;/span&gt;[\&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;]&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;\&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;/&lt;span style=&#34;color:#000&#34;&gt;g&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To create this Markdown formatted image link:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;![&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;Functional diversity measures&lt;/span&gt;](&lt;span style=&#34;color:#c4a000&#34;&gt;img/jetz_table.png&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This was my first proper outing using &lt;code&gt;\{-}&lt;/code&gt; for non-greedy matching, used on the double quotes &lt;code&gt;&amp;quot;&lt;/code&gt;. It also uses capture groups &lt;code&gt;\(.{-}\)&lt;/code&gt; -&amp;gt; &lt;code&gt;\1&lt;/code&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>FZF script for searching a lookup table</title>
+      <link>http://localhost:1313/posts/2020-06-15-fzf_csv/</link>
+      <pubDate>2020-06-15T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-06-15-fzf_csv/</guid>
+      <description>&lt;p&gt;I have a very long lookup table which corrects synonymy in species names.&lt;/p&gt;
+&lt;p&gt;The table is a &lt;code&gt;.csv&lt;/code&gt; with the original name in the first column and the corrected name in the second column.&lt;/p&gt;
+&lt;p&gt;I wrote a shell script which uses &lt;code&gt;fzf&lt;/code&gt; to search the table and outputs the corrected name:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env sh 
+
+csv=$(csvcut -c &amp;#34;${2}&amp;#34;,&amp;#34;${3}&amp;#34; &amp;#34;${1}&amp;#34; | sed &amp;#39;s/,/ -- /g&amp;#39; | tail -n +2)
+
+echo &amp;#34;${csv}&amp;#34; | fzf | sed &amp;#39;s/.*--\ //&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;fzf_csv test.csv orig corr
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Snippets to tweak macOS Finder.app</title>
+      <link>http://localhost:1313/posts/2020-05-10-finder/</link>
+      <pubDate>2020-05-10T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-05-10-finder/</guid>
+      <description>&lt;p&gt;MacOS&amp;rsquo; Finder.app and the Dock aren&amp;rsquo;t really designed for power users, but both are so integral to the Desktop Environment that it&amp;rsquo;s difficult to do without. Fortunately there are a few tweaks which can be made to make both a bit better. Below is a list of the various code snippets I&amp;rsquo;ve used to adjust Finder, the Dock, and a couple of other closely related utilities that come bundled with macOS:&lt;/p&gt;
+&lt;p&gt;Show full filepath in Finder address bar:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.finder _FXShowPosixPathInTitle -bool true; killall Finder
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Hide path bar in Finder:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.finder ShowPathbar -bool true; killall Finder
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Show hidden files and directories in Finder:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.finder AppleShowAllFiles TRUE; killall Finder
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Enable text selection in QuickLook windows:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.finder QLEnableTextSelection -bool TRUE; killall Finder
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Disable QuickLook window animation:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write -g QLPanelAnimationDuration -float 0; killall Finder
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Disable window animations:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Reduce transparency across system:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.universalaccess reduceTransparency 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Show file extensions in Finder:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write NSGlobalDomain AppleShowAllExtensions -bool true; killall Finder
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Display folders first in finder:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.finder _FXSortFoldersFirst -bool true; killall Finder
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Always use list view as default in Finder:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.finder FXPreferredViewStyle -string &amp;#34;Nlsv&amp;#34;; killall Finder
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Show the user Library folder in Finder:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;chflags nohidden ~/Library &amp;amp;&amp;amp; xattr -d com.apple.FinderInfo ~/Library
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Make the Dock reappear instantly on hover and disable the slide-in animation:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.Dock autohide-time-modifier -int 0; killall Dock
+defaults write com.apple.Dock autohide-delay -float 0; killall Dock
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Make hidden apps transparent in the Dock:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.Dock showhidden -bool yes; killall Dock
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Disable bouncing animation for Dock items:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.Dock no-bouncing -bool TRUE; kilall Dock
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Expand system save panel by default:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Disable screenshot floating preview thumbnail created by Screenshot.app:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.screencapture show-thumbnail -bool FALSE
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>Shiny app to visualise scaled planetary orbits on world map</title>
+      <link>http://localhost:1313/posts/2020-04-30-orbit/</link>
+      <pubDate>2020-04-30T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-04-30-orbit/</guid>
+      <description>&lt;p&gt;When I was in primary school I remember going into the playground to do a fun thought experiment to try and teach us just how vast the Solar System is, how much space there is between the planets, and how tiny the planets are compared to the Sun. We got a football to represent the Sun and measured the diameter. The teacher then did some maths to calculate how far away the planets would be if the Sun was the size of the football. The teacher then got us to lay out a long tape measure, and stand at distances along the tape measure to represent the planets. One child would be Jupiter, another child would be Saturn and get to hold a hula hoop to represent the rings.&lt;/p&gt;
+&lt;p&gt;I was talking with a friend who now works in science communication about this and I started to think about a place for a web-app that lets you define the size of your Sun model and then displays on a map the correctly scaled full orbits of the planets. You could say to your audience &amp;ldquo;if the Sun was 30 cm diameter, Neptune would be in the next town over&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;I only know how to make web apps in R Shiny, so I made one, and published it &lt;a href=&#34;https://johngodlee.shinyapps.io/orbit_app/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;
+.&lt;/p&gt;
+&lt;p&gt;The most interesting parts of this from a programming point of view were (a) learning how to define ellipses mathematically, using their major axis, minor axis, and eccentricity, and (b) transforming the coordinate systems between the appropriate UTM zone and Latitude/Longitude measurements for display on the map. I also learned a lot about reactive values in Shiny in the process. In particular, I learned a lot of terminology to describe the geometry of the planetary orbits, for example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Longitude of perihelion/periapsis - Angular direction of major axis of orbit if the inclination equalled the reference plane&lt;/li&gt;
+&lt;li&gt;Argument of perihelion/periapsis - The vertical angle of the major axis from the reference plane&lt;/li&gt;
+&lt;li&gt;Orbital eccentricity&lt;/li&gt;
+&lt;li&gt;Longitude of ascending node&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/orbit/scrot.png&#34;&gt;&lt;img
+          alt=&#34;Screenshot of Shiny app showing orbits&#34;
+          title=&#34;Screenshot of Shiny app showing orbits&#34;src=&#34;http://localhost:1313/img/orbit/scrot.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>Compiling a single master.tex from a modular document</title>
+      <link>http://localhost:1313/posts/2020-04-25-latex-main/</link>
+      <pubDate>2020-04-25T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-04-25-latex-main/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve recently submitted a paper to a peer reviewed journal. During the final proofing process it was clear that the editors at the journal had taken my original paper.tex file, which calls a load of other .tex files using &lt;code&gt;\input{}&lt;/code&gt;, as well as a .bib file with &lt;code&gt;\bibliography{}&lt;/code&gt;, and subbed in the contents of those files to form one .tex file which could then be compiled on its own, without the additional files originally called by my paper.tex.&lt;/p&gt;
+&lt;p&gt;It seemed like this process could be automated somewhat, so I set about writing a bash script.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env bash
+
+# Run latexmk
+latexmk $1
+
+# Get filename without extension
+base=&amp;#34;${1%.*}&amp;#34;
+
+# Create main.tex
+cp &amp;#34;${base}.tex&amp;#34; &amp;#34;main.tex&amp;#34;
+
+# Create \input{} filepaths array
+inputs=($(grep -E &amp;#39;\\input{.*}&amp;#39; $1 | sed &amp;#39;s/.*{\([^]]*\)}.*/\1/g&amp;#39;))
+
+# Create \input{} line number array
+inputlines=($(grep -n &amp;#39;\\input{.*}&amp;#39; $1 | cut -f1 -d: ))
+
+# Loop over each element of both array to create a sed statement
+# which replaces the \input{} lines with the contents of the referenced file
+for ((i=0;i&amp;lt;${#inputlines[@]};++i)); do
+   printf -v s &amp;#39;%s%s\n%s\n&amp;#39; &amp;#34;$s&amp;#34; &amp;#34;${inputlines[i]}r ${inputs[i]}&amp;#34; &amp;#34;${inputlines[i]}d&amp;#34;
+done
+
+# Run sed 
+sed -i.bak -e &amp;#34;$s&amp;#34; main.tex
+
+# Find bibliography line number
+bibline=&amp;#34;$(grep -n &amp;#39;\\bibliography{.*}&amp;#39; main.tex | cut -f1 -d: )&amp;#34;
+
+# Replace \bibliography{} with formatted contents of
+# .bbl file generated by latexmk
+sed -i.bak -e &amp;#34;${bibline}r ${base}.bbl&amp;#34; -e &amp;#34;${bibline}d&amp;#34;  main.tex
+
+# Clean up intermediate files
+rm main.tex.bak
+latexmk -C
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;First the script runs &lt;code&gt;latexmk&lt;/code&gt; to compile the intermediate files and a .pdf. Then the script creates two array variables, one containing the filepaths of every file that is called by &lt;code&gt;\input{}&lt;/code&gt; and the other containing the line numbers in paper.tex of each of those &lt;code&gt;\input{}&lt;/code&gt; lines. Then the script runs a for loop which creates a big long multi-part &lt;code&gt;sed&lt;/code&gt; statement, which replaces the lines with &lt;code&gt;input{}&lt;/code&gt; with the contents of that file. As a side note, this is the first time I&amp;rsquo;ve really used the sed &lt;code&gt;r&lt;/code&gt; operator, and it looks super useful. Finally the script does similar but without a for loop to replace the bibliography command with the contents of paper.bbl, which is a TeX formatted file containing the bibliography, generated by &lt;code&gt;latexmk&lt;/code&gt; from the .bib file. After that there is just some clean up to remove intermediate files and you&amp;rsquo;re left with main.tex, which can then be sent off to reviewers or used for final proofing before publication, without the hassle of handling multiple documents. While multiple documents is useful during document creation, I feel it&amp;rsquo;s less useful when you are trying to typeset the final document.&lt;/p&gt;
+&lt;p&gt;I got a lot of help and inspiration from the following StackExchange posts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://tex.stackexchange.com/questions/514153/dealing-with-strict-rules-for-paper-submission-using-latex&#34; target=&#34;_blank&#34;&gt;bibtex - Dealing with strict rules for paper submission using LaTeX - TeX - LaTeX Stack Exchange&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tex.stackexchange.com/questions/25713/how-do-i-combine-several-tex-files-into-one&#34; target=&#34;_blank&#34;&gt;automation - How do I combine several tex files into one? - TeX - LaTeX Stack Exchange&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tex.stackexchange.com/questions/62232/generating-a-single-tex-file-by-merging-different-tex-files&#34; target=&#34;_blank&#34;&gt;input - Generating a single TeX file by merging different TeX files - TeX - LaTeX Stack Exchange&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And from this question which I asked myself to help figure out the for loop bit:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/60980245/insert-file-contents-at-line-number-from-bash-arrays/60989942?noredirect=1#comment107902183_60989942&#34; target=&#34;_blank&#34;&gt;Insert file contents at line number from bash arrays - Stack Overflow&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Comparison of F-droid notetaking apps on Android</title>
+      <link>http://localhost:1313/posts/2020-04-05-note-app/</link>
+      <pubDate>2020-04-05T00:00:00+0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2020-04-05-note-app/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been looking for a better notetaking app on my Android phone. There are &lt;strong&gt;lots&lt;/strong&gt; of notetaking apps on the Google Play Store and they vary massively in features, speed, reliability, privacy, and app size. &lt;a href=&#34;https://f-droid.org/&#34; target=&#34;_blank&#34;&gt;F-droid&lt;/a&gt;
+ also has a lot of notetaking apps and these vary in quality even more, with many being abandoned hobby projects, and some with very niche features. I think that it&amp;rsquo;s important to support free and open source software, so I limited myself to searching for a new notetaking app on F-droid.&lt;/p&gt;
+&lt;p&gt;I decided to do a comparison of all the notetaking apps currently available on F-droid to find my favourite. I kept in mind things like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Date of last update and compatibility with new versions of Android&lt;/li&gt;
+&lt;li&gt;Permissions required&lt;/li&gt;
+&lt;li&gt;App size&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I had a few features that I needed in my chosen app:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Plain text storage of notes on device&lt;/li&gt;
+&lt;li&gt;Homescreen widget where I can preview notes and quickly jot things down&lt;/li&gt;
+&lt;li&gt;Export notes to plain text files, ideally with &lt;code&gt;.md&lt;/code&gt; extension&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I also had a few desirable features, but which weren&amp;rsquo;t an absolute necessity:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Automated cloud backup&lt;/li&gt;
+&lt;li&gt;Responsive Markdown styling in the note, to add structural aspects like headings with Markdown syntax&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I searched F-droid and extracted relevant apps by searching for these key terms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;note&lt;/li&gt;
+&lt;li&gt;todo&lt;/li&gt;
+&lt;li&gt;list&lt;/li&gt;
+&lt;li&gt;text editor&lt;/li&gt;
+&lt;li&gt;writing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In total I found 44 notetaking apps on F-droid. I excluded apps that only provided todo-list features, because I often want to take longer notes, write letters and blog posts and stuff. Below is a table comparing these apps and their features, as tested on an Android 7.1.1 running on &lt;a href=&#34;https://www.bluestacks.com/&#34; target=&#34;_blank&#34;&gt;Bluestacks&lt;/a&gt;
+ on my Macbook Pro. I just didn&amp;rsquo;t have the patience to install and uninstall each app on my ailing Android phone, but hopefully Bluestacks is an appropriate replacement. While I was going through the apps I found extra features which I have included in the table, despite them not being features I particularly need. When recording whether an app had a widget or not, I recorded it as FALSE if the widget was just an icon which opened the main app.&lt;/p&gt;
+&lt;p&gt;I tested each app by creating a folder,if possible, and adding a note with the contents:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# This is a note
+
+```
+x &amp;lt;- 123
+```
+
+It has multiple lines and [a link](https://www.duckduckgo.com)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;then I added two tags to the note, if possible. Then I tried to export the note to the local file storage and finally tried to set up cloud storage.&lt;/p&gt;
+&lt;p&gt;Below is the table of comparisons:&lt;/p&gt;
+&lt;style type=&#34;text/css&#34;&gt;
+.true{background-color: #4ac64e;}
+.false{background-color: #cc5050;}
+&lt;/style&gt;
+&lt;div style=&#34;overflow-x:auto;&#34;&gt;
+&lt;table&gt;
+&lt;thead&gt;&lt;tr&gt;
+&lt;th&gt;App name&lt;/th&gt;
+&lt;th&gt;Tagline&lt;/th&gt;
+&lt;th&gt;License&lt;/th&gt;
+&lt;th&gt;APK size (MB)&lt;/th&gt;
+&lt;th&gt;Last updated&lt;/th&gt;
+&lt;th&gt;Archived?&lt;/th&gt;
+&lt;th&gt;Permissions&lt;/th&gt;
+&lt;th&gt;Checklist&lt;/th&gt;
+&lt;th&gt;Tags&lt;/th&gt;
+&lt;th&gt;Folders&lt;/th&gt;
+&lt;th&gt;Widget&lt;/th&gt;
+&lt;th&gt;Plain export&lt;/th&gt;
+&lt;th&gt;Cloud backup&lt;/th&gt;
+&lt;th&gt;Markdown preview&lt;/th&gt;
+&lt;th&gt;Password protection&lt;/th&gt;
+&lt;th&gt;Org Mode&lt;/th&gt;
+&lt;th&gt;Search&lt;/th&gt;
+&lt;th&gt;Autosave&lt;/th&gt;
+&lt;th&gt;Notification area&lt;/th&gt;
+&lt;th&gt;Notes&lt;/th&gt;
+&lt;/tr&gt;&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;920 Editor&lt;/td&gt;
+&lt;td&gt;Text editorGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9&lt;/td&gt;
+&lt;td&gt;05/12/2012&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;Crashes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Carnet&lt;/td&gt;
+&lt;td&gt;Powerful note taking app with sync and online editorGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.5&lt;/td&gt;
+&lt;td&gt;26/02/2020&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Camera, Microphone, Storage&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Clear List&lt;/td&gt;
+&lt;td&gt;Add todo items and alarmsGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.7&lt;/td&gt;
+&lt;td&gt;27/02/2016&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td&gt;Crashes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CrocodileNote&lt;/td&gt;
+&lt;td&gt;Take notes and encrypt themGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.068&lt;/td&gt;
+&lt;td&gt;13/03/2015&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Editor&lt;/td&gt;
+&lt;td&gt;Simple generic text editorGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.167&lt;/td&gt;
+&lt;td&gt;01/02/2020&lt;/td&gt;
+&lt;td&gt;TRUE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Markdown rendering in web browser&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Just Notes&lt;/td&gt;
+&lt;td&gt;Take notes with import and export featuresApache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.8&lt;/td&gt;
+&lt;td&gt;14/09/2018&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Kolab Notes&lt;/td&gt;
+&lt;td&gt;Write notes and sync them with KolabLGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;LGPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td&gt;22/10/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Contacts, Storage&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;.xml export&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LaaNo&lt;/td&gt;
+&lt;td&gt;Bind notes to links and sync them with NextcloudGPL-3.0-or-later&lt;/td&gt;
+&lt;td&gt;GPL-3.0-or-later&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.3&lt;/td&gt;
+&lt;td&gt;10/12/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Contacts, Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;NextCloud cloud backup&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Markor&lt;/td&gt;
+&lt;td&gt;Text editor - Notes &amp;amp; ToDo. Lightweight. Markdown and todo.txt support.Apache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6.9&lt;/td&gt;
+&lt;td&gt;12/02/2020&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Memento&lt;/td&gt;
+&lt;td&gt;Take notesMIT&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2&lt;/td&gt;
+&lt;td&gt;30/12/2016&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;miniNoteViewer&lt;/td&gt;
+&lt;td&gt;Note taker with encryptionGPL-2.0-or-later&lt;/td&gt;
+&lt;td&gt;GPL-2.0-or-later&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.163&lt;/td&gt;
+&lt;td&gt;30/11/2012&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Text editor only&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;MobileOrg&lt;/td&gt;
+&lt;td&gt;TODO list/task managementGPL-2.0-only&lt;/td&gt;
+&lt;td&gt;GPL-2.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.4&lt;/td&gt;
+&lt;td&gt;15/08/2013&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Calendar, Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;My Notes - Take notes anywhere&lt;/td&gt;
+&lt;td&gt;Very simple note-takingGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.4&lt;/td&gt;
+&lt;td&gt;29/10/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Note Crypt Pro&lt;/td&gt;
+&lt;td&gt;Keep your notes safe and secureGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.4&lt;/td&gt;
+&lt;td&gt;12/11/2018&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NoteBuddy&lt;/td&gt;
+&lt;td&gt;Store encrypted notesGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;19/07/2017&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NoteCipher&lt;/td&gt;
+&lt;td&gt;Notepad with lockApache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.1&lt;/td&gt;
+&lt;td&gt;15/12/2013&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Notepad&lt;/td&gt;
+&lt;td&gt;Basic note takingApache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.046&lt;/td&gt;
+&lt;td&gt;07/09/2012&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Notepad&lt;/td&gt;
+&lt;td&gt;Take notesGPL-3.0-or-later&lt;/td&gt;
+&lt;td&gt;GPL-3.0-or-later&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;15/10/2016&lt;/td&gt;
+&lt;td&gt;TRUE&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Notepad&lt;/td&gt;
+&lt;td&gt;A simple, bare-bones, no-frills note taking appApache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.3&lt;/td&gt;
+&lt;td&gt;13/04/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Notey&lt;/td&gt;
+&lt;td&gt;Location-aware notesBSD-3-Clause&lt;/td&gt;
+&lt;td&gt;BSD-3-clause New or Revised&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.4&lt;/td&gt;
+&lt;td&gt;26/11/2014&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Location, Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;.html export&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Notification Notes&lt;/td&gt;
+&lt;td&gt;Add notes and show them as notificationsMIT&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.7&lt;/td&gt;
+&lt;td&gt;01/01/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Notify&lt;/td&gt;
+&lt;td&gt;Manage notes and TODO listsGPL-2.0-or-later&lt;/td&gt;
+&lt;td&gt;GPL-2.0-or-later&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2&lt;/td&gt;
+&lt;td&gt;11/02/2015&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OI Notepad&lt;/td&gt;
+&lt;td&gt;Take notesApache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;18/02/2017&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Omni Notes&lt;/td&gt;
+&lt;td&gt;Note taking open-source application aimed to have both a simple interface but keGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.6&lt;/td&gt;
+&lt;td&gt;17/09/2018&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage, Location, Microphone&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Orgzly&lt;/td&gt;
+&lt;td&gt;Outliner for notes and tasks in plain-textGPL-3.0-or-later&lt;/td&gt;
+&lt;td&gt;GPL-3.0-or-later&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td&gt;14/11/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;p!n&lt;/td&gt;
+&lt;td&gt;Pin notes to the notification area.GPL-3.0-or-later&lt;/td&gt;
+&lt;td&gt;GPL-3.0-or-later&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.9&lt;/td&gt;
+&lt;td&gt;31/10/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;NA&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Post Writer&lt;/td&gt;
+&lt;td&gt;A writing app for the true minimalistApache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.7&lt;/td&gt;
+&lt;td&gt;14/06/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Retro Text Editor&lt;/td&gt;
+&lt;td&gt;Edit text filesBSD-2-Clause-FreeBSD&lt;/td&gt;
+&lt;td&gt;BSD-2-Clause-FreeBSD&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.3&lt;/td&gt;
+&lt;td&gt;02/10/2019&lt;/td&gt;
+&lt;td&gt;TRUE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Text editor only&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Scarlet Notes FD&lt;/td&gt;
+&lt;td&gt;Quick and beautiful note-takingGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.3&lt;/td&gt;
+&lt;td&gt;09/10/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SealNote&lt;/td&gt;
+&lt;td&gt;Simple, safe and easy to use notepadMIT&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;11&lt;/td&gt;
+&lt;td&gt;15/03/2017&lt;/td&gt;
+&lt;td&gt;TRUE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Simple Notes&lt;/td&gt;
+&lt;td&gt;A beautiful quick note taking app without ads or weird permissions.Apache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.8&lt;/td&gt;
+&lt;td&gt;04/02/2020&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Simpletask Cloudless&lt;/td&gt;
+&lt;td&gt;Todo list managerGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.8&lt;/td&gt;
+&lt;td&gt;01/02/2020&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SNotepad&lt;/td&gt;
+&lt;td&gt;Take notesGPL-3.0-or-later&lt;/td&gt;
+&lt;td&gt;GPL-3.0-or-later&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.9&lt;/td&gt;
+&lt;td&gt;04/04/2017&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Swiftnotes&lt;/td&gt;
+&lt;td&gt;Take notesApache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;30/04/2017&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;SyncOrg&lt;/td&gt;
+&lt;td&gt;Take and organize notesGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.8&lt;/td&gt;
+&lt;td&gt;25/01/2017&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage, Calendar&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;SSH backup&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TAG Notepad&lt;/td&gt;
+&lt;td&gt;Tag-based notebookApache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7&lt;/td&gt;
+&lt;td&gt;15/12/2013&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ted&lt;/td&gt;
+&lt;td&gt;Lightweight text editorMIT&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.248&lt;/td&gt;
+&lt;td&gt;13/11/2012&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Text editor only&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TEdit&lt;/td&gt;
+&lt;td&gt;A simple text editor0BSD&lt;/td&gt;
+&lt;td&gt;0BSD&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.5&lt;/td&gt;
+&lt;td&gt;02/11/2019&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Text editor only&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TextWarrior&lt;/td&gt;
+&lt;td&gt;Text editorApache-2.0&lt;/td&gt;
+&lt;td&gt;Apache License 2.0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.335&lt;/td&gt;
+&lt;td&gt;17/04/2013&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Text editor only&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tomdroid&lt;/td&gt;
+&lt;td&gt;Note takerGPL-3.0-or-later&lt;/td&gt;
+&lt;td&gt;GPL-3.0-or-later&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td&gt;16/01/2014&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;.xml export&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Turbo Editor&lt;/td&gt;
+&lt;td&gt;Simple text editorGPL-3.0-or-later&lt;/td&gt;
+&lt;td&gt;GPL-3.0-or-later&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.9&lt;/td&gt;
+&lt;td&gt;29/03/2015&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Text editor only&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;uNote&lt;/td&gt;
+&lt;td&gt;Lightweight and minimalist notepadGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.071&lt;/td&gt;
+&lt;td&gt;29/11/2018&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VIMTouch&lt;/td&gt;
+&lt;td&gt;Text editorGPL-3.0-only&lt;/td&gt;
+&lt;td&gt;GPL-3.0-only&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.4&lt;/td&gt;
+&lt;td&gt;30/03/2013&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Text editor only&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Writeily Pro&lt;/td&gt;
+&lt;td&gt;Edit markdown filesMIT&lt;/td&gt;
+&lt;td&gt;MIT&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.7&lt;/td&gt;
+&lt;td&gt;20/05/2015&lt;/td&gt;
+&lt;td&gt;FALSE&lt;/td&gt;
+&lt;td&gt;Storage&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;true&#34;&gt;TRUE&lt;/td&gt;
+&lt;td class=&#34;false&#34;&gt;FALSE&lt;/td&gt;
+&lt;td&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;The apps which stood out to me as the most polished and feature rich were Writely Pro, Scarlet Notes, Simple Notes, and Omni Notes. Orgzly is good but I don&amp;rsquo;t see myself learning its idiosyncratic ways. Markor almost made its way to being on of my favourites, but it ran quite clunky on my setup.&lt;/p&gt;
+&lt;p&gt;After much deliberation, I&amp;rsquo;m going to live with &lt;a href=&#34;https://github.com/BijoySingh/Scarlet-Notes&#34; target=&#34;_blank&#34;&gt;Scarlet Notes&lt;/a&gt;
+ for a while and see how it goes.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

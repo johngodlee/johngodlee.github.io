@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>John L. Godlee</title>
@@ -38,7 +38,7 @@
 <p>You feed the function a set of species names, and optionally family names, stand IDs (plots), extra wood density data supplied by the user, and a geographic region with which to subset the wood density database.</p>
 <p>First, <code>getWoodDensity()</code> filters to wood density database to only include the families, genera, or species present in the wood density database. This means that an entry in the input data where family = &ldquo;Fabaceae&rdquo;, genus = &ldquo;Brachystegia&rdquo;, and species = &ldquo;spiciformis&rdquo;, the filtered wood density data will include records from the species <em>Acacia acuminata</em>, because this species is in the Fabaceae family.</p>
 <p>Then, <code>getWoodDensity()</code> calculates the mean wood density for each of those species. These species-level estimates are used when there is a match in the input data.</p>
-<p>The function then calculates mean wood density for each genus by taking the mean of the species-level means calculated in the previous step. This means that in the case where species within a genus have more than one record, the genus-level mean calculated by the function will be slightly different to the grand mean calculated from the raw wood density records. This is a good example of <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox" target="_blank">Simpson&amp;rsquo;s paradox</a>
+<p>The function then calculates mean wood density for each genus by taking the mean of the species-level means calculated in the previous step. This means that in the case where species within a genus have more than one record, the genus-level mean calculated by the function will be slightly different to the grand mean calculated from the raw wood density records. This is a good example of <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox" target="_blank">Simpson&rsquo;s paradox</a>
 . Additionally, the values of <code>nInd</code> generated for these genus-level estimates are the number of  species-level means, not the number of raw records. These genus-level means are used when there is a match in the input data that hasn&rsquo;t yet been filled by a species-level estimate.</p>
 <p>For genus-level indets (e.g. Fabaceae indet) the function calculates mean wood density for the family, again by taking the mean of genus-level estimates calculated in the previous step. Again, these family-level means are used where there is a match in the input data that doesn&rsquo;t yet have an estimate of wood density.</p>
 <p>For family-level indets (i.e. no taxonomic information provided) it calculates mean wood density for the plot, using the best wood density estimates generated for each individual in previous steps. This means that if only a single individual in the plot has a wood density estimate, this value will be used as the wood density estimate for all other individuals on the plot.</p>
@@ -54,7 +54,7 @@
   <hr/>
   John L. Godlee | 
   <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
-  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+  <a href="http://localhost:1313//index.xml">RSS</a>
 
   </footer>
   </body>

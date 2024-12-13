@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>John L. Godlee</title>
@@ -37,7 +37,7 @@
 <pre tabindex="0"><code>https://radiostationusa.fm/apii.php?url=https://stream.revma.ihrhls.com/zc1385,Big I 107.9 Albuquerque New Country 
 http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p,BBC Radio 1
 http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_vlow/llnw/bbc_radio_fourlw.m3u8,BBC Radio 4 LW
-</code></pre><p>Then I wrote a shell script which uses <a href="https://github.com/junegunn/fzf" target="_blank">&lt;code&gt;fzf&lt;/code&gt;</a>
+</code></pre><p>Then I wrote a shell script which uses <a href="https://github.com/junegunn/fzf" target="_blank"><code>fzf</code></a>
  to neatly display the radio station names, then uses <code>sed</code> and <code>grep</code> to send the URL to the ncurses version of VLC, which on macOS at least is stored in <code>/Applications/VLC.app/Contents/MacOS/VLC -I ncurses</code> when VLC is installed using Homebrew.</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/sh
 
@@ -128,7 +128,7 @@ sed &#39;s/[^ ]* //&#39; ${rfile} |
   <hr/>
   John L. Godlee | 
   <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
-  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+  <a href="http://localhost:1313//index.xml">RSS</a>
 
   </footer>
   </body>

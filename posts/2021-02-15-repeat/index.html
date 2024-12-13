@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>John L. Godlee</title>
@@ -34,90 +34,90 @@
 <p>For the tree data collection form I have been creating in ODK with XLSForm, I wanted to allow users to quickly re-use species names from previous species identified within the plot to cut down on typing. It stands to reason that if a species is encountered within a plot, there are likely other trees of the same species within the plot. My mental model for the ODK form was to present the user with a repeating question, one iteration for each individual, which said: &ldquo;from the choices listed below, choose the species of tree&rdquo;, where the list of choices was populated by answers given by the user during previous iterations. If the list didn&rsquo;t contain the correct species the user could enter it manually in a question below and the name would be added to the list of choices for future iterations of the repeat. Currently XLSForm+pyxform lack a method to accomplish this, so I posted a reply to a <a href="https://forum.getodk.org/t/generate-multiple-choice-alternatives-based-on-the-answers-in-a-repeat/10269/16" target="_blank">similar question on the ODK support forums</a>
 . I got an incredibly helpful response from a member of the core developer team which involved editing the raw <code>.xml</code> after the form had been converted. Here is a rundown of the method posted using an example where users are asked to record the names of animals encountered. First, the <code>.xls</code> file, approximated using a markdown table:</p>
 <table>
-<thead>
-<tr>
-<th>type</th>
-<th>name</th>
-<th>label</th>
-<th>choice_filter</th>
-<th>required</th>
-<th>appearance</th>
-<th>relevance</th>
-<th>calculation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>begin_repeat</td>
-<td>pet</td>
-<td>Pet</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>begin_group</td>
-<td>pet_group</td>
-<td>Pet</td>
-<td></td>
-<td></td>
-<td>field-list</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>calculate</td>
-<td>pos</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>position(../..)</td>
-</tr>
-<tr>
-<td>select_one ${animal_type}</td>
-<td>animal_select</td>
-<td>Select the animal type. If not in the list, type below.</td>
-<td>position() != current()/../pos and animal_type != ''</td>
-<td></td>
-<td>autocomplete</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>text</td>
-<td>animal_type</td>
-<td>Animal type</td>
-<td></td>
-<td>yes</td>
-<td></td>
-<td>${animal_select} = ''</td>
-<td></td>
-</tr>
-<tr>
-<td>end_group</td>
-<td>pet_group</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>end_repeat</td>
-<td>pet</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>type</th>
+          <th>name</th>
+          <th>label</th>
+          <th>choice_filter</th>
+          <th>required</th>
+          <th>appearance</th>
+          <th>relevance</th>
+          <th>calculation</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>begin_repeat</td>
+          <td>pet</td>
+          <td>Pet</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>begin_group</td>
+          <td>pet_group</td>
+          <td>Pet</td>
+          <td></td>
+          <td></td>
+          <td>field-list</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>calculate</td>
+          <td>pos</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>position(../..)</td>
+      </tr>
+      <tr>
+          <td>select_one ${animal_type}</td>
+          <td>animal_select</td>
+          <td>Select the animal type. If not in the list, type below.</td>
+          <td>position() != current()/../pos and animal_type != ''</td>
+          <td></td>
+          <td>autocomplete</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>text</td>
+          <td>animal_type</td>
+          <td>Animal type</td>
+          <td></td>
+          <td>yes</td>
+          <td></td>
+          <td>${animal_select} = ''</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>end_group</td>
+          <td>pet_group</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>end_repeat</td>
+          <td>pet</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
 </table>
 <p>Technically this file is invalid in its specification. It can be awkward to produce XForm <code>.xml</code> from an invalid <code>.xls</code>. I used <code>xls2xform</code> from <code>pyxform</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>xls2xform --pretty_print --skip_validate pets.xls pets.xml
@@ -140,7 +140,7 @@
   <hr/>
   John L. Godlee | 
   <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
-  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+  <a href="http://localhost:1313//index.xml">RSS</a>
 
   </footer>
   </body>

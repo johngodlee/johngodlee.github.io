@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>John L. Godlee</title>
@@ -49,7 +49,7 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">&lt;/outline&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">&lt;/body&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">&lt;/opml&gt;</span>
-</span></span></code></pre></div><p>I found that actually, thanks to a package that has already been written called <a href="https://pythonhosted.org/listparser/" target="_blank">&lt;code&gt;listparser&lt;/code&gt;</a>
+</span></span></code></pre></div><p>I found that actually, thanks to a package that has already been written called <a href="https://pythonhosted.org/listparser/" target="_blank"><code>listparser</code></a>
 , adding this feature was REALLY REALLY EASY!</p>
 <p>I wrapped the existing <code>.csv</code> import method in an if else statement, saying that if the file extension was <code>csv</code> proceed with the <code>.csv</code> import method, but if the file extension was <code>.xml</code>, use the other import method. The code looks like this:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000">subsLoc</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">endswith</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;csv&#34;</span><span style="color:#000;font-weight:bold">):</span> 
@@ -75,7 +75,7 @@
   <hr/>
   John L. Godlee | 
   <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
-  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+  <a href="http://localhost:1313//index.xml">RSS</a>
 
   </footer>
   </body>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>John L. Godlee</title>
@@ -182,7 +182,7 @@ PS1=&#34;\$(error_test)&#34;
 
 <p>Note the <code>__stat</code>. As far as I know the <code>__</code> aren&rsquo;t necessary, the function could just be called <code>stat</code>, but it seems to be a common convention in bash prompt functions.</p>
 <h3 id="sourcing-external-scripts">Sourcing external scripts</h3>
-<p>I use the <a href="http://www.github.com/git/git/tree/master/contrib/completion/git-prompt.sh" target="_blank">&lt;code&gt;git-prompt.sh&lt;/code&gt; shell script</a>
+<p>I use the <a href="http://www.github.com/git/git/tree/master/contrib/completion/git-prompt.sh" target="_blank"><code>git-prompt.sh</code> shell script</a>
 , which is part of the contributed materials in the git github repo, to get the current git branch displayed in my bash prompt. Download and save the script in the link as  <code>~/.git-prompt.sh</code>. Then add the following to your <code>.bashrc</code>:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">source ~/.git-prompt.sh
 
@@ -203,7 +203,7 @@ PS1=&#39;$(__git_ps1 &#34;[%s]&#34;)&#39;
   <hr/>
   John L. Godlee | 
   <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
-  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+  <a href="http://localhost:1313//index.xml">RSS</a>
 
   </footer>
   </body>

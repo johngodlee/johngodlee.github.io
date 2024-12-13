@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>John L. Godlee</title>
@@ -49,98 +49,98 @@
 
 
 <table>
-<thead>
-<tr>
-<th>Compression (%)</th>
-<th>Size (MB)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>100</td>
-<td>7.799</td>
-</tr>
-<tr>
-<td>95</td>
-<td>4.479</td>
-</tr>
-<tr>
-<td>90</td>
-<td>3.229</td>
-</tr>
-<tr>
-<td>85</td>
-<td>2.6</td>
-</tr>
-<tr>
-<td>80</td>
-<td>2.24</td>
-</tr>
-<tr>
-<td>75</td>
-<td>1.973</td>
-</tr>
-<tr>
-<td>70</td>
-<td>1.808</td>
-</tr>
-<tr>
-<td>65</td>
-<td>1.658</td>
-</tr>
-<tr>
-<td>60</td>
-<td>1.531</td>
-</tr>
-<tr>
-<td>55</td>
-<td>1.434</td>
-</tr>
-<tr>
-<td>50</td>
-<td>1.349</td>
-</tr>
-<tr>
-<td>45</td>
-<td>1.268</td>
-</tr>
-<tr>
-<td>40</td>
-<td>1.172</td>
-</tr>
-<tr>
-<td>35</td>
-<td>1.086</td>
-</tr>
-<tr>
-<td>30</td>
-<td>0.9793</td>
-</tr>
-<tr>
-<td>25</td>
-<td>0.8683</td>
-</tr>
-<tr>
-<td>20</td>
-<td>0.7416</td>
-</tr>
-<tr>
-<td>15</td>
-<td>0.5998</td>
-</tr>
-<tr>
-<td>10</td>
-<td>0.4374</td>
-</tr>
-<tr>
-<td>5</td>
-<td>0.2395</td>
-</tr>
-<tr>
-<td>&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</td>
-<td>&mdash;&mdash;&mdash;&mdash;</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Compression (%)</th>
+          <th>Size (MB)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>100</td>
+          <td>7.799</td>
+      </tr>
+      <tr>
+          <td>95</td>
+          <td>4.479</td>
+      </tr>
+      <tr>
+          <td>90</td>
+          <td>3.229</td>
+      </tr>
+      <tr>
+          <td>85</td>
+          <td>2.6</td>
+      </tr>
+      <tr>
+          <td>80</td>
+          <td>2.24</td>
+      </tr>
+      <tr>
+          <td>75</td>
+          <td>1.973</td>
+      </tr>
+      <tr>
+          <td>70</td>
+          <td>1.808</td>
+      </tr>
+      <tr>
+          <td>65</td>
+          <td>1.658</td>
+      </tr>
+      <tr>
+          <td>60</td>
+          <td>1.531</td>
+      </tr>
+      <tr>
+          <td>55</td>
+          <td>1.434</td>
+      </tr>
+      <tr>
+          <td>50</td>
+          <td>1.349</td>
+      </tr>
+      <tr>
+          <td>45</td>
+          <td>1.268</td>
+      </tr>
+      <tr>
+          <td>40</td>
+          <td>1.172</td>
+      </tr>
+      <tr>
+          <td>35</td>
+          <td>1.086</td>
+      </tr>
+      <tr>
+          <td>30</td>
+          <td>0.9793</td>
+      </tr>
+      <tr>
+          <td>25</td>
+          <td>0.8683</td>
+      </tr>
+      <tr>
+          <td>20</td>
+          <td>0.7416</td>
+      </tr>
+      <tr>
+          <td>15</td>
+          <td>0.5998</td>
+      </tr>
+      <tr>
+          <td>10</td>
+          <td>0.4374</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>0.2395</td>
+      </tr>
+      <tr>
+          <td>&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</td>
+          <td>&mdash;&mdash;&mdash;&mdash;</td>
+      </tr>
+  </tbody>
 </table>
 <p>It&rsquo;s interesting that even at 5% <code>-quality</code>, the image is still not bad to look at.</p>
 <p>For the next part I&rsquo;ll take an arbitrary <code>-quality</code> value of 50%, meaning the base image is 1.349 MB.</p>
@@ -157,58 +157,58 @@ convert bike.jpg -quality 50% -colorspace gray -dither floyd-steinberg -posteriz
 </code></pre><p>The <code>-monochrome</code> option produced a file of 2.812 MB and the <code>-posterize 10</code> option produced a file of 1.428 MB.</p>
 <p>Posterize is an interesting one to play with. Here is a comparison of <code>-posterize</code> with different numbers of colours:</p>
 <table>
-<thead>
-<tr>
-<th>Size (MB)</th>
-<th>Number of colours</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1.428</td>
-<td>10</td>
-</tr>
-<tr>
-<td>1.459</td>
-<td>9</td>
-</tr>
-<tr>
-<td>1.487</td>
-<td>8</td>
-</tr>
-<tr>
-<td>1.532</td>
-<td>7</td>
-</tr>
-<tr>
-<td>1.578</td>
-<td>6</td>
-</tr>
-<tr>
-<td>1.631</td>
-<td>5</td>
-</tr>
-<tr>
-<td>1.674</td>
-<td>4</td>
-</tr>
-<tr>
-<td>1.793</td>
-<td>3</td>
-</tr>
-<tr>
-<td>1.437</td>
-<td>2</td>
-</tr>
-<tr>
-<td>0.06754</td>
-<td>1</td>
-</tr>
-<tr>
-<td>&mdash;&mdash;&mdash;&ndash;</td>
-<td>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Size (MB)</th>
+          <th>Number of colours</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1.428</td>
+          <td>10</td>
+      </tr>
+      <tr>
+          <td>1.459</td>
+          <td>9</td>
+      </tr>
+      <tr>
+          <td>1.487</td>
+          <td>8</td>
+      </tr>
+      <tr>
+          <td>1.532</td>
+          <td>7</td>
+      </tr>
+      <tr>
+          <td>1.578</td>
+          <td>6</td>
+      </tr>
+      <tr>
+          <td>1.631</td>
+          <td>5</td>
+      </tr>
+      <tr>
+          <td>1.674</td>
+          <td>4</td>
+      </tr>
+      <tr>
+          <td>1.793</td>
+          <td>3</td>
+      </tr>
+      <tr>
+          <td>1.437</td>
+          <td>2</td>
+      </tr>
+      <tr>
+          <td>0.06754</td>
+          <td>1</td>
+      </tr>
+      <tr>
+          <td>&mdash;&mdash;&mdash;&ndash;</td>
+          <td>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-</td>
+      </tr>
+  </tbody>
 </table>
 <p>Weirdly, the file size actually increases as the number of colours decreases, up until the number of colours is two.</p>
 <p>There are also predefined dithering threshold maps that can be used with <code>-ordered-dither</code>:</p>
@@ -221,95 +221,95 @@ convert bike.jpg -quality 50% -colorspace gray -dither floyd-steinberg -posteriz
 
 
 <table>
-<thead>
-<tr>
-<th>Code</th>
-<th>Description</th>
-<th>Size (MB)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>checks</td>
-<td>Checkerboard 2x1 (dither)</td>
-<td>2.678</td>
-</tr>
-<tr>
-<td>o2x2</td>
-<td>Ordered 2x2 (dispersed)</td>
-<td>3.702</td>
-</tr>
-<tr>
-<td>o3x3</td>
-<td>Ordered 3x3 (dispersed)</td>
-<td>4.445</td>
-</tr>
-<tr>
-<td>o4x4</td>
-<td>Ordered 4x4 (dispersed)</td>
-<td>4.557</td>
-</tr>
-<tr>
-<td>o8x8</td>
-<td>Ordered 8x8 (dispersed)</td>
-<td>4.675</td>
-</tr>
-<tr>
-<td>h6x6a</td>
-<td>Halftone 6x6 (angled)</td>
-<td>4.824</td>
-</tr>
-<tr>
-<td>h8x8a</td>
-<td>Halftone 8x8 (angled)</td>
-<td>1.264</td>
-</tr>
-<tr>
-<td>h6x6o</td>
-<td>Halftone 6x6 (orthogonal)</td>
-<td>4.877</td>
-</tr>
-<tr>
-<td>h8x8o</td>
-<td>Halftone 8x8 (orthogonal)</td>
-<td>4.831</td>
-</tr>
-<tr>
-<td>c5x5b</td>
-<td>Circles 5x5 (black)</td>
-<td>4.879</td>
-</tr>
-<tr>
-<td>c5x5w</td>
-<td>Circles 5x5 (white)</td>
-<td>4.879</td>
-</tr>
-<tr>
-<td>c6x6b</td>
-<td>Circles 6x6 (black)</td>
-<td>4.831</td>
-</tr>
-<tr>
-<td>c6x6w</td>
-<td>Circles 6x6 (white)</td>
-<td>4.823</td>
-</tr>
-<tr>
-<td>c7x7b</td>
-<td>Circles 7x7 (black)</td>
-<td>4.915</td>
-</tr>
-<tr>
-<td>c7x7w</td>
-<td>Circles 7x7 (white)</td>
-<td>4.899</td>
-</tr>
-<tr>
-<td>&mdash;&mdash;&ndash;</td>
-<td>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</td>
-<td>&mdash;&mdash;&mdash;&ndash;</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Size (MB)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>checks</td>
+          <td>Checkerboard 2x1 (dither)</td>
+          <td>2.678</td>
+      </tr>
+      <tr>
+          <td>o2x2</td>
+          <td>Ordered 2x2 (dispersed)</td>
+          <td>3.702</td>
+      </tr>
+      <tr>
+          <td>o3x3</td>
+          <td>Ordered 3x3 (dispersed)</td>
+          <td>4.445</td>
+      </tr>
+      <tr>
+          <td>o4x4</td>
+          <td>Ordered 4x4 (dispersed)</td>
+          <td>4.557</td>
+      </tr>
+      <tr>
+          <td>o8x8</td>
+          <td>Ordered 8x8 (dispersed)</td>
+          <td>4.675</td>
+      </tr>
+      <tr>
+          <td>h6x6a</td>
+          <td>Halftone 6x6 (angled)</td>
+          <td>4.824</td>
+      </tr>
+      <tr>
+          <td>h8x8a</td>
+          <td>Halftone 8x8 (angled)</td>
+          <td>1.264</td>
+      </tr>
+      <tr>
+          <td>h6x6o</td>
+          <td>Halftone 6x6 (orthogonal)</td>
+          <td>4.877</td>
+      </tr>
+      <tr>
+          <td>h8x8o</td>
+          <td>Halftone 8x8 (orthogonal)</td>
+          <td>4.831</td>
+      </tr>
+      <tr>
+          <td>c5x5b</td>
+          <td>Circles 5x5 (black)</td>
+          <td>4.879</td>
+      </tr>
+      <tr>
+          <td>c5x5w</td>
+          <td>Circles 5x5 (white)</td>
+          <td>4.879</td>
+      </tr>
+      <tr>
+          <td>c6x6b</td>
+          <td>Circles 6x6 (black)</td>
+          <td>4.831</td>
+      </tr>
+      <tr>
+          <td>c6x6w</td>
+          <td>Circles 6x6 (white)</td>
+          <td>4.823</td>
+      </tr>
+      <tr>
+          <td>c7x7b</td>
+          <td>Circles 7x7 (black)</td>
+          <td>4.915</td>
+      </tr>
+      <tr>
+          <td>c7x7w</td>
+          <td>Circles 7x7 (white)</td>
+          <td>4.899</td>
+      </tr>
+      <tr>
+          <td>&mdash;&mdash;&ndash;</td>
+          <td>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</td>
+          <td>&mdash;&mdash;&mdash;&ndash;</td>
+      </tr>
+  </tbody>
 </table>
 <p>So the <code>h8x8a</code> method produced the smallest file size of 1.264 MB, but this is only as small as the undithered grayscale image!</p>
 <p>So from my little test so far it seems that the best way of compressing images is to use a grayscale undithered image an adjust the <code>-quality</code> of the image to my liking.</p>
@@ -329,98 +329,98 @@ convert bike.jpg -quality 50% -colorspace gray -dither floyd-steinberg -posteriz
 
 
 <table>
-<thead>
-<tr>
-<th>Blur</th>
-<th>Size (MB)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0.05</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>0.1</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>0.2</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>0.3</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>0.4</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>0.5</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>0.6</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>0.7</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>0.8</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>0.9</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1.031</td>
-</tr>
-<tr>
-<td>2</td>
-<td>0.9472</td>
-</tr>
-<tr>
-<td>3</td>
-<td>0.9377</td>
-</tr>
-<tr>
-<td>4</td>
-<td>0.9373</td>
-</tr>
-<tr>
-<td>5</td>
-<td>0.9373</td>
-</tr>
-<tr>
-<td>10</td>
-<td>0.9373</td>
-</tr>
-<tr>
-<td>20</td>
-<td>0.9373</td>
-</tr>
-<tr>
-<td>30</td>
-<td>0.9373</td>
-</tr>
-<tr>
-<td>40</td>
-<td>0.9373</td>
-</tr>
-<tr>
-<td>50</td>
-<td>0.9373</td>
-</tr>
-<tr>
-<td>&mdash;&mdash;</td>
-<td>&mdash;&mdash;&mdash;&ndash;</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Blur</th>
+          <th>Size (MB)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>0.05</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>0.1</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>0.2</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>0.3</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>0.4</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>0.5</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>0.6</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>0.7</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>0.8</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>0.9</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>1.031</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>0.9472</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>0.9377</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>0.9373</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>0.9373</td>
+      </tr>
+      <tr>
+          <td>10</td>
+          <td>0.9373</td>
+      </tr>
+      <tr>
+          <td>20</td>
+          <td>0.9373</td>
+      </tr>
+      <tr>
+          <td>30</td>
+          <td>0.9373</td>
+      </tr>
+      <tr>
+          <td>40</td>
+          <td>0.9373</td>
+      </tr>
+      <tr>
+          <td>50</td>
+          <td>0.9373</td>
+      </tr>
+      <tr>
+          <td>&mdash;&mdash;</td>
+          <td>&mdash;&mdash;&mdash;&ndash;</td>
+      </tr>
+  </tbody>
 </table>
 <p>So, finally, the optimal way of compressing my JPEG images seems to be:</p>
 <pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">convert bike.jpg -quality 20% -colorspace gray -strip -gaussian-blur 3.5 output.jpg
@@ -467,7 +467,7 @@ cp img_full/404/404.png img/404/404.png
   <hr/>
   John L. Godlee | 
   <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
-  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+  <a href="http://localhost:1313//index.xml">RSS</a>
 
   </footer>
   </body>

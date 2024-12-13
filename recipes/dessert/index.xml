@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dessert on John L. Godlee</title>
-    <link>http://johngodlee.xyz/recipes/dessert/</link>
+    <link>http://localhost:1313/recipes/dessert/</link>
     <description>Recent content in Dessert on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-gb</language><atom:link href="http://johngodlee.xyz/recipes/dessert/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-gb</language><atom:link href="http://localhost:1313/recipes/dessert/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chia Seed Chocolate Pudding</title>
-      <link>http://johngodlee.xyz/recipes/dessert/chia_seed_chocolate_pudding/</link>
+      <link>http://localhost:1313/recipes/dessert/chia_seed_chocolate_pudding/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/chia_seed_chocolate_pudding/</guid>
+      <guid>http://localhost:1313/recipes/dessert/chia_seed_chocolate_pudding/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;360 ml milk&lt;/li&gt;
@@ -33,10 +33,10 @@
     
     <item>
       <title>Chocolate brownies</title>
-      <link>http://johngodlee.xyz/recipes/dessert/chocolate_brownies/</link>
+      <link>http://localhost:1313/recipes/dessert/chocolate_brownies/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/chocolate_brownies/</guid>
+      <guid>http://localhost:1313/recipes/dessert/chocolate_brownies/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;100 g plain flour&lt;/li&gt;
@@ -61,10 +61,10 @@
     
     <item>
       <title>Chocolate Chip Cookies</title>
-      <link>http://johngodlee.xyz/recipes/dessert/chocolate_chip_cookies/</link>
+      <link>http://localhost:1313/recipes/dessert/chocolate_chip_cookies/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/chocolate_chip_cookies/</guid>
+      <guid>http://localhost:1313/recipes/dessert/chocolate_chip_cookies/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;1 cup white, oat, or spelt flour&lt;/li&gt;
@@ -92,10 +92,10 @@
     
     <item>
       <title>Chocolate peanut butter cups</title>
-      <link>http://johngodlee.xyz/recipes/dessert/peanut_butter_cups/</link>
+      <link>http://localhost:1313/recipes/dessert/peanut_butter_cups/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/peanut_butter_cups/</guid>
+      <guid>http://localhost:1313/recipes/dessert/peanut_butter_cups/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;300 g dark chocolate&lt;/li&gt;
@@ -120,10 +120,10 @@
     
     <item>
       <title>Elderberry Pie</title>
-      <link>http://johngodlee.xyz/recipes/dessert/elderberry_pie/</link>
+      <link>http://localhost:1313/recipes/dessert/elderberry_pie/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/elderberry_pie/</guid>
+      <guid>http://localhost:1313/recipes/dessert/elderberry_pie/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;h3 id=&#34;filling&#34;&gt;Filling&lt;/h3&gt;
 &lt;ul&gt;
@@ -164,10 +164,10 @@
     
     <item>
       <title>Fuhrer Cake</title>
-      <link>http://johngodlee.xyz/recipes/dessert/fuhrer_cake/</link>
+      <link>http://localhost:1313/recipes/dessert/fuhrer_cake/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/fuhrer_cake/</guid>
+      <guid>http://localhost:1313/recipes/dessert/fuhrer_cake/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;2 cups white sugar&lt;/li&gt;
@@ -198,10 +198,10 @@
     
     <item>
       <title>Gajar burfi</title>
-      <link>http://johngodlee.xyz/recipes/dessert/gajar_burfi/</link>
+      <link>http://localhost:1313/recipes/dessert/gajar_burfi/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/gajar_burfi/</guid>
+      <guid>http://localhost:1313/recipes/dessert/gajar_burfi/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;2 tbsp ghee or other clarified butter&lt;/li&gt;
@@ -232,10 +232,10 @@
     
     <item>
       <title>Microwave sponge pudding</title>
-      <link>http://johngodlee.xyz/recipes/dessert/quick_sponge/</link>
+      <link>http://localhost:1313/recipes/dessert/quick_sponge/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/quick_sponge/</guid>
+      <guid>http://localhost:1313/recipes/dessert/quick_sponge/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;100 g self-raising flour&lt;/li&gt;
@@ -267,10 +267,10 @@
     
     <item>
       <title>Savoury Scones</title>
-      <link>http://johngodlee.xyz/recipes/dessert/savoury_scones/</link>
+      <link>http://localhost:1313/recipes/dessert/savoury_scones/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/savoury_scones/</guid>
+      <guid>http://localhost:1313/recipes/dessert/savoury_scones/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;360 g white flour&lt;/li&gt;
@@ -305,10 +305,10 @@
     
     <item>
       <title>Stewed Rhubarb</title>
-      <link>http://johngodlee.xyz/recipes/dessert/stewed_rhubarb/</link>
+      <link>http://localhost:1313/recipes/dessert/stewed_rhubarb/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/stewed_rhubarb/</guid>
+      <guid>http://localhost:1313/recipes/dessert/stewed_rhubarb/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;750 g rhubarb, chopped into 2 cm pieces&lt;/li&gt;
@@ -331,10 +331,10 @@
     
     <item>
       <title>Victoria Sponge Cake</title>
-      <link>http://johngodlee.xyz/recipes/dessert/victoria_sponge_cake/</link>
+      <link>http://localhost:1313/recipes/dessert/victoria_sponge_cake/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/dessert/victoria_sponge_cake/</guid>
+      <guid>http://localhost:1313/recipes/dessert/victoria_sponge_cake/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;175 g self-raising flour&lt;/li&gt;

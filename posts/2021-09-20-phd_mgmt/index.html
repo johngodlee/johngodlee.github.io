@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>John L. Godlee</title>
@@ -71,7 +71,7 @@
 , which recommends keeping at least <strong>3</strong> copies of the data, with at least <strong>2</strong> different media types (hard drive, network share), and store <strong>1</strong> copy off-site (I have two different off-site locations, University, parent&rsquo;s house). I also have &ldquo;cleaned&rdquo; versions of the plot census data hosted on the <a href="https://seosaw.github.io/" target="_blank">SEOSAW database</a>
 , which makes the data accessible to other researchers under agreement. I&rsquo;ve already had a few other projects request to use the data, which is very nice to see.</p>
 <p>One thing that I didn&rsquo;t keep good track of for a little while was only using one copy as the &lsquo;primary&rsquo; copy, and using the others as backup only. At one point I was writing new data to both my personal hard drives and I got mixed up. Since then, I put one of the hard drives in a cupboard out of site, to deter me from writing data to it unless I wanted to do a backup. As an aside, I use <a href="https://www.google.com/search?hl=en&amp;q=rsync" target="_blank">rsync</a>
- to make backups. It&rsquo;s quick and efficient and very rarely fails. I have plans to buy a NAS (Network Attached Storage), the <a href="https://www.synology.com/en-us/products/DS420&#43;" target="_blank">Synology DS420&#43;</a>
+ to make backups. It&rsquo;s quick and efficient and very rarely fails. I have plans to buy a NAS (Network Attached Storage), the <a href="https://www.synology.com/en-us/products/DS420&#43;" target="_blank">Synology DS420+</a>
  looks nice, but for now having loose hard drives will have to suffice.</p>
 <p>The LiDAR data consists of raw .zfs files exported directly from the scanner, databases built by Cyclone (Leica&rsquo;s proprietary LiDAR processing software), PTX files outputted by Cyclone, and LAZ files created by me which compress the <em>huge</em> PTX files to a more manageable binary format.</p>
 <p>The key items to keep in my opinion are the raw .zfs files, and the PTX files, as they constitute the raw untouched data in open formats, but the LAZ files are the ones I&rsquo;ll probably use most on a day to day basis, simply because they are small enough that drive I/O isn&rsquo;t a bottleneck for processing time.</p>
@@ -85,7 +85,7 @@
   <hr/>
   John L. Godlee | 
   <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
-  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+  <a href="http://localhost:1313//index.xml">RSS</a>
 
   </footer>
   </body>

@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Drinks on John L. Godlee</title>
-    <link>http://johngodlee.xyz/recipes/drinks/</link>
+    <link>http://localhost:1313/recipes/drinks/</link>
     <description>Recent content in Drinks on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-gb</language><atom:link href="http://johngodlee.xyz/recipes/drinks/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-gb</language><atom:link href="http://localhost:1313/recipes/drinks/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Beach Leaf Gin</title>
-      <link>http://johngodlee.xyz/recipes/drinks/beech_leaf_gin/</link>
+      <link>http://localhost:1313/recipes/drinks/beech_leaf_gin/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/drinks/beech_leaf_gin/</guid>
+      <guid>http://localhost:1313/recipes/drinks/beech_leaf_gin/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;1 bottle of gin (700ml)&lt;/li&gt;
@@ -34,10 +34,10 @@
     
     <item>
       <title>Blackberry Wine</title>
-      <link>http://johngodlee.xyz/recipes/drinks/blackberry_wine/</link>
+      <link>http://localhost:1313/recipes/drinks/blackberry_wine/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/drinks/blackberry_wine/</guid>
+      <guid>http://localhost:1313/recipes/drinks/blackberry_wine/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Blackberries 1.75kg&lt;/li&gt;
@@ -83,10 +83,10 @@
     
     <item>
       <title>Blackcurrant Cordial</title>
-      <link>http://johngodlee.xyz/recipes/drinks/blackcurrant_cordial/</link>
+      <link>http://localhost:1313/recipes/drinks/blackcurrant_cordial/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/drinks/blackcurrant_cordial/</guid>
+      <guid>http://localhost:1313/recipes/drinks/blackcurrant_cordial/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;225 g blackcurrants&lt;/li&gt;
@@ -109,10 +109,10 @@
     
     <item>
       <title>Buckwheat Saison with Cashmere Hops</title>
-      <link>http://johngodlee.xyz/recipes/drinks/buckwheat_saison/</link>
+      <link>http://localhost:1313/recipes/drinks/buckwheat_saison/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/drinks/buckwheat_saison/</guid>
+      <guid>http://localhost:1313/recipes/drinks/buckwheat_saison/</guid>
       <description>&lt;h2 id=&#34;info&#34;&gt;Info&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -167,10 +167,10 @@
     
     <item>
       <title>Cocoa</title>
-      <link>http://johngodlee.xyz/recipes/drinks/cocoa/</link>
+      <link>http://localhost:1313/recipes/drinks/cocoa/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/drinks/cocoa/</guid>
+      <guid>http://localhost:1313/recipes/drinks/cocoa/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;2 tsp brown sugar&lt;/li&gt;
@@ -190,10 +190,10 @@
     
     <item>
       <title>Elderberry Cordial</title>
-      <link>http://johngodlee.xyz/recipes/drinks/elderberry_cordial/</link>
+      <link>http://localhost:1313/recipes/drinks/elderberry_cordial/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/drinks/elderberry_cordial/</guid>
+      <guid>http://localhost:1313/recipes/drinks/elderberry_cordial/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Elderberries&lt;/li&gt;
@@ -222,10 +222,10 @@
     
     <item>
       <title>Elderflower Champagne</title>
-      <link>http://johngodlee.xyz/recipes/drinks/elderflower_champagne/</link>
+      <link>http://localhost:1313/recipes/drinks/elderflower_champagne/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/drinks/elderflower_champagne/</guid>
+      <guid>http://localhost:1313/recipes/drinks/elderflower_champagne/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;800g sugar&lt;/li&gt;
@@ -252,10 +252,10 @@
     
     <item>
       <title>Plum Wine</title>
-      <link>http://johngodlee.xyz/recipes/drinks/plum_wine/</link>
+      <link>http://localhost:1313/recipes/drinks/plum_wine/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/recipes/drinks/plum_wine/</guid>
+      <guid>http://localhost:1313/recipes/drinks/plum_wine/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;3 kg ripe plums&lt;/li&gt;

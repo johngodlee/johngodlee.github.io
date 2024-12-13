@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>John L. Godlee</title>
@@ -34,7 +34,7 @@
 <p>I took some time to get my notes in order and to properly implement FZF, both in Bash and Vim. I have known about FZF for a long time, and use it regularly to <a href="/2020/03/25/radio.html">choose internet radio stations</a>
 , but I know that it&rsquo;s a very adapatable program, and I&rsquo;d seen some cool FZF applications online, so I wanted to try and use it more deeply for myself.</p>
 <p>First are the default variables. Like many others I use <a href="https://github.com/BurntSushi/ripgrep" target="_blank">ripgrep</a>
- to list files faster within FZF. By default I choose to show hidden files (<code>--hidden</code>), but exclude files inside <code>.git</code> directories (<code>--glob &quot;!.git/*&quot;</code>). I enable multi-selection with <!-- raw HTML omitted --> (<code>-m</code>) and enable ANSI colour codes (<code>--ansi</code>). These variables live in my <code>~/.bashrc</code>.</p>
+ to list files faster within FZF. By default I choose to show hidden files (<code>--hidden</code>), but exclude files inside <code>.git</code> directories (<code>--glob &quot;!.git/*&quot;</code>). I enable multi-selection with <code>&lt;tab&gt;</code> (<code>-m</code>) and enable ANSI colour codes (<code>--ansi</code>). These variables live in my <code>~/.bashrc</code>.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">FZF_DEFAULT_COMMAND</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;rg --files --hidden --glob &#34;!.git/*&#34;&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">FZF_DEFAULT_OPTS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;-m --ansi&#34;</span>
 </span></span></code></pre></div><p>I have a file-picker script, which smply lists files in the directory tree, with a preview window:</p>
@@ -92,7 +92,7 @@
   <hr/>
   John L. Godlee | 
   <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
-  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+  <a href="http://localhost:1313//index.xml">RSS</a>
 
   </footer>
   </body>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>John L. Godlee</title>
@@ -40,31 +40,31 @@
 <p>I used R to recode and process the data.</p>
 <p>The original spreadsheet looked like this:</p>
 <table>
-<thead>
-<tr>
-<th>date</th>
-<th>breakfast</th>
-<th>lunch</th>
-<th>supper</th>
-<th>location</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2022-08-20</td>
-<td>Cereal</td>
-<td>Falafel wrap</td>
-<td>NOTHING</td>
-<td>Edinburgh</td>
-</tr>
-<tr>
-<td>2022-08-21</td>
-<td>Toast and peanut butter</td>
-<td>Sandwich (OUT)</td>
-<td>Lentil salad</td>
-<td>Edinburgh</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>date</th>
+          <th>breakfast</th>
+          <th>lunch</th>
+          <th>supper</th>
+          <th>location</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>2022-08-20</td>
+          <td>Cereal</td>
+          <td>Falafel wrap</td>
+          <td>NOTHING</td>
+          <td>Edinburgh</td>
+      </tr>
+      <tr>
+          <td>2022-08-21</td>
+          <td>Toast and peanut butter</td>
+          <td>Sandwich (OUT)</td>
+          <td>Lentil salad</td>
+          <td>Edinburgh</td>
+      </tr>
+  </tbody>
 </table>
 <p>The first this was to transform the table to a long format:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
@@ -90,60 +90,60 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#000">mutate</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">vegetarian</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ifelse</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">tag</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;meat&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">))</span>
 </span></span></code></pre></div><p>The final table looked like this:</p>
 <table>
-<thead>
-<tr>
-<th>date</th>
-<th>meal</th>
-<th>value</th>
-<th>meal_id</th>
-<th>out</th>
-<th>nothing</th>
-<th>tag</th>
-<th>vegetarian</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2022-08-20</td>
-<td>breakfast</td>
-<td>Cereal</td>
-<td>1</td>
-<td>FALSE</td>
-<td>FALSE</td>
-<td>cereal</td>
-<td>TRUE</td>
-</tr>
-<tr>
-<td>2022-08-20</td>
-<td>lunch</td>
-<td>Falafel wrap</td>
-<td>2</td>
-<td>FALSE</td>
-<td>FALSE</td>
-<td>falafel</td>
-<td>TRUE</td>
-</tr>
-<tr>
-<td>2022-08-20</td>
-<td>lunch</td>
-<td>Falafel wrap</td>
-<td>2</td>
-<td>FALSE</td>
-<td>FALSE</td>
-<td>tortilla</td>
-<td>TRUE</td>
-</tr>
-<tr>
-<td>2022-08-20</td>
-<td>supper</td>
-<td>NOTHING</td>
-<td>3</td>
-<td>FALSE</td>
-<td>TRUE</td>
-<td>NA</td>
-<td>TRUE</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>date</th>
+          <th>meal</th>
+          <th>value</th>
+          <th>meal_id</th>
+          <th>out</th>
+          <th>nothing</th>
+          <th>tag</th>
+          <th>vegetarian</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>2022-08-20</td>
+          <td>breakfast</td>
+          <td>Cereal</td>
+          <td>1</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>cereal</td>
+          <td>TRUE</td>
+      </tr>
+      <tr>
+          <td>2022-08-20</td>
+          <td>lunch</td>
+          <td>Falafel wrap</td>
+          <td>2</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>falafel</td>
+          <td>TRUE</td>
+      </tr>
+      <tr>
+          <td>2022-08-20</td>
+          <td>lunch</td>
+          <td>Falafel wrap</td>
+          <td>2</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>tortilla</td>
+          <td>TRUE</td>
+      </tr>
+      <tr>
+          <td>2022-08-20</td>
+          <td>supper</td>
+          <td>NOTHING</td>
+          <td>3</td>
+          <td>FALSE</td>
+          <td>TRUE</td>
+          <td>NA</td>
+          <td>TRUE</td>
+      </tr>
+  </tbody>
 </table>
 <p>I made a plot of the number of meals I missed per month:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">meals_clean</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
@@ -307,7 +307,7 @@
   <hr/>
   John L. Godlee | 
   <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
-  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+  <a href="http://localhost:1313//index.xml">RSS</a>
 
   </footer>
   </body>
