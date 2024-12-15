@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Work on John L. Godlee</title>
-    <link>http://localhost:1313/tags/work/</link>
+    <link>http://johngodlee.xyz/tags/work/</link>
     <description>Recent content in Work on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2024-06-20T00:00:00+0000</lastBuildDate><atom:link href="http://localhost:1313/tags/work/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2024-06-20T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/tags/work/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>R function to extract raster data</title>
-      <link>http://localhost:1313/posts/2024-06-20-nearextract/</link>
+      <link>http://johngodlee.xyz/posts/2024-06-20-nearextract/</link>
       <pubDate>2024-06-20T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-06-20-nearextract/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-06-20-nearextract/</guid>
       <description>&lt;p&gt;I have to extract lots of point estimates from raster layers to use as explanatory variables of biomass dynamics measured in vegetation monitoring plots across tropical savannas and dry forests. Some of these raster layers are quite coarse and some of the plot locations are close to the coast, meaning that occasionally a plot will not coincide with a non-NA pixel in a particular raster layer. Here is an example, showing the raster layer in blue and the plots as black dots.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/nearextract/map.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/nearextract/map.png&#34;&gt;&lt;img
           alt=&#34;A map illustrating the coarse pixel issue.&#34;
-          title=&#34;A map illustrating the coarse pixel issue.&#34;src=&#34;http://localhost:1313/img/nearextract/map.png&#34; 
+          title=&#34;A map illustrating the coarse pixel issue.&#34;src=&#34;http://johngodlee.xyz/img/nearextract/map.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -117,10 +117,10 @@
     
     <item>
       <title>Converting stem locations from lat-long to XY coordinates</title>
-      <link>http://localhost:1313/posts/2024-06-12-xy_latlong/</link>
+      <link>http://johngodlee.xyz/posts/2024-06-12-xy_latlong/</link>
       <pubDate>2024-06-12T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-06-12-xy_latlong/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-06-12-xy_latlong/</guid>
       <description>&lt;p&gt;In 2018 I wrote some code to convert stem locations within square plots from lat-long coordinates into XY grid coordinates. Recently I was asked to do the opposite, to convert XY grid coordinates into lat-long coordinates, so a colleague could combine multiple adjacent plots into one larger plot with a shared coordinate system. I&amp;rsquo;ve pasted the code for this procedure below:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Convert XY grid coordinates to Lat-long coordinates&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# John L. Godlee (johngodlee@gmail.com)&lt;/span&gt;
@@ -308,9 +308,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# This dataframe contains lat-long coordinates for each row of x&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/xy_latlong/xy_illus.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/xy_latlong/xy_illus.png&#34;&gt;&lt;img
           alt=&#34;Demonstration of the code to converrt lat-long coordinates to XY coordinates.&#34;
-          title=&#34;Demonstration of the code to converrt lat-long coordinates to XY coordinates.&#34;src=&#34;http://localhost:1313/img/xy_latlong/xy_illus.png&#34; 
+          title=&#34;Demonstration of the code to converrt lat-long coordinates to XY coordinates.&#34;src=&#34;http://johngodlee.xyz/img/xy_latlong/xy_illus.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -319,10 +319,10 @@
     
     <item>
       <title>An email about resprouting in the SEOSAW database</title>
-      <link>http://localhost:1313/posts/2024-04-30-resprouting/</link>
+      <link>http://johngodlee.xyz/posts/2024-04-30-resprouting/</link>
       <pubDate>2024-04-30T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-04-30-resprouting/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-04-30-resprouting/</guid>
       <description>&lt;p&gt;I help to manage the &lt;a href=&#34;https://seosaw.github.io/&#34; target=&#34;_blank&#34;&gt;SEOSAW database&lt;/a&gt;
 . A database of tree stem measurements from vegetation monitoring plots in African woodlands. We gather data on tree size (stem diameter, height, crown dimensions), floristic composition (species names), growth and mortality dynamics. A colleague of mine is conducting a study into the resprouting behaviour of trees using data from SEOSAW. We got into a long conversation about what constitutes resprouting and how that information is represented within the SEOSAW database. Here is an email I sent to clarify my thinking:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;stem_status&lt;/code&gt; can have four possible values:&lt;/p&gt;
@@ -352,15 +352,15 @@
     
     <item>
       <title>Definitions of drylands</title>
-      <link>http://localhost:1313/posts/2024-03-15-drylands/</link>
+      <link>http://johngodlee.xyz/posts/2024-03-15-drylands/</link>
       <pubDate>2024-03-15T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-03-15-drylands/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-03-15-drylands/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve read a few papers that refer to &amp;ldquo;drylands&amp;rdquo; and &amp;ldquo;semi-arid&amp;rdquo; ecosystems, and I became interested in the definitions of these terms, so here I&amp;rsquo;ve gathered together some notes on my reading, with the aim of tracing back the definitions through the literature.&lt;/p&gt;
 &lt;p&gt;Ahlstrom et al. (2015) is a DGVM modelling study that looks at the contribution of different regional terrestrial ecosystem types to the temporal trend and temporal variability of the global land carbon sink. They find that &amp;ldquo;semi-arid&amp;rdquo; ecosystems dominate the trend and inter-annual variability of the sink, with these temporal variations being strongly associated with inter-annual variation in precipitation. They define semi-arid ecosystems alongside five other land cover classes: tropical forest, extra-tropical forest, tundra and arctic shrubland, grassland and agriculture, and barren (sparsely vegetated). First they divide into forest, savanna and shrublands, and grasslands and croplands using the MODIS land cover classification (MCD12C1 type 3). They then divide the savanna and shrubland class into two based on latitude. Below 45N they class as semi-arid, and above 45N they class as tundra and arctic shrubland. Below is their map of land cover classes. Tropical forests in light green, extra-tropical forests in dark green, semi-arid in orange, tundra and arctic shrubland in grey, grassland and cops in blue, barren in white.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/drylands/ahlstrom_map.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/ahlstrom_map.png&#34;&gt;&lt;img
           alt=&#34;Map of land cover classes as defined by Ahlstom et al. (2015).&#34;
-          title=&#34;Map of land cover classes as defined by Ahlstom et al. (2015).&#34;src=&#34;http://localhost:1313/img/drylands/ahlstrom_map.png&#34; 
+          title=&#34;Map of land cover classes as defined by Ahlstom et al. (2015).&#34;src=&#34;http://johngodlee.xyz/img/drylands/ahlstrom_map.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -378,24 +378,24 @@
 &lt;/ul&gt;
 &lt;p&gt;In this chapter, Middleton and Thomas say that their classification comes fom an earlier iteration used in the UNSECO (1977) map of aridity. The boundaries between arid and hyper-arid zones, and dry sub-humid and humid zones were changed for the 1997 map, after they found that PET was being under- and over-estimated in very dry and moist climates, respectively. They also introduced a separate cold and mountains zone, acknowledging that while these areas may be arid, they present a different range of environmental issues than warm dryland environments.&lt;/p&gt;
 &lt;p&gt;Heathcote (1983), in The Arid Lands: Their Use and Abuse, observes that the UNSECO (1977) map is very similar to the map of Meigs (1953), which was also prepared for UNESCO for their extended project on drylands, which ran between 1951 and 1964. The maps in Meigs (1953) use a different aridity index to UNESCO (1977). Meigs uses the Thornthwaite (1948) climate classification, which uses an aridity index of &lt;code&gt;100(d/n)&lt;/code&gt;, where &lt;code&gt;d&lt;/code&gt; is the sum of monthly differences between P and PET for those months when the average precipitation is less than the average evapotranspiration, and &lt;code&gt;n&lt;/code&gt; is the sum of monthly values of PET for the deficient months. Grove et al. (1977) shows that Meigs&amp;rsquo; definition of extremely arid lands aligns well with areas receiving less than 25 mm annual rainfall or at least 12 consecutive months without rainfall, arid as 25-200 mm, semi-arid as 200-500 mm.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/drylands/meigs.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/meigs.png&#34;&gt;&lt;img
           alt=&#34;World map showing Meigs&amp;#39; classification of arid lands.&#34;
-          title=&#34;World map showing Meigs&amp;#39; classification of arid lands.&#34;src=&#34;http://localhost:1313/img/drylands/meigs.png&#34; 
+          title=&#34;World map showing Meigs&amp;#39; classification of arid lands.&#34;src=&#34;http://johngodlee.xyz/img/drylands/meigs.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;The Köppen-Geiger climate classification (Köppen 1884, Peel et al. 2007) uses a mixture of temperature and precipitation thresholds to define arid areas, as well as tropical, temperate, cold and polar, with subgroups. Ahlstrom et al. (2015) reference the Köppen-Geiger classification in their classification of tropical and extra-tropical forests, but they don&amp;rsquo;t use it to classify semi-arid regions. In the Köppen-Geiger classification, arid areas are defined as areas where mean annual precipitation (MAP) is less than 10x a key precipitation threshold. The precipitation threshold is 2x mean annual temperature (MAT) if 70% or more of MAP occurs in the cooler six months of the year, 2xMAT+28 if 70% or more of MAP occurs in the warmer six months of the year, or otherwise 2xMAT+14.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/drylands/koppen_africa.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/koppen_africa.png&#34;&gt;&lt;img
           alt=&#34;The Köppen-Geiger classification for Africa, from Peel et al. 2007.&#34;
-          title=&#34;The Köppen-Geiger classification for Africa, from Peel et al. 2007.&#34;src=&#34;http://localhost:1313/img/drylands/koppen_africa.png&#34; 
+          title=&#34;The Köppen-Geiger classification for Africa, from Peel et al. 2007.&#34;src=&#34;http://johngodlee.xyz/img/drylands/koppen_africa.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;The FAO defines arid zones as those areas where the length of the growing period is less than 180 days (FAO 2000); this includes regions classified climatically as arid, semi-arid and dry sub-humid (from Gaur 2018).&lt;/p&gt;
 &lt;p&gt;The Holdridge life zones (Holdrige 1947, 1967), determine semi-arid regions as having an aridity index P:PET value less than approximately 0.5.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/drylands/holdridge.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/holdridge.png&#34;&gt;&lt;img
           alt=&#34;Holdridge Life Zones.&#34;
-          title=&#34;Holdridge Life Zones.&#34;src=&#34;http://localhost:1313/img/drylands/holdridge.png&#34; 
+          title=&#34;Holdridge Life Zones.&#34;src=&#34;http://johngodlee.xyz/img/drylands/holdridge.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -410,10 +410,10 @@
     
     <item>
       <title>Methods to establish square vegetation monitoring plots</title>
-      <link>http://localhost:1313/posts/2024-03-07-square_plots/</link>
+      <link>http://johngodlee.xyz/posts/2024-03-07-square_plots/</link>
       <pubDate>2024-03-07T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-03-07-square_plots/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-03-07-square_plots/</guid>
       <description>&lt;p&gt;Creating perfectly square permanent plots in dense woodland ecosystems can be a challenge. It&amp;rsquo;s very easy to end up with something more like a diamond or a rhombus, unless care is taken to measure the diagonals of the plot.&lt;/p&gt;
 &lt;p&gt;Previously I have set up one hectare permanent woodland tree sampling plots by starting at the SW corner of the plot, then running tapes at 90° going N and E for 100 m to form the W and S edges, respectively. Then to ensure that the edges are actually at 90° you run a tape along the hypotenuse of those edges, which should be 141.42 m long. Then you construct the other two edges (N, E), ensuring that they meet at 100 m, and finally check the length of the other hypotenuse is 141.42 m. The principal drawback of this method is that it requires a tape measure that can cover 141.42 m, or else you have to mess about with two tapes or a long piece of string. Covering a straight distance of 141.42 m is difficult because you often can&amp;rsquo;t see the person standing at the opposite corner. Using 100 m tapes, this method requires a minimum of six tapes. Alternatively you can measure smaller hypotenuse angles at intermediate points along the edges, e.g. at 10 and 25 m, but this means you will have to do many more measurements.&lt;/p&gt;
 &lt;p&gt;Below I present an alternative method that I think overcomes these problems.&lt;/p&gt;
@@ -421,9 +421,9 @@
 &lt;p&gt;This process requires only five 100 m tapes and means that you don&amp;rsquo;t have to span 141.42 m to traverse the full diagonal of the plot.&lt;/p&gt;
 &lt;p&gt;It requires 5 metal poles. One for each corner and one for the centre.&lt;/p&gt;
 &lt;p&gt;The diagram below shows the layout of tape measures to create a plot in this way. The dotted lines show temporary tape measures, while the dashed lines show permanent tape measures, which form the edges of the plot. The tape measure lines are numbered in the order they should be laid out. The letters next to the numbers (a-e) identify the tape measures. See that line 2b and 5b use the same tape measure, for example.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/square_plots/square_plots.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/square_plots/square_plots.png&#34;&gt;&lt;img
           alt=&#34;Diagram of tape measure layout for a 100x100 m square plot.&#34;
-          title=&#34;Diagram of tape measure layout for a 100x100 m square plot.&#34;src=&#34;http://localhost:1313/img/square_plots/square_plots.png&#34; 
+          title=&#34;Diagram of tape measure layout for a 100x100 m square plot.&#34;src=&#34;http://johngodlee.xyz/img/square_plots/square_plots.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -433,10 +433,10 @@
     
     <item>
       <title>Scraping plot locations from the ForestPlots.net web map</title>
-      <link>http://localhost:1313/posts/2023-10-05-fp_scrape/</link>
+      <link>http://johngodlee.xyz/posts/2023-10-05-fp_scrape/</link>
       <pubDate>2023-10-05T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-10-05-fp_scrape/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-10-05-fp_scrape/</guid>
       <description>&lt;p&gt;I was making a presentation about vegetation monitoring networks and wanted a map showing the spatial distribution of vegetation monitoring plots across the tropics. &lt;a href=&#34;https://forestplots.net/&#34; target=&#34;_blank&#34;&gt;ForestPlots.net&lt;/a&gt;
  is a meta-network which holds a database of plot-based tree demographic data. They have a &lt;a href=&#34;https://forestplots.net/en/map&#34; target=&#34;_blank&#34;&gt;web map&lt;/a&gt;
  with useful metadata, but this map doesn&amp;rsquo;t look great and I didn&amp;rsquo;t want to just include a screenshot.&lt;/p&gt;
@@ -521,9 +521,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;xlim&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;-95&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;166&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;ylim&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;-40&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;ggsave&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fp_map&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;width&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;height&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;file&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;fp_map.png&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/fp_scrape/fp_map.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/fp_scrape/fp_map.png&#34;&gt;&lt;img
           alt=&#34;Map of ForestPlots.net plots.&#34;
-          title=&#34;Map of ForestPlots.net plots.&#34;src=&#34;http://localhost:1313/img/fp_scrape/fp_map.png&#34; 
+          title=&#34;Map of ForestPlots.net plots.&#34;src=&#34;http://johngodlee.xyz/img/fp_scrape/fp_map.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -532,10 +532,10 @@
     
     <item>
       <title>SEOSAW growth rates workshop</title>
-      <link>http://localhost:1313/posts/2023-09-13-growth_workshop/</link>
+      <link>http://johngodlee.xyz/posts/2023-09-13-growth_workshop/</link>
       <pubDate>2023-09-13T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-09-13-growth_workshop/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-09-13-growth_workshop/</guid>
       <description>&lt;p&gt;Recently, with help from colleagues, I ran an online workshop for the &lt;a href=&#34;https://seosaw.github.io/&#34; target=&#34;_blank&#34;&gt;SEOSAW network&lt;/a&gt;
  on estimating tree growth rates, rates of recruitment and mortality, and rates of biomass productivity and loss from repeat measurements of tree stem diameter in fixed area plots.&lt;/p&gt;
 &lt;p&gt;The workshop built on a lot of previously established methods like &lt;a href=&#34;https://doi.org/10.1016/j.foreco.2018.11.010&#34; target=&#34;_blank&#34;&gt;Kohyama et al. (2019)&lt;/a&gt;
@@ -547,35 +547,35 @@
 &lt;p&gt;I put together some worksheets with tutorial-like exercises to familiarise everybody with the functions in the &lt;a href=&#34;https://bitbucket.org/miombo/seosaw/src/master/seosawr/seosawr/&#34; target=&#34;_blank&#34;&gt;{seosawr}&lt;/a&gt;
  and &lt;a href=&#34;https://github.com/johngodlee/ProdVital&#34; target=&#34;_blank&#34;&gt;{ProdVital}&lt;/a&gt;
  R packages, then in the afternoon we had some discussions on developing research ideas that take advantage of these methods.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/growth_workshop/seosaw_growth_workshop.zip&#34;&gt;Here is a link&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/growth_workshop/seosaw_growth_workshop.zip&#34;&gt;Here is a link&lt;/a&gt;
  to a zip file containing all the slides and worksheets from the workshop.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Geo-referenced Teixeira (1968) Bicuar National Park vegetation map</title>
-      <link>http://localhost:1313/posts/2023-06-01-teixeira_georef/</link>
+      <link>http://johngodlee.xyz/posts/2023-06-01-teixeira_georef/</link>
       <pubDate>2023-06-01T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-06-01-teixeira_georef/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-06-01-teixeira_georef/</guid>
       <description>&lt;p&gt;In a previous post I mentioned that I had been given a copy of J. B. Teixeira&amp;rsquo;s 1968 vegetation map of Bicuar National Park.&lt;/p&gt;
-&lt;p&gt;I just finished geo-referencing and vectorising the map, so I&amp;rsquo;ve &lt;a href=&#34;http://localhost:1313/files/teixeira_georef/teixeira_1968_bicuar_veg_map.zip&#34;&gt;uploaded it here&lt;/a&gt;
+&lt;p&gt;I just finished geo-referencing and vectorising the map, so I&amp;rsquo;ve &lt;a href=&#34;http://johngodlee.xyz/files/teixeira_georef/teixeira_1968_bicuar_veg_map.zip&#34;&gt;uploaded it here&lt;/a&gt;
  in case anybody wants to use it.&lt;/p&gt;
 &lt;p&gt;The geo-referencing process was difficult, and the result isn&amp;rsquo;t perfect. The only clear reference points on the map that are comparable with modern maps are the Cunene river and the locations of the towns of Mulondo and Folgares (now Capelongo). The river appears to have changed its course slightly since 1968, which is plausible, as has the centre of the town of Folgares, where new building has shifted away from the original colonial centre. The outline of the Park is different now, having been redrawn in 2012, notably reducing the size of the Park from the northern boundary. The locations of the mulolas (seasonally flooded grassy valley bottoms) are largely the same, and can be lined up with true colour satellite imagery.&lt;/p&gt;
 &lt;p&gt;I used QGIS for all of the digitising process, drawing polygons by hand. I then spent some time fiddling to adjust some polygons with holes. I learned a lot about the &amp;ldquo;snapping&amp;rdquo; functionality in QGIS, to avoid adjacent polygons with tiny gaps between them.&lt;/p&gt;
 &lt;p&gt;I used &lt;a href=&#34;https://mapshaper.org/&#34; target=&#34;_blank&#34;&gt;mapshaper&lt;/a&gt;
  to clean up the polygons further, using the &lt;code&gt;clean&lt;/code&gt; command in the console. This command repairs various abnormal geometries, e.g. overlaps, small gaps, self-intersections, and orphaned nodes. Then I took the shapefile back into QGIS for a few minor manual adjustments.&lt;/p&gt;
-&lt;p&gt;I labelled the polygons according to the legend in the &lt;a href=&#34;http://localhost:1313/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;original report&lt;/a&gt;
+&lt;p&gt;I labelled the polygons according to the legend in the &lt;a href=&#34;http://johngodlee.xyz/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;original report&lt;/a&gt;
 .&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/teixeira_georef/teixeira_final_print.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/teixeira_georef/teixeira_final_print.png&#34;&gt;&lt;img
           alt=&#34;Georeferenced vector vegetation map overlaid on original map.&#34;
-          title=&#34;Georeferenced vector vegetation map overlaid on original map.&#34;src=&#34;http://localhost:1313/img/teixeira_georef/teixeira_final_print.png&#34; 
+          title=&#34;Georeferenced vector vegetation map overlaid on original map.&#34;src=&#34;http://johngodlee.xyz/img/teixeira_georef/teixeira_final_print.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/teixeira_georef/teixeira_final_satellite_print.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/teixeira_georef/teixeira_final_satellite_print.jpg&#34;&gt;&lt;img
           alt=&#34;Georeferenced vector vegetation map overlaid on true colour satellite imagery.&#34;
-          title=&#34;Georeferenced vector vegetation map overlaid on true colour satellite imagery.&#34;src=&#34;http://localhost:1313/img/teixeira_georef/teixeira_final_satellite_print.png&#34; 
+          title=&#34;Georeferenced vector vegetation map overlaid on true colour satellite imagery.&#34;src=&#34;http://johngodlee.xyz/img/teixeira_georef/teixeira_final_satellite_print.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -584,10 +584,10 @@
     
     <item>
       <title>An email about estimating productivity</title>
-      <link>http://localhost:1313/posts/2023-05-24-productivity_email/</link>
+      <link>http://johngodlee.xyz/posts/2023-05-24-productivity_email/</link>
       <pubDate>2023-05-24T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-05-24-productivity_email/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-05-24-productivity_email/</guid>
       <description>&lt;p&gt;I had a student ask me something along the lines of:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;How do I calculate woody productivity in a woodland plot? I have seen others calculate the difference in standing biomass between censuses as net primary productivity. Is this right?&lt;/p&gt;
@@ -610,10 +610,10 @@
     
     <item>
       <title>R functions to download data from KoboToolbox</title>
-      <link>http://localhost:1313/posts/2023-05-18-kobo_functions/</link>
+      <link>http://johngodlee.xyz/posts/2023-05-18-kobo_functions/</link>
       <pubDate>2023-05-18T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-05-18-kobo_functions/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-05-18-kobo_functions/</guid>
       <description>&lt;p&gt;I have created a couple of R functions to download data from a &lt;a href=&#34;&#34;&gt;KoboToolbox&lt;/a&gt;
  server, using their API. The functions sometimes fail with a 502 bad gateway error, so it might be worth wrapping them in a &lt;code&gt;try()&lt;/code&gt; statement to get them to fail nicely.&lt;/p&gt;
 &lt;p&gt;First, a function to list all the form IDs for a given user. This function is used primarily to find the form ID, which can be used in the second function to get the data. The function takes either an access token or a username and password and returns a dataframe:&lt;/p&gt;
@@ -725,23 +725,23 @@
     
     <item>
       <title>Vegetation map of Bicuar National Park - Teixeira 1968</title>
-      <link>http://localhost:1313/posts/2023-05-15-teixeira_bicuar/</link>
+      <link>http://johngodlee.xyz/posts/2023-05-15-teixeira_bicuar/</link>
       <pubDate>2023-05-15T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-05-15-teixeira_bicuar/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-05-15-teixeira_bicuar/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve been searching around for a long time for a copy of a vegetation map of Bicuar National Park, Angola, produced in 1968 by J. B. Teixeira. A number of contemporary publications looking at the ecology of Bicuar reference this map, but I realised I have never seen it. To my knowledge, it remains the only vegetation map of Bicuar National Park. I would like to see if I can geo-reference this map and overlay it on a new vegetation map we are producing, to see how they line up.&lt;/p&gt;
 &lt;p&gt;After lots of emailing I was provided with a scanned copy by a colleague. To make it easier for others to find, I have uploaded a pdf version here:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;Teixeira J. B. (1968). Parque Nacional Do Bicuar. Carta Da Vegetação (1a aproximação) e Memória Descritiva. Instituto de Investigação Agronómica de Angola.&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;Teixeira J. B. (1968). Parque Nacional Do Bicuar. Carta Da Vegetação (1a aproximação) e Memória Descritiva. Instituto de Investigação Agronómica de Angola.&lt;/a&gt;
 &lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Presentations for lectureship interview</title>
-      <link>http://localhost:1313/posts/2023-04-13-job_interview/</link>
+      <link>http://johngodlee.xyz/posts/2023-04-13-job_interview/</link>
       <pubDate>2023-04-13T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-04-13-job_interview/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-04-13-job_interview/</guid>
       <description>&lt;p&gt;I applied for a junior lectureship position in Ecological Science a few weeks ago. Unfortunately I didn&amp;rsquo;t get the job, but the experience forced me to think about who I am as a researcher, what my strengths are, and also what my goals should be if I want to be successful on the next application.&lt;/p&gt;
 &lt;p&gt;As part of the interview process I had to prepare a 20 minute presentation on:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -755,23 +755,23 @@
 &lt;/blockquote&gt;
 &lt;p&gt;Finally, I did a normal question-based interview.&lt;/p&gt;
 &lt;p&gt;I have decided to make the two presentations available online:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/job_interview/research_presentation.pdf&#34;&gt;Research presentation&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/research_presentation.pdf&#34;&gt;Research presentation&lt;/a&gt;
 &lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/job_interview/teaching_presentation.pdf&#34;&gt;Teaching presentation&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_presentation.pdf&#34;&gt;Teaching presentation&lt;/a&gt;
 &lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/job_interview/teaching_schedule.pdf&#34;&gt;Teaching schedule&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_schedule.pdf&#34;&gt;Teaching schedule&lt;/a&gt;
 &lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/job_interview/teaching_statement.pdf&#34;&gt;Teaching statement&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_statement.pdf&#34;&gt;Teaching statement&lt;/a&gt;
 &lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Blog post on fieldwork in Ongava Game Reserve</title>
-      <link>http://localhost:1313/posts/2023-03-14-ongava_blog/</link>
+      <link>http://johngodlee.xyz/posts/2023-03-14-ongava_blog/</link>
       <pubDate>2023-03-14T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-03-14-ongava_blog/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-03-14-ongava_blog/</guid>
       <description>&lt;p&gt;I wrote a blog post for Ongava Research Centre on our recent fieldwork in Ongava Game Reserve, where we established 11 vegetation monitoring plots in dry forest, shrubland, woodland and grassland vegetation:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&#34; target=&#34;_blank&#34;&gt;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&lt;/a&gt;
 &lt;/p&gt;
@@ -780,10 +780,10 @@
     
     <item>
       <title>Importing data layers into Avenza Maps Android app</title>
-      <link>http://localhost:1313/posts/2023-03-13-avenza/</link>
+      <link>http://johngodlee.xyz/posts/2023-03-13-avenza/</link>
       <pubDate>2023-03-13T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-03-13-avenza/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-03-13-avenza/</guid>
       <description>&lt;p&gt;I had a go with the &lt;a href=&#34;https://store.avenza.com/pages/app-features&#34; target=&#34;_blank&#34;&gt;Avenza Maps&lt;/a&gt;
  Android app during fieldwork to visualise my position within the landscape. I had access to a vegetation map and I wanted to see how close I was to transition zones between vegetation units, and also where I could walk to find a good place to install a vegetation monitoring plot.&lt;/p&gt;
 &lt;p&gt;It was a bit of a faff, but I worked out a method for importing raster and vector data into Avenza Maps. I used the free version of the Avenza Maps app:&lt;/p&gt;
@@ -814,72 +814,72 @@
     
     <item>
       <title>Fieldwork in Ongava Game Reserve</title>
-      <link>http://localhost:1313/posts/2023-02-15-ongava/</link>
+      <link>http://johngodlee.xyz/posts/2023-02-15-ongava/</link>
       <pubDate>2023-02-15T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-02-15-ongava/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-02-15-ongava/</guid>
       <description>&lt;p&gt;Recently I spent a month in Namibia on fieldwork. I was working in a place called Ongava Game Reserve on the south side of Etosha National Park. &lt;a href=&#34;https://ongava.com/&#34; target=&#34;_blank&#34;&gt;Ongava&lt;/a&gt;
  is a privately owned game reserve with a research centre attached, the &lt;a href=&#34;https://www.orc.eco/&#34; target=&#34;_blank&#34;&gt;Ongava Research Centre&lt;/a&gt;
  (ORC). I was working with a team of students from NUST, the Namibia University of Science and Technology, and our aim for the field campaign was to set up some vegetation monitoring plots within the Reserve.&lt;/p&gt;
 &lt;p&gt;The plots we established are very similar to the plots I set up in Bicuar National Park in Angola during my PhD. The plots are 100x100 m squares. Within each plot we measure every woody stem with a diameter &amp;gt;5 cm at breast height (DBH, 1.3 m). For each stem we record the diameter, species, the tree to which the stem belongs, the location of the stem within the plot using tape measures, information on mortality, and damage, following the &lt;a href=&#34;https://seosaw.github.io/manuals.html&#34; target=&#34;_blank&#34;&gt;SEOSAW tree plot protocol&lt;/a&gt;
 . Each of these stems is then tagged by nailing a numbered aluminium into the stem. We deliberately nail the tags 20 cm above the diameter measurement, so in a few years time we can return and measure the same trees at the same place on the stem to see how much they have grown.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/ongava/tree_tag.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/ongava/tree_tag.jpg&#34;&gt;&lt;img
           alt=&#34;Example of a tree tag nailed into a tree stem.&#34;
-          title=&#34;Example of a tree tag nailed into a tree stem.&#34;src=&#34;http://localhost:1313/img/ongava/tree_tag.png&#34; 
+          title=&#34;Example of a tree tag nailed into a tree stem.&#34;src=&#34;http://johngodlee.xyz/img/ongava/tree_tag.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;We used a vegetation map developed by Vera De Cauwer at NUST to determine the major vegetation types on the Reserve and to pick potential locations for the plots ahead of time. The majority of the land area of the Reserve is covered by woodland dominated by &lt;em&gt;Colophospermum mopane&lt;/em&gt; and to a lesser extent &lt;em&gt;Terminalia prunioides&lt;/em&gt;. Most of this woodland occurs on rocky rolling hills composed of Elandhoek light-grey dolomite with thin dark clay soil. There are also Mopane-Terminalia woodlands on some different rocky hills composed of Huettenberg formation darker-grey dolostone, which has bands of chert running through it. These woodlands tend to be more diverse and include species not found elsewhere like &lt;em&gt;Kirkia acuminata&lt;/em&gt;, &lt;em&gt;Sterculia africana&lt;/em&gt;, and &lt;em&gt;Moringa ovalifolia&lt;/em&gt;. Around the base of the hills this woodland grades into bushland, also with &lt;em&gt;Colophospermum mopane&lt;/em&gt; and some &lt;em&gt;Terminalia prunioides&lt;/em&gt;, but shorter stature (height &amp;lt;4 m) and with fewer proper trees (single trunk with branching canopy on top). On the deeper clay-silt soil on the flat land, underlaid by calcrete, there is a mixture of sparse mopane parkland that is heavily grazed by ungulate herbivores, sparse to dense shrubland dominated by &lt;em&gt;Catophractes alexandri&lt;/em&gt;, and grassland with very sparse &lt;em&gt;Acacia&lt;/em&gt; species.&lt;/p&gt;
 &lt;p&gt;Our aim was to establish 8-10 plots covering the dominant vegetation units in the Reserve. This includes some areas with few or no trees like the Catophractes shrubland and open grasslands. We established two plots in the open mopane parkland areas. Two plots in Catophractes shrubland. Two plots in grassland. and 6 plots in the Mopane-Terminalia woodland. In the woodland we aimed to try and capture some of the variation in species composition and stand structure, with some plots in less diverse areas and some on the more diverse Huettenberg hills. So in total we established 12 plots, though the grassland and Catophractes plots were very easy to set up. The real work on those plots will come later when others use the ground layer and shrub/small stem SEOSAW protocols to assess the non-tree vegetation.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/ongava/catophractes.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/ongava/catophractes.jpg&#34;&gt;&lt;img
           alt=&#34;Example of a Catophractes shrubland plot.&#34;
-          title=&#34;Example of a Catophractes shrubland plot.&#34;src=&#34;http://localhost:1313/img/ongava/catophractes.png&#34; 
+          title=&#34;Example of a Catophractes shrubland plot.&#34;src=&#34;http://johngodlee.xyz/img/ongava/catophractes.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;The parkland is quite interesting. On one of our plots, even though there were only 117 trees, there were 342 stems. Most trees had two or more stems. One tree had 13 stems. It&amp;rsquo;s probable that on some of these parkland areas, the land was previously cleared, or at least the big trees were felled, when the Reserve used to be a farm.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/ongava/parkland.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/ongava/parkland.jpg&#34;&gt;&lt;img
           alt=&#34;Example of a mopane parkland plot.&#34;
-          title=&#34;Example of a mopane parkland plot.&#34;src=&#34;http://localhost:1313/img/ongava/parkland.png&#34; 
+          title=&#34;Example of a mopane parkland plot.&#34;src=&#34;http://johngodlee.xyz/img/ongava/parkland.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;Finding decent plot locations in the Mopane-Terminalia woodland areas on the rocky hills was more challending than I expected. There are not many roads going through these areas of the Reserve, making large tracts of land essentially unreachable if we are carrying all our equipment. On top of that, one of the main routes to access the southern reaches of the Reserve was cut off for about two weeks due to heavy rain that made it too muddy to get a vehicle through.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/ongava/woodland.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/ongava/woodland.jpg&#34;&gt;&lt;img
           alt=&#34;Example of a rocky woodland plot.&#34;
-          title=&#34;Example of a rocky woodland plot.&#34;src=&#34;http://localhost:1313/img/ongava/woodland.png&#34; 
+          title=&#34;Example of a rocky woodland plot.&#34;src=&#34;http://johngodlee.xyz/img/ongava/woodland.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/ongava/woodland2.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/ongava/woodland2.jpg&#34;&gt;&lt;img
           alt=&#34;Example of another rocky woodland plot, this one at lower elevation with deeper soil.&#34;
-          title=&#34;Example of another rocky woodland plot, this one at lower elevation with deeper soil.&#34;src=&#34;http://localhost:1313/img/ongava/woodland2.png&#34; 
+          title=&#34;Example of another rocky woodland plot, this one at lower elevation with deeper soil.&#34;src=&#34;http://johngodlee.xyz/img/ongava/woodland2.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;We also had trouble marking the plot corners in the rocky areas. Normally we hammer rebar into the ground to mark the plot corners. But on the rocky hills this was almost impossible. Even if we found a gap in the rocks at one corner, it almost certainly wouldn&amp;rsquo;t coincide with gaps at the other three corners. We resorted to maneouvering huge boulders into place for most of these plots and painting them, then triangulating the corner location by measuring from many nearby trees.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/ongava/woodland_boulder.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/ongava/woodland_boulder.jpg&#34;&gt;&lt;img
           alt=&#34;A large painted boulder used to mark the corner of a rocky woodland plot.&#34;
-          title=&#34;A large painted boulder used to mark the corner of a rocky woodland plot.&#34;src=&#34;http://localhost:1313/img/ongava/woodland_boulder.png&#34; 
+          title=&#34;A large painted boulder used to mark the corner of a rocky woodland plot.&#34;src=&#34;http://johngodlee.xyz/img/ongava/woodland_boulder.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;In Ongava, the management are concerned about animals injuring themselves on bits of metal rebar sticking out of the ground. For those areas on the deeper clay soil where we could get a marker in the ground, I designed an alternative to rebar that remains secure and poses no danger to animals. The marker is made from steel plate, welded to a length of square steel tube. The tube is then hammered into the ground and the plate sits flush with the surface. The plate can then be painted to increase visibility.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/ongava/corner_diag.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/ongava/corner_diag.png&#34;&gt;&lt;img
           alt=&#34;Schematic diagram of the animal-friendly corner marker.&#34;
-          title=&#34;Schematic diagram of the animal-friendly corner marker.&#34;src=&#34;http://localhost:1313/img/ongava/corner_diag.png&#34; 
+          title=&#34;Schematic diagram of the animal-friendly corner marker.&#34;src=&#34;http://johngodlee.xyz/img/ongava/corner_diag.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/ongava/corner.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/ongava/corner.jpg&#34;&gt;&lt;img
           alt=&#34;Example of the animal-friendly corner marker.&#34;
-          title=&#34;Example of the animal-friendly corner marker.&#34;src=&#34;http://localhost:1313/img/ongava/corner.png&#34; 
+          title=&#34;Example of the animal-friendly corner marker.&#34;src=&#34;http://johngodlee.xyz/img/ongava/corner.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/ongava/corner_situ.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/ongava/corner_situ.jpg&#34;&gt;&lt;img
           alt=&#34;Example of the animal-friendly corner marker in situ.&#34;
-          title=&#34;Example of the animal-friendly corner marker in situ.&#34;src=&#34;http://localhost:1313/img/ongava/corner_situ.png&#34; 
+          title=&#34;Example of the animal-friendly corner marker in situ.&#34;src=&#34;http://johngodlee.xyz/img/ongava/corner_situ.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -889,16 +889,16 @@
     
     <item>
       <title>Fieldwork bumbag</title>
-      <link>http://localhost:1313/posts/2023-02-12-field_bumbag/</link>
+      <link>http://johngodlee.xyz/posts/2023-02-12-field_bumbag/</link>
       <pubDate>2023-02-12T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-02-12-field_bumbag/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-02-12-field_bumbag/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve been on fieldwork in Namibia, near Etosha, setting up some vegetation monitoring plots in Ongava Game Reserve. This involves measuring the stem diameter of every tree within a 100x100 m square, and affixing a numbered metal tag that identifies that stem so its growth can be monitored over time. This means a lot of time spent walking around in the plot with tape measures, a notebook, a GPS, a compass and many other small pieces of equipment. In the past, I always shoved things in my pockets and carried other things in my rucksack. This meant however, that if I needed something from the rucksack I would have to stop and take it off, rummage around, then close the bag and put it back on. Also, having all these things in my pockets meant that inevitably something would fall out or I&amp;rsquo;d rip a hole in the pocket and spend the rest of the day constantly retrieving stuff from the bottom of my trouser leg.&lt;/p&gt;
 &lt;p&gt;This time, I decided to buy a bumbag to try and solve these issues. Specifically, I purchased the &lt;a href=&#34;https://www.snugpak.com/responsepak&#34; target=&#34;_blank&#34;&gt;Snugpak Response Pak&lt;/a&gt;
 . This bag has a main pocket, two side pockets, and a front pocket, all of them zipped. The front and main pocket also have divider pockets inside to keep stuff organised. The bag has a waist strap with wide webbing and a big plastic buckle. The bag also has a carry handle attached by buckles which go around the main and front pockets.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/field_bumbag/bag.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/field_bumbag/bag.jpg&#34;&gt;&lt;img
           alt=&#34;The Snugpak Response Pak.&#34;
-          title=&#34;The Snugpak Response Pak.&#34;src=&#34;http://localhost:1313/img/field_bumbag/bag.png&#34; 
+          title=&#34;The Snugpak Response Pak.&#34;src=&#34;http://johngodlee.xyz/img/field_bumbag/bag.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -940,25 +940,25 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/field_bumbag/bag_contents.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/field_bumbag/bag_contents.jpg&#34;&gt;&lt;img
           alt=&#34;Contents of the Snugpak Response Pak.&#34;
-          title=&#34;Contents of the Snugpak Response Pak.&#34;src=&#34;http://localhost:1313/img/field_bumbag/bag_contents.png&#34; 
+          title=&#34;Contents of the Snugpak Response Pak.&#34;src=&#34;http://johngodlee.xyz/img/field_bumbag/bag_contents.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;In the field the bag has worked very well. When working with a clipboard I can wear the bag on my front and rest the clipboard on it. Most of the time though, I wear the bag on my lower back where it is more comfortable. I&amp;rsquo;ve also been using the bag for trips to town, wearing it across my shoulder and chest as a messenger bag with the waist strap loosened all the way.&lt;/p&gt;
 &lt;p&gt;My main complaint is that the waist strap is sewn a bit low on the bag, meaning that when the bag is full it pulls forwards. I think it would be better if the strap was sewn a bit higher.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/field_bumbag/bag_back.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/field_bumbag/bag_back.jpg&#34;&gt;&lt;img
           alt=&#34;The bag on my back during fieldwork in a plot.&#34;
-          title=&#34;The bag on my back during fieldwork in a plot.&#34;src=&#34;http://localhost:1313/img/field_bumbag/bag_back.png&#34; 
+          title=&#34;The bag on my back during fieldwork in a plot.&#34;src=&#34;http://johngodlee.xyz/img/field_bumbag/bag_back.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;To help carry items for actually tagging trees, I also purchased a &lt;a href=&#34;https://www.toolstop.co.uk/stanley-stst1-80114-leather-nail-hammer-pouch-p80204/&#34; target=&#34;_blank&#34;&gt;Stanley STST1-80114 nail belt&lt;/a&gt;
 . This has three pockets, a hammer loop, and two slots for pens. In the large pocket I put the nails. In the front smaller pocket I put the current bundle of tags, and in the rear smaller pocket I put a 20 cm DBH measuring stick and the next bundle of tags. I added a shoulder carrying strap made from rope so the bag can be worn a bit higher, rather than carried on a belt.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/field_bumbag/nail_belt.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/field_bumbag/nail_belt.jpg&#34;&gt;&lt;img
           alt=&#34;The Stanley nail belt.&#34;
-          title=&#34;The Stanley nail belt.&#34;src=&#34;http://localhost:1313/img/field_bumbag/nail_belt.png&#34; 
+          title=&#34;The Stanley nail belt.&#34;src=&#34;http://johngodlee.xyz/img/field_bumbag/nail_belt.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -967,10 +967,10 @@
     
     <item>
       <title>`BIOMASS::getWoodDensity()` description</title>
-      <link>http://localhost:1313/posts/2022-11-23-get_wood_density/</link>
+      <link>http://johngodlee.xyz/posts/2022-11-23-get_wood_density/</link>
       <pubDate>2022-11-23T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2022-11-23-get_wood_density/</guid>
+      <guid>http://johngodlee.xyz/posts/2022-11-23-get_wood_density/</guid>
       <description>&lt;p&gt;I looked through the code for the &lt;code&gt;getWoodDensity()&lt;/code&gt; function from the &lt;code&gt;{BIOMASS}&lt;/code&gt; &lt;a href=&#34;https://cran.r-project.org/web/packages/BIOMASS/index.html&#34; target=&#34;_blank&#34;&gt;R package&lt;/a&gt;
 , to get a better idea of how it estimates tree wood density.&lt;/p&gt;
 &lt;p&gt;The function uses the wood density database from the &lt;a href=&#34;https://datadryad.org/stash/dataset/doi:10.5061/dryad.234&#34; target=&#34;_blank&#34;&gt;Zanne et al. (2009) global wood density database&lt;/a&gt;
@@ -992,10 +992,10 @@
     
     <item>
       <title>Shiny app to explore climate space of SEOSAW region</title>
-      <link>http://localhost:1313/posts/2022-09-10-shiny_climate/</link>
+      <link>http://johngodlee.xyz/posts/2022-09-10-shiny_climate/</link>
       <pubDate>2022-09-10T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2022-09-10-shiny_climate/</guid>
+      <guid>http://johngodlee.xyz/posts/2022-09-10-shiny_climate/</guid>
       <description>&lt;p&gt;I made an R Shiny web app to explore the climate space of the SEOSAW region. The app can be found &lt;a href=&#34;https://johngodlee.shinyapps.io/climate_space/&#34; target=&#34;_blank&#34;&gt;here, on shinyapps.io&lt;/a&gt;
 .&lt;/p&gt;
 &lt;p&gt;A big part of getting the app to run smoothly was to pre-process the data sources so they could be loaded quickly from disk, subsetted quickly, and rendered quickly with &lt;code&gt;ggplot()&lt;/code&gt;. I haven&amp;rsquo;t styled the app much to make it look pretty, as it was more a learning experience on how code reactive objects in Shiny.&lt;/p&gt;
@@ -1061,9 +1061,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;aes&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;y&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;y&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;fill&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;bg_col&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/shiny_climate/scrot.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/shiny_climate/scrot.png&#34;&gt;&lt;img
           alt=&#34;Screenshot of the app with a dry and wet region selected.&#34;
-          title=&#34;Screenshot of the app with a dry and wet region selected.&#34;src=&#34;http://localhost:1313/img/shiny_climate/scrot.png&#34; 
+          title=&#34;Screenshot of the app with a dry and wet region selected.&#34;src=&#34;http://johngodlee.xyz/img/shiny_climate/scrot.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1072,16 +1072,16 @@
     
     <item>
       <title>Comparing coordinates of tree stems collected with GPS or tape measures</title>
-      <link>http://localhost:1313/posts/2022-08-27-gps_xy/</link>
+      <link>http://johngodlee.xyz/posts/2022-08-27-gps_xy/</link>
       <pubDate>2022-08-27T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2022-08-27-gps_xy/</guid>
+      <guid>http://johngodlee.xyz/posts/2022-08-27-gps_xy/</guid>
       <description>&lt;p&gt;In 2018 and 2019 I set up some 100x100 m (1 ha) permanent vegetation monitoring plots in Bicuar National Park, southwest Angola. We measured the stem diameter of each tree stem &amp;gt;5 cm diameter and attached a numbered metal tag to each of these stems so we could track the growth and mortality of each stem over time. At the same time as measuring the stem diameters and attaching the tags, I also took a quick GPS point with a Garmin GPSMAP 65s Handheld GPS unit.&lt;/p&gt;
 &lt;p&gt;There are two main reasons to record the location of each stem in the plot. The first is to make it easier to relocate stems in the future. Sometimes tags fall off or stems are completely vaporised by fire. If we know the location of the stem, we can visit that location and confirm what has happened to the stem since the last survey. The second reason is that if we understand the spatial distribution of stems, we can better understand competitive (or facilitative) interactions among individuals, and look at how these interactions affect biomass dynamics.&lt;/p&gt;
 &lt;p&gt;When I revisited the plots in 2022, my goal was to collect lots of auxiliary data, to enrich our picture of the ecosystem. Alongside collecting data on woody debris, herbaceous biomass, and tree leaf traits, I also recorded the position of stems that had recruited since the initial survey back in 2018/2019. Instead of using a GPS, this time I used tape measures to record the position of each stem, using an XY coordinate system.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/gps_xy/diag.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/gps_xy/diag.png&#34;&gt;&lt;img
           alt=&#34;Diagram showing the XY grid coordinate system in a 1 ha plot.&#34;
-          title=&#34;Diagram showing the XY grid coordinate system in a 1 ha plot.&#34;src=&#34;http://localhost:1313/img/gps_xy/diag.png&#34; 
+          title=&#34;Diagram showing the XY grid coordinate system in a 1 ha plot.&#34;src=&#34;http://johngodlee.xyz/img/gps_xy/diag.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1227,26 +1227,26 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;atan2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;dst_diff[1]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dst_diff[2]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;pi&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;First, here is a map where I laid all the location errors from each of the 11 plots on top of each other.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/gps_xy/pretty_plot.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/gps_xy/pretty_plot.png&#34;&gt;&lt;img
           alt=&#34;Map of all location errors.&#34;
-          title=&#34;Map of all location errors.&#34;src=&#34;http://localhost:1313/img/gps_xy/pretty_plot.png&#34; 
+          title=&#34;Map of all location errors.&#34;src=&#34;http://johngodlee.xyz/img/gps_xy/pretty_plot.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;One really interesting thing about the plot above is that it looks like the errors get larger in the top part of the plot, and also that the errors on the X axis are larger than the errors on the Y axis.&lt;/p&gt;
 &lt;p&gt;In the field we always started collecting the XY coordinates from the SW (bottom-left) corner of the plot, doing 20 m lines of trees running E-W up to the NE corner. I wonder if the errors are larger at the top of the plot because we were getting tired towards the end of the day. Or maybe they were due to tape measure stretch? Also from this plot I get the impression that the errors are generally larger on the E-W axis than on the N-S axis. I&amp;rsquo;d expect the GPS to produce random errors, while the tape measures would produce systematic errors, so this plot suggests actually that there might be greater error in the tape measure coordinates than in the GPS.&lt;/p&gt;
 &lt;p&gt;Now here is a simple rose plot where I plotted all the lines with the tape measure position normalised to 0,0:&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/gps_xy/cnt_lines_rose.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/gps_xy/cnt_lines_rose.png&#34;&gt;&lt;img
           alt=&#34;Simple rose plot of all lines with tape measure at 0,0.&#34;
-          title=&#34;Simple rose plot of all lines with tape measure at 0,0.&#34;src=&#34;http://localhost:1313/img/gps_xy/cnt_lines_rose.png&#34; 
+          title=&#34;Simple rose plot of all lines with tape measure at 0,0.&#34;src=&#34;http://johngodlee.xyz/img/gps_xy/cnt_lines_rose.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;Again, this potentially shows that there&amp;rsquo;s greater error on the E-W axis. It also highlights some particularly large errors of &amp;gt;40 m, which I assume are reporting errors in the field.&lt;/p&gt;
 &lt;p&gt;And a histogram showing the distribution of error lengths:&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/gps_xy/error_length_hist.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/gps_xy/error_length_hist.png&#34;&gt;&lt;img
           alt=&#34;Histogram of error lengths.&#34;
-          title=&#34;Histogram of error lengths.&#34;src=&#34;http://localhost:1313/img/gps_xy/error_length_hist.png&#34; 
+          title=&#34;Histogram of error lengths.&#34;src=&#34;http://johngodlee.xyz/img/gps_xy/error_length_hist.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1273,9 +1273,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;axis.text.y&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;element_blank&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(),&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;axis.ticks.y&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;element_blank&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;labs&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;expression&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Angle&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;~&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;degree&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)),&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;y&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Total length (m)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/gps_xy/angle_length_rose.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/gps_xy/angle_length_rose.png&#34;&gt;&lt;img
           alt=&#34;Rose diagram showing total error length per 20 degree angle bin.&#34;
-          title=&#34;Rose diagram showing total error length per 20 degree angle bin.&#34;src=&#34;http://localhost:1313/img/gps_xy/angle_length_rose.png&#34; 
+          title=&#34;Rose diagram showing total error length per 20 degree angle bin.&#34;src=&#34;http://johngodlee.xyz/img/gps_xy/angle_length_rose.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1289,9 +1289,9 @@
 &lt;p&gt;Where the goal is just to aid relocation of stems in future censuses, I would definitely advocate for using a GPS unit. It saves a lot of time, and the location accuracy is good enough. Where it&amp;rsquo;s necessary to quantify neighbourhood effects, I think tape measures can probably give better accuracy and higher precision, but only if the measuring is done by a trained team working meticuluously, and the plot is set up properly to begin with.&lt;/p&gt;
 &lt;p&gt;Another option for measuring tree location that I&amp;rsquo;ve been toying with for a long time is using a laser total station or a laser level in conjunction with differential GPS. Something like the &lt;a href=&#34;https://leica-geosystems.com/en-gb/products/levels/automatic-levels/leica-na500-series&#34; target=&#34;_blank&#34;&gt;Leica NA520&lt;/a&gt;
  which can measure angle and distance to a reflective target. First you would pick a spot where many stems are visible and set up a survey tripod. Then using a differential GPS system you would record the precise location of the tripod. This could take a few minutes, but only has to be done once for each batch of measurements. Then the GPS antenna would be swapped out for a laser level. The distance and angle of each stem in view with respect to the level would be recorded. The survey tripod would be moved to the next surveying location and the process would be repeated. Then the location of each stem can be calculated using the real-space location of the survey tripod, the angle and distance of the stem with respect to the tripod. You could even record the same stem multiple times from different positions to further improve the accuracy of the location, but I think even for measuring neighbourhood effects it&amp;rsquo;s only really necessary to have an accuracy of about 50-100 cm.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/gps_xy/diag_2.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/gps_xy/diag_2.png&#34;&gt;&lt;img
           alt=&#34;Diagram of field setup for laser level GNSS method.&#34;
-          title=&#34;Diagram of field setup for laser level GNSS method.&#34;src=&#34;http://localhost:1313/img/gps_xy/diag_2.png&#34; 
+          title=&#34;Diagram of field setup for laser level GNSS method.&#34;src=&#34;http://johngodlee.xyz/img/gps_xy/diag_2.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1300,10 +1300,10 @@
     
     <item>
       <title>Using `any()` with `ifelse()` and `group_by()`</title>
-      <link>http://localhost:1313/posts/2022-08-14-group_any_ifelse/</link>
+      <link>http://johngodlee.xyz/posts/2022-08-14-group_any_ifelse/</link>
       <pubDate>2022-08-14T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2022-08-14-group_any_ifelse/</guid>
+      <guid>http://johngodlee.xyz/posts/2022-08-14-group_any_ifelse/</guid>
       <description>&lt;p&gt;I am doing some more work to update the &lt;a href=&#34;https://seosaw.github.io&#34; target=&#34;_blank&#34;&gt;SEOSAW database&lt;/a&gt;
 . When we measure the growth and mortality of trees to monitor biomass dynamics, it is important to have a consistent way of recording mortality. For trees, especially trees with multiple stems, the concept of &amp;ldquo;death&amp;rdquo; is not as simple as for animals. We generally classify a tree as dead if all the above-ground tissue on the tree appears to be dead, i.e. has no living leaves or buds, and no sap below the bark. Sometimes though, a single stem on a multi-stemmed tree will die, but the rest of the tree continues to live. Sometimes a stem or tree may appear dead, but comes back to life later. In savanna systems especially, it&amp;rsquo;s fairly common for trees to partially die, or to resurrect after a disturbance event like a drought or a fire.&lt;/p&gt;
 &lt;p&gt;In SEOSAW we previously classified stems as either &amp;ldquo;alive&amp;rdquo;, &amp;ldquo;topkilled&amp;rdquo;, &amp;ldquo;resprouting&amp;rdquo; or &amp;ldquo;dead&amp;rdquo;. I first heard the term topkill used in a paper by Bill Hoffmann (&lt;a href=&#34;https://doi.org/10.1890/08-0741.1&#34; target=&#34;_blank&#34;&gt;Hoffmann et al. 2009&lt;/a&gt;

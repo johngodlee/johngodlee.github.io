@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on John L. Godlee</title>
-    <link>http://localhost:1313/tags/</link>
+    <link>http://johngodlee.xyz/tags/</link>
     <description>Recent content in Tags on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2024-06-26T00:00:00+0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2024-06-26T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Personal</title>
-      <link>http://localhost:1313/tags/personal/</link>
+      <link>http://johngodlee.xyz/tags/personal/</link>
       <pubDate>2024-06-26T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/tags/personal/</guid>
+      <guid>http://johngodlee.xyz/tags/personal/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Work</title>
-      <link>http://localhost:1313/tags/work/</link>
+      <link>http://johngodlee.xyz/tags/work/</link>
       <pubDate>2024-06-20T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/tags/work/</guid>
+      <guid>http://johngodlee.xyz/tags/work/</guid>
       <description></description>
     </item>
     

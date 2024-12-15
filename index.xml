@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>John L. Godlee</title>
-    <link>http://localhost:1313/</link>
+    <link>http://johngodlee.xyz/</link>
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2024-10-27T00:00:00+0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2024-10-27T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GPX files for Edinburgh cycle loops</title>
-      <link>http://localhost:1313/posts/2024-10-27-cycle_edinburgh/</link>
+      <link>http://johngodlee.xyz/posts/2024-10-27-cycle_edinburgh/</link>
       <pubDate>2024-10-27T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-10-27-cycle_edinburgh/</guid>
-      <description>&lt;p&gt;Here are some routes that I cycle fairly regularly in Edinburgh. I cycle them predominantly on my &lt;a href=&#34;http://localhost:1313/posts/2018-07-25-bike&#34;&gt;single speed&lt;/a&gt;
+      <guid>http://johngodlee.xyz/posts/2024-10-27-cycle_edinburgh/</guid>
+      <description>&lt;p&gt;Here are some routes that I cycle fairly regularly in Edinburgh. I cycle them predominantly on my &lt;a href=&#34;http://johngodlee.xyz/posts/2018-07-25-bike&#34;&gt;single speed&lt;/a&gt;
 . There are occasional sections where I would prefer something with wider tyres, but nothing that requires a proper mountain bike. Most of the tracks start around Holyrood Park, then head out of the city in different directions.&lt;/p&gt;
 &lt;p&gt;I calculated the length of the GPX files in R:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Packages&lt;/span&gt;
@@ -41,58 +41,58 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;km&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;x_length_km&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;mi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;x_length_mi&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;})&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;inverkeithing&#34;&gt;Inverkeithing&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/cycle_edinburgh/inverkeithing.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/inverkeithing.gpx&#34;&gt;GPX track&lt;/a&gt;
 &lt;/p&gt;
 &lt;p&gt;Length: 52.2 km, 32.4 miles&lt;/p&gt;
 &lt;p&gt;This route heads north from Haymarket via the Roseburn Path down to Granton, then west along the coast to Cramond along the promenade along National Cycle-route 1, which follows the Roseburn path from Haymarket. From Cramond the route then follows National Cycle-route 1 (NCR1) alongside the busy A90. Unfortunately there is a short section of fast road between the B294 and Dalmeny, which makes this route difficult after dark. The route then heads through Dalmeny to Inverkeithing over the old Forth Road Bridge and back again to Cramond. From Cramond back into town the route continues to follow NCR1 to Haymarket, then through Grassmarket and down Cowgate back towards Holyrood Park.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/cycle_edinburgh/inverkeithing.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/inverkeithing.png&#34;&gt;&lt;img
           alt=&#34;Map of the Inverkeithing route.&#34;
-          title=&#34;Map of the Inverkeithing route.&#34;src=&#34;http://localhost:1313/img/cycle_edinburgh/inverkeithing.png&#34; 
+          title=&#34;Map of the Inverkeithing route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/inverkeithing.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;h2 id=&#34;musselburgh-to-roslin-via-the-penicuik-dalkeith-walkway&#34;&gt;Musselburgh to Roslin via the Penicuik-Dalkeith Walkway&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/cycle_edinburgh/musselburgh_dalkeith_roslin.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/musselburgh_dalkeith_roslin.gpx&#34;&gt;GPX track&lt;/a&gt;
 &lt;/p&gt;
 &lt;p&gt;Length: 47.4 km, 29.4 miles&lt;/p&gt;
 &lt;p&gt;I got the idea for this route from &lt;a href=&#34;https://www.cyclingscot.co.uk/blog/why-do-disused-railway-paths-always-seem-to-be-located-in-the-most-stunning-scenery-edinburgh-to-penicuik-cycle-route&#34; target=&#34;_blank&#34;&gt;another route&lt;/a&gt;
  which goes all the way down to Penicuik, but recently the Penicuik-Dalkeith Walkway has been partially closed for resurfacing work. The route starts by following NCR1 down toward the Jewel, then towards Musselburgh and Queen Margaret University through winding housing estates. Then towards Dalkeith and Bonnyrigg onto the Penicuik-Dalkeith Walkway. Going through Roslin Glen there are a few walking sections, then after Roslin village it&amp;rsquo;s back on the cycle path, through Loanhead to Newton Village and past Shawfair train station. The landscape is very odd round here, with lots of abandoned farmland, abandoned roads and buildings. The section between Newton Village and the turn-off at Hilltown along the A6106 is quite nasty. I cycles along the pavement. Beyond Craighall Junction the route goes the same way as at the start.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/cycle_edinburgh/musselburgh_dalkeith_roslin.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/musselburgh_dalkeith_roslin.png&#34;&gt;&lt;img
           alt=&#34;Map of the Musselburgh to Roslin route.&#34;
-          title=&#34;Map of the Musselburgh to Roslin route.&#34;src=&#34;http://localhost:1313/img/cycle_edinburgh/musselburgh_dalkeith_roslin.png&#34; 
+          title=&#34;Map of the Musselburgh to Roslin route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/musselburgh_dalkeith_roslin.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;h2 id=&#34;patina-bakery&#34;&gt;Patina bakery&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/cycle_edinburgh/patina.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/patina.gpx&#34;&gt;GPX track&lt;/a&gt;
 &lt;/p&gt;
 &lt;p&gt;Length: 24.6 km, 15.3 miles&lt;/p&gt;
 &lt;p&gt;This route worms through the middle of town towards Haymarket, then through Murrayfield on the cycle path that follows the tramline all the way to Edinburgh Park. Once in the business park there are various roads that never have any traffic on them, which are good for doing laps to extend the length of the ride a bit. Patina Bakery is a good stop for a pastry or a pint in the adjacent restaurant. The route through the centre of town could be varied, for example to avoid Princes Steet, or to avoid Cowgate.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/cycle_edinburgh/patina.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/patina.png&#34;&gt;&lt;img
           alt=&#34;Map of the Patina bakery route.&#34;
-          title=&#34;Map of the Patina bakery route.&#34;src=&#34;http://localhost:1313/img/cycle_edinburgh/patina.png&#34; 
+          title=&#34;Map of the Patina bakery route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/patina.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;h2 id=&#34;portobello-and-the-roseburn-path&#34;&gt;Portobello and the Roseburn Path&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/cycle_edinburgh/portobello_roseburn_path.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/portobello_roseburn_path.gpx&#34;&gt;GPX track&lt;/a&gt;
 &lt;/p&gt;
 &lt;p&gt;Length: 26.8 km, 16.6 miles&lt;/p&gt;
 &lt;p&gt;This is my most frequent after work route. It starts of the road down to Joppa, then along Portobello Road and onto the promenade to follow the bike path road to Seafield. This section of the ride isn&amp;rsquo;t very pretty, but at least it&amp;rsquo;s not on the busy road, as there is a wide bike path that runs alongside. Through the Shore towards the Roseburn Path is a fast road, but there&amp;rsquo;s lots of space in the bus lane. Once on the Roseburn Path the route is very pleasant, though if doing this route at night it&amp;rsquo;s vital to have a bright front light. From the end of the Roseburn Path back towards Holyrood the route is very urban. I normally head through Grassmarket and down Cowgate, but there are many ways of doing this section.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/cycle_edinburgh/portobello_roseburn_path.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/portobello_roseburn_path.png&#34;&gt;&lt;img
           alt=&#34;Map of the Portobello and Roseburn Path route.&#34;
-          title=&#34;Map of the Portobello and Roseburn Path route.&#34;src=&#34;http://localhost:1313/img/cycle_edinburgh/portobello_roseburn_path.png&#34; 
+          title=&#34;Map of the Portobello and Roseburn Path route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/portobello_roseburn_path.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;h2 id=&#34;slateford-climb-and-the-balerno-cycle-path&#34;&gt;Slateford climb and the Balerno cycle path&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/cycle_edinburgh/slateford_balerno_path.gpx&#34;&gt;GPX track&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/cycle_edinburgh/slateford_balerno_path.gpx&#34;&gt;GPX track&lt;/a&gt;
 &lt;/p&gt;
 &lt;p&gt;Length: 23.8 km, 14.8 miles&lt;/p&gt;
 &lt;p&gt;The entire purpose of this route is to do the long climb from Slateford to Juniper Green along the A70. Much of this road now has a segregated cycle lane, which makes it more pleasant, but it&amp;rsquo;s still a fast road. It&amp;rsquo;s easy to miss the turn-off towards the Balerno cycle path. It&amp;rsquo;s also necessary to carry your bike down the steps into the valley of the Water of Leith. Once on the Balerno cycle path, proceeded by the Union Canal Path, the route is very nice, though like the Roseburn Path it&amp;rsquo;s important to have a bright front light if doing this route after dark. When I recorded this route I went up the hill to Bruntsfield Links before heading back down to the Meadows because I wanted another climb, but you could just take the junction at the end of Gilmore Place and onto the cycle link on Valleyfield Street straight on to the Meadows.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/cycle_edinburgh/slateford_balerno_path.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cycle_edinburgh/slateford_balerno_path.png&#34;&gt;&lt;img
           alt=&#34;Map of the Slateford and Balerno cycle path route.&#34;
-          title=&#34;Map of the Slateford and Balerno cycle path route.&#34;src=&#34;http://localhost:1313/img/cycle_edinburgh/slateford_balerno_path.png&#34; 
+          title=&#34;Map of the Slateford and Balerno cycle path route.&#34;src=&#34;http://johngodlee.xyz/img/cycle_edinburgh/slateford_balerno_path.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -101,10 +101,10 @@
     
     <item>
       <title>Bash script to download audio from Youtube</title>
-      <link>http://localhost:1313/posts/2024-06-26-ytdlp/</link>
+      <link>http://johngodlee.xyz/posts/2024-06-26-ytdlp/</link>
       <pubDate>2024-06-26T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-06-26-ytdlp/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-06-26-ytdlp/</guid>
       <description>&lt;p&gt;This post is actually about a trick I learned that allows bash scripts to accept input either as a string or from &lt;code&gt;stdin&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Here is the code. It first checks whether at least one argument is provided to the script. If an argument is found it creates a variable containing all the arguments. If no arguments are found, then it waits for input from &lt;code&gt;stdin&lt;/code&gt;, which can either come from a pipe or can be typed in after the script is called.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env bash
@@ -162,14 +162,14 @@
     
     <item>
       <title>R function to extract raster data</title>
-      <link>http://localhost:1313/posts/2024-06-20-nearextract/</link>
+      <link>http://johngodlee.xyz/posts/2024-06-20-nearextract/</link>
       <pubDate>2024-06-20T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-06-20-nearextract/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-06-20-nearextract/</guid>
       <description>&lt;p&gt;I have to extract lots of point estimates from raster layers to use as explanatory variables of biomass dynamics measured in vegetation monitoring plots across tropical savannas and dry forests. Some of these raster layers are quite coarse and some of the plot locations are close to the coast, meaning that occasionally a plot will not coincide with a non-NA pixel in a particular raster layer. Here is an example, showing the raster layer in blue and the plots as black dots.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/nearextract/map.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/nearextract/map.png&#34;&gt;&lt;img
           alt=&#34;A map illustrating the coarse pixel issue.&#34;
-          title=&#34;A map illustrating the coarse pixel issue.&#34;src=&#34;http://localhost:1313/img/nearextract/map.png&#34; 
+          title=&#34;A map illustrating the coarse pixel issue.&#34;src=&#34;http://johngodlee.xyz/img/nearextract/map.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -270,10 +270,10 @@
     
     <item>
       <title>Processing bike ride data from Fitotrack Android app</title>
-      <link>http://localhost:1313/posts/2024-06-19-fitotrack/</link>
+      <link>http://johngodlee.xyz/posts/2024-06-19-fitotrack/</link>
       <pubDate>2024-06-19T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-06-19-fitotrack/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-06-19-fitotrack/</guid>
       <description>&lt;p&gt;I have been using The &lt;a href=&#34;https://github.com/russok/FitoTrack&#34; target=&#34;_blank&#34;&gt;Fitotrack Android app&lt;/a&gt;
  for a over a year now to track my bike rides. Fitotrack allows you to export the tracking data in XML format. I wrote an R script to process the XML data and create some basic summary plots. I have broken down the R script below:&lt;/p&gt;
 &lt;p&gt;Firstly, load necessary packages and import the compressed XML file, which has the file extension &lt;code&gt;.ftb&lt;/code&gt;. I use &lt;a href=&#34;https://syncthing.net/&#34; target=&#34;_blank&#34;&gt;Syncthing&lt;/a&gt;
@@ -391,15 +391,15 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Patchwork plots together&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;plots_all&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;avgSpeed_ts&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;topSpeed_ts&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;length_ts&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;month_dist&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/fitotrack/plots_all.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/fitotrack/plots_all.png&#34;&gt;&lt;img
           alt=&#34;Summary plots created by code above.&#34;
-          title=&#34;Summary plots created by code above.&#34;src=&#34;http://localhost:1313/img/fitotrack/plots_all.png&#34; 
+          title=&#34;Summary plots created by code above.&#34;src=&#34;http://johngodlee.xyz/img/fitotrack/plots_all.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/fitotrack/month_summ.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/fitotrack/month_summ.png&#34;&gt;&lt;img
           alt=&#34;Monthly summary table cretaed by code above.&#34;
-          title=&#34;Monthly summary table cretaed by code above.&#34;src=&#34;http://localhost:1313/img/fitotrack/month_summ.png&#34; 
+          title=&#34;Monthly summary table cretaed by code above.&#34;src=&#34;http://johngodlee.xyz/img/fitotrack/month_summ.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -463,9 +463,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Combine speed and elevation plots for a particular ride&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;plots_ride&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;int_speed&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;int_elev&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000&#34;&gt;plot_layout&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ncol&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/fitotrack/plots_ride.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/fitotrack/plots_ride.png&#34;&gt;&lt;img
           alt=&#34;Plots of single ride generated by code above.&#34;
-          title=&#34;Plots of single ride generated by code above.&#34;src=&#34;http://localhost:1313/img/fitotrack/plots_ride.png&#34; 
+          title=&#34;Plots of single ride generated by code above.&#34;src=&#34;http://johngodlee.xyz/img/fitotrack/plots_ride.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -504,9 +504,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;int_lines&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;pal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;int_lines&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;speed&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;opacity&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/fitotrack/leaflet.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/fitotrack/leaflet.png&#34;&gt;&lt;img
           alt=&#34;Screenshot of leaflet map showing route with colouring by speed.&#34;
-          title=&#34;Screenshot of leaflet map showing route with colouring by speed.&#34;src=&#34;http://localhost:1313/img/fitotrack/leaflet.png&#34; 
+          title=&#34;Screenshot of leaflet map showing route with colouring by speed.&#34;src=&#34;http://johngodlee.xyz/img/fitotrack/leaflet.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -546,9 +546,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;opacity&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0.05&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;src&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;digits&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/fitotrack/heatmap.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/fitotrack/heatmap.png&#34;&gt;&lt;img
           alt=&#34;Screenshot of leaflet heatmap.&#34;
-          title=&#34;Screenshot of leaflet heatmap.&#34;src=&#34;http://localhost:1313/img/fitotrack/heatmap.png&#34; 
+          title=&#34;Screenshot of leaflet heatmap.&#34;src=&#34;http://johngodlee.xyz/img/fitotrack/heatmap.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -557,10 +557,10 @@
     
     <item>
       <title>Converting stem locations from lat-long to XY coordinates</title>
-      <link>http://localhost:1313/posts/2024-06-12-xy_latlong/</link>
+      <link>http://johngodlee.xyz/posts/2024-06-12-xy_latlong/</link>
       <pubDate>2024-06-12T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-06-12-xy_latlong/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-06-12-xy_latlong/</guid>
       <description>&lt;p&gt;In 2018 I wrote some code to convert stem locations within square plots from lat-long coordinates into XY grid coordinates. Recently I was asked to do the opposite, to convert XY grid coordinates into lat-long coordinates, so a colleague could combine multiple adjacent plots into one larger plot with a shared coordinate system. I&amp;rsquo;ve pasted the code for this procedure below:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Convert XY grid coordinates to Lat-long coordinates&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# John L. Godlee (johngodlee@gmail.com)&lt;/span&gt;
@@ -748,9 +748,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# This dataframe contains lat-long coordinates for each row of x&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;out&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/xy_latlong/xy_illus.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/xy_latlong/xy_illus.png&#34;&gt;&lt;img
           alt=&#34;Demonstration of the code to converrt lat-long coordinates to XY coordinates.&#34;
-          title=&#34;Demonstration of the code to converrt lat-long coordinates to XY coordinates.&#34;src=&#34;http://localhost:1313/img/xy_latlong/xy_illus.png&#34; 
+          title=&#34;Demonstration of the code to converrt lat-long coordinates to XY coordinates.&#34;src=&#34;http://johngodlee.xyz/img/xy_latlong/xy_illus.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -759,10 +759,10 @@
     
     <item>
       <title>An email about resprouting in the SEOSAW database</title>
-      <link>http://localhost:1313/posts/2024-04-30-resprouting/</link>
+      <link>http://johngodlee.xyz/posts/2024-04-30-resprouting/</link>
       <pubDate>2024-04-30T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-04-30-resprouting/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-04-30-resprouting/</guid>
       <description>&lt;p&gt;I help to manage the &lt;a href=&#34;https://seosaw.github.io/&#34; target=&#34;_blank&#34;&gt;SEOSAW database&lt;/a&gt;
 . A database of tree stem measurements from vegetation monitoring plots in African woodlands. We gather data on tree size (stem diameter, height, crown dimensions), floristic composition (species names), growth and mortality dynamics. A colleague of mine is conducting a study into the resprouting behaviour of trees using data from SEOSAW. We got into a long conversation about what constitutes resprouting and how that information is represented within the SEOSAW database. Here is an email I sent to clarify my thinking:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;stem_status&lt;/code&gt; can have four possible values:&lt;/p&gt;
@@ -792,15 +792,15 @@
     
     <item>
       <title>Definitions of drylands</title>
-      <link>http://localhost:1313/posts/2024-03-15-drylands/</link>
+      <link>http://johngodlee.xyz/posts/2024-03-15-drylands/</link>
       <pubDate>2024-03-15T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-03-15-drylands/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-03-15-drylands/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve read a few papers that refer to &amp;ldquo;drylands&amp;rdquo; and &amp;ldquo;semi-arid&amp;rdquo; ecosystems, and I became interested in the definitions of these terms, so here I&amp;rsquo;ve gathered together some notes on my reading, with the aim of tracing back the definitions through the literature.&lt;/p&gt;
 &lt;p&gt;Ahlstrom et al. (2015) is a DGVM modelling study that looks at the contribution of different regional terrestrial ecosystem types to the temporal trend and temporal variability of the global land carbon sink. They find that &amp;ldquo;semi-arid&amp;rdquo; ecosystems dominate the trend and inter-annual variability of the sink, with these temporal variations being strongly associated with inter-annual variation in precipitation. They define semi-arid ecosystems alongside five other land cover classes: tropical forest, extra-tropical forest, tundra and arctic shrubland, grassland and agriculture, and barren (sparsely vegetated). First they divide into forest, savanna and shrublands, and grasslands and croplands using the MODIS land cover classification (MCD12C1 type 3). They then divide the savanna and shrubland class into two based on latitude. Below 45N they class as semi-arid, and above 45N they class as tundra and arctic shrubland. Below is their map of land cover classes. Tropical forests in light green, extra-tropical forests in dark green, semi-arid in orange, tundra and arctic shrubland in grey, grassland and cops in blue, barren in white.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/drylands/ahlstrom_map.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/ahlstrom_map.png&#34;&gt;&lt;img
           alt=&#34;Map of land cover classes as defined by Ahlstom et al. (2015).&#34;
-          title=&#34;Map of land cover classes as defined by Ahlstom et al. (2015).&#34;src=&#34;http://localhost:1313/img/drylands/ahlstrom_map.png&#34; 
+          title=&#34;Map of land cover classes as defined by Ahlstom et al. (2015).&#34;src=&#34;http://johngodlee.xyz/img/drylands/ahlstrom_map.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -818,24 +818,24 @@
 &lt;/ul&gt;
 &lt;p&gt;In this chapter, Middleton and Thomas say that their classification comes fom an earlier iteration used in the UNSECO (1977) map of aridity. The boundaries between arid and hyper-arid zones, and dry sub-humid and humid zones were changed for the 1997 map, after they found that PET was being under- and over-estimated in very dry and moist climates, respectively. They also introduced a separate cold and mountains zone, acknowledging that while these areas may be arid, they present a different range of environmental issues than warm dryland environments.&lt;/p&gt;
 &lt;p&gt;Heathcote (1983), in The Arid Lands: Their Use and Abuse, observes that the UNSECO (1977) map is very similar to the map of Meigs (1953), which was also prepared for UNESCO for their extended project on drylands, which ran between 1951 and 1964. The maps in Meigs (1953) use a different aridity index to UNESCO (1977). Meigs uses the Thornthwaite (1948) climate classification, which uses an aridity index of &lt;code&gt;100(d/n)&lt;/code&gt;, where &lt;code&gt;d&lt;/code&gt; is the sum of monthly differences between P and PET for those months when the average precipitation is less than the average evapotranspiration, and &lt;code&gt;n&lt;/code&gt; is the sum of monthly values of PET for the deficient months. Grove et al. (1977) shows that Meigs&amp;rsquo; definition of extremely arid lands aligns well with areas receiving less than 25 mm annual rainfall or at least 12 consecutive months without rainfall, arid as 25-200 mm, semi-arid as 200-500 mm.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/drylands/meigs.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/meigs.png&#34;&gt;&lt;img
           alt=&#34;World map showing Meigs&amp;#39; classification of arid lands.&#34;
-          title=&#34;World map showing Meigs&amp;#39; classification of arid lands.&#34;src=&#34;http://localhost:1313/img/drylands/meigs.png&#34; 
+          title=&#34;World map showing Meigs&amp;#39; classification of arid lands.&#34;src=&#34;http://johngodlee.xyz/img/drylands/meigs.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;The Köppen-Geiger climate classification (Köppen 1884, Peel et al. 2007) uses a mixture of temperature and precipitation thresholds to define arid areas, as well as tropical, temperate, cold and polar, with subgroups. Ahlstrom et al. (2015) reference the Köppen-Geiger classification in their classification of tropical and extra-tropical forests, but they don&amp;rsquo;t use it to classify semi-arid regions. In the Köppen-Geiger classification, arid areas are defined as areas where mean annual precipitation (MAP) is less than 10x a key precipitation threshold. The precipitation threshold is 2x mean annual temperature (MAT) if 70% or more of MAP occurs in the cooler six months of the year, 2xMAT+28 if 70% or more of MAP occurs in the warmer six months of the year, or otherwise 2xMAT+14.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/drylands/koppen_africa.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/koppen_africa.png&#34;&gt;&lt;img
           alt=&#34;The Köppen-Geiger classification for Africa, from Peel et al. 2007.&#34;
-          title=&#34;The Köppen-Geiger classification for Africa, from Peel et al. 2007.&#34;src=&#34;http://localhost:1313/img/drylands/koppen_africa.png&#34; 
+          title=&#34;The Köppen-Geiger classification for Africa, from Peel et al. 2007.&#34;src=&#34;http://johngodlee.xyz/img/drylands/koppen_africa.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;The FAO defines arid zones as those areas where the length of the growing period is less than 180 days (FAO 2000); this includes regions classified climatically as arid, semi-arid and dry sub-humid (from Gaur 2018).&lt;/p&gt;
 &lt;p&gt;The Holdridge life zones (Holdrige 1947, 1967), determine semi-arid regions as having an aridity index P:PET value less than approximately 0.5.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/drylands/holdridge.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/holdridge.png&#34;&gt;&lt;img
           alt=&#34;Holdridge Life Zones.&#34;
-          title=&#34;Holdridge Life Zones.&#34;src=&#34;http://localhost:1313/img/drylands/holdridge.png&#34; 
+          title=&#34;Holdridge Life Zones.&#34;src=&#34;http://johngodlee.xyz/img/drylands/holdridge.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -850,10 +850,10 @@
     
     <item>
       <title>Methods to establish square vegetation monitoring plots</title>
-      <link>http://localhost:1313/posts/2024-03-07-square_plots/</link>
+      <link>http://johngodlee.xyz/posts/2024-03-07-square_plots/</link>
       <pubDate>2024-03-07T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-03-07-square_plots/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-03-07-square_plots/</guid>
       <description>&lt;p&gt;Creating perfectly square permanent plots in dense woodland ecosystems can be a challenge. It&amp;rsquo;s very easy to end up with something more like a diamond or a rhombus, unless care is taken to measure the diagonals of the plot.&lt;/p&gt;
 &lt;p&gt;Previously I have set up one hectare permanent woodland tree sampling plots by starting at the SW corner of the plot, then running tapes at 90° going N and E for 100 m to form the W and S edges, respectively. Then to ensure that the edges are actually at 90° you run a tape along the hypotenuse of those edges, which should be 141.42 m long. Then you construct the other two edges (N, E), ensuring that they meet at 100 m, and finally check the length of the other hypotenuse is 141.42 m. The principal drawback of this method is that it requires a tape measure that can cover 141.42 m, or else you have to mess about with two tapes or a long piece of string. Covering a straight distance of 141.42 m is difficult because you often can&amp;rsquo;t see the person standing at the opposite corner. Using 100 m tapes, this method requires a minimum of six tapes. Alternatively you can measure smaller hypotenuse angles at intermediate points along the edges, e.g. at 10 and 25 m, but this means you will have to do many more measurements.&lt;/p&gt;
 &lt;p&gt;Below I present an alternative method that I think overcomes these problems.&lt;/p&gt;
@@ -861,9 +861,9 @@
 &lt;p&gt;This process requires only five 100 m tapes and means that you don&amp;rsquo;t have to span 141.42 m to traverse the full diagonal of the plot.&lt;/p&gt;
 &lt;p&gt;It requires 5 metal poles. One for each corner and one for the centre.&lt;/p&gt;
 &lt;p&gt;The diagram below shows the layout of tape measures to create a plot in this way. The dotted lines show temporary tape measures, while the dashed lines show permanent tape measures, which form the edges of the plot. The tape measure lines are numbered in the order they should be laid out. The letters next to the numbers (a-e) identify the tape measures. See that line 2b and 5b use the same tape measure, for example.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/square_plots/square_plots.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/square_plots/square_plots.png&#34;&gt;&lt;img
           alt=&#34;Diagram of tape measure layout for a 100x100 m square plot.&#34;
-          title=&#34;Diagram of tape measure layout for a 100x100 m square plot.&#34;src=&#34;http://localhost:1313/img/square_plots/square_plots.png&#34; 
+          title=&#34;Diagram of tape measure layout for a 100x100 m square plot.&#34;src=&#34;http://johngodlee.xyz/img/square_plots/square_plots.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -873,10 +873,10 @@
     
     <item>
       <title>Raspberry Pi home server</title>
-      <link>http://localhost:1313/posts/2023-12-24-rpi_server/</link>
+      <link>http://johngodlee.xyz/posts/2023-12-24-rpi_server/</link>
       <pubDate>2023-12-24T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-12-24-rpi_server/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-12-24-rpi_server/</guid>
       <description>&lt;p&gt;When we lived in London we had an HP Compaq Elite 8300 desktop tower that we used as a home server. The server ran Ubuntu minimal server 18.04. I used the server to back up important documents, and used Samba to connect our laptops to access music, movies etc.&lt;/p&gt;
 &lt;p&gt;The server was very convenient for me, but it was a bit awkward for others to connect to if they weren&amp;rsquo;t familiar with network shares or SSH. Additionally, the server was quite power hungry. I set it up to wake on LAN, but this meant I was the only one in the house who could turn it on.&lt;/p&gt;
 &lt;p&gt;In our new flat I aimed to upgrade the home server setup to reduce power consumption, increase storage capacity, and improve accessibility for less techy people.&lt;/p&gt;
@@ -893,9 +893,9 @@
 &lt;p&gt;I used zipties to mount the three bits of hardware onto a section from a plastic crate, the kind used to hold fruits and vegetables. I then hung the &amp;ldquo;rack&amp;rdquo; under a gateleg table using screw-in hooks.&lt;/p&gt;
 &lt;p&gt;To play music in the living room the RPi is connected to a Yamaha CRX-M170 micro Hi-Fi system via a 3.5 mm to phono cable. Unfortunately, the 3.5 mm jack in the RPi 4 is terrible. The sound comes through very tinny with lots of interference. To get decent audio quality I had to buy an &lt;a href=&#34;https://thepihut.com/products/iqaudio-dac-pro&#34; target=&#34;_blank&#34;&gt;IQaudIO DAC Pro hat&lt;/a&gt;
  for the RPi. The DAC Pro connects via the GPIO pins to the RPi.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/rpi_server/server.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/rpi_server/server.jpg&#34;&gt;&lt;img
           alt=&#34;Server setup mounted to plastic tray &amp;#39;rack&amp;#39;.&#34;
-          title=&#34;Server setup mounted to plastic tray &amp;#39;rack&amp;#39;.&#34;src=&#34;http://localhost:1313/img/rpi_server/server.png&#34; 
+          title=&#34;Server setup mounted to plastic tray &amp;#39;rack&amp;#39;.&#34;src=&#34;http://johngodlee.xyz/img/rpi_server/server.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -979,10 +979,10 @@ done
     
     <item>
       <title>Scraping plot locations from the ForestPlots.net web map</title>
-      <link>http://localhost:1313/posts/2023-10-05-fp_scrape/</link>
+      <link>http://johngodlee.xyz/posts/2023-10-05-fp_scrape/</link>
       <pubDate>2023-10-05T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-10-05-fp_scrape/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-10-05-fp_scrape/</guid>
       <description>&lt;p&gt;I was making a presentation about vegetation monitoring networks and wanted a map showing the spatial distribution of vegetation monitoring plots across the tropics. &lt;a href=&#34;https://forestplots.net/&#34; target=&#34;_blank&#34;&gt;ForestPlots.net&lt;/a&gt;
  is a meta-network which holds a database of plot-based tree demographic data. They have a &lt;a href=&#34;https://forestplots.net/en/map&#34; target=&#34;_blank&#34;&gt;web map&lt;/a&gt;
  with useful metadata, but this map doesn&amp;rsquo;t look great and I didn&amp;rsquo;t want to just include a screenshot.&lt;/p&gt;
@@ -1067,9 +1067,9 @@ done
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;xlim&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;-95&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;166&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;),&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;ylim&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;-40&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;ggsave&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;fp_map&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;width&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;height&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;file&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;fp_map.png&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/fp_scrape/fp_map.png&#34;&gt;&lt;img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/fp_scrape/fp_map.png&#34;&gt;&lt;img
           alt=&#34;Map of ForestPlots.net plots.&#34;
-          title=&#34;Map of ForestPlots.net plots.&#34;src=&#34;http://localhost:1313/img/fp_scrape/fp_map.png&#34; 
+          title=&#34;Map of ForestPlots.net plots.&#34;src=&#34;http://johngodlee.xyz/img/fp_scrape/fp_map.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1078,10 +1078,10 @@ done
     
     <item>
       <title>tmux grouped sessions</title>
-      <link>http://localhost:1313/posts/2023-09-23-tmux_sessions/</link>
+      <link>http://johngodlee.xyz/posts/2023-09-23-tmux_sessions/</link>
       <pubDate>2023-09-23T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-09-23-tmux_sessions/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-09-23-tmux_sessions/</guid>
       <description>&lt;p&gt;I have two monitors at work. Normally I have a terminal running tmux open full screen on the right-hand monitor, in portrait, and use the left monitor in landscape for everything else. Occasionally however, I want to also have a terminal open on the left monitor, and to move windows easily between terminals. To make it easier to share windows across terminals, I have adjusted my tmux setup to take advantage of the grouped-sessions feature.&lt;/p&gt;
 &lt;p&gt;At the bottom of my &lt;code&gt;.tmux.conf&lt;/code&gt; I have this chunk, which starts a new session called &amp;ldquo;main&amp;rdquo;, as a daemon.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;new-session -s main -d
@@ -1092,17 +1092,17 @@ done
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The result is that when I open a terminal, tmux checks if the &amp;ldquo;main&amp;rdquo; session exists, creates it if it doesn&amp;rsquo;t and attaches a client to that session.&lt;/p&gt;
 &lt;p&gt;All sessions in the same group share the same set of windows, but you can move freely between windows in each session.&lt;/p&gt;
 &lt;video controls&gt;
-    &lt;source src=&#34;http://localhost:1313/vid/tmux_sessions/tmux_sessions.mp4&#34; type=&#34;video/webm&#34;&gt;
+    &lt;source src=&#34;http://johngodlee.xyz/vid/tmux_sessions/tmux_sessions.mp4&#34; type=&#34;video/webm&#34;&gt;
 &lt;/video&gt;
 </description>
     </item>
     
     <item>
       <title>SEOSAW growth rates workshop</title>
-      <link>http://localhost:1313/posts/2023-09-13-growth_workshop/</link>
+      <link>http://johngodlee.xyz/posts/2023-09-13-growth_workshop/</link>
       <pubDate>2023-09-13T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-09-13-growth_workshop/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-09-13-growth_workshop/</guid>
       <description>&lt;p&gt;Recently, with help from colleagues, I ran an online workshop for the &lt;a href=&#34;https://seosaw.github.io/&#34; target=&#34;_blank&#34;&gt;SEOSAW network&lt;/a&gt;
  on estimating tree growth rates, rates of recruitment and mortality, and rates of biomass productivity and loss from repeat measurements of tree stem diameter in fixed area plots.&lt;/p&gt;
 &lt;p&gt;The workshop built on a lot of previously established methods like &lt;a href=&#34;https://doi.org/10.1016/j.foreco.2018.11.010&#34; target=&#34;_blank&#34;&gt;Kohyama et al. (2019)&lt;/a&gt;
@@ -1114,20 +1114,20 @@ done
 &lt;p&gt;I put together some worksheets with tutorial-like exercises to familiarise everybody with the functions in the &lt;a href=&#34;https://bitbucket.org/miombo/seosaw/src/master/seosawr/seosawr/&#34; target=&#34;_blank&#34;&gt;{seosawr}&lt;/a&gt;
  and &lt;a href=&#34;https://github.com/johngodlee/ProdVital&#34; target=&#34;_blank&#34;&gt;{ProdVital}&lt;/a&gt;
  R packages, then in the afternoon we had some discussions on developing research ideas that take advantage of these methods.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/growth_workshop/seosaw_growth_workshop.zip&#34;&gt;Here is a link&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/growth_workshop/seosaw_growth_workshop.zip&#34;&gt;Here is a link&lt;/a&gt;
  to a zip file containing all the slides and worksheets from the workshop.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Refurbishing my bike</title>
-      <link>http://localhost:1313/posts/2023-08-12-bike_refurb/</link>
+      <link>http://johngodlee.xyz/posts/2023-08-12-bike_refurb/</link>
       <pubDate>2023-08-12T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-08-12-bike_refurb/</guid>
-      <description>&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/spot_autumn/bike.jpg&#34;&gt;&lt;img
+      <guid>http://johngodlee.xyz/posts/2023-08-12-bike_refurb/</guid>
+      <description>&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/spot_autumn/bike.jpg&#34;&gt;&lt;img
           alt=&#34;Bike&#34;
-          title=&#34;Bike&#34;src=&#34;http://localhost:1313/img/spot_autumn/bike.png&#34; 
+          title=&#34;Bike&#34;src=&#34;http://johngodlee.xyz/img/spot_autumn/bike.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1154,77 +1154,77 @@ done
 &lt;li&gt;Chain&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Initially, I wanted to upgrade the bike using period parts. The crankset in particular needed to be replaced urgently, as the small chainring was very worn.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/chainring_wear.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/chainring_wear.jpg&#34;&gt;&lt;img
           alt=&#34;Extreme wear on the chainring.&#34;
-          title=&#34;Extreme wear on the chainring.&#34;src=&#34;http://localhost:1313/img/bike_refurb/chainring_wear.png&#34; 
+          title=&#34;Extreme wear on the chainring.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/chainring_wear.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;I found it very difficult to find a decent replacement for the crankset, and even more difficult to find a good 5 speed freewheel for the back. Eventually, I decided to convert the bike into a single speed. I have ridden single speeds before and enjoy them for commuting to work and generally riding around the town. They are less maintenance, and are good for building up my leg strength.&lt;/p&gt;
 &lt;p&gt;I bought a replacement rear wheel off eBay, a Madspeed7 with a flip-flop hub and a Continental UltraSport 32c tyre. It has an 18T freewheel and an 18T fixed ring on the other side. The wheel is a 700c, slightly smaller than the 27&amp;quot; wheel that was previously on there. I had already replaced the front wheel with a 700c a few years ago. I wanted a 700c because it&amp;rsquo;s much easier to get tyres for these size wheels nowadays.&lt;/p&gt;
 &lt;p&gt;I wasn&amp;rsquo;t sure whether the frame would fit a single speed wheel. Old 10 speeds often have a width of 126 mm in the rear dropouts, while track bikes often have 120 mm, so I was worried that the axle on the wheel wouldn&amp;rsquo;t be long enough to span the gap, or I would have to get the wheel re-dished to get the chainline right. Without enough information to make an informed decision, I bought the wheel and gave it a try. It fit perfectly. There is approximately 18 mm of spare axle outside the dropouts on both sides, and the wheel fits inside the dropouts with very little issue. It helps that steel frames have a bit of flex.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/chainstay_space.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/chainstay_space.jpg&#34;&gt;&lt;img
           alt=&#34;Spacing of 32c tyre between chainstays.&#34;
-          title=&#34;Spacing of 32c tyre between chainstays.&#34;src=&#34;http://localhost:1313/img/bike_refurb/chainstay_space.png&#34; 
+          title=&#34;Spacing of 32c tyre between chainstays.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/chainstay_space.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;I replaced the crankset with a Brick Lane Bikes Freestyle Crankset 44T, ordered from their website. This required a new bottom bracket to be fitted, because the bottom bracket fitted for the 10 speed had the chainring too far out from the frame, which made the chainline wonky. I got this done at &lt;a href=&#34;https://www.soulcycles.co.uk/&#34; target=&#34;_blank&#34;&gt;Soul Cycles&lt;/a&gt;
 , as I don&amp;rsquo;t have the tools to remove a bottom bracket.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/blb_crankset.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/blb_crankset.jpg&#34;&gt;&lt;img
           alt=&#34;The new Brick Lane Bikes crankset&#34;
-          title=&#34;The new Brick Lane Bikes crankset&#34;src=&#34;http://localhost:1313/img/bike_refurb/blb_crankset.png&#34; 
+          title=&#34;The new Brick Lane Bikes crankset&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/blb_crankset.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/chainline.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/chainline.jpg&#34;&gt;&lt;img
           alt=&#34;The new Brick Lane Bikes crankset&#34;
-          title=&#34;The new Brick Lane Bikes crankset&#34;src=&#34;http://localhost:1313/img/bike_refurb/chainline.png&#34; 
+          title=&#34;The new Brick Lane Bikes crankset&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/chainline.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;I wanted to replace the handlebars because the original handlebars were damaged in a crash with a car in 2018, which bent the right drop inwards. The bars were also very aggressive and narrow, which tended to give me a bad back on longer rides. I replaced them with a set of Cinelli bars gifted from a friend. These are 25.4 mm (1&amp;quot;) diameter at the point where they are clamped by the stem. They were slightly harder to fit into the stem clamp than the old bars, probably because of the geometry of the bars, as they curve quite tight.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/old_bars.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/old_bars.jpg&#34;&gt;&lt;img
           alt=&#34;The old handlebars, highlighting the bent profile from the car crash.&#34;
-          title=&#34;The old handlebars, highlighting the bent profile from the car crash.&#34;src=&#34;http://localhost:1313/img/bike_refurb/old_bars.png&#34; 
+          title=&#34;The old handlebars, highlighting the bent profile from the car crash.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/old_bars.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;I replaced the brake levers with some Shimano Exage Action brakes, model BL-A351, also gifted by a friend. I wanted some levers with taller hoods, to make riding on the hoods more comfortable. I also wanted levers with aero style cable routing, which goes beneath the bar tape, as it looks a lot cleaner.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/new_brake_levers.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/new_brake_levers.jpg&#34;&gt;&lt;img
           alt=&#34;The new brake levers.&#34;
-          title=&#34;The new brake levers.&#34;src=&#34;http://localhost:1313/img/bike_refurb/new_brake_levers.png&#34; 
+          title=&#34;The new brake levers.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/new_brake_levers.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;I replaced the rubber parts on these levers, as the rubber was very dirty and had gone all sticky and gummy. I bought a pair of Shimano BL-R400 Bracket Covers - 86C 9810 from SJS Cycles. They fit almost perfectly, except for a tiny gap on the base of the outside, though this might close up over time as I use the bike more and the hoods stretch a bit. I followed &lt;a href=&#34;https://youtu.be/-KbzZDQJ6hg&#34; target=&#34;_blank&#34;&gt;this video&lt;/a&gt;
  on how to fit new hoods, using alcohol gel to lubricate the inside of the rubber.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/old_brake_levers.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/old_brake_levers.jpg&#34;&gt;&lt;img
           alt=&#34;The old brake levers.&#34;
-          title=&#34;The old brake levers.&#34;src=&#34;http://localhost:1313/img/bike_refurb/old_brake_levers.png&#34; 
+          title=&#34;The old brake levers.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/old_brake_levers.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;For bar tape I used Fizik Tempto Microtex 2mm Classic. I would have preferred a colour other than black, as the bike is rather trendy and monochrome at the moment, but this is the one they had in the shop (&lt;a href=&#34;https://www.thebicycleworks.com/&#34; target=&#34;_blank&#34;&gt;BikeWorks&lt;/a&gt;
 ).&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/new_bars.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/new_bars.jpg&#34;&gt;&lt;img
           alt=&#34;New bars with bar tape and brake levers.&#34;
-          title=&#34;New bars with bar tape and brake levers.&#34;src=&#34;http://localhost:1313/img/bike_refurb/new_bars.png&#34; 
+          title=&#34;New bars with bar tape and brake levers.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/new_bars.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;I was desperate to replace the brake calipers with something more modern. The originals were a set of Weinmann AG Type 500 Single-pivot calipers. Quite cheap and difficult to maintain due to the number of hex bolts which had become stripped over time. The front caliper was also bent slightly in the car crash mentioned earlier.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/old_brake_calipers.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/old_brake_calipers.jpg&#34;&gt;&lt;img
           alt=&#34;The old brake calipers.&#34;
-          title=&#34;The old brake calipers.&#34;src=&#34;http://localhost:1313/img/bike_refurb/old_brake_calipers.png&#34; 
+          title=&#34;The old brake calipers.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/old_brake_calipers.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;I replaced them with a set of &lt;a href=&#34;https://www.sjscycles.co.uk/brakes/tektro-r359-caliper-brake-set-4757-mm-drop-nut-fitting-silver/&#34; target=&#34;_blank&#34;&gt;Tektro RJT R359 Caliper Brake Set 47-57 mm Drop&lt;/a&gt;
  from SJS cycles. I opted for a nutted fitting rather than a recessed fitting. I would have preferred a recessed nut, as they are slightly cleaner looking, and it&amp;rsquo;s one less hex nut to worry about, but that would have required drilling the frame to enlarge the hole for the brake caliper screw from 6 mm to 8 mm. I went to Eastside bikes to see if it was possible to do this, but they were concerned that drilling the frame might cause cracks to develop, as the frame is a bit corroded anyway.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/calipers_new.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/calipers_new.jpg&#34;&gt;&lt;img
           alt=&#34;New brake calipers.&#34;
-          title=&#34;New brake calipers.&#34;src=&#34;http://localhost:1313/img/bike_refurb/calipers_new.png&#34; 
+          title=&#34;New brake calipers.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/calipers_new.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1234,22 +1234,22 @@ done
 &lt;p&gt;The new seatpost is 28 mm diameter, while the old seatpost is 27 mm. Over time, the top tube in the frame had ovalised a little bit from being over-tightened, and had to be reamed out a little bit to get rid of some corroded gunk.&lt;/p&gt;
 &lt;p&gt;The new saddle is a &lt;a href=&#34;https://burgtec.co.uk/product/the-cloud-mk2-seat/&#34; target=&#34;_blank&#34;&gt;Burgtec The Cloud Mk2&lt;/a&gt;
 . It&amp;rsquo;s a bit more low-profile than the original saddle, and I like it a lot. No issues so far.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/saddle_orig.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/saddle_orig.jpg&#34;&gt;&lt;img
           alt=&#34;Original saddle.&#34;
-          title=&#34;Original saddle.&#34;src=&#34;http://localhost:1313/img/bike_refurb/saddle_orig.png&#34; 
+          title=&#34;Original saddle.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/saddle_orig.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/saddle_new.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/saddle_new.jpg&#34;&gt;&lt;img
           alt=&#34;New saddle.&#34;
-          title=&#34;New saddle.&#34;src=&#34;http://localhost:1313/img/bike_refurb/saddle_new.png&#34; 
+          title=&#34;New saddle.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/saddle_new.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;This is what the bike looks like now:&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/bike_refurb/bike_new.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_refurb/bike_new.jpg&#34;&gt;&lt;img
           alt=&#34;The refurbished bike, finished.&#34;
-          title=&#34;The refurbished bike, finished.&#34;src=&#34;http://localhost:1313/img/bike_refurb/bike_new.png&#34; 
+          title=&#34;The refurbished bike, finished.&#34;src=&#34;http://johngodlee.xyz/img/bike_refurb/bike_new.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1258,46 +1258,46 @@ done
     
     <item>
       <title>Excel Scottish Land Tax calculator</title>
-      <link>http://localhost:1313/posts/2023-06-10-land_tax/</link>
+      <link>http://johngodlee.xyz/posts/2023-06-10-land_tax/</link>
       <pubDate>2023-06-10T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-06-10-land_tax/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-06-10-land_tax/</guid>
       <description>&lt;p&gt;Me and my partner are in the process of buying our first house. In Scotland, property transactions are subject to &lt;a href=&#34;https://www.gov.scot/policies/taxes/land-and-buildings-transaction-tax/&#34; target=&#34;_blank&#34;&gt;Land Tax&lt;/a&gt;
 . Land Tax is calculated based on the property price and is based on tiers. The first 145k is free, then 145-250k is subject to 2% tax, 250-325k is 5% and so on. For first time buyers the tax free amount is raised to 175k.&lt;/p&gt;
 &lt;p&gt;There are a few &lt;a href=&#34;https://revenue.scot/calculate-tax/calculate-property-transactions&#34; target=&#34;_blank&#34;&gt;online Land Tax calculators&lt;/a&gt;
 , but I wanted something offline so I could automatically update the land tax amount depending on how much we choose to offer on the property we eventually go for.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ve uploaded the .xlsx spreadsheet to calculate the Land Tax &lt;a href=&#34;http://localhost:1313/files/land_tax/scot_land_tax_calc.xlsx&#34;&gt;here&lt;/a&gt;
+&lt;p&gt;I&amp;rsquo;ve uploaded the .xlsx spreadsheet to calculate the Land Tax &lt;a href=&#34;http://johngodlee.xyz/files/land_tax/scot_land_tax_calc.xlsx&#34;&gt;here&lt;/a&gt;
 , in case it is useful for anybody else. You enter the property price, and whether you are eligible for first time buyers relief, and the spreadsheet calculates the total Land Tax payable.&lt;/p&gt;
 &lt;h2 id=&#34;update-2023-08-11&#34;&gt;Update 2023-08-11&lt;/h2&gt;
-&lt;p&gt;I have updated the land tax calculator to be slightly more compact, and added it to a broader &lt;a href=&#34;http://localhost:1313/files/land_tax/scot_house_purchase_calc.xlsx&#34;&gt;house purchase calculator&lt;/a&gt;
+&lt;p&gt;I have updated the land tax calculator to be slightly more compact, and added it to a broader &lt;a href=&#34;http://johngodlee.xyz/files/land_tax/scot_house_purchase_calc.xlsx&#34;&gt;house purchase calculator&lt;/a&gt;
 , which I used when organising our house purchase. This method worked for me, but everybody has different circumstances, so it might not be useful for others.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Geo-referenced Teixeira (1968) Bicuar National Park vegetation map</title>
-      <link>http://localhost:1313/posts/2023-06-01-teixeira_georef/</link>
+      <link>http://johngodlee.xyz/posts/2023-06-01-teixeira_georef/</link>
       <pubDate>2023-06-01T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-06-01-teixeira_georef/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-06-01-teixeira_georef/</guid>
       <description>&lt;p&gt;In a previous post I mentioned that I had been given a copy of J. B. Teixeira&amp;rsquo;s 1968 vegetation map of Bicuar National Park.&lt;/p&gt;
-&lt;p&gt;I just finished geo-referencing and vectorising the map, so I&amp;rsquo;ve &lt;a href=&#34;http://localhost:1313/files/teixeira_georef/teixeira_1968_bicuar_veg_map.zip&#34;&gt;uploaded it here&lt;/a&gt;
+&lt;p&gt;I just finished geo-referencing and vectorising the map, so I&amp;rsquo;ve &lt;a href=&#34;http://johngodlee.xyz/files/teixeira_georef/teixeira_1968_bicuar_veg_map.zip&#34;&gt;uploaded it here&lt;/a&gt;
  in case anybody wants to use it.&lt;/p&gt;
 &lt;p&gt;The geo-referencing process was difficult, and the result isn&amp;rsquo;t perfect. The only clear reference points on the map that are comparable with modern maps are the Cunene river and the locations of the towns of Mulondo and Folgares (now Capelongo). The river appears to have changed its course slightly since 1968, which is plausible, as has the centre of the town of Folgares, where new building has shifted away from the original colonial centre. The outline of the Park is different now, having been redrawn in 2012, notably reducing the size of the Park from the northern boundary. The locations of the mulolas (seasonally flooded grassy valley bottoms) are largely the same, and can be lined up with true colour satellite imagery.&lt;/p&gt;
 &lt;p&gt;I used QGIS for all of the digitising process, drawing polygons by hand. I then spent some time fiddling to adjust some polygons with holes. I learned a lot about the &amp;ldquo;snapping&amp;rdquo; functionality in QGIS, to avoid adjacent polygons with tiny gaps between them.&lt;/p&gt;
 &lt;p&gt;I used &lt;a href=&#34;https://mapshaper.org/&#34; target=&#34;_blank&#34;&gt;mapshaper&lt;/a&gt;
  to clean up the polygons further, using the &lt;code&gt;clean&lt;/code&gt; command in the console. This command repairs various abnormal geometries, e.g. overlaps, small gaps, self-intersections, and orphaned nodes. Then I took the shapefile back into QGIS for a few minor manual adjustments.&lt;/p&gt;
-&lt;p&gt;I labelled the polygons according to the legend in the &lt;a href=&#34;http://localhost:1313/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;original report&lt;/a&gt;
+&lt;p&gt;I labelled the polygons according to the legend in the &lt;a href=&#34;http://johngodlee.xyz/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;original report&lt;/a&gt;
 .&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/teixeira_georef/teixeira_final_print.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/teixeira_georef/teixeira_final_print.png&#34;&gt;&lt;img
           alt=&#34;Georeferenced vector vegetation map overlaid on original map.&#34;
-          title=&#34;Georeferenced vector vegetation map overlaid on original map.&#34;src=&#34;http://localhost:1313/img/teixeira_georef/teixeira_final_print.png&#34; 
+          title=&#34;Georeferenced vector vegetation map overlaid on original map.&#34;src=&#34;http://johngodlee.xyz/img/teixeira_georef/teixeira_final_print.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/teixeira_georef/teixeira_final_satellite_print.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/teixeira_georef/teixeira_final_satellite_print.jpg&#34;&gt;&lt;img
           alt=&#34;Georeferenced vector vegetation map overlaid on true colour satellite imagery.&#34;
-          title=&#34;Georeferenced vector vegetation map overlaid on true colour satellite imagery.&#34;src=&#34;http://localhost:1313/img/teixeira_georef/teixeira_final_satellite_print.png&#34; 
+          title=&#34;Georeferenced vector vegetation map overlaid on true colour satellite imagery.&#34;src=&#34;http://johngodlee.xyz/img/teixeira_georef/teixeira_final_satellite_print.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1306,10 +1306,10 @@ done
     
     <item>
       <title>An email about estimating productivity</title>
-      <link>http://localhost:1313/posts/2023-05-24-productivity_email/</link>
+      <link>http://johngodlee.xyz/posts/2023-05-24-productivity_email/</link>
       <pubDate>2023-05-24T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-05-24-productivity_email/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-05-24-productivity_email/</guid>
       <description>&lt;p&gt;I had a student ask me something along the lines of:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;How do I calculate woody productivity in a woodland plot? I have seen others calculate the difference in standing biomass between censuses as net primary productivity. Is this right?&lt;/p&gt;
@@ -1332,10 +1332,10 @@ done
     
     <item>
       <title>R functions to download data from KoboToolbox</title>
-      <link>http://localhost:1313/posts/2023-05-18-kobo_functions/</link>
+      <link>http://johngodlee.xyz/posts/2023-05-18-kobo_functions/</link>
       <pubDate>2023-05-18T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-05-18-kobo_functions/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-05-18-kobo_functions/</guid>
       <description>&lt;p&gt;I have created a couple of R functions to download data from a &lt;a href=&#34;&#34;&gt;KoboToolbox&lt;/a&gt;
  server, using their API. The functions sometimes fail with a 502 bad gateway error, so it might be worth wrapping them in a &lt;code&gt;try()&lt;/code&gt; statement to get them to fail nicely.&lt;/p&gt;
 &lt;p&gt;First, a function to list all the form IDs for a given user. This function is used primarily to find the form ID, which can be used in the second function to get the data. The function takes either an access token or a username and password and returns a dataframe:&lt;/p&gt;
@@ -1447,23 +1447,23 @@ done
     
     <item>
       <title>Vegetation map of Bicuar National Park - Teixeira 1968</title>
-      <link>http://localhost:1313/posts/2023-05-15-teixeira_bicuar/</link>
+      <link>http://johngodlee.xyz/posts/2023-05-15-teixeira_bicuar/</link>
       <pubDate>2023-05-15T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-05-15-teixeira_bicuar/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-05-15-teixeira_bicuar/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve been searching around for a long time for a copy of a vegetation map of Bicuar National Park, Angola, produced in 1968 by J. B. Teixeira. A number of contemporary publications looking at the ecology of Bicuar reference this map, but I realised I have never seen it. To my knowledge, it remains the only vegetation map of Bicuar National Park. I would like to see if I can geo-reference this map and overlay it on a new vegetation map we are producing, to see how they line up.&lt;/p&gt;
 &lt;p&gt;After lots of emailing I was provided with a scanned copy by a colleague. To make it easier for others to find, I have uploaded a pdf version here:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;Teixeira J. B. (1968). Parque Nacional Do Bicuar. Carta Da Vegetação (1a aproximação) e Memória Descritiva. Instituto de Investigação Agronómica de Angola.&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;Teixeira J. B. (1968). Parque Nacional Do Bicuar. Carta Da Vegetação (1a aproximação) e Memória Descritiva. Instituto de Investigação Agronómica de Angola.&lt;/a&gt;
 &lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Presentations for lectureship interview</title>
-      <link>http://localhost:1313/posts/2023-04-13-job_interview/</link>
+      <link>http://johngodlee.xyz/posts/2023-04-13-job_interview/</link>
       <pubDate>2023-04-13T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-04-13-job_interview/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-04-13-job_interview/</guid>
       <description>&lt;p&gt;I applied for a junior lectureship position in Ecological Science a few weeks ago. Unfortunately I didn&amp;rsquo;t get the job, but the experience forced me to think about who I am as a researcher, what my strengths are, and also what my goals should be if I want to be successful on the next application.&lt;/p&gt;
 &lt;p&gt;As part of the interview process I had to prepare a 20 minute presentation on:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1477,23 +1477,23 @@ done
 &lt;/blockquote&gt;
 &lt;p&gt;Finally, I did a normal question-based interview.&lt;/p&gt;
 &lt;p&gt;I have decided to make the two presentations available online:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/job_interview/research_presentation.pdf&#34;&gt;Research presentation&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/research_presentation.pdf&#34;&gt;Research presentation&lt;/a&gt;
 &lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/job_interview/teaching_presentation.pdf&#34;&gt;Teaching presentation&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_presentation.pdf&#34;&gt;Teaching presentation&lt;/a&gt;
 &lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/job_interview/teaching_schedule.pdf&#34;&gt;Teaching schedule&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_schedule.pdf&#34;&gt;Teaching schedule&lt;/a&gt;
 &lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://localhost:1313/files/job_interview/teaching_statement.pdf&#34;&gt;Teaching statement&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_statement.pdf&#34;&gt;Teaching statement&lt;/a&gt;
 &lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Blog post on fieldwork in Ongava Game Reserve</title>
-      <link>http://localhost:1313/posts/2023-03-14-ongava_blog/</link>
+      <link>http://johngodlee.xyz/posts/2023-03-14-ongava_blog/</link>
       <pubDate>2023-03-14T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2023-03-14-ongava_blog/</guid>
+      <guid>http://johngodlee.xyz/posts/2023-03-14-ongava_blog/</guid>
       <description>&lt;p&gt;I wrote a blog post for Ongava Research Centre on our recent fieldwork in Ongava Game Reserve, where we established 11 vegetation monitoring plots in dry forest, shrubland, woodland and grassland vegetation:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&#34; target=&#34;_blank&#34;&gt;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&lt;/a&gt;
 &lt;/p&gt;

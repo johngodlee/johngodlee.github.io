@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Personal on John L. Godlee</title>
-    <link>http://localhost:1313/tags/personal/</link>
+    <link>http://johngodlee.xyz/tags/personal/</link>
     <description>Recent content in Personal on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2024-06-26T00:00:00+0000</lastBuildDate><atom:link href="http://localhost:1313/tags/personal/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2024-06-26T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/tags/personal/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Bash script to download audio from Youtube</title>
-      <link>http://localhost:1313/posts/2024-06-26-ytdlp/</link>
+      <link>http://johngodlee.xyz/posts/2024-06-26-ytdlp/</link>
       <pubDate>2024-06-26T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2024-06-26-ytdlp/</guid>
+      <guid>http://johngodlee.xyz/posts/2024-06-26-ytdlp/</guid>
       <description>&lt;p&gt;This post is actually about a trick I learned that allows bash scripts to accept input either as a string or from &lt;code&gt;stdin&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Here is the code. It first checks whether at least one argument is provided to the script. If an argument is found it creates a variable containing all the arguments. If no arguments are found, then it waits for input from &lt;code&gt;stdin&lt;/code&gt;, which can either come from a pipe or can be typed in after the script is called.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env bash
@@ -70,10 +70,10 @@
     
     <item>
       <title>Flatbreads</title>
-      <link>http://localhost:1313/posts/2021-04-05-flatbreads/</link>
+      <link>http://johngodlee.xyz/posts/2021-04-05-flatbreads/</link>
       <pubDate>2021-04-05T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2021-04-05-flatbreads/</guid>
+      <guid>http://johngodlee.xyz/posts/2021-04-05-flatbreads/</guid>
       <description>&lt;p&gt;I tried to make flatbreads for the first time at secondary school in food tech class, when I was about 13. We were doing a module on world bread and each student had to pick a culture / country, learn about their bread, and cook some examples. I chose India as my case study and tried to create Thepla. &lt;a href=&#34;https://en.wikipedia.org/wiki/Thepla&#34; target=&#34;_blank&#34;&gt;Thepla&lt;/a&gt;
  is a Gujarati bread made usually with yoghurt, ghee, wheat flour, fenugreek and green chillies. I remember the breads I made turned out quite stodgy and greasy, probably because the pan wasn&amp;rsquo;t hot enough.&lt;/p&gt;
 &lt;p&gt;Now I make flatbreads frequently in all sorts of guises. Here I&amp;rsquo;m defining flatbreads as any bread which is much wider than it is tall. Basically anything that isn&amp;rsquo;t a loaf or roll of some kind. The most generic flatbread I make uses plain flour, vegetable oil, salt and water. It is dry fried in a very hot pan. I make these flatbreads to serve with eggs for breakfast, as wraps for lunch, or to pair with a stew for supper. The recipe I use varies a bit depending on the exact type of bread that I want, but roughly it is:&lt;/p&gt;
@@ -96,27 +96,27 @@
 &lt;li&gt;Fry each bread until bubbles start to form on the surface, then flip and fry the other side until lightly browned, with darker patches where the bubbles are.&lt;/li&gt;
 &lt;li&gt;Stack the breads and possibly cover with a towel to steam them for a couple of minutes.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/dough.JPG&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/flatbreads/dough.JPG&#34;&gt;&lt;img
           alt=&#34;Dough&#34;
-          title=&#34;Dough&#34;src=&#34;http://localhost:1313/img/flatbreads/dough.png&#34; 
+          title=&#34;Dough&#34;src=&#34;http://johngodlee.xyz/img/flatbreads/dough.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/bubbles.JPG&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/flatbreads/bubbles.JPG&#34;&gt;&lt;img
           alt=&#34;Bubbles just before flipping&#34;
-          title=&#34;Bubbles just before flipping&#34;src=&#34;http://localhost:1313/img/flatbreads/bubbles.png&#34; 
+          title=&#34;Bubbles just before flipping&#34;src=&#34;http://johngodlee.xyz/img/flatbreads/bubbles.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/flip.JPG&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/flatbreads/flip.JPG&#34;&gt;&lt;img
           alt=&#34;Browned surface just after flipping&#34;
-          title=&#34;Browned surface just after flipping&#34;src=&#34;http://localhost:1313/img/flatbreads/flip.png&#34; 
+          title=&#34;Browned surface just after flipping&#34;src=&#34;http://johngodlee.xyz/img/flatbreads/flip.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/stack.JPG&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/flatbreads/stack.JPG&#34;&gt;&lt;img
           alt=&#34;Stacked flatbreads to keep them steamy&#34;
-          title=&#34;Stacked flatbreads to keep them steamy&#34;src=&#34;http://localhost:1313/img/flatbreads/stack.png&#34; 
+          title=&#34;Stacked flatbreads to keep them steamy&#34;src=&#34;http://johngodlee.xyz/img/flatbreads/stack.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -140,15 +140,15 @@
 &lt;li&gt;Make thin breads and add a bit of margerine, ghee, butter, or vegetable oil to the pan to make something that resembles an Indian &lt;a href=&#34;https://en.wikipedia.org/wiki/Parotta&#34; target=&#34;_blank&#34;&gt;parotta&lt;/a&gt;
 . Make sure to pick an oil with a high smoke point.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/pan.JPG&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/flatbreads/pan.JPG&#34;&gt;&lt;img
           alt=&#34;Aluminium pan&#34;
-          title=&#34;Aluminium pan&#34;src=&#34;http://localhost:1313/img/flatbreads/pan.png&#34; 
+          title=&#34;Aluminium pan&#34;src=&#34;http://johngodlee.xyz/img/flatbreads/pan.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/parotta.JPG&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/flatbreads/parotta.JPG&#34;&gt;&lt;img
           alt=&#34;A parotta style fltabread, fried in foamy butter&#34;
-          title=&#34;A parotta style fltabread, fried in foamy butter&#34;src=&#34;http://localhost:1313/img/flatbreads/parotta.png&#34; 
+          title=&#34;A parotta style fltabread, fried in foamy butter&#34;src=&#34;http://johngodlee.xyz/img/flatbreads/parotta.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -158,9 +158,9 @@
 , &lt;a href=&#34;https://en.wikipedia.org/wiki/Bazlama&#34; target=&#34;_blank&#34;&gt;bazlama&lt;/a&gt;
 , and &lt;a href=&#34;https://en.wikipedia.org/wiki/Manakish&#34; target=&#34;_blank&#34;&gt;manakish&lt;/a&gt;
  which are often flavoured with fresh herbs or spread with meat and sharp cheese.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/flatbreads/eggs.JPG&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/flatbreads/eggs.JPG&#34;&gt;&lt;img
           alt=&#34;South-western style breakfast eggs with salsa, hot sauce and avocado&#34;
-          title=&#34;South-western style breakfast eggs with salsa, hot sauce and avocado&#34;src=&#34;http://localhost:1313/img/flatbreads/eggs.png&#34; 
+          title=&#34;South-western style breakfast eggs with salsa, hot sauce and avocado&#34;src=&#34;http://johngodlee.xyz/img/flatbreads/eggs.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -169,17 +169,17 @@
     
     <item>
       <title>Planting 10 acres of woodland</title>
-      <link>http://localhost:1313/posts/2021-03-25-planting/</link>
+      <link>http://johngodlee.xyz/posts/2021-03-25-planting/</link>
       <pubDate>2021-03-25T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2021-03-25-planting/</guid>
+      <guid>http://johngodlee.xyz/posts/2021-03-25-planting/</guid>
       <description>&lt;p&gt;This post describes the process I went through with the &lt;a href=&#34;https://www.woodlandtrust.org.uk/plant-trees/large-scale-planting/morewoods/&#34; target=&#34;_blank&#34;&gt;Woodland Trust MOREWoods&lt;/a&gt;
  tree planting scheme, to plant 10 acres (4.05 hectares) on some farmland in North Yorkshire.&lt;/p&gt;
 &lt;p&gt;I found historical maps through the &lt;a href=&#34;https://digimap.edina.ac.uk/&#34; target=&#34;_blank&#34;&gt;University of Edinburgh Digimap&lt;/a&gt;
  service which showed that some of the pasture on our farm had previously been woodland. The images below show what the woodland looked like in 1892, 1919, 1957, and 2018. Clearly at some point between 1919 and 1957 a large portion of the woodland was felled. This is the area I aimed to re-plant. Since at least 1957, the land has only been used as rough pasture for sheep and cattle.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/historic.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/planting/historic.png&#34;&gt;&lt;img
           alt=&#34;Maps of the woodland in 1892, 1919, 1957, and 2018&#34;
-          title=&#34;Maps of the woodland in 1892, 1919, 1957, and 2018&#34;src=&#34;http://localhost:1313/img/planting/historic.png&#34; 
+          title=&#34;Maps of the woodland in 1892, 1919, 1957, and 2018&#34;src=&#34;http://johngodlee.xyz/img/planting/historic.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -191,15 +191,15 @@
  to draw an area of exactly 10 acres, using an &lt;a href=&#34;https://www.gov.uk/government/publications/land-registry-plans-the-basis-of-land-registry-applications/land-registry-plans-the-basis-of-land-registry-plans-practice-guide-40-supplement-1&#34; target=&#34;_blank&#34;&gt;OS 1:2500 map&lt;/a&gt;
  as a guide for the field boundaries. I tried initially to use satellite imagery, but because of the overhang of hedges and trees I found it difficult to accurately determine the boundaries of the field. I measured the distance from known points along the existing fence lines to determine the new fence line. On-site we used a &lt;a href=&#34;https://en.wikipedia.org/wiki/Trundle_wheel&#34; target=&#34;_blank&#34;&gt;trundle wheel&lt;/a&gt;
  to measure those distances and marked the new fence line at both ends with iron rods driven deep into the ground. In hind-sight, we should have used a tape measure rather than a trundle wheel, because the uneven ground messed up the distance measures a bit, but eventually we came to a fence line that everybody agreed on.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/fenceline.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/planting/fenceline.png&#34;&gt;&lt;img
           alt=&#34;Map of the new fence line, with measurements&#34;
-          title=&#34;Map of the new fence line, with measurements&#34;src=&#34;http://localhost:1313/img/planting/fenceline.png&#34; 
+          title=&#34;Map of the new fence line, with measurements&#34;src=&#34;http://johngodlee.xyz/img/planting/fenceline.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/fence.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/planting/fence.jpg&#34;&gt;&lt;img
           alt=&#34;The new fence&#34;
-          title=&#34;The new fence&#34;src=&#34;http://localhost:1313/img/planting/fence.png&#34; 
+          title=&#34;The new fence&#34;src=&#34;http://johngodlee.xyz/img/planting/fence.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -313,9 +313,9 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;To generate these numbers I started off by calculating how many trees would fit in each compartment based on the compartment area and the 2.5 m distance between each tree. Then for each species in each compartment, I decided what percentage of the trees I would like from each species in each compartment. Then I divided the total number of trees by the percentage to get the number of trees per species. Because the trees come in bundles of 25, I then had to round up or down to the nearest 25.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/planting_map.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/planting/planting_map.png&#34;&gt;&lt;img
           alt=&#34;Planting map&#34;
-          title=&#34;Planting map&#34;src=&#34;http://localhost:1313/img/planting/planting_map.png&#34; 
+          title=&#34;Planting map&#34;src=&#34;http://johngodlee.xyz/img/planting/planting_map.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -324,30 +324,30 @@
 &lt;p&gt;Finally there is a wedge-shaped patch at the southern end of the site near the gate which we have left empty so that we can use it for other things. Helpfully this patch coincides with most of the area the archaeology people wanted to leave un-planted. I&amp;rsquo;m hoping to install some bays that we can use to process and keep wood in before it is transported nearer the house for drying. Also I&amp;rsquo;d like to have a bay for wood-chippings, which we are going to use as mulch around the base of the trees to keep weeds down.&lt;/p&gt;
 &lt;p&gt;By the time we got to mid-December 2020 it was clear that having volunteer groups in to plant the trees, as had been the original plan, was untenable because of COVID restrictions that meant we couldn&amp;rsquo;t safely house or feed the volunteers if they needed to stay overnight. Instead we opted to use a professional tree-planting company who are based nearby and who came recommended by a family friend. The tree-planting company cost a lot of money, but under the circumstances it was the only safe option. I still feel guilty for not involving the community more, but circumstance forced my hand.&lt;/p&gt;
 &lt;p&gt;Our trees were delivered on pallets by a lorry with a forklift on the back. We loaded as much as possible onto a trailer, and transported it in batches over to the planting site. Most of the volume of the delivery consisted of tree guards and stakes. The 4725 trees all fitted onto one large pallet. The trees arrived bare rooted in plastic bags, which meant they had to be planted ideally within about 7-10 days.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/delivery.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/planting/delivery.jpg&#34;&gt;&lt;img
           alt=&#34;Tree delivery&#34;
-          title=&#34;Tree delivery&#34;src=&#34;http://localhost:1313/img/planting/delivery.png&#34; 
+          title=&#34;Tree delivery&#34;src=&#34;http://johngodlee.xyz/img/planting/delivery.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;The tree-planting company marked out the different compartments of the planting site with bamboo canes with flagging tape attached. I helped with this process because there were a few adjustments and judgement calls to be made since the gate holes and therefore the 10 m wide track had changed position from when I made the planting map. The tree planting company used an Android mapping app with an overlay of the planting area I had sent them to mark out the different areas. I thought this worked well, but I felt that they relied on it a bit too much and I had to pull them back a couple of times on common sense issues. See the image below where some trees have been planted under an overhanging hedge tree, which is probably not the best idea.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/overhang.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/planting/overhang.jpg&#34;&gt;&lt;img
           alt=&#34;A hedging tree overhanging some of the new planting&#34;
-          title=&#34;A hedging tree overhanging some of the new planting&#34;src=&#34;http://localhost:1313/img/planting/overhang.png&#34; 
+          title=&#34;A hedging tree overhanging some of the new planting&#34;src=&#34;http://johngodlee.xyz/img/planting/overhang.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/marking.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/planting/marking.jpg&#34;&gt;&lt;img
           alt=&#34;Marking out the planting area&#34;
-          title=&#34;Marking out the planting area&#34;src=&#34;http://localhost:1313/img/planting/marking.png&#34; 
+          title=&#34;Marking out the planting area&#34;src=&#34;http://johngodlee.xyz/img/planting/marking.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;I helped with some of the planting, and learned a lot about how to find the rhythm when planting many hundreds of trees, but mostly I left the professionals to it and just checked in every day to see if they had questions or problems. They planted in rows to allow easy access for mowers, but offset each row so that from most angles the trees appear more naturally distributed. I thought this was very effective at breaking the visual lines. See the photo below. Mostly the tree planters didn&amp;rsquo;t use any special equipment, only tree-planting spades, hammers, and bamboo canes, but one incredibly useful addition to their arsenal was a &lt;a href=&#34;https://www.deere.co.uk/en/gator-utility-vehicles/&#34; target=&#34;_blank&#34;&gt;John Deere Gator Utility Vehicle&lt;/a&gt;
 , which looks a bit like an off-road golf cart. It allowed them to quickly move stuff around the site without churning up the wet ground. If they had relied on wheelbarrows instead it would have taken much longer to get set up.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/planted.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/planting/planted.jpg&#34;&gt;&lt;img
           alt=&#34;The planted trees&#34;
-          title=&#34;The planted trees&#34;src=&#34;http://localhost:1313/img/planting/planted.png&#34; 
+          title=&#34;The planted trees&#34;src=&#34;http://johngodlee.xyz/img/planting/planted.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -359,9 +359,9 @@
 &lt;li&gt;Trees where the main stem or a substantial branch was threaded through the zip-tie&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Fixing all these small issues, while tedious, is definitely worth it, as without correction they will severely impact the growth of the tree. Trees without guards will only last a few days before the rabbits and deer snip off them growing tip. Guards without the correct number of zip-ties are likely to blow over in the wind and snap the tree they are guarding. Trees with bent over stems will likely die because it will mess with the gravity flow of auxin down the stem. If the stem is threaded through a zip-tie the zip-tie will choke off the main growing tip as the stem thickens.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/planting/ziptie.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/planting/ziptie.jpg&#34;&gt;&lt;img
           alt=&#34;A tree with the main stem threaded through the zip-tie&#34;
-          title=&#34;A tree with the main stem threaded through the zip-tie&#34;src=&#34;http://localhost:1313/img/planting/ziptie.png&#34; 
+          title=&#34;A tree with the main stem threaded through the zip-tie&#34;src=&#34;http://johngodlee.xyz/img/planting/ziptie.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -396,38 +396,38 @@
     
     <item>
       <title>Fixing a stool</title>
-      <link>http://localhost:1313/posts/2021-03-15-stool/</link>
+      <link>http://johngodlee.xyz/posts/2021-03-15-stool/</link>
       <pubDate>2021-03-15T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2021-03-15-stool/</guid>
+      <guid>http://johngodlee.xyz/posts/2021-03-15-stool/</guid>
       <description>&lt;p&gt;About a year and a half ago I made a stool from a piece of oak, with alder legs. I had just been given a new drawknife for Christmas and wanted to test it out by shaping some pole lengths.&lt;/p&gt;
 &lt;p&gt;The seat of the stool was shaped from a tangential section of a large log. First the log was split down the middle using a splitting maul, then the backside of the log was taken off with a chainsaw, ripping down the grain of the wood, which is slow-going compared to cutting across the grain. Using a tangential section meant that there was some lovely colour difference between the dark heartwood and the pale sapwood.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/stool/seat.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/stool/seat.jpg&#34;&gt;&lt;img
           alt=&#34;Seat of the stool&#34;
-          title=&#34;Seat of the stool&#34;src=&#34;http://localhost:1313/img/stool/seat.png&#34; 
+          title=&#34;Seat of the stool&#34;src=&#34;http://johngodlee.xyz/img/stool/seat.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;I drilled four holes with a brace-and-bit drill and an auger through the seat, to fit the legs. I shaped the alder legs with the drawknife into octagonal shapes, purposely leaving some bits of bark on the corners, which I think adds a nice effect.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/stool/legs.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/stool/legs.jpg&#34;&gt;&lt;img
           alt=&#34;Stool legs&#34;
-          title=&#34;Stool legs&#34;src=&#34;http://localhost:1313/img/stool/legs.png&#34; 
+          title=&#34;Stool legs&#34;src=&#34;http://johngodlee.xyz/img/stool/legs.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;To fit the legs into the seat I shaped the top of the legs down to pegs which could then be tapped into the holes in the seat, and finally wedged with thin slivers of hard yew. I made sure the seat was wet and the legs were dry, so the seat would tighten around the legs.&lt;/p&gt;
 &lt;p&gt;To make the pegs I sawed into the legs then used a flat chisel to split off the wood up to the saw cut, bit by bit. To fine tune I used the chisel to shave down the pegs.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/stool/peg.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/stool/peg.jpg&#34;&gt;&lt;img
           alt=&#34;Shaping the leg pegs&#34;
-          title=&#34;Shaping the leg pegs&#34;src=&#34;http://localhost:1313/img/stool/peg.png&#34; 
+          title=&#34;Shaping the leg pegs&#34;src=&#34;http://johngodlee.xyz/img/stool/peg.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;Clearly I cut too deep on one of the saw cuts for the pegs, because recently the leg snapped off.&lt;/p&gt;
 &lt;p&gt;Instead of shaping new legs I decided to shape a new peg for the broken leg, and just have a shorter stool. I actually think the shorter legs look better, as one of the legs was previously quite bowed and looked a bit silly.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/stool/short.jpg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/stool/short.jpg&#34;&gt;&lt;img
           alt=&#34;New shortened legs&#34;
-          title=&#34;New shortened legs&#34;src=&#34;http://localhost:1313/img/stool/short.png&#34; 
+          title=&#34;New shortened legs&#34;src=&#34;http://johngodlee.xyz/img/stool/short.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -436,10 +436,10 @@
     
     <item>
       <title>Playfair cipher in R</title>
-      <link>http://localhost:1313/posts/2021-01-25-playfair/</link>
+      <link>http://johngodlee.xyz/posts/2021-01-25-playfair/</link>
       <pubDate>2021-01-25T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2021-01-25-playfair/</guid>
+      <guid>http://johngodlee.xyz/posts/2021-01-25-playfair/</guid>
       <description>&lt;p&gt;I was designing a treasure hunt as a Christmas present. I wanted to create a Playfair cipher as the final clue which when decoded would reveal the location of the Christmas present.&lt;/p&gt;
 &lt;p&gt;I used R to construct a function which produces a cipher matrix and key lookup table, and an encoded message. Here is a brief description of how the playfair cipher works:&lt;/p&gt;
 &lt;p&gt;Start with a matrix of letters:&lt;/p&gt;
@@ -560,10 +560,10 @@ r|K|n|I|c|M
     
     <item>
       <title>Pandoc LaTeX shopping list template</title>
-      <link>http://localhost:1313/posts/2021-01-05-shopping_list/</link>
+      <link>http://johngodlee.xyz/posts/2021-01-05-shopping_list/</link>
       <pubDate>2021-01-05T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2021-01-05-shopping_list/</guid>
+      <guid>http://johngodlee.xyz/posts/2021-01-05-shopping_list/</guid>
       <description>&lt;p&gt;I wanted to be able to create a printable shopping list with nice formatting, mainly as an exercise in practicing Pandoc templating, but also maybe to try and automate some of the recurring struggles with buying enough groceries and the correct items. Here is the LaTeX template:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;[a4paper, 12pt, twocolumn]&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
@@ -650,9 +650,9 @@ r|K|n|I|c|M
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#204a87&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Key features are a redefined title section so it doesn&amp;rsquo;t take up so much space, tickable boxes instead of bullet points, and some trickery with the section headings so they take up less space, and so that a section never breaks across two columns or pages.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/shopping_list/list.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/shopping_list/list.png&#34;&gt;&lt;img
           alt=&#34;Example shopping list&#34;
-          title=&#34;Example shopping list&#34;src=&#34;http://localhost:1313/img/shopping_list/list.png&#34; 
+          title=&#34;Example shopping list&#34;src=&#34;http://johngodlee.xyz/img/shopping_list/list.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -661,10 +661,10 @@ r|K|n|I|c|M
     
     <item>
       <title>Tiling wallpapers</title>
-      <link>http://localhost:1313/posts/2020-12-10-tiling/</link>
+      <link>http://johngodlee.xyz/posts/2020-12-10-tiling/</link>
       <pubDate>2020-12-10T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-12-10-tiling/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-12-10-tiling/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve recently become enamoured with tiling desktop wallpapers. These are wallpapers where the image is repeated across the screen in a regular grid to produce the illusion of a continuous texture. Tiling wallpapers used to be a necessity when hard drive space and memory were limited. Now they&amp;rsquo;re more of a curiosity and source of nostalgia. One benefit of tiling wallpapers is that I can store them in my dotfiles repo and the repo will still stay small, while some other wallpapers I have can be up to 50MB.&lt;/p&gt;
 &lt;p&gt;I was initially inspired by &lt;a href=&#34;https://old.reddit.com/r/unixporn/comments/7ivelb/xfce_got_obsessed_with_tiling_wallpapers/&#34; target=&#34;_blank&#34;&gt;this post on reddit&lt;/a&gt;
  which uses a retro looking XFCE window manager setup. It almost looks more like FVWM.&lt;/p&gt;
@@ -678,93 +678,93 @@ r|K|n|I|c|M
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;I wanted to showcase a few of my favourite tiling wallpapers, which can be seen below. The way this website renders dithered images will probably make some of the screenshots look terrible at this resolution, so click the images to see them full size. All the images below were captured wit hthe same pixel dimensions by the way, and so are directly comparable:&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/blue_rivet.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/blue_rivet.png&#34;&gt;&lt;img
           alt=&#34;Blue rivets&#34;
-          title=&#34;Blue rivets&#34;src=&#34;http://localhost:1313/img/tiling/blue_rivet.png&#34; 
+          title=&#34;Blue rivets&#34;src=&#34;http://johngodlee.xyz/img/tiling/blue_rivet.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/cyan_diag_tile.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/cyan_diag_tile.png&#34;&gt;&lt;img
           alt=&#34;Cyan diagonal tiles&#34;
-          title=&#34;Cyan diagonal tiles&#34;src=&#34;http://localhost:1313/img/tiling/cyan_diag_tile.png&#34; 
+          title=&#34;Cyan diagonal tiles&#34;src=&#34;http://johngodlee.xyz/img/tiling/cyan_diag_tile.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/forest.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/forest.png&#34;&gt;&lt;img
           alt=&#34;Forest&#34;
-          title=&#34;Forest&#34;src=&#34;http://localhost:1313/img/tiling/forest.png&#34; 
+          title=&#34;Forest&#34;src=&#34;http://johngodlee.xyz/img/tiling/forest.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/blue_wave.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/blue_wave.png&#34;&gt;&lt;img
           alt=&#34;Blue wave&#34;
-          title=&#34;Blue wave&#34;src=&#34;http://localhost:1313/img/tiling/blue_wave.png&#34; 
+          title=&#34;Blue wave&#34;src=&#34;http://johngodlee.xyz/img/tiling/blue_wave.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/weave.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/weave.png&#34;&gt;&lt;img
           alt=&#34;Weave&#34;
-          title=&#34;Weave&#34;src=&#34;http://localhost:1313/img/tiling/weave.png&#34; 
+          title=&#34;Weave&#34;src=&#34;http://johngodlee.xyz/img/tiling/weave.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/grey_tile.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/grey_tile.png&#34;&gt;&lt;img
           alt=&#34;Grey tile&#34;
-          title=&#34;Grey tile&#34;src=&#34;http://localhost:1313/img/tiling/grey_tile.png&#34; 
+          title=&#34;Grey tile&#34;src=&#34;http://johngodlee.xyz/img/tiling/grey_tile.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/narrow_cyan_diag.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/narrow_cyan_diag.png&#34;&gt;&lt;img
           alt=&#34;Narrow cyan diagonal lines&#34;
-          title=&#34;Narrow cyan diagonal lines&#34;src=&#34;http://localhost:1313/img/tiling/narrow_cyan_diag.png&#34; 
+          title=&#34;Narrow cyan diagonal lines&#34;src=&#34;http://johngodlee.xyz/img/tiling/narrow_cyan_diag.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/wide_cyan_diag.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/wide_cyan_diag.png&#34;&gt;&lt;img
           alt=&#34;Wide cyan diagonal tiles&#34;
-          title=&#34;Wide cyan diagonal tiles&#34;src=&#34;http://localhost:1313/img/tiling/wide_cyan_diag.png&#34; 
+          title=&#34;Wide cyan diagonal tiles&#34;src=&#34;http://johngodlee.xyz/img/tiling/wide_cyan_diag.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/neg_grey_box.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/neg_grey_box.png&#34;&gt;&lt;img
           alt=&#34;Negative grey box&#34;
-          title=&#34;Negative grey box&#34;src=&#34;http://localhost:1313/img/tiling/neg_grey_box.png&#34; 
+          title=&#34;Negative grey box&#34;src=&#34;http://johngodlee.xyz/img/tiling/neg_grey_box.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/small_cyan_tile.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/small_cyan_tile.png&#34;&gt;&lt;img
           alt=&#34;Small cyan tile&#34;
-          title=&#34;Small cyan tile&#34;src=&#34;http://localhost:1313/img/tiling/small_cyan_tile.png&#34; 
+          title=&#34;Small cyan tile&#34;src=&#34;http://johngodlee.xyz/img/tiling/small_cyan_tile.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/mid_cyan_tile.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/mid_cyan_tile.png&#34;&gt;&lt;img
           alt=&#34;Medium cyan tile&#34;
-          title=&#34;Medium cyan tile&#34;src=&#34;http://localhost:1313/img/tiling/mid_cyan_tile.png&#34; 
+          title=&#34;Medium cyan tile&#34;src=&#34;http://johngodlee.xyz/img/tiling/mid_cyan_tile.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/large_cyan_tile.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/large_cyan_tile.png&#34;&gt;&lt;img
           alt=&#34;Large cyan tile&#34;
-          title=&#34;Large cyan tile&#34;src=&#34;http://localhost:1313/img/tiling/large_cyan_tile.png&#34; 
+          title=&#34;Large cyan tile&#34;src=&#34;http://johngodlee.xyz/img/tiling/large_cyan_tile.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/blue_tile.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/blue_tile.png&#34;&gt;&lt;img
           alt=&#34;Blue tile&#34;
-          title=&#34;Blue tile&#34;src=&#34;http://localhost:1313/img/tiling/blue_tile.png&#34; 
+          title=&#34;Blue tile&#34;src=&#34;http://johngodlee.xyz/img/tiling/blue_tile.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/purple_wave.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/purple_wave.png&#34;&gt;&lt;img
           alt=&#34;Purple wave&#34;
-          title=&#34;Purple wave&#34;src=&#34;http://localhost:1313/img/tiling/purple_wave.png&#34; 
+          title=&#34;Purple wave&#34;src=&#34;http://johngodlee.xyz/img/tiling/purple_wave.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/tiling/purple.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tiling/purple.png&#34;&gt;&lt;img
           alt=&#34;Purple texture&#34;
-          title=&#34;Purple texture&#34;src=&#34;http://localhost:1313/img/tiling/purple.png&#34; 
+          title=&#34;Purple texture&#34;src=&#34;http://johngodlee.xyz/img/tiling/purple.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -790,17 +790,17 @@ narrow_cyan_diag.png    195
       blue_rivet.bmp    630
        grey_tile.bmp   1270
           purple.png   2297
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The files for each of the wallpapers seen above &lt;a href=&#34;http://localhost:1313/files/tiling/tiles.zip&#34;&gt;can be found here&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The files for each of the wallpapers seen above &lt;a href=&#34;http://johngodlee.xyz/files/tiling/tiles.zip&#34;&gt;can be found here&lt;/a&gt;
 .&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Scripting qutebrowser to grab papers with scidownl</title>
-      <link>http://localhost:1313/posts/2020-10-17-scidownl/</link>
+      <link>http://johngodlee.xyz/posts/2020-10-17-scidownl/</link>
       <pubDate>2020-10-17T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-10-17-scidownl/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-10-17-scidownl/</guid>
       <description>&lt;p&gt;I have been using &lt;a href=&#34;https://github.com/Tishacy/SciDownl&#34; target=&#34;_blank&#34;&gt;scidownl&lt;/a&gt;
  to download scientific papers using that I find on the web. It&amp;rsquo;s quicker than using the journals&amp;rsquo; own pdf download interface, which often requires multiple button clicks and validating through my university.&lt;/p&gt;
 &lt;p&gt;With scidownl I can copy a DOI that I find on the web and download the paper:&lt;/p&gt;
@@ -819,36 +819,36 @@ narrow_cyan_diag.png    195
     
     <item>
       <title>Propagating basil</title>
-      <link>http://localhost:1313/posts/2020-10-10-basil/</link>
+      <link>http://johngodlee.xyz/posts/2020-10-10-basil/</link>
       <pubDate>2020-10-10T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-10-10-basil/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-10-10-basil/</guid>
       <description>&lt;p&gt;We have a basil plant in the kitchen, bought from a supermarket. They always die, but we use a lot of basil in our cooking and I dislike having to buy a new plant every few weeks. Over time these store-bought basil plants tend to get leggy and thin out. I looked around and found a &lt;a href=&#34;https://www.youtube.com/watch?v=byoEBdVoVpM&#34; target=&#34;_blank&#34;&gt;good video on Youtube&lt;/a&gt;
  which demonstrates how to take cuttings from basil.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/basil/pot.jpeg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/basil/pot.jpeg&#34;&gt;&lt;img
           alt=&#34;Original basil plant after pruning&#34;
-          title=&#34;Original basil plant after pruning&#34;src=&#34;http://localhost:1313/img/basil/pot.png&#34; 
+          title=&#34;Original basil plant after pruning&#34;src=&#34;http://johngodlee.xyz/img/basil/pot.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;The key is to cut just below a stem node, to take advantage of the lateral meristem tissue found there to promote root growth.&lt;/p&gt;
 &lt;p&gt;I suspended the cuttings plants in water for two weeks on a windowsill, but didn&amp;rsquo;t add any rooting hormone or use growth lamps as the video suggested. After two weeks there was a good amount of root growth on most of the cuttings, ~2-4 cm. Out of 10 cuttings, two died, mainly because they weren&amp;rsquo;t suspended properly in the water and drowned.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/basil/cutting.jpeg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/basil/cutting.jpeg&#34;&gt;&lt;img
           alt=&#34;Cuttings growing in water&#34;
-          title=&#34;Cuttings growing in water&#34;src=&#34;http://localhost:1313/img/basil/cutting.png&#34; 
+          title=&#34;Cuttings growing in water&#34;src=&#34;http://johngodlee.xyz/img/basil/cutting.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/basil/roots.jpeg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/basil/roots.jpeg&#34;&gt;&lt;img
           alt=&#34;Root growth of cutting after two weeks in water&#34;
-          title=&#34;Root growth of cutting after two weeks in water&#34;src=&#34;http://localhost:1313/img/basil/roots.png&#34; 
+          title=&#34;Root growth of cutting after two weeks in water&#34;src=&#34;http://johngodlee.xyz/img/basil/roots.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
 &lt;p&gt;Each cutting was planted in its own tin can, with holes punched in the bottom for drainage. One problem with the store-bought basil plants is that they group multiple plants together in the same pot to give the illusion of a lush, full plant. But this overcrowding promotes the leggy growth and eventual death.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/basil/can.jpeg&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/basil/can.jpeg&#34;&gt;&lt;img
           alt=&#34;New cutting in tin can&#34;
-          title=&#34;New cutting in tin can&#34;src=&#34;http://localhost:1313/img/basil/can.png&#34; 
+          title=&#34;New cutting in tin can&#34;src=&#34;http://johngodlee.xyz/img/basil/can.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -857,10 +857,10 @@ narrow_cyan_diag.png    195
     
     <item>
       <title>Making playlists for cmus</title>
-      <link>http://localhost:1313/posts/2020-09-10-cmus_playlist/</link>
+      <link>http://johngodlee.xyz/posts/2020-09-10-cmus_playlist/</link>
       <pubDate>2020-09-10T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-09-10-cmus_playlist/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-09-10-cmus_playlist/</guid>
       <description>&lt;p&gt;I use &lt;a href=&#34;https://github.com/cmus/cmus&#34; target=&#34;_blank&#34;&gt;cmus&lt;/a&gt;
  as the music player on my laptop. I routinely use the track queue feature to create an immediate playlist of the next few songs, but never got to grips with creating persistent themed playlists. It turns out it&amp;rsquo;s not that hard, the documentation just seems a bit sparse.&lt;/p&gt;
 &lt;p&gt;Playlists are stored in plain text files, on my system inside &lt;code&gt;~/.config/cmus/playlists/&lt;/code&gt;. The &lt;code&gt;default&lt;/code&gt; playlist (filename and playlist name) is created by default. It&amp;rsquo;s merely a list of filepaths referencing song locations, one filepath per line. The filename can contain spaces and so can the filepaths, with no quoting or escape sequences required. New playlists can be added by adding files to the directory. An example playlist:&lt;/p&gt;
@@ -873,10 +873,10 @@ narrow_cyan_diag.png    195
     
     <item>
       <title>Sort and filter .bib files</title>
-      <link>http://localhost:1313/posts/2020-08-24-bib_sort/</link>
+      <link>http://johngodlee.xyz/posts/2020-08-24-bib_sort/</link>
       <pubDate>2020-08-24T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-08-24-bib_sort/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-08-24-bib_sort/</guid>
       <description>&lt;p&gt;I have a master &lt;code&gt;.bib&lt;/code&gt; file called &lt;code&gt;lib.bib&lt;/code&gt;, which contains all the BibTeX citations I&amp;rsquo;ve ever used. I use it as an index for organising which papers I&amp;rsquo;ve read and it means it&amp;rsquo;s easier to reuse references for new manuscripts. When I submit a manuscript to a journal however, I want to include a standalone &lt;code&gt;.bib&lt;/code&gt; file which only contains the references for the current manuscript. I wrote a little shell script which leverages &lt;a href=&#34;https://github.com/BurntSushi/ripgrep&#34; target=&#34;_blank&#34;&gt;ripgrep (rg)&lt;/a&gt;
  to create a sorted and filtered &lt;code&gt;.bib&lt;/code&gt; file:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env sh
@@ -896,10 +896,10 @@ done
     
     <item>
       <title>Exporting draw.io images to LaTeX</title>
-      <link>http://localhost:1313/posts/2020-07-22-drawio_latex/</link>
+      <link>http://johngodlee.xyz/posts/2020-07-22-drawio_latex/</link>
       <pubDate>2020-07-22T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-07-22-drawio_latex/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-07-22-drawio_latex/</guid>
       <description>&lt;p&gt;I discovered and tweaked a nifty one-liner which allows me to take &lt;code&gt;.drawio&lt;/code&gt; files generated by &lt;a href=&#34;https://app.diagrams.net/&#34; target=&#34;_blank&#34;&gt;Draw.io&lt;/a&gt;
  and export them as clean vector-based &lt;code&gt;.pdf&lt;/code&gt; files which I can then include in a LaTeX document:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env sh
@@ -911,10 +911,10 @@ find . -name *.drawio -exec rm -f ../img/{}.pdf \; -exec /Applications/draw.io.a
     
     <item>
       <title>How I cast Youtube videos to the TV</title>
-      <link>http://localhost:1313/posts/2020-07-15-youtube/</link>
+      <link>http://johngodlee.xyz/posts/2020-07-15-youtube/</link>
       <pubDate>2020-07-15T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-07-15-youtube/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-07-15-youtube/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve seen other people using a Chromecast and an Android phone to play Youtube videos on their TV. I wanted to do the same thing but instead I wanted to use my laptop. It turns out this is pretty difficult without using Google Chrome. I have since come up with a system which works reasonably well.&lt;/p&gt;
 &lt;p&gt;I use &lt;a href=&#34;https://qutebrowser.org/&#34; target=&#34;_blank&#34;&gt;Qutebrowser&lt;/a&gt;
  as my web browser. I configured qutebrowser to pipe videos to &lt;a href=&#34;https://www.videolan.org/vlc&#34; target=&#34;_blank&#34;&gt;VLC&lt;/a&gt;
@@ -930,10 +930,10 @@ find . -name *.drawio -exec rm -f ../img/{}.pdf \; -exec /Applications/draw.io.a
     
     <item>
       <title>A weekend of consultations on woodland planting</title>
-      <link>http://localhost:1313/posts/2020-07-10-consultation/</link>
+      <link>http://johngodlee.xyz/posts/2020-07-10-consultation/</link>
       <pubDate>2020-07-10T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-07-10-consultation/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-07-10-consultation/</guid>
       <description>&lt;p&gt;Over last weekend I had a couple of meetings about the woodland planting project I&amp;rsquo;m managing. I also had lots of time on the planting site to think about things. Being in the physical location helped massively to visualise how the planting might work and it gave me a lot of inspiration.&lt;/p&gt;
 &lt;p&gt;My goal is to extend an existing woodland, approximate doubling its size. I&amp;rsquo;m hoping to increase the ecological benefits of the woodland by increasing the woodland interior, and to turn the additional land into something more productive. At the moment it&amp;rsquo;s just rough sheep pasture, and doesn&amp;rsquo;t support a lot of grass, mostly because it&amp;rsquo;s over-grazed. In total we are planting about four hectares. We have managed to get a grant which will pay for 75% of the cost of the trees and tree-guards. We just have to pay for the fencing and to provide labour for the planting, which I am hoping to accomplish mostly with volunteers.&lt;/p&gt;
 &lt;p&gt;It&amp;rsquo;s the first time I have managed a project like this, though I&amp;rsquo;ve found that many previous experiences have set me up well for the new challenge. For example, the team delegation aspect I&amp;rsquo;ve found myself drawing on fieldwork experience from my PhD, and the same with marking out the area to be planted, which is very similar to the way I mark out woodland plots in southern Africa. I&amp;rsquo;ve been using lots of GIS skills to make maps and estimate planting density. It&amp;rsquo;s unfortunate that I can&amp;rsquo;t share the maps in this post, but I want to maintain some privacy. I have been thinking back to old conservation volunteer projects when considering the best way to organise the actual planting of the trees. I&amp;rsquo;m hoping that my old conservation volunteer group might be able to help with the tree planting when the time comes.&lt;/p&gt;
@@ -959,10 +959,10 @@ find . -name *.drawio -exec rm -f ../img/{}.pdf \; -exec /Applications/draw.io.a
     
     <item>
       <title>Vim HTML img tag to markdown</title>
-      <link>http://localhost:1313/posts/2020-06-30-vim-html-md/</link>
+      <link>http://johngodlee.xyz/posts/2020-06-30-vim-html-md/</link>
       <pubDate>2020-06-30T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-06-30-vim-html-md/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-06-30-vim-html-md/</guid>
       <description>&lt;p&gt;I was quite proud of myself for figuring this one out in only about 2 minutes, in Vim. Starting with an HTML img tag:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;img/jetz_table.png&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Functional diversity measures&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;width&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;640&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And using this Vim regex:&lt;/p&gt;
@@ -975,10 +975,10 @@ find . -name *.drawio -exec rm -f ../img/{}.pdf \; -exec /Applications/draw.io.a
     
     <item>
       <title>FZF script for searching a lookup table</title>
-      <link>http://localhost:1313/posts/2020-06-15-fzf_csv/</link>
+      <link>http://johngodlee.xyz/posts/2020-06-15-fzf_csv/</link>
       <pubDate>2020-06-15T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-06-15-fzf_csv/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-06-15-fzf_csv/</guid>
       <description>&lt;p&gt;I have a very long lookup table which corrects synonymy in species names.&lt;/p&gt;
 &lt;p&gt;The table is a &lt;code&gt;.csv&lt;/code&gt; with the original name in the first column and the corrected name in the second column.&lt;/p&gt;
 &lt;p&gt;I wrote a shell script which uses &lt;code&gt;fzf&lt;/code&gt; to search the table and outputs the corrected name:&lt;/p&gt;
@@ -993,10 +993,10 @@ echo &amp;#34;${csv}&amp;#34; | fzf | sed &amp;#39;s/.*--\ //&amp;#39;
     
     <item>
       <title>Snippets to tweak macOS Finder.app</title>
-      <link>http://localhost:1313/posts/2020-05-10-finder/</link>
+      <link>http://johngodlee.xyz/posts/2020-05-10-finder/</link>
       <pubDate>2020-05-10T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-05-10-finder/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-05-10-finder/</guid>
       <description>&lt;p&gt;MacOS&amp;rsquo; Finder.app and the Dock aren&amp;rsquo;t really designed for power users, but both are so integral to the Desktop Environment that it&amp;rsquo;s difficult to do without. Fortunately there are a few tweaks which can be made to make both a bit better. Below is a list of the various code snippets I&amp;rsquo;ve used to adjust Finder, the Dock, and a couple of other closely related utilities that come bundled with macOS:&lt;/p&gt;
 &lt;p&gt;Show full filepath in Finder address bar:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;defaults write com.apple.finder _FXShowPosixPathInTitle -bool true; killall Finder
@@ -1037,10 +1037,10 @@ defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
     
     <item>
       <title>Shiny app to visualise scaled planetary orbits on world map</title>
-      <link>http://localhost:1313/posts/2020-04-30-orbit/</link>
+      <link>http://johngodlee.xyz/posts/2020-04-30-orbit/</link>
       <pubDate>2020-04-30T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-04-30-orbit/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-04-30-orbit/</guid>
       <description>&lt;p&gt;When I was in primary school I remember going into the playground to do a fun thought experiment to try and teach us just how vast the Solar System is, how much space there is between the planets, and how tiny the planets are compared to the Sun. We got a football to represent the Sun and measured the diameter. The teacher then did some maths to calculate how far away the planets would be if the Sun was the size of the football. The teacher then got us to lay out a long tape measure, and stand at distances along the tape measure to represent the planets. One child would be Jupiter, another child would be Saturn and get to hold a hula hoop to represent the rings.&lt;/p&gt;
 &lt;p&gt;I was talking with a friend who now works in science communication about this and I started to think about a place for a web-app that lets you define the size of your Sun model and then displays on a map the correctly scaled full orbits of the planets. You could say to your audience &amp;ldquo;if the Sun was 30 cm diameter, Neptune would be in the next town over&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;I only know how to make web apps in R Shiny, so I made one, and published it &lt;a href=&#34;https://johngodlee.shinyapps.io/orbit_app/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;
@@ -1052,9 +1052,9 @@ defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 &lt;li&gt;Orbital eccentricity&lt;/li&gt;
 &lt;li&gt;Longitude of ascending node&lt;/li&gt;
 &lt;/ul&gt;
-&lt;figure&gt;&lt;a href=&#34;http://localhost:1313/img_full/orbit/scrot.png&#34;&gt;&lt;img
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/orbit/scrot.png&#34;&gt;&lt;img
           alt=&#34;Screenshot of Shiny app showing orbits&#34;
-          title=&#34;Screenshot of Shiny app showing orbits&#34;src=&#34;http://localhost:1313/img/orbit/scrot.png&#34; 
+          title=&#34;Screenshot of Shiny app showing orbits&#34;src=&#34;http://johngodlee.xyz/img/orbit/scrot.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
@@ -1063,10 +1063,10 @@ defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
     
     <item>
       <title>Compiling a single master.tex from a modular document</title>
-      <link>http://localhost:1313/posts/2020-04-25-latex-main/</link>
+      <link>http://johngodlee.xyz/posts/2020-04-25-latex-main/</link>
       <pubDate>2020-04-25T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-04-25-latex-main/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-04-25-latex-main/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve recently submitted a paper to a peer reviewed journal. During the final proofing process it was clear that the editors at the journal had taken my original paper.tex file, which calls a load of other .tex files using &lt;code&gt;\input{}&lt;/code&gt;, as well as a .bib file with &lt;code&gt;\bibliography{}&lt;/code&gt;, and subbed in the contents of those files to form one .tex file which could then be compiled on its own, without the additional files originally called by my paper.tex.&lt;/p&gt;
 &lt;p&gt;It seemed like this process could be automated somewhat, so I set about writing a bash script.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env bash
@@ -1125,10 +1125,10 @@ latexmk -C
     
     <item>
       <title>Comparison of F-droid notetaking apps on Android</title>
-      <link>http://localhost:1313/posts/2020-04-05-note-app/</link>
+      <link>http://johngodlee.xyz/posts/2020-04-05-note-app/</link>
       <pubDate>2020-04-05T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/posts/2020-04-05-note-app/</guid>
+      <guid>http://johngodlee.xyz/posts/2020-04-05-note-app/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve been looking for a better notetaking app on my Android phone. There are &lt;strong&gt;lots&lt;/strong&gt; of notetaking apps on the Google Play Store and they vary massively in features, speed, reliability, privacy, and app size. &lt;a href=&#34;https://f-droid.org/&#34; target=&#34;_blank&#34;&gt;F-droid&lt;/a&gt;
  also has a lot of notetaking apps and these vary in quality even more, with many being abandoned hobby projects, and some with very niche features. I think that it&amp;rsquo;s important to support free and open source software, so I limited myself to searching for a new notetaking app on F-droid.&lt;/p&gt;
 &lt;p&gt;I decided to do a comparison of all the notetaking apps currently available on F-droid to find my favourite. I kept in mind things like:&lt;/p&gt;

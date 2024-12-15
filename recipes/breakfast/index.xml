@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Breakfast on John L. Godlee</title>
-    <link>http://localhost:1313/recipes/breakfast/</link>
+    <link>http://johngodlee.xyz/recipes/breakfast/</link>
     <description>Recent content in Breakfast on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-gb</language><atom:link href="http://localhost:1313/recipes/breakfast/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-gb</language><atom:link href="http://johngodlee.xyz/recipes/breakfast/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chilaquiles</title>
-      <link>http://localhost:1313/recipes/breakfast/chilaquiles/</link>
+      <link>http://johngodlee.xyz/recipes/breakfast/chilaquiles/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/recipes/breakfast/chilaquiles/</guid>
+      <guid>http://johngodlee.xyz/recipes/breakfast/chilaquiles/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;1 avocado, sliced&lt;/li&gt;
@@ -38,10 +38,10 @@
     
     <item>
       <title>Freezer breakfast burritos</title>
-      <link>http://localhost:1313/recipes/breakfast/freezer_breakfast_burritos/</link>
+      <link>http://johngodlee.xyz/recipes/breakfast/freezer_breakfast_burritos/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/recipes/breakfast/freezer_breakfast_burritos/</guid>
+      <guid>http://johngodlee.xyz/recipes/breakfast/freezer_breakfast_burritos/</guid>
       <description>&lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;12 eggs&lt;/li&gt;
@@ -82,10 +82,10 @@
     
     <item>
       <title>Overnight oats</title>
-      <link>http://localhost:1313/recipes/breakfast/overnight_oats/</link>
+      <link>http://johngodlee.xyz/recipes/breakfast/overnight_oats/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/recipes/breakfast/overnight_oats/</guid>
+      <guid>http://johngodlee.xyz/recipes/breakfast/overnight_oats/</guid>
       <description>&lt;p&gt;To make one serving.&lt;/p&gt;
 &lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
@@ -123,10 +123,10 @@
     
     <item>
       <title>Porridge</title>
-      <link>http://localhost:1313/recipes/breakfast/porridge/</link>
+      <link>http://johngodlee.xyz/recipes/breakfast/porridge/</link>
       <pubDate>0001-01-01T00:00:00+0000</pubDate>
       
-      <guid>http://localhost:1313/recipes/breakfast/porridge/</guid>
+      <guid>http://johngodlee.xyz/recipes/breakfast/porridge/</guid>
       <description>&lt;p&gt;To make one serving.&lt;/p&gt;
 &lt;h2 id=&#34;ingredients&#34;&gt;Ingredients&lt;/h2&gt;
 &lt;ul&gt;
