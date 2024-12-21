@@ -6,7 +6,50 @@
     <description>Recent content in Archive on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2024-10-27T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2024-12-21T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Comparison of Mo et al. (2024) global wood density with plots in the seasonally dry tropics</title>
+      <link>http://johngodlee.xyz/posts/2024-12-21-mo_wood_density/</link>
+      <pubDate>2024-12-21T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/2024-12-21-mo_wood_density/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://doi.org/10.1038/s41559-024-02564-9&#34; target=&#34;_blank&#34;&gt;This paper was recently published&lt;/a&gt;
+:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Mo, L., Crowther, T.W., Maynard, D.S. et al. The global distribution and drivers of wood density and their impact on forest carbon stocks. Nat Ecol Evol 8, 2195–2212 (2024).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In the paper, the authors use plot data from 1.1 million forest plots, and wood density data from 10,703 tree species, to explore global patterns in wood density. They find that water availability, measured in their case by mean annual temperature and soil moisture, is correlated with wood density, globally. They suggest that the mechanism for this is that trees in &amp;ldquo;warm and dry regions are likely to develop denser wood to maintain xylem resistance against implosion and rupture&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Notably, this study included hardly any plot data from the seasonally dry tropics, including tropical savannas and dry forests. There is a particular lack of data from southern Africa:&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/mo_wood_density/mo_fig1.png&#34;&gt;&lt;img
+          alt=&#34;Figure 1d from Mo et al. (2024), showing the lack of plot data from tropical savannas and dry forests.&#34;
+          title=&#34;Figure 1d from Mo et al. (2024), showing the lack of plot data from tropical savannas and dry forests.&#34;src=&#34;http://johngodlee.xyz/img/mo_wood_density/mo_fig1.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;The authors use random-forest models to develop wall-to-wall maps of predicted wood density across forested landscapes.&lt;/p&gt;
+&lt;p&gt;In my post-doc, we have amassed a dataset of ~1500 plots from across the seasonally dry tropics, for which we have estimates of wood density for each tree (&amp;gt;5 or &amp;gt;10 cm diameter). We used wood density data from the Global Wood Density Database (Zanne et al. 2009) with extra data from Vieilledent et al. (2018). We used the &lt;code&gt;BIOMASS:getWoodDensity()&lt;/code&gt; function to estimate individual tree wood density, which uses the species estimate where possible, then genus, family, and finally plot-level if no data is available.&lt;/p&gt;
+&lt;p&gt;As in Mo et al. (2024), I took the Community Weighted Mean (CWM) of wood density by basal area from each plot, using the most recent census for each plot.&lt;/p&gt;
+&lt;p&gt;Below is a plot comparing our estimates of the CWM of wood density from each of our plots, with the corresponding pixels from the community wood density map in Mo et al. (2024) (see Figure 3a in the paper). The line is a GAM smooth fit:&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/mo_wood_density/wd_comp.png&#34;&gt;&lt;img
+          alt=&#34;Comparison of wood density estimates from plots in tropical savannas and dry forests, with pixel estimates from Mo et al. (2024)&#34;
+          title=&#34;Comparison of wood density estimates from plots in tropical savannas and dry forests, with pixel estimates from Mo et al. (2024)&#34;src=&#34;http://johngodlee.xyz/img/mo_wood_density/wd_comp.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;I think this shows good agreement between our plot-level estimates and the spatialised estimates from the paper. We show greater variation in wood density, but the average wood density of our plots at any level of Mo et al.&amp;rsquo;s estimates is about the same.&lt;/p&gt;
+&lt;p&gt;We do not however, see strong relationships between plot-level wood density estimates in the seasonally dry tropics with precipitation or temperature (ERA5-Land 1980-2022). There is a weak negative correlation between precipitation and wood density, as in the paper, but we don&amp;rsquo;t see any effect of temperature, which the paper regards as the strongest environmental filter acting on wood density.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/mo_wood_density/wd_map_mat.png&#34;&gt;&lt;img
+          alt=&#34;Comparison of wood density estimates from plots in tropical savannas and dry forests with precipitation and temperature climatologies.&#34;
+          title=&#34;Comparison of wood density estimates from plots in tropical savannas and dry forests with precipitation and temperature climatologies.&#34;src=&#34;http://johngodlee.xyz/img/mo_wood_density/wd_map_mat.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;This might because our data, which span the environmental space of woody ecosystems in the dry tropics, don&amp;rsquo;t cover a wide enough environmental gradient to detect an effect of temperature, while the data in Mo et al. (2024) cover a wide range of biomes across a broad latitudinal range.&lt;/p&gt;
+&lt;p&gt;From this basic comparison, it seems like the lack of data from the seasonally dry tropics hasn&amp;rsquo;t harmed the estimates in Mo et al. (2024). I wonder though, if they did add more data from the seasonally dry tropics, would they find a stronger effect of fire disturbance, and a weaker effect of temperature on wood density? The authors acknowledge that their dataset of global &amp;ldquo;forests&amp;rdquo; might under-represent fire, and there is a clear bias towards temperate and boreal regions in their plot data.&lt;/p&gt;
+&lt;p&gt;I see this wood density map being especially helpful in building biomass maps from radar or LiDAR data, which can sense woody volume, but not wood density. For plot-level analyses however, using an individual-level estimation of wood density will remain the better option.&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>GPX files for Edinburgh cycle loops</title>
       <link>http://johngodlee.xyz/posts/2024-10-27-cycle_edinburgh/</link>
@@ -1484,18 +1527,6 @@ done
 &lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_schedule.pdf&#34;&gt;Teaching schedule&lt;/a&gt;
 &lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_statement.pdf&#34;&gt;Teaching statement&lt;/a&gt;
-&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Blog post on fieldwork in Ongava Game Reserve</title>
-      <link>http://johngodlee.xyz/posts/2023-03-14-ongava_blog/</link>
-      <pubDate>2023-03-14T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/2023-03-14-ongava_blog/</guid>
-      <description>&lt;p&gt;I wrote a blog post for Ongava Research Centre on our recent fieldwork in Ongava Game Reserve, where we established 11 vegetation monitoring plots in dry forest, shrubland, woodland and grassland vegetation:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&#34; target=&#34;_blank&#34;&gt;https://www.orc.eco/post/long-term-vegetation-monitoring-infrastructure-at-ongava&lt;/a&gt;
 &lt;/p&gt;
 </description>
     </item>
