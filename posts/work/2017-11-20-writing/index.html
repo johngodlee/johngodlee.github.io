@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Methods of writing and collaboration</h1>
+
+<h2>2017-11-01</h2>
+</div>
+
+<main>
+<p>Just recently I&rsquo;ve been having to send lots of short reports and essays to my supervisors, to get their comments on things before I start writing my confirmation report for my PhD, which will porbably happen late next spring sometime. This has led me to think quite a lot about the best ways to collaborate, what are the best ways to write efficiently, what are the tradeoffs between these aspects of writing.</p>
+<p>In the past I&rsquo;ve used the following systems to share work between colleagues:</p>
+<ul>
+<li>Google Doc which colleagues are invited to edit through an emailable link</li>
+<li>Microsoft Word document which is passed around colleagues for edits, which are done using track changes and comments, then sent back to me for consideration.</li>
+</ul>
+<p>The issue with these methods is that they don&rsquo;t align with the ways that I like to write when I&rsquo;m writing for myself, which are:</p>
+<ul>
+<li>Markdown</li>
+<li>LaTeX</li>
+</ul>
+<p>Both of which I like to edit using VIM, my chosen plain text editor. I like Markdown and LaTeX because the file sizes are small, I can use version control software like Git, I find the writing style more focussed if I don&rsquo;t have to worry too much about formatting as I&rsquo;m writing, and I know that plain text will always be readable, even when Microsoft Word versions have lost their backwards compatibility and Google has gone out of business (unlikely, but possible).</p>
+<p>Wouldn&rsquo;t it be good if there was a method of doing track changes on plain text documents? Well there is, it&rsquo;s Git combined with git diff, but unfortunately lots of people seem to be scared of Git, and even those colleagues that I&rsquo;ve come across who know about Git don&rsquo;t seem to make the connection that it can be used for more than just code editing. In fact, Git with git diff is even better than Track Changes or Google Docs in some senses. In track changes, you can&rsquo;t pass the document around multiple co-authors simultaneously and have them always be looking at the most up to date version, instead you get lots of comments back that are increasingly out of date as time goes on and the document evolves. In Google Docs and track changes, it&rsquo;s not so simple to see the version history of a document like you can with git log. Yes, Google Docs has a version history, but it&rsquo;s not nearly as powerful as git diff combined with git log.</p>
+<p>Unfortunately however, I don&rsquo;t know the best way to get people to use Git and plain text for their document editing, I think most of it is fear of something that looks techy on the command line, but then some of it I think is the lack of a GUI meaning that you have to learn commands, whether that&rsquo;s using git log, git merge, git diff etc. to control versions, or using underscores for italics, and hashes for headers etc..</p>
+<p>aybe the answer is some sort of GUI that incorporates markdown syntax highlighting, git version control, a markdown previewer and pandoc suite, so that the user doesn&rsquo;t even know what is going on in the background, unless they want to, then the program should be wide open for tinkering. Maybe one of the GUI plain text editors like Sublime or Atom could have an extensive overhaul to serve this purpose. There may even have already been attempts, and I just haven&rsquo;t heard of them.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

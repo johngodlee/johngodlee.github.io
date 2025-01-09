@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>tmux popup windows for quickly launching scripts</h1>
+
+<h2>2021-07-10</h2>
+</div>
+
+<main>
+<p>I was inspired by <a href="https://www.youtube.com/watch?v=41JxYe70Xwo" target="_blank">this video</a>
+, which uses the pop-up window feature in <a href="https://github.com/tmux/tmux" target="_blank">tmux</a>
+ v3.2+ to quickly launch scripts that don&rsquo;t deserve their own pane. I wrote a similar script to handle the pop-ups, which I keep in my <code>$PATH</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/usr/bin/env sh
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># List scripts </span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">read</span> -d <span style="color:#4e9a06">&#39;&#39;</span> APPS <span style="color:#4e9a06">&lt;&lt; EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">passwords	~/bin/tmux_popup/./fpass_popup
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">mount drives	~/bin/netmount
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">search papers	~/bin/papers
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">stopwatch	~/bin/stopwatch
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">internet speed test	~/bin/speed
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">emojis	~/bin/tmux_popup/./emoji_popup
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">calculator	~/bin/tmux_popup/./calc_popup
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SELECTED</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$APPS</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000;font-weight:bold">|</span> fzf -d <span style="color:#4e9a06">&#34;	&#34;</span> --with-nth <span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#000;font-weight:bold">|</span> sed <span style="color:#4e9a06">&#34;s/.*\t//g&#34;</span><span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">eval</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SELECTED</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span></code></pre></div><p>The scripts are listed by their name, which appears in the fzf pop-up, and their path, separated by a tab.</p>
+<figure><a href="/img_full/tmux_popup/popup.png"><img
+          alt="Example of tmux popup window"
+          title="Example of tmux popup window"src="/img/tmux_popup/popup.png" 
+      /></a></figure>
+
+
+<p>The scripts currently available in the popup:</p>
+<ul>
+<li>passwords - Search <code>pass</code> password store using <code>fzf</code> and copy the selected password to the clipboard</li>
+<li>mount drives - Search mountable drives using <code>fzf</code> and mount the selected drive</li>
+<li>search papers - Search through academic article pdfs using <code>fzf</code> and <code>pdftotext</code>, then open the selected pdf</li>
+<li>stopwatch - Run a stopwatch</li>
+<li>internet speed test - Run an upload/download speed test</li>
+<li>emojis - Search through emojis using <code>fzf</code> and copy the selected emoji to the clipboard</li>
+<li>calculator - open an <code>R</code> console with <code>--no-save</code> and <code>--quiet</code> flags for performing simple calculations</li>
+</ul>
+<p>The script is launched by hitting <code>&lt;prefix&gt;-Tab</code> in tmux, using this line in my <code>.tmux.conf</code>:</p>
+<pre tabindex="0"><code>bind-key Tab capture-pane \; save-buffer /tmp/tmux-buffer \; delete-buffer \; display-popup -w 50% -h 50% -E &#34;/path/to/fzf-speed&#34;
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

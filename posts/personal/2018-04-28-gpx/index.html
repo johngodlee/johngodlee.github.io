@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Mapping GPX tracks from AAT for Android, in R</h1>
+
+<h2>2018-04-28</h2>
+</div>
+
+<main>
+<p>I stopped using Strava to track my cycle rides, because I didn&rsquo;t feel comfortable giving away all that GPS data to a third party. I know lots of other things I do give away my location, but this is a small step in the right direction. It also prompted me to play with new GPS tracking apps.</p>
+<p>The one I have settled on is called <a href="https://f-droid.org/en/packages/ch.bailu.aat/" target="_blank">AAT</a>
+, which is a lovely brutalist piece of open source software that is designed around tracking cycling.</p>
+<p>It stores tracks as GPX files, which can then be manipulated and plotted in other softwares. In this case, I wanted to use R. The script is below and <a href="/files/gpx/import_gpx_tracks.R">here</a>
+ and an example GPX file from AAT can be found <a href="/files/gpx/2018_04_19_0.gpx">here</a>
+.</p>
+<p>Note that you may have to install <code>ggmap</code> from the github repository like this: <code>devtools::install_github(&quot;dkahle/ggmap&quot;)</code>, as the CRAN mirror is often way behind.</p>
+<pre tabindex="0"><code># Packages ----
+library(rgdal)  # readOGR(), ogrListLayers()
+library(ggplot2)  # ggplot()
+library(ggmap)  # get_map(), ggmap()
+
+# setwd ----
+setwd(&#34;~/tracks&#34;)
+
+# Import file ----
+# Find out what layers are in the file
+(layers &lt;- ogrListLayers(&#34;2018_04_19_0.gpx&#34;))
+
+# Import the points layer, which contains elevation data
+track_points &lt;- readOGR(&#34;2018_04_19_0.gpx&#34;, layer = layers[5])
+# Import the tracks layer as a spatiallinesdataframe
+
+# Test plot
+plot(track_points)
+
+# Transform data to data frame for plotting ----
+# Create data frame from spatial object
+track_df &lt;- data.frame(track_points@coords, 
+	track_points$ele, 
+	track_points$time,
+	track_points$track_seg_point_id)
+
+# Rename columns
+names(track_df) &lt;- c(&#34;lon&#34;, &#34;lat&#34;, &#34;elev&#34;, &#34;time&#34;, &#34;seg_id&#34;)
+
+# Convert time to posixCT
+track_df$time_posix &lt;- track_df$time %&gt;%
+	as.POSIXct(., format = &#34;%Y/%m/%d %H:%M:%S &#34;)
+
+# Create plots ----
+# Create elevation plot
+(elev_plot &lt;- ggplot(track_df, aes(x = time_posix, y = elev)) + 
+	geom_point() + 
+	geom_smooth(method = &#34;loess&#34;, span = 0.1) + 
+	scale_x_datetime() + 
+	theme_classic() + 
+	xlab(&#34;Elevation (m)&#34;) + 
+	ylab(&#34;Time&#34;))
+
+# Plot map using ggmap
+goog_map &lt;- get_map(location = track_points@bbox, 
+	zoom = 15, 
+	maptype = &#34;roadmap&#34;, color = &#34;bw&#34;)
+
+(route_map &lt;- ggmap(goog_map) + 
+	geom_path(data = track_df,
+	aes(colour = elev), size = 1.5) + 
+	scale_color_gradientn(colours = rainbow(4)) +
+	guides(colour = guide_colourbar(title=&#34;Elevation (m)&#34;)) + 
+	xlab(&#34;Longitude&#34;) + 
+	ylab(&#34;Latitude&#34;))
+</code></pre><p>The script outputs an elevation plot and a map which shows the track, coloured by elevation.</p>
+<figure><a href="/img_full/gpx/elev_plot.png"><img
+          alt="Elevation profile"
+          title="Elevation profile"src="/img/gpx/elev_plot.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/gpx/route_map.png"><img
+          alt="Route map"
+          title="Route map"src="/img/gpx/route_map.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

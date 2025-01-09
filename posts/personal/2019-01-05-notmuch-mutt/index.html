@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Using notmuch to search email in Mutt</h1>
+
+<h2>2019-01-05</h2>
+</div>
+
+<main>
+<p>I found that the inbuilt search facility in my email client, Mutt, was not all that powerful, or at least I didn&rsquo;t have the inclination to learn its ways. But I already know how to use <code>notmuch</code> for indexing and searching email, so I wanted to incorporate it into my Mutt workflow.</p>
+<p>I made sure I had <code>notmuch</code> on my computer:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">brew install notmuch
+</code></pre><p>NeoMutt is meant to come with notmuch support out of the box, so I didn&rsquo;t need to apply the <a href="https://notmuchmail.org/notmuch-mutt/" target="_blank">notmuch-mutt</a>
+ patch. I did use <a href="https://github.com/honza/mutt-notmuch-py" target="_blank">this <code>mutt-notmuch-py</code> script</a>
+ though, which I included in my $PATH by adding it to <code>~/bin</code>.</p>
+<p>Then, I edited my <code>muttrc</code> to include this macro:</p>
+<pre tabindex="0"><code># Search using notmuch
+macro index \\ &#34;&lt;enter-command&gt;unset wait_key&lt;enter&gt;&lt;shell-escape&gt;mutt-notmuch-py ~/.mail/temporary/search&lt;enter&gt;&lt;change-folder-readonly&gt;+temporary/search&lt;enter&gt;&#34; &#34;search mail (using notmuch)&#34;
+</code></pre><p>It calls <code>mutt-notmuch-py</code> and puts results based on your query in <code>~/.mail/temporary/search</code> as a mailbox, then switches to that temporary mailbox.</p>
+<p>I also wanted to make search results appear in my sidebar, to be visible until I ran the macro again, so I added it to my sidebar mailbox creation:</p>
+<pre tabindex="0"><code># Notmuch search mailbox
+mailboxes &#34;+--- search --------&#34;
+mailboxes +temporary/search
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

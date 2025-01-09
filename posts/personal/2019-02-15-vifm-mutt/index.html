@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Using vifm to attach files to emails in Mutt</h1>
+
+<h2>2019-02-15</h2>
+</div>
+
+<main>
+<p>I&rsquo;ve found that the default file attachment browser in <code>mutt</code> is very lacking, it requires lots of manually traversing directories to find the file I want, and it doesn&rsquo;t look great, it&rsquo;s essentially an interactive <code>ls -l</code>. I&rsquo;ve started using <code>vifm</code> as a file manager in the terminal for those rare occassions when I need a full file manager, so I thought I would try to integrate that into my <code>mutt</code>, <code>vim</code> workflow.</p>
+<figure><a href="/img_full/mutt_vifm/mutt_browser.png"><img
+          alt="Mutt file selector"
+          title="Mutt file selector"src="/img/mutt_vifm/mutt_browser.png" 
+      /></a></figure>
+
+
+<p>I couldn&rsquo;t figure out how to change the file browser that appears when you type <code>a</code> on the composer view in Mutt, but I had read about using external commands in Vim so thought maybe I could use those to access <code>vifm</code> in the vim composer. I have Mutt setup so that when I open a new email composer in Vim with <code>c</code> from the browser view, it&rsquo;s populated with some default headers, <code>To:</code>, <code>Cc:</code> and so on. To activate these headers, add <code>set edit_headers = yes</code> to your <code>.muttrc</code>. Mutt also has some &ldquo;pseudo-headers&rdquo; which trigger special behaviour in Mutt when it reads the file back. One of those is <code>Attach:</code>.</p>
+<p>Vifm has the ability to pipe the name of the selected file to standard output by using <code>vifm --choose-files -</code>. <code>-</code> is what tells vifm not to send the output to a file, but instead to standard output. I wrote a small shell script which pipes the output of vifm using the above command and adds <code>Attach:</code> to the start of the line, and <code>echo</code>es that whole line. This is the shell script:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
+
+file=&#34;$(vifm --choose-files -)&#34;
+
+echo &#34;Attach: $file&#34;
+</code></pre><p>Then it&rsquo;s easy enough to call this shell script (which is stored in my <code>$PATH</code>) in vim and paste the output to line 7 in the vim email composer, which is the line directly below the final header. This is the relevant <code>.vimrc</code> section:</p>
+<pre tabindex="0"><code>nnoremap &lt;Leader&gt;A :6r !vifm_attach &lt;CR&gt;
+</code></pre><p>The nice thing about this method is that I can add multiple files by simply running the command again. There can be multiple lines with the header <code>Attach:</code> and all of them will be read by Mutt. I can also leverage all the normal functionality of vifm, like jumping to directories, regex, sorting etc.</p>
+<figure><a href="/img_full/mutt_vifm/vim_attach.png"><img
+          alt="Mutt attachement pseudo-header"
+          title="Mutt attachement pseudo-header"src="/img/mutt_vifm/vim_attach.png" 
+      /></a></figure>
+
+
+<p>Next, I might try to improve the shell script so that I can select multiple files in vifm and have each of them appear as their own <code>Attach:</code> line in vim.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>An email about resprouting in the SEOSAW database</h1>
+
+<h2>2024-04-30</h2>
+</div>
+
+<main>
+<p>I help to manage the <a href="https://seosaw.github.io/" target="_blank">SEOSAW database</a>
+. A database of tree stem measurements from vegetation monitoring plots in African woodlands. We gather data on tree size (stem diameter, height, crown dimensions), floristic composition (species names), growth and mortality dynamics. A colleague of mine is conducting a study into the resprouting behaviour of trees using data from SEOSAW. We got into a long conversation about what constitutes resprouting and how that information is represented within the SEOSAW database. Here is an email I sent to clarify my thinking:</p>
+<p><code>stem_status</code> can have four possible values:</p>
+<ul>
+<li>&ldquo;a&rdquo; - the stem shows signs of life above the POM (point of measurement for stem diameter), for example green leaves or sap below the bark.</li>
+<li>&ldquo;r&rdquo; - the stem has no signs of life above the POM, but there are signs of life elsewhere on the <strong>tree</strong>. This could be signs of life on the same stem, or elsewhere on the individual.</li>
+<li>&ldquo;d&rdquo; - the stem has no signs of life and there are no other signs of life elsewhere on the tree.</li>
+<li>NA - data missing, unknown</li>
+</ul>
+<p>This info is in the SEOSAW field manual, section 4.5.</p>
+<p>In our meeting the other day you asked whether stems with <code>stem_status</code> &ldquo;r&rdquo; could be interpreted as &ldquo;resprouting&rdquo;. Indeed, the abbreviation &ldquo;r&rdquo; is derived from &ldquo;resprouting&rdquo;, but I find that definitions of resprouting vary and are not always clear, hence the very strict definitions of <code>stem_status</code> in the SEOSAW database. I read through these papers to refamiliarise myself with common definitions of resprouting:</p>
+<ul>
+<li><a href="https://doi.org/10.1007/s11258-011-9994-z" target="_blank">Lawes and Clarke (2011)</a>
+</li>
+<li><a href="https://doi.org/10.1111/nph.12001" target="_blank">Clarke et al. (2012)</a>
+</li>
+</ul>
+<p>Do you define a resprouting stem as one where the mature crown is dead and new shoots are growing from the same stem below the crown? These stems would be classified as &ldquo;r&rdquo; in the SEOSAW database.</p>
+<p>Do you also include in your definition stems where the crown is dead and new shoots are growing from elsewhere on the tree, for example from belowground budbanks in the rootstock? These stems would also be classified as &ldquo;r&rdquo; in the SEOSAW database.</p>
+<p>Do you also include in your definition stems where the crown is dead (stem A) and there is another mature (i.e. diameter larger than plot minimum diameter threshold) living stem (stem B) growing from the base of the same tree? Stem A would be classified as &ldquo;r&rdquo; and stem B would be classified as &ldquo;a&rdquo; in the SEOSAW database. Yet, it is unclear whether the tree is &ldquo;resprouting&rdquo; to produce stem B (i.e. regeneration following a disturbance) or if it is just &ldquo;sprouting&rdquo; another stem. Resprouting ultimately implies response to disturbance.</p>
+<p>I think you should be able to say that single-stemmed trees with <code>stem_status</code> &ldquo;r&rdquo; are definitely &ldquo;resprouting&rdquo;, by common definitions.</p>
+<p>I think that for multi-stemmed trees you will also be able to say that the tree is resprouting if all stems have <code>stem_status</code> &ldquo;r&rdquo;.</p>
+<p>I think that if the multi-stemmed tree has some stems with <code>stem_status</code> &ldquo;r&rdquo; and some &ldquo;a&rdquo;, then it is unclear if the tree has resprouted or is just multi-stemmed.</p>
+<p>I hope that helps to decide whether <code>stem_status</code> can be used to imply resprouting. Personally I think it can. Even if <code>stem_status</code> &ldquo;r&rdquo; doesn&rsquo;t always map perfectly to functional definitions of resprouting, it correlates pretty strongly.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

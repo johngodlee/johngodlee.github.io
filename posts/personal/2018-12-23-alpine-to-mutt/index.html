@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Converting Alpine addressbook to Mutt aliases</h1>
+
+<h2>2018-12-23</h2>
+</div>
+
+<main>
+<p>Having switched to a finally usable Mutt setup, I wanted to be able to use my addressbook from Alpine in Mutt. I&rsquo;m also trying to learn how to use regex, sed, awk, grep etc. so I thought this was a good chance.</p>
+<p>Alpine&rsquo;s <code>.addressbook</code> looks like:</p>
+<pre tabindex="0"><code>Aidan	Aidan Dude	aidan.dude@email.com
+Alan_H	Alan Holey	alan.holey@email.com		 Alans really unnecessarily long place of work
+ : in a city I cantt spell 
+Cameron	Cameron Green	cameron@gmail.com
+</code></pre><p>I used a shell script like this, to manipulate this format into what Mutt likes:</p>
+<pre tabindex="0"><code>#!/bin/bash
+
+address=$(cat ~/.addressbook | grep -v &#34;^ :&#34;) 
+
+book_length=$(echo &#34;$address&#34; | wc -l)
+
+rm ~/.mutt/aliases
+touch ~/.mutt/aliases
+
+# Create alias for start of every line
+alias=$(for i in `seq 1 $book_length`;
+do 
+    echo &#39;alias &#39;
+done)
+
+# Get nickname from addressbook
+nickname=$(echo &#34;$address&#34; | awk &#39;{print $1}&#39;) 
+
+# Get full name from addressbook
+# everything before @, then before last space, then remove first word 
+fullname=$(echo &#34;$address&#34; | grep -o &#39;^.*\S@&#39; | gsed  &#39;s/\S*$//g&#39; | gsed &#39;s/^\w*\ *//&#39;)
+
+# Get email address from addressbook
+# Get email address, then add space after comma
+email=$(echo &#34;$address&#34; | grep -E -o &#34;\b\S+@\S+\.[A-Za-z]{2,6}\b&#34; | gsed &#39;s/, */, /g&#39;)
+
+opb=$(for i in `seq 1 $book_length`;
+do 
+    echo &#39;&lt;&#39;
+done)
+
+clb=$(for i in `seq 1 $book_length`;
+do
+    echo &#39;&gt;&#39;
+done)
+
+# Paste together
+paste  -d &#39;\0&#39; &lt;(echo &#34;$alias&#34;) &lt;(echo &#34;$nickname&#34;) &lt;(echo &#34;$fullname&#34;) &lt;(echo &#34;$opb&#34;) &lt;(echo &#34;$email&#34;) &lt;(echo &#34;$clb&#34;)  | gsed &#39;s/\s+*/ /g&#39; &gt; ~/.mutt/aliases 
+</code></pre><p>The outputted alias file looks like this:</p>
+<pre tabindex="0"><code>alias Aidan Aidan Dude &lt;aidan.dude@email.com&gt;
+alias Alan_H Alan Holey &lt;alan.holey@email.com&gt;
+alias Cameron Cameron Green &lt;cameron@gmail.com&gt;
+</code></pre><p>It also allows for multiple comma separated email addresses</p>
+<p>I also found a way to use omnicompletion to let me search my Mutt aliases within vim when called from Mutt, so I can add them to the To: and CC: fields. The script is courtesy of [https://www.vim.org/scripts/script.php?script_id=2533](Karsten B).</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

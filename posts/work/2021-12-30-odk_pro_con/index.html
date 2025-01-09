@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Pros and cons of conducting ecological fieldwork with ODK</h1>
+
+<h2>2021-12-30</h2>
+</div>
+
+<main>
+<p>I constantly flip back and forth on using mobile data collection methods for ecological fieldwork. I put a decent amount of effort into making <a href="https://seosaw.github.io/manuals.html" target="_blank">ODK forms for the SEOSAW project</a>
+, and when they were rolled out to remote project partners they worked pretty well. However, I&rsquo;ve yet to drag myself away from using conventional pen and paper for my own fieldwork.</p>
+<figure><a href="/img_full/odk_pro_con/odk_example.png"><img
+          alt="Example of an ODK form used to collect vegetation plot metadata."
+          title="Example of an ODK form used to collect vegetation plot metadata."src="/img/odk_pro_con/odk_example.png" 
+      /></a></figure>
+
+
+<p>Here, I&rsquo;m going to briefly lay out some pros and cons of using mobile data collection methods for ecological fieldwork. There are many different mobile data collection software, but I&rsquo;ll use ODK as an example here, because it&rsquo;s one of the most ubiquitous and it&rsquo;s the one I&rsquo;ve used most in the past.</p>
+<h2 id="pros">Pros</h2>
+<p>Using ODK forms eliminates errors introduced during data transcription from paper to computer. Data collection on paper can get quite messy, especially if it&rsquo;s raining or you&rsquo;re in a rush. On the other hand, the data transcription phase can help to identify potential data recording errors, which can be fixed the next day if transcription is done each evening after work.</p>
+<p>I&rsquo;ve read a few articles which suggest that the speed of data recording is improved when using ODK. I actually think that&rsquo;s debatable. It depends on how well trained the data recorder is and how well the ODK form is designed. It&rsquo;s easy to design an unintuitive ODK form. Data entry by paper can be very quick, especially if you make use of shorthand, symbols and diagrams.</p>
+<p>Our work involves rolling out the same data collection protocol to many different project partners, so they can collect data at their field sites and send it back to us for analysis. With a pen and paper, there&rsquo;s no consistency among data collectors in how they record their data, which can lead to data being collected in the wrong way, and can make it difficult to figure out the formatting of the original paper tables. It&rsquo;s easy to cut corners during data recording with paper forms, telling yourself that you will remember what various squiggles and poorly written notes mean, but this can backfire.</p>
+<p>ODK forms can be programmed to check data entry in real time. For example, when recording tree stem diameters, there are some logical checks, like if a stem is lt5 cm diameter it should not be recorded, and if a stem is gt100 cm diameter it is likely to be a mistake and should be double checked. Similarly, when a plot is being recensused, it is possible to check newly recorded data against data recorded in previous years. So if a stem suddenly grows by an unrealistic amount, the data recorder can be notified. Data checking can also be done on paper forms, but with ODK forms it can be enforced with warnings and error messages.</p>
+<h2 id="cons">Cons</h2>
+<p>Although ODK helps to enforce some structure in data collection, it necessarily reduces the flexibility of data entry. It&rsquo;s often useful to annotate data points on a paper form, e.g. &ldquo;this diameter measurement was taken in two parts with a long piece of string because the tree was very big&rdquo;. If an ODK form is poorly designed, it might not have anywhere to record this extra information, and so it will be lost. Even with a &ldquo;notes&rdquo; question in the ODK form, I still get the feeling that the data recorder is less likely to record these annotations on an ODK form than on a more flexible paper form.</p>
+<p>Waterproof paper is more robust in the field than a mobile phone or a tablet. With waterproof paper you don&rsquo;t have to worry about sun glaring off the screen making it impossible to read, you don&rsquo;t have to worry about it getting wet and damaging the electronics or making the screen difficult to use, and you don&rsquo;t have to worry about it running out of battery in the middle of the day. Ultimately, electronics are much more likely to break than paper.</p>
+<p>Although most people around the world now have access to an Android smartphone, it&rsquo;s still a consideration that there is some extra cost in rolling out mobile data collection among project partners.</p>
+<p>There will be extra training involved in teaching data collectors how to set up ODKCollect or KoboCollect on their Android device, and this can be hard to do properly if there is a language barrier and the training is being done remotely. Although ODK promises a simple interface to record data, getting the blank forms downloaded to your device and uploading the collected data to a remote server cab be a hassle, requiring detailed <a href="https://bitbucket.org/miombo/seosaw/raw/master/doc/forms/odk/filling_forms.txt" target="_blank">step by step instructions</a>
+. Often our fieldsites don&rsquo;t have a reliable mobile data connection, so form data can&rsquo;t be uploaded to the remote server immediately. This means that the data needs to be manually sent from the Android device to a laptop every few days as a backup, using software like <a href="https://docs.getodk.org/briefcase-intro/" target="_blank">ODK Briefcase</a>
+, just in case the phone is damaged or lost, and this requires more training. I get the sense that people place undue trust in digital data storage as compared to paper, or rather the digital data is out of sight and so out of mind, and this might lead to data not getting backed up as often as it should in the field.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

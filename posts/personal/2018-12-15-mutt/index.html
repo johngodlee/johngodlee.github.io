@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Updated Mutt config, multiple accounts</h1>
+
+<h2>2018-12-15</h2>
+</div>
+
+<main>
+<p>In a long transition away from Google, I made another email account, on an email system that values privacy and doesn&rsquo;t sell information to advertisers. That means that for the moment, I now have two email accounts. Simultaneously, I thought I would give (Neo)Mutt another go as my email client, along with Offlineimap (grabbing mail), notmuch/alot (indexing mail), msmtp (sending email), pass (managing passwords), vim (writing mail), launchd (scheduling mail sync), and w3m (parsing HTML email).</p>
+<h1 id="offlineimap">Offlineimap</h1>
+<p>This is my current <code>.offlineimaprc</code>:</p>
+<pre tabindex="0"><code>general
+accounts = riseup, gmail 
+pythonfile = ~/.offlineimap_pass.py
+fsync = true
+
+Account riseup
+localrepository = riseup-local
+remoterepository = riseup-remote
+
+Repository riseup-local
+type = Maildir
+localfolders = ~/.mail/riseup
+
+Repository riseup-remote
+type = IMAP
+ssl = true 
+sslcacertfile = /usr/local/etc/openssl/cert.pem
+remotehost = mail.riseup.net
+remoteuser = &lt;EMAIL ADDRESS&gt; 
+remotepasseval = GetPassRiseup() 
+
+Account gmail
+localrepository = gmail-local
+remoterepository = gmail-remote
+
+Repository gmail-local
+type = Maildir
+localfolders = ~/.mail/gmail
+nametrans = lambda folder: re.sub(&#39;drafts&#39;, &#39;[Google Mail].Drafts&#39;,
+    re.sub(&#39;sent&#39;, &#39;[Google Mail].Sent Mail&#39;,
+    re.sub(&#39;starred&#39;, &#39;[Google Mail].Starred&#39;,
+    re.sub(&#39;trash&#39;, &#39;[Google Mail].Bin&#39;, folder))))
+
+Repository gmail-remote
+maxconnections = 3
+type = Gmail
+ssl = true
+sslcacertfile = /usr/local/etc/openssl/cert.pem
+remoteuser = &lt;EMAIL ADDRESS&gt; 
+remotepasseval = GetPassGmail()
+realdelete = no
+nametrans = lambda folder: re.sub(&#39;.*Drafts$&#39;, &#39;drafts&#39;,
+    re.sub(&#39;.*Sent Mail$&#39;, &#39;sent&#39;,
+    re.sub(&#39;.*Starred$&#39;, &#39;starred&#39;,
+    re.sub(&#39;.*Bin$&#39;, &#39;trash&#39;, folder))))
+
+folderfilter = lambda folder: folder not in [
+    &#39;[Google Mail]/Important&#39;,
+    &#39;[Google Mail]/Spam&#39;,
+    &#39;[Google Mail]/Chats&#39;,
+    &#39;[Google Mail]/All Mail&#39;,
+    ]
+createfolders = True
+
+
+postsynchook = notmuch new --quiet
+</code></pre><p><code>accounts = riseup, gmail</code> tells offlineimap that I have two accounts.</p>
+<p>The password for each account, defined by <code>remotepasseval</code> is mapped to two python functions, found in <code>pythonfile = ~/.offlineimap_pass.py</code>. See below in the <strong>pass</strong> section for what the <code>pythonfile</code> contains.</p>
+<p>The rest I think is self explanatory, except for the name translations. This takes the IMAP name for certain default gmail, like <code>[Google Mail].Starred</code>, and turns them into names that are easy to read in the Neomutt sidebar, like <code>starred</code>. It&rsquo;s also necessary to change these names back in the remote section of the config file.</p>
+<p>Lastly, the <code>postsynhook</code> calls notmuch to recompile it&rsquo;s database, checking for new mail. I use <code>notmuch</code> with <code>alot</code> for searching emails sometimes. At some point it might be nice to see if I can run alot directly from mutt.</p>
+<p>To get offlineimap to run every few minutes, to check if I have new mail, I use launchd, which is the successor to cron on macOS. I keep a script in <code>~/Library/LaunchAgents/</code> that looks like this:</p>
+<pre tabindex="0"><code>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;
+&lt;plist version=&#34;1.0&#34;&gt;
+  &lt;dict&gt;
+    &lt;key&gt;EnvironmentVariables&lt;/key&gt;
+    &lt;dict&gt;
+      &lt;key&gt;PATH&lt;/key&gt;
+      &lt;string&gt;/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin&lt;/string&gt;
+    &lt;/dict&gt;
+    &lt;key&gt;KeepAlive&lt;/key&gt;
+    &lt;false/&gt;
+    &lt;key&gt;Label&lt;/key&gt;
+    &lt;string&gt;homebrew.mxcl.offlineimap&lt;/string&gt;
+    &lt;key&gt;ProgramArguments&lt;/key&gt;
+    &lt;array&gt;
+      &lt;string&gt;/usr/local/opt/offlineimap/bin/offlineimap&lt;/string&gt;
+      &lt;string&gt;-q&lt;/string&gt;
+      &lt;string&gt;-u&lt;/string&gt;
+      &lt;string&gt;basic&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;StartInterval&lt;/key&gt;
+    &lt;integer&gt;300&lt;/integer&gt;
+    &lt;key&gt;RunAtLoad&lt;/key&gt;
+    &lt;true /&gt;
+    &lt;key&gt;StandardErrorPath&lt;/key&gt;
+    &lt;string&gt;/dev/null&lt;/string&gt;
+    &lt;key&gt;StandardOutPath&lt;/key&gt;
+    &lt;string&gt;/dev/null&lt;/string&gt;
+  &lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre><p>It runs offlineimap in quiet mode (<code>-q</code>, <code>-u basic</code>), every 300 seconds, and whenever the computer wakes from sleep or is powered on (<code>RunAtLoad</code>), it also pipes error outputs to <code>/dev/null</code>.</p>
+<h1 id="pass">pass</h1>
+<p>This is the python file I use to call pass to get the passwords for each of my email accounts. Basically it just runs pass on the appropriate entry, then takes the output and grabs the appropriate line:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/usr/bin/env python2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">from</span> <span style="color:#000">subprocess</span> <span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">check_output</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">GetPassGmail</span><span style="color:#000;font-weight:bold">():</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">check_output</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;/usr/local/bin/pass email/gmail&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">shell</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">True</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">splitlines</span><span style="color:#000;font-weight:bold">()[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">def</span> <span style="color:#000">GetPassRiseup</span><span style="color:#000;font-weight:bold">():</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">check_output</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;/usr/local/bin/pass email/riseup&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">shell</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">True</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#000">splitlines</span><span style="color:#000;font-weight:bold">()[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span>
+</span></span></code></pre></div><h1 id="mutt">Mutt</h1>
+<p>Here is my Mutt config, which I keep in <code>~/.mutt/muttrc</code>:</p>
+<pre tabindex="0"><code># Source other files
+source ~/.mutt/mutt_colours
+source ~/.mutt/aliases
+
+# Basic settings
+set realname = &#34;John Godlee&#34;
+set folder = &#34;~/.mail&#34;
+
+# Text editor 
+# Use vim with minimal mail writing vimrc 
+set editor = &#34;vim -u ~/.vimrc_alpine&#34;
+set charset = &#34;utf-8&#34;
+unset record
+
+# Ability to change headers manually in text editor 
+set edit_headers = yes
+set autoedit = yes
+
+# Pager View Options 
+set pager_index_lines = 0  # number of index lines to show
+set pager_context = 3      # number of context lines to show
+set pager_stop             # don&#39;t go to next message automatically
+set menu_scroll            # scroll in menus
+set tilde                  # show tildes like in vim
+unset markers              # no ugly plus signs
+set mark_old = no          # Don&#39;t add Old flags, just keep N
+set mailcap_path = ~/.mutt/mailcap
+auto_view text/html
+
+# Status bar
+set status_chars  = &#34; *%A&#34;
+set status_format = &#34;───[Folder: %f]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)?]───%&gt;─%?p?( %p postponed )?───&#34;
+
+# Index
+set date_format = &#34;%b-%d&#34;
+set index_format = &#34;[%Z] %X %M %-20.20F -- %s %* %[%Y_%m_%d] - %[%H:%M]&#34;
+set sort = threads                         # like gmail
+set sort_aux = last-date-received          # like gmail
+set uncollapse_jump                        # don&#39;t collapse on an unread message
+set sort_re                                # thread based on regex
+set reply_regexp = &#34;^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*&#34;
+
+# Pager
+set pager_index_lines = 8  # number of index lines to show
+set pager_context = 3      # number of context lines to show
+set pager_stop             # don&#39;t go to next message automatically
+set menu_scroll            # scroll in menus
+set tilde                  # show tildes like in vim
+unset markers              # no ugly plus signs
+alternative_order text/plain text/enriched text/html
+
+# Sidebar
+set sidebar_visible = yes
+set sidebar_format = &#34;%B %* [%N]%S&#34;
+
+## Don&#39;t abbreviate folders in sidebar
+set sidebar_short_path
+set sidebar_delim_chars = &#34;/&#34;
+
+# Gmail mailboxes in sidebar
+mailboxes &#34;+--- gmail --------&#34;
+mailboxes +gmail/INBOX # Always have inbox at top of list
+mailboxes `find ~/.mail/* -maxdepth 1 -mindepth 1 | sort | cut -d/ -f5- | sed &#39;s/^/+/&#39; | sed &#39;/notmuch/d&#39; | sed &#39;/INBOX/d&#39; | sed &#39;/riseup/d&#39; | tr &#39;\n&#39; &#39; &#39;`
+
+# Riseup mailboxes in sidebar
+mailboxes &#34;+--- riseup --------&#34;
+mailboxes +riseup/INBOX
+mailboxes `find ~/.mail/* -maxdepth 1 -mindepth 1 | sort | cut -d/ -f5- | sed &#39;s/^/+/&#39; | sed &#39;/INBOX/d&#39; | sed &#39;/gmail/d&#39; | tr &#39;\n&#39; &#39; &#39;`
+
+# Multiple account setup
+# Default to gmail setup
+source ~/.mutt/accounts/gmail
+
+# Folder hooks
+folder-hook gmail/*      source ~/.mutt/accounts/gmail
+folder-hook riseup/*     source ~/.mutt/accounts/riseup
+
+# Macros for switching accounts - sources a separate config when a folder is opened
+macro index } &#39;&lt;sync-mailbox&gt;&lt;enter-command&gt;source ~/.mutt/accounts/gmail&lt;enter&gt;&lt;change-folder&gt;!&lt;enter&gt;&#39;
+macro index { &#39;&lt;sync-mailbox&gt;&lt;enter-command&gt;source ~/.mutt/accounts/riseup&lt;enter&gt;&lt;change-folder&gt;!&lt;enter&gt;&#39;
+
+# Keybindings
+
+bind index,pager R group-reply
+bind index,pager r reply
+bind index &lt;space&gt;  collapse-thread
+macro index C &#34;&lt;copy-message&gt;?&lt;toggle-mailboxes&gt;&#34; &#34;copy a message to a mailbox&#34;
+macro index M &#34;&lt;save-message&gt;?&lt;toggle-mailboxes&gt;&#34; &#34;move a message to a mailbox&#34;
+
+## Disable arrow keys
+bind generic,pager,editor,index &lt;Up&gt;       noop
+bind generic,pager,editor,index &lt;Down&gt;     noop
+bind generic,pager,editor,index &lt;Left&gt;     noop
+bind generic,pager,editor,index &lt;Right&gt;    noop
+
+## Tagging and manipulating basics
+bind  index,pager c  mail                      # compose
+bind  generic     x  tag-entry                 # Select Conversation
+bind  index       x  tag-thread                # Select Conversation
+bind  pager       x  tag-message               # Select Conversation
+bind  index,pager *  flag-message              # Star a message
+bind  index,pager a  group-reply               # Reply all
+bind  index,pager \# delete-thread             # Delete
+bind  index,pager l  copy-message              # Label
+bind  index       v  save-message              # Move to
+
+## Sidebar interaction
+bind  index,pager B  sidebar-toggle-visible
+bind  index,pager &gt;  sidebar-next
+bind  index,pager &lt;  sidebar-prev
+bind  index,pager ?  sidebar-open
+
+## Movement 
+bind  pager  i  noop
+bind  index  G  last-entry
+bind  index  j  next-entry
+bind  index  k  previous-entry
+bind  pager  k  previous-line
+bind  pager  j  next-line
+bind  pager  J  next-entry
+bind  pager  K  previous-entry 
+bind  pager  q  exit
+bind  pager  v  view-attachments
+
+## Fast movement
+bind editor &lt;space&gt; noop
+bind  index,pager g noop
+macro index,pager gi &#34;&lt;change-folder&gt;=gmail/INBOX&lt;enter&gt;&#34; &#34;Go to inbox&#34;
+
+bind  index,pager h  help
+
+# Mail handling
+set move = no
+# Always include original message in reply and always reply to sender
+set include = yes
+set fast_reply
+
+# Ask if unsent message should be kept as postponed
+set postpone = ask-yes
+</code></pre><p>It&rsquo;s mostly a mash up of things I found online, but these are the bits I think are interesting.</p>
+<p>I use a set of sed manipulations to get the names of mailboxes in both my gmail and riseup directories to fill the sidebar, using:</p>
+<pre tabindex="0"><code>mailboxes `find ~/.mail/* -maxdepth 1 -mindepth 1 | sort | cut -d/ -f5- | sed &#39;s/^/+/&#39; | sed &#39;/notmuch/d&#39; | sed &#39;/INBOX/d&#39; | sed &#39;/riseup/d&#39; | tr &#39;\n&#39; &#39; &#39;`
+</code></pre><p>I use folder hooks and macros to load separate configs which change settings for replying to emails depending on which account I want to use. The extra configs look like this:</p>
+<pre tabindex="0"><code>set from = &#34;&lt;EMAIL ADDRESS&gt;&#34;
+set spoolfile = gmail/INBOX
+set postponed = +gmail/drafts
+set record = +gmail/sent
+
+set sendmail = &#34;/usr/local/bin/msmtp -a gmail&#34;
+
+macro index D \
+    &#34;&lt;delete-message&gt;&lt;enter&gt;&#34; \
+    &#34;Delete message permanently&#34;
+</code></pre><p>See that <code>set sendmail</code> uses <code>msmtp</code> to send the email, and uses the account called gmail. This is what my <code>.msmtprc</code> looks like, which defines those accounts:</p>
+<pre tabindex="0"><code>account riseup
+host mail.riseup.net
+port 587
+protocol smtp
+auth on
+tls on
+tls_trust_file /usr/local/etc/openssl/cert.pem
+from &lt;EMAIL ADDRESS&gt; 
+user &lt;EMAIL ADDRESS&gt;
+passwordeval &#34;gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/email/riseup.gpg | sed -n 2p&#34;
+
+account gmail
+host smtp.gmail.com
+port 587
+protocol smtp
+auth on
+tls on
+tls_trust_file /usr/local/etc/openssl/cert.pem 
+from &lt;EMAIL ADDRESS&gt; 
+user &lt;EMAIL ADDRESS&gt;
+passwordeval &#34;gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/email/gmail.gpg&#34;
+
+account default : gmail
+</code></pre><p>The last thing is the mailcap, which uses w3m to parse HTML email as plain text, and is called into mutt using <code>set mailcap_path</code>:</p>
+<pre tabindex="0"><code>text/html;  w3m -dump -o document_charset=%{charset} &#39;%s&#39;; nametemplate=%s.html; copiousoutput
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

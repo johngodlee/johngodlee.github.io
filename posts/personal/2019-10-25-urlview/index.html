@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>urlview to easily handle URLs in the terminal</h1>
+
+<h2>2019-10-25</h2>
+</div>
+
+<main>
+<p>I recently looked at <code>newsboat</code> as a way of reading RSS news feeds on my laptop. I use <a href="https://f-droid.org/en/packages/com.nononsenseapps.feeder/" target="_blank">Feeder</a>
+ to read the feeds on my android phone and I wanted to keep up to date with the same list of feeds on my laptop. That&rsquo;s not very exciting, there were the usual UI configurations to change colours and so on, but then I found that it was quite clumsy to act on URLs that I found in posts. Many RSS entries that I read, particularly those from Multi-reddits have images attached alongside the description text. I could open the whole entry in a web browser by pressing <code>o</code> within newsboat, but that seemed like overkill. What I wanted to do was download and open only the links I cared about.</p>
+<p>I came across <a href="https://github.com/sigpipe/urlview" target="_blank">urlview</a>
+ as a remedy for this problem. urlview basically just checks through a text file or STDOUT and finds URLs, then presents them to you in a selectable list. With no extra configuration it just prints the selected URL to STDOUT, but with a fairly simple shell script which defines how different types of URL should be handled, it turns into a very neat way of handling URLs in the terminal without having to copy and paste them.</p>
+<p>I installed <code>urlview</code> with <code>brew install urlview</code>. The configuration file for <code>urlview</code> lives in <code>~/.urlview</code> and can contain instructions for what to do with links, in my case a shell script takes care of this, called <code>linkhandler</code> and lives in my <code>$PATH</code>. <code>~/.urlview</code> contains:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">COMMAND linkhandler
+</code></pre><p>The <code>linkhandler</code> looks like this:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
+
+case &#34;$1&#34; in
+	*mkv|*webm|*mp4|*mp3|*flac|*opus|*mp3?source*|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*)
+		youtube-dl -o &#34;~/Downloads/%(title)s.%(ext)s&#34; &#34;$1&#34; ;;
+	*png|*jpg|*jpeg|*gif|*svg)
+		wget -P ~/Downloads/ &#34;$1&#34;
+		open -a preview &#34;Downloads/${1##*/}&#34; ;;
+	*pdf)
+		wget -P ~/Downloads/ &#34;$1&#34;
+		open -a skim &#34;Downloads/${1##*/}&#34; ;;
+	*)
+		open -a qutebrowser $1 ;;
+esac
+</code></pre><p>It takes the URL as its first and only argument, provided by <code>urlview</code> then depending on the name of the URL it performs different actions using a <code>case</code> statement. If the URL ends in common video or audio extensions (<code>*mkv, *webm ...</code>) it uses <code>youtube-dl</code> to download the file in the URL. If it is an image it <code>wget</code>s it and then opens it in Preview.app, and if it&rsquo;s a <code>.pdf</code> it does the same but opens it in <code>skim</code>. Finally, if none of the above tests were true, it simply opens the link in my web browser, <code>qutebrowser</code>.</p>
+<p>To use urlview in <code>newsboat</code> I can set some options in <code>~/.config/newsboat/config</code>:</p>
+<pre tabindex="0"><code>external-url-viewer &#34;urlview&#34;
+bind-key U show-urls
+</code></pre><p>This allows me to press <code>U</code> in the article view of <code>newsboat</code> to view the URLs and use <code>linkhandler</code> to determine how they are opened.</p>
+<p>The nice thing about this setup with <code>urlview</code> is I can replicate it across many programs. In <code>vim</code> I can put this in my <code>~/.vimrc</code> to use <code>urlview</code> by pressing <code>&lt;Leader&gt;u</code>:</p>
+<pre tabindex="0"><code>nnoremap &lt;Leader&gt;u :w&lt;Home&gt;silent &lt;End&gt; !urlview&lt;CR&gt;
+</code></pre><p>I can also use it in Mutt by adding this to my <code>muttrc</code>:</p>
+<pre tabindex="0"><code>macro index,pager U &#34;&lt;enter-command&gt;set pipe_decode = yes&lt;enter&gt;&lt;pipe-message&gt;urlview&lt;enter&gt;&lt;enter-command&gt;set pipe_decode = no&lt;enter&gt;&#34;&#34;view URLs&#34;
+</code></pre><p>and there is a <a href="https://github.com/tmux-plugins/tmux-urlview" target="_blank"><code>tmux</code> plugin</a>
+ as well! Though I haven&rsquo;t looked at that properly yet.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

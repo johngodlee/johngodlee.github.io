@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Tiling wallpapers</h1>
+
+<h2>2020-12-10</h2>
+</div>
+
+<main>
+<p>I&rsquo;ve recently become enamoured with tiling desktop wallpapers. These are wallpapers where the image is repeated across the screen in a regular grid to produce the illusion of a continuous texture. Tiling wallpapers used to be a necessity when hard drive space and memory were limited. Now they&rsquo;re more of a curiosity and source of nostalgia. One benefit of tiling wallpapers is that I can store them in my dotfiles repo and the repo will still stay small, while some other wallpapers I have can be up to 50MB.</p>
+<p>I was initially inspired by <a href="https://old.reddit.com/r/unixporn/comments/7ivelb/xfce_got_obsessed_with_tiling_wallpapers/" target="_blank">this post on reddit</a>
+ which uses a retro looking XFCE window manager setup. It almost looks more like FVWM.</p>
+<p>I scoured a few different sources for my favourite tiling wallpapers. Here are a few places where there are a bunch of tiling wallpapers:</p>
+<ul>
+<li><a href="http://cs.gettysburg.edu/~duncjo01/archive/patterns/" target="_blank">Index of /~duncjo01/archive/patterns</a>
+</li>
+<li><a href="https://github.com/dkeg/bitmap-walls" target="_blank">dkeg/bitmap-walls: Collection of tiled bitmap walls for xsetroot</a>
+</li>
+<li><a href="https://github.com/BenjaminHCCarr/PropagandaTiles" target="_blank">BenjaminHCCarr/PropagandaTiles</a>
+</li>
+</ul>
+<p>I wanted to showcase a few of my favourite tiling wallpapers, which can be seen below. The way this website renders dithered images will probably make some of the screenshots look terrible at this resolution, so click the images to see them full size. All the images below were captured wit hthe same pixel dimensions by the way, and so are directly comparable:</p>
+<figure><a href="/img_full/tiling/blue_rivet.png"><img
+          alt="Blue rivets"
+          title="Blue rivets"src="/img/tiling/blue_rivet.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/cyan_diag_tile.png"><img
+          alt="Cyan diagonal tiles"
+          title="Cyan diagonal tiles"src="/img/tiling/cyan_diag_tile.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/forest.png"><img
+          alt="Forest"
+          title="Forest"src="/img/tiling/forest.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/blue_wave.png"><img
+          alt="Blue wave"
+          title="Blue wave"src="/img/tiling/blue_wave.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/weave.png"><img
+          alt="Weave"
+          title="Weave"src="/img/tiling/weave.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/grey_tile.png"><img
+          alt="Grey tile"
+          title="Grey tile"src="/img/tiling/grey_tile.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/narrow_cyan_diag.png"><img
+          alt="Narrow cyan diagonal lines"
+          title="Narrow cyan diagonal lines"src="/img/tiling/narrow_cyan_diag.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/wide_cyan_diag.png"><img
+          alt="Wide cyan diagonal tiles"
+          title="Wide cyan diagonal tiles"src="/img/tiling/wide_cyan_diag.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/neg_grey_box.png"><img
+          alt="Negative grey box"
+          title="Negative grey box"src="/img/tiling/neg_grey_box.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/small_cyan_tile.png"><img
+          alt="Small cyan tile"
+          title="Small cyan tile"src="/img/tiling/small_cyan_tile.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/mid_cyan_tile.png"><img
+          alt="Medium cyan tile"
+          title="Medium cyan tile"src="/img/tiling/mid_cyan_tile.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/large_cyan_tile.png"><img
+          alt="Large cyan tile"
+          title="Large cyan tile"src="/img/tiling/large_cyan_tile.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/blue_tile.png"><img
+          alt="Blue tile"
+          title="Blue tile"src="/img/tiling/blue_tile.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/purple_wave.png"><img
+          alt="Purple wave"
+          title="Purple wave"src="/img/tiling/purple_wave.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/tiling/purple.png"><img
+          alt="Purple texture"
+          title="Purple texture"src="/img/tiling/purple.png" 
+      /></a></figure>
+
+
+<p>Just to prove how tiny the files are, here is a breakdown of their file sizes. Also, I&rsquo;ve been learning AWK:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">du -b * |\
+awk &#39;
+	BEGIN {printf(&#34;%20s  %5s\n&#34;, &#34;file&#34;, &#34;bytes&#34;)} 
+	{printf(&#34;%20s  %5s\n&#34;,  $2, $1)}&#39; |\
+sort -nk2
+</code></pre><pre tabindex="0"><code>                file  bytes
+ small_cyan_tile.gif     69
+   mid_cyan_tile.gif    107
+    neg_grey_box.gif    127
+       blue_wave.gif    140
+ large_cyan_tile.gif    170
+     purple_wave.gif    177
+narrow_cyan_diag.png    195
+  wide_cyan_diag.png    265
+          forest.png    325
+       blue_tile.png    373
+           weave.png    419
+  cyan_diag_tile.png    609
+      blue_rivet.bmp    630
+       grey_tile.bmp   1270
+          purple.png   2297
+</code></pre><p>The files for each of the wallpapers seen above <a href="/files/tiling/tiles.zip">can be found here</a>
+.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

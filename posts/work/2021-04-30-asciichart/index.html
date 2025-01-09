@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>ASCII charts in R</h1>
+
+<h2>2021-04-30</h2>
+</div>
+
+<main>
+<p>I was inspired by a blog post on Gemini that was talking about uploading gemtext summaries of their academic research. The writer of the post wanted to avoid images where simple ASCII graphics would do, so I had a look to see if I could make simple ASCII scatter charts. Most of the answers on this <a href="https://stackoverflow.com/questions/123378/command-line-unix-ascii-based-charting-plotting-tool" target="_blank">Stackoverflow post</a>
+ mention using gnuplot, with varying degrees of hackery to get around how difficult gnuplot is to work with. I use R for nearly all my basic data visualisation, so I decided instead to write a script in R. The <a href="https://cran.r-project.org/web/packages/txtplot/index.html" target="_blank">{txtplot}</a>
+ package has done the bulk of the real work already. I only had to write a wrapper that makes it convenient to pass values from the command line:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/usr/bin/env Rscript</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">args</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">commandArgs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">trailingOnly</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">argsLen</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">argsLen</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">stop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Too many arguments&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">argsLen</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">stop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Must supply CSV with two columns&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">infile</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">args[1]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">argsLen</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">pwidth</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">as.numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args[2]</span><span style="color:#000;font-weight:bold">))</span> 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">pwidth</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">options</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#0000cf;font-weight:bold">0.8</span><span style="color:#000;font-weight:bold">)</span> 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">argsLen</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">pheight</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">as.numeric</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">args[3]</span><span style="color:#000;font-weight:bold">))</span> 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">pheight</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0.25</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">pwidth</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">file.exists</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">infile</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">stop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;File path invalid&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">dat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">read.csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">infile</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">ncol</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">stop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;CSV must have only two columns&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">txtplot</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">txtplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dat[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pwidth</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pheight</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xlab</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[1]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ylab</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[2]</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>Here is an example. First the base R plot of the data:</p>
+<figure><a href="/img_full/asciichart/plot.png"><img
+          alt="Base R scatter plot"
+          title="Base R scatter plot"src="/img/asciichart/plot.png" 
+      /></a></figure>
+
+
+<p>And now the ASCII representation, generated with <code>asciichart test.csv</code>:</p>
+<pre tabindex="0"><code>        +------+---------+--------+---------+---------+--------+
+C       |                                * *         *      *  |
+u 8e+06 +                         *                     **     +
+m       |                               *      *      *        |
+u       |                             *** **   * ***           |
+l 6e+06 +                               ****      * **         +
+a       |                  *   ************   *  *  *  *       |
+t 4e+06 +          *       *     ******* * **      *           +
+i       |             * * ** **** * **   **  *     *           |
+v       |           *  *********** ****** ** *                 |
+e 2e+06 +             *********  ** **                         +
+.       |    **   **********  * **                             |
+m     0 + * ******* **      *             *                    +
+o       +------+---------+--------+---------+---------+--------+
+               5        10       15        20        25
+                             Layer.diversity
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Data management during and after my PhD</h1>
+
+<h2>2021-09-20</h2>
+</div>
+
+<main>
+<p>During my PhD I spent a lot of time collecting field data. Along with colleagues from Angola I setup 15 1 ha permanent woodland survey plots in Bicuar National Park, Angola, where we conducted a census of all woody stems &gt;5 cm diameter, and made additional measurements of the grass biomass and tree canopy cover. These plots will hopefully have another census in 2023. I also collected terrestrial LiDAR data in 22 1 ha woodland plots, all 15 in Bicuar National Park and an additional seven in southern Tanzania, to quantify canopy complexity.</p>
+<p>I think these two datasets form a key product of my PhD thesis. PhD students often <a href="https://hal.univ-lille.fr/hal-01248979" target="_blank">generate a lot of data</a>
+, but only a minority of PhD students develop a long-term plan for <a href="https://www.researchgate.net/publication/305395587_Research_traditions_and_emerging_expectations_PhD_students_and_their_research_data_management" target="_blank">data management</a>
+ and data dissemination. I chose to write an extra chapter in my thesis all about the multiple uses of the data I collected, and it&rsquo;s contribution to the greater good of the field, but it requires that the data are properly archived, managed, and advertised, otherwise nobody else will want to use it. Like the investigative chapters of the thesis, which I hope can be converted into manuscripts for peer-review, extending their lifespan and making them more impactful by reaching a larger audience, I hope that I can ensure the data I collected during my PhD has a legacy beyond just my PhD thesis.</p>
+<p>Lots of universities have a data management plan web page, these are some of the first results from Google for &ldquo;phd data management&rdquo;:</p>
+<ul>
+<li><a href="https://www.ucl.ac.uk/library/research-support/research-data-management/policies/writing-data-management-plan" target="_blank">University College London</a>
+</li>
+<li><a href="https://www.york.ac.uk/library/info-for/researchers/data/planning/" target="_blank">University of York</a>
+</li>
+<li><a href="https://www.sheffield.ac.uk/library/rdm/dmp" target="_blank">University of Sheffield</a>
+</li>
+<li><a href="https://library.bath.ac.uk/research-data/data-management-plans/university-dmp-templates" target="_blank">University of Bath</a>
+</li>
+<li><a href="https://library.leeds.ac.uk/info/14062/research_data_management/62/data_management_planning" target="_blank">University of Leeds</a>
+</li>
+<li><a href="https://libcal.liverpool.ac.uk/event/3671658" target="_blank">University of Liverpool</a>
+</li>
+<li><a href="https://intranet.birmingham.ac.uk/as/libraryservices/library/research/rdm/data-management-plans.aspx" target="_blank">University of Birmingham</a>
+</li>
+<li><a href="http://www.bristol.ac.uk/staff/researchers/data/" target="_blank">University of Bristol</a>
+</li>
+<li><a href="https://www.exeter.ac.uk/research/researchdatamanagement/before/plans/" target="_blank">University of Exeter</a>
+</li>
+<li><a href="https://library.soton.ac.uk/researchdata/phd" target="_blank">University of Southampton</a>
+</li>
+</ul>
+<p>The University of Edinburgh, where I did my PhD, also has one, but I didn&rsquo;t see it until writing this blog post, a week after handing in.</p>
+<p>Writing a DMP | The University of Edinburgh</p>
+<p>At the end of the first year of my PhD I wrote a &ldquo;Confirmation Report&rdquo;. In other institutions I&rsquo;ve heard them referred to as &ldquo;Upgrades&rdquo;. It&rsquo;s sort of a friendly examination that makes sure you have a developed plan for what to do during the PhD, before it&rsquo;s too late. You write a report that&rsquo;s part literature review and part methodology proposal, then have a mini <em>viva</em> with some other academics. I always felt like my confirmation report should have required a data management plan, similar to how it required an ethics assessment and a timeframe, but it didn&rsquo;t. We did have a short presentation on data management during the &ldquo;Research Planning and Management&rdquo; course in the first year of the PhD, which consisted mostly of information on how to store data on the University network. I would have liked to see more guidance on how to manage and archive large volumes of data (TBs), both during and after the PhD, to ensure that data is usable by others, and by your future self.</p>
+<p>For the plot census data, which was only a couple of GBs, I have stored the data in three places:</p>
+<ul>
+<li>University datastore - accessible by ssh, backed up regularly by the University</li>
+<li>Hard drive stored at my parent&rsquo;s house</li>
+<li>Hard drive stored at my house</li>
+</ul>
+<p>This conforms to the <a href="https://en.wikipedia.org/wiki/Backup#3-2-1_rule" target="_blank">3-2-1 backup rule</a>
+, which recommends keeping at least <strong>3</strong> copies of the data, with at least <strong>2</strong> different media types (hard drive, network share), and store <strong>1</strong> copy off-site (I have two different off-site locations, University, parent&rsquo;s house). I also have &ldquo;cleaned&rdquo; versions of the plot census data hosted on the <a href="https://seosaw.github.io/" target="_blank">SEOSAW database</a>
+, which makes the data accessible to other researchers under agreement. I&rsquo;ve already had a few other projects request to use the data, which is very nice to see.</p>
+<p>One thing that I didn&rsquo;t keep good track of for a little while was only using one copy as the &lsquo;primary&rsquo; copy, and using the others as backup only. At one point I was writing new data to both my personal hard drives and I got mixed up. Since then, I put one of the hard drives in a cupboard out of site, to deter me from writing data to it unless I wanted to do a backup. As an aside, I use <a href="https://www.google.com/search?hl=en&amp;q=rsync" target="_blank">rsync</a>
+ to make backups. It&rsquo;s quick and efficient and very rarely fails. I have plans to buy a NAS (Network Attached Storage), the <a href="https://www.synology.com/en-us/products/DS420&#43;" target="_blank">Synology DS420+</a>
+ looks nice, but for now having loose hard drives will have to suffice.</p>
+<p>The LiDAR data consists of raw .zfs files exported directly from the scanner, databases built by Cyclone (Leica&rsquo;s proprietary LiDAR processing software), PTX files outputted by Cyclone, and LAZ files created by me which compress the <em>huge</em> PTX files to a more manageable binary format.</p>
+<p>The key items to keep in my opinion are the raw .zfs files, and the PTX files, as they constitute the raw untouched data in open formats, but the LAZ files are the ones I&rsquo;ll probably use most on a day to day basis, simply because they are small enough that drive I/O isn&rsquo;t a bottleneck for processing time.</p>
+<p>I&rsquo;ve got the LAZ files backed up in the same places as the plot census data, and also in a <a href="https://datashare.ed.ac.uk/handle/10283/3997" target="_blank">DataShare repository</a>
+, which gives them a permanent DOI and makes them available for others to use. The scan databases I don&rsquo;t think I will back up, because every aspect of information in them is represented in some other file. The only convenience of keeping them is that I would be able to quickly boot up Cyclone and use their very good 3D rendering, but <a href="https://www.danielgm.net/cc/" target="_blank">Cloud Compare</a>
+ is enough for me most of the time. The PTX files I have backed up both on my personal hard drives, and also on cassette at the University, a service which costs about £50 per pair of tapes I think, which is very reasonable. This isn&rsquo;t perfect as the cassette backup isn&rsquo;t that accessible, but the PTX files are just so big that it&rsquo;s difficult to keep them anywhere else. As long as I have two sets of hard drives, each stored in different places, they should be safe.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Mapping The Vegetation and Climate of Africa in R</h1>
+
+<h2>2017-09-05</h2>
+</div>
+
+<main>
+<p>As I&rsquo;ll soon be embarking on my PhD research into biodiversity and woodland productivity in Southern Africa, I thought I should get a better idea of how the vegatation differs across the continent.</p>
+<p>I normally try to use R instead of point and click GIS packages like ArcMap or QGIS, so all the code here is to be used in an R session.</p>
+<p>The packages I used are:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">maps</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rgdal</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggmap</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>First I needed a base map of Africa, ideally with countries on, <a href="http://maplibrary.org/library/stacks/Africa/index.htm" target="_blank">which I found here</a>
+.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Import shapefile of country borders ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">countries</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dsn</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;africa&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>                     <span style="color:#000">layer</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;Africa&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">countries</span><span style="color:#ce5c00;font-weight:bold">@</span><span style="color:#000">data</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">countries_fort</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">fortify</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">countries</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">region</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;COUNTRY&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Plot country borders ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#000">geom_polygon</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">long</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lat</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">group</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">group</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">),</span> 
+</span></span><span style="display:flex;"><span>							 <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;black&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>							 <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">countries_fort</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span>  <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#000">scale_fill_manual</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">values</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">palette_veg_type_19</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Biome&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#000">xlab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Longitude&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#000">ylab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Latitude&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#000">coord_map</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><p>To investigate vegetation types I tracked down a <a href="http://omap.africanmarineatlas.org/BIOSPHERE/pages/3_terrestrial%20vegetation.htm" target="_blank">shapefile version of White&rsquo;s 1983 Vegetation Map</a>
+. The map is the result of 15 years of work by UNESCO and AEFTET and was created by first compiling many existing maps, then cross-checking with extensive fieldwork and consultation with local experts.</p>
+<figure><a href="/img_full/white_veg_map/veg_map.png"><img
+          alt="White&#39;s map of vegetation types in Africa"
+          title="White&#39;s map of vegetation types in Africa"src="/img/white_veg_map/veg_map.png" 
+      /></a></figure>
+
+
+<p>To create the map above I used the <code>ggplot2</code> and <code>rgdal</code> packages:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Read shapefile ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">white_veg</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">readOGR</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dsn</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;whitesveg&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#000">layer</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;Whites vegetation&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Explore shapefile</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">@</span><span style="color:#000">data</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">@</span><span style="color:#000">bbox</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">white_veg</span><span style="color:#ce5c00;font-weight:bold">@</span><span style="color:#000">proj4string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Fortify shapefile for use in ggplot2 ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">white_veg_fort</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">fortify</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">region</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;DESCRIPTIO&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg_fort</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">white_veg_fort</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">id</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create colour palette for ggplot2 ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">palette_veg_type_19</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;#FF4A46&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#008941&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#006FA6&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#A30059&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#FFDBE5&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#4e9a06">&#34;#7A4900&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#0000A6&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#63FFAC&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#B79762&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#004D43&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#4e9a06">&#34;#8FB0FF&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#997D87&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#5A0007&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#809693&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#FEFFE6&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#4e9a06">&#34;#1B4400&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#4FC601&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#3B5DFF&#34;</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;#4A3B53&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># ggplot Africa with vegetation ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_polygon</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">long</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lat</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">group</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">group</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">id</span><span style="color:#000;font-weight:bold">),</span> 
+</span></span><span style="display:flex;"><span>               <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">white_veg_fort</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_polygon</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">long</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lat</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">group</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">group</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">),</span> 
+</span></span><span style="display:flex;"><span>               <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;black&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>               <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">countries_fort</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span>  <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">scale_fill_manual</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">values</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">palette_veg_type_19</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Biome&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xlab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Longitude&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">ylab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Latitude&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">coord_map</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><p>To look specifically at Southern Africa I had to use some trial and error to get the x and y limits right in the <code>ggplot()</code> call:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># ggplot Southern Africa ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_polygon</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">long</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lat</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">group</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">group</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">id</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">white_veg_fort</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_polygon</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">long</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lat</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">group</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">group</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;black&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">countries_fort</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span>  <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">scale_fill_manual</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">values</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">palette_veg_type_19</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Biome&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xlab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Longitude&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">ylab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Latitude&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">coord_map</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xlim</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">40</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">ylim</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">-35</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">-10</span><span style="color:#000;font-weight:bold">))</span>
+</span></span></code></pre></div><p>The steps once again for anyone interested in a mapping workflow in R:</p>
+<ol>
+<li>Import shapefile with <code>readOGR()</code></li>
+<li>Explore shapefile</li>
+<li>&ldquo;Fortify&rdquo; shapefile for use in <code>ggplot()</code></li>
+<li>Plot using <code>ggplot()</code></li>
+</ol>
+<p>I also wrote a tutorial for the Coding Club group I&rsquo;m involved with on using R as a GIS</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

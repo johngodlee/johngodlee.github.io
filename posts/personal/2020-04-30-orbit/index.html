@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Shiny app to visualise scaled planetary orbits on world map</h1>
+
+<h2>2020-04-30</h2>
+</div>
+
+<main>
+<p>When I was in primary school I remember going into the playground to do a fun thought experiment to try and teach us just how vast the Solar System is, how much space there is between the planets, and how tiny the planets are compared to the Sun. We got a football to represent the Sun and measured the diameter. The teacher then did some maths to calculate how far away the planets would be if the Sun was the size of the football. The teacher then got us to lay out a long tape measure, and stand at distances along the tape measure to represent the planets. One child would be Jupiter, another child would be Saturn and get to hold a hula hoop to represent the rings.</p>
+<p>I was talking with a friend who now works in science communication about this and I started to think about a place for a web-app that lets you define the size of your Sun model and then displays on a map the correctly scaled full orbits of the planets. You could say to your audience &ldquo;if the Sun was 30 cm diameter, Neptune would be in the next town over&rdquo;.</p>
+<p>I only know how to make web apps in R Shiny, so I made one, and published it <a href="https://johngodlee.shinyapps.io/orbit_app/" target="_blank">here</a>
+.</p>
+<p>The most interesting parts of this from a programming point of view were (a) learning how to define ellipses mathematically, using their major axis, minor axis, and eccentricity, and (b) transforming the coordinate systems between the appropriate UTM zone and Latitude/Longitude measurements for display on the map. I also learned a lot about reactive values in Shiny in the process. In particular, I learned a lot of terminology to describe the geometry of the planetary orbits, for example:</p>
+<ul>
+<li>Longitude of perihelion/periapsis - Angular direction of major axis of orbit if the inclination equalled the reference plane</li>
+<li>Argument of perihelion/periapsis - The vertical angle of the major axis from the reference plane</li>
+<li>Orbital eccentricity</li>
+<li>Longitude of ascending node</li>
+</ul>
+<figure><a href="/img_full/orbit/scrot.png"><img
+          alt="Screenshot of Shiny app showing orbits"
+          title="Screenshot of Shiny app showing orbits"src="/img/orbit/scrot.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

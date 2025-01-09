@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>My vimdiff setup</h1>
+
+<h2>2020-03-10</h2>
+</div>
+
+<main>
+<p>Here is the relevant part of my <code>.vimrc</code> which deals with <code>vimdiff</code>. Annoyingly, but maybe necessarilly, <code>vimdiff</code> uses a lot of different options to normal <code>vim</code>.</p>
+<pre tabindex="0"><code>&#34; Disable folding
+set diffopt+=context:99999
+
+&#34; Disable diffing on whitespace
+set diffopt+=iwhite
+
+&#34; Softwrap lines
+au VimEnter * if &amp;diff | execute &#39;windo set wrap&#39; | endif
+
+&#34; Disable syntax highlighting
+if &amp;diff
+    syntax off
+endif
+
+&#34; Change highlight colours so they are less garish
+hi DiffAdd      cterm=none ctermfg=NONE ctermbg=Red
+hi DiffChange   cterm=none ctermfg=NONE ctermbg=Gray
+hi DiffDelete   cterm=none ctermfg=NONE ctermbg=Red
+hi DiffText     cterm=none ctermfg=NONE ctermbg=DarkGray
+</code></pre><p>Ordinarily, if large chunks of the two diffed files are identical, they are folded away to avoid distraction. I don&rsquo;t actually like that, I get confused about where in the document I am, so I disable it with <code>set diffopt+=context:99999</code>.</p>
+<p>Diffing on whitespace is <em>almost</em> always a bad idea, so that&rsquo;s disabled by default.</p>
+<p>By default, lines in vimdiff run off the edge of the page, which makes it difficult to see differences between files. That&rsquo;s dumb, so softwrap is used instead.</p>
+<p>When syntax highlighting is used there are too many conflicting colours on the page, making it hard to follow what needs to be changed, so syntax highlighting is disabled.</p>
+<p>Finally, to further help with the super bright colours, I redefine the colours used show differences between files, so only the background colours are changed. This way the colours are never too loud even with different colour schemes.</p>
+<figure><a href="/img_full/vimdiff/scrot.png"><img
+          alt="A screenshot of my vimdiff"
+          title="A screenshot of my vimdiff"src="/img/vimdiff/scrot.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

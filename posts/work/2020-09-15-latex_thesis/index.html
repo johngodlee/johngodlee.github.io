@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Making a LaTeX thesis template</h1>
+
+<h2>2020-09-15</h2>
+</div>
+
+<main>
+<p>Note, I updated this post on 2021-07-31, as my LaTeX template has developed.</p>
+<p>Terrifyingly, it&rsquo;s not too long before I have to start writing my PhD thesis. To save myself some headaches down the line I put together a LaTeX thesis template system for myself. The template itself can be found <a href="https://github.com/johngodlee/phd_thesis" target="_blank">on Github</a>
+.</p>
+<p>The template hinges on <code>compile.sh</code>, which contains a shell script which can compile the thesis, or individual chapters separately.</p>
+<p>The directory structure is paramount to make sure all the parts work together, and as a result the template isn&rsquo;t that flexible, but it works for my needs.</p>
+<p>Below is a copy of the <code>README.md</code> found in the template, which details how it works:</p>
+<hr>
+<p>This directory contains a directory structure and associated styling files for a University of Edinburgh PhD thesis, created by the author, for a PhD in the School of GeoSciences.</p>
+<h1 id="directory-structure">Directory structure</h1>
+<p><code>compile.sh</code> is a shell script to generate the thesis and chapters. The script requires <code>bash</code> and <code>latexmk</code>. It takes 1:5 arguments:</p>
+<ul>
+<li><code>-c</code> - clean intermediate LaTeX files before and after compilation</li>
+<li><code>-t</code> - compile thesis</li>
+<li><code>-p</code> - compile all individual chapters</li>
+<li><code>-s</code> - compile a named chapter by referencing its directory. e.g. <code>./compile.sh -s chapters/introduction</code></li>
+<li><code>-f</code> - sets the format argument, either <code>0</code> for submission (default), or <code>1</code> for a &ldquo;nicer&rdquo; layout with smaller margins, a serif&rsquo;ed font, and single spaced lines.</li>
+</ul>
+<p><code>main.tex</code> contains the top-level <code>.tex</code> skeleton file which calls all other files. Can be altered to include new chapters, or to change the order of chapters.</p>
+<p><code>frontmatter/</code> contains various <code>.tex</code> snippets used in the frontmatter of the main thesis: title page (<code>ttl.tex</code>), acknowledgements (<code>ack.tex</code>), etc.</p>
+<p><code>img/</code> contains common images used in the thesis.</p>
+<p><code>chapters/</code> contains subdirectories each referring to a thesis chapter or an appendix. The directory name of each chapter should match the name of the main <code>.tex</code> file for that chapter. Each chapter directory should have a <code>*_defin.tex</code> where the asterisk expands to the directory name, which defines the <code>\chaptertitle{}</code> variable for that chapter. Chapters can have their own <code>img/</code> (images) and <code>inc/</code> (included <code>.tex</code> files, e.g. tables) directories which will be incorporated into the thesis and standalone chapters. Chapter <code>.tex</code> content should be wrapped in the following boilerplate, to ensure that references come at the end of the chapter, rather than the end of the thesis:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>refsection<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\input</span><span style="color:#204a87">{</span>chaptername<span style="color:#204a87">_</span>defin.tex<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\chapter</span><span style="color:#c4a000">[\chaptertitle]</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\chaptertitle</span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\chaptermark</span><span style="color:#204a87">{</span>Introduction<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>ch:chaptername<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">% CONTENT HERE
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\newpage</span><span style="color:#204a87">{}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begingroup</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\setstretch</span><span style="color:#204a87">{</span>1.0<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\printbibliography</span><span style="color:#c4a000">[heading=subbibintoc]</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\endgroup</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>refsection<span style="color:#204a87">}</span>
+</span></span></code></pre></div><p><code>out/</code> contains all compiled <code>.pdf</code> files.</p>
+<p><code>snippets/</code> contains bits of code used to compile the thesis:</p>
+<ul>
+<li><code>preamble.tex</code> contains all the preamble material used for the thesis. It is also called by <code>chapter.tex</code>.</li>
+<li><code>pagefmt_submission.tex</code> defines page layout which adheres to thesis submission guidelines</li>
+<li><code>pagefmt_nice.tex</code> defines page layout for a &ldquo;nicer&rdquo; layout</li>
+<li><code>chapter.tex</code> contains a skeleton to create individually formatted chapters.</li>
+<li><code>definitions.tex</code> contains thesis-level LaTeX variables: thesis title, author name, thesis date, etc.</li>
+</ul>
+<h1 id="packages">Packages</h1>
+<p>Various packages are used to create this template:</p>
+<p><code>import</code> to make nested linking of <code>.tex</code> files per chapter easier. Uses <code>import</code> when sourcing chapters in <code>main.tex</code></p>
+<p><code>inputenc</code>, <code>babel</code> and <code>csquotes</code> set English language rules.</p>
+<p><code>geometry</code> sets page margins.</p>
+<p><code>pdflscape</code> allows landscape pages with <code>\begin{landscape}</code>.</p>
+<p><code>setspace</code> sets line spacing.</p>
+<p><code>fancyhdr</code> sets page headers and footers.</p>
+<p><code>graphicx</code> for including images.</p>
+<p><code>float</code> for managing floats with <code>[H]</code>.</p>
+<p><code>caption</code> for custom caption formatting.</p>
+<p><code>subcaption</code> for compound figures:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>[H]
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>[h]<span style="color:#204a87">{</span>0.45<span style="color:#204a87;font-weight:bold">\linewidth</span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#c4a000">[width=\linewidth]</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>a<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>a<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\hfill</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>[h]<span style="color:#204a87">{</span>0.45<span style="color:#204a87;font-weight:bold">\linewidth</span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\includegraphics</span><span style="color:#c4a000">[width=\linewidth]</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>b<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>b<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>subfigure<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\caption</span><span style="color:#204a87">{</span>caption text<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">\label</span><span style="color:#204a87">{</span>img<span style="color:#204a87">_</span>a<span style="color:#204a87">_</span>b<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>figure<span style="color:#204a87">}</span>
+</span></span></code></pre></div><p><code>multirow</code> and <code>longtable</code> allow for more flexible table formatting,</p>
+<p><code>booktabs</code> subtly improves table aesthetics.</p>
+<p><code>biblatex</code> handles referencing.</p>
+<p><code>textcomp</code>, <code>siunitx</code>, <code>amsmath</code>, and <code>amssymb</code> provide many symbols and extended text characters.</p>
+<p><code>fmtcount</code> converts numbers into text, useful for including variable output from R scripts.</p>
+<p><code>appendix</code> handles appendices better than the basic <code>\appendix{}</code>.</p>
+<p><code>hyperref</code> provides hyperlinks between sections, to references, to DOIs and URLs.</p>
+<p><code>xcolor</code> allows using colours to highlight text.</p>
+<p><code>appendix</code> improves handling of appendices per chapter.</p>
+<p><code>enumitem</code> for custom lists such as author affiliations at the start of chapters adapted from published articles.</p>
+<p><code>microtype</code> magically improves text justification.</p>
+<h1 id="extras">Extras</h1>
+<p>I&rsquo;ve added some commands to format information to be displayed at the start of chapters adapted from peer-reviewed articles. <code>\paperauthors{}</code> and <code>\authorcontributions{}</code> simply format author names and author contributions, prepending with &ldquo;<strong>Author contributions</strong>&rdquo; for example, and adding some aesthetic space around the block. <code>\papercite{}</code> wraps around <code>\fullcite{}</code> to provide a pretty bibliographic entry for published papers. <code>\paperaffil{}</code> defines a custom enumerated list to display author affiliations in a compact manner.</p>
+<p><code>begin{supplement}...\end{supplement}</code> defines an environment for supplementary materials at the end of a chapter. It resets the figure and table counters to zero and prepends &ldquo;S&rdquo; to each figure and table number.</p>
+<p>The <code>report</code> class does a ridiculous thing where the page count is reset after every <code>\begin{abstract}...\end{abstract}</code>. This might be OK if every chapter has an abstract but not all of mine did. I patched the <code>\abstract{}</code> command to stop this happening, and also to display the abstract like an unnumbered section.</p>
+<p>The basic <code>\textasciitilde{}</code> sits too high on the line. I defined <code>\textapprox{}</code> which produces a more aesthetically pleasing tilde.</p>
+<h1 id="notable-mentions">Notable mentions</h1>
+<p>Inspiration for this template came from other projects:</p>
+<ul>
+<li><a href="https://git.ecdf.ed.ac.uk/uoe-gits/edthesis" target="_blank">uoe-gits / EdThesis LaTeX template · GitLab</a>
+ - Created by Magnus Hagdorn back in 2003.</li>
+<li><a href="https://jojomio.wordpress.com/2014/02/14/writing-a-phd-thesis-in-latex/" target="_blank">Writing a PhD Thesis in LaTeX | Johannes Miocic</a>
+ - A more recent attempt, from 2015, also with links to other PhD thesis LaTeX projects.</li>
+<li><a href="https://github.com/ryklith/ue-phd-thesis" target="_blank">ryklith/ue-phd-thesis: Template for a PhD thesis at the University of Edinburgh</a>
+</li>
+<li><a href="https://github.com/maxbiostat/PhD_Thesis" target="_blank">maxbiostat/PhD_Thesis: My PhD Thesis - Institute of Evolutionary Biology, University of Edinburgh, 2018</a>
+</li>
+</ul>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

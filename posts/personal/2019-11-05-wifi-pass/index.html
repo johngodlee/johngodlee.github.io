@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Shell script to get wifi password in macOS</h1>
+
+<h2>2019-11-05</h2>
+</div>
+
+<main>
+<p>macOS uses the BSD <code>security</code> command to access information from the system keychain. With this command you can access all the same information which is normally stored in <code>Keychain Access.app</code> and more. I wrote a script which prints the WiFi password for either the current network, or a specified network to the terminal. This was mostly an exercise for me to learn how <code>getopts</code> works.</p>
+<p>The script is below:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
+
+ssid=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep &#34; SSID:&#34; | awk -F&#39;: &#39; &#39;{print $2}&#39;)
+
+while getopts &#34;:n:&#34; opt; do
+	case $opt in 
+		n)
+			# If flag is given with argument
+			ssid=&#34;$OPTARG&#34;
+			;;
+		\?)
+			# If incorrect flag given
+			echo &#34;-$OPTARG is not a valid option&#34; &gt;&amp;2
+			exit 1
+			;;
+		:)
+			# If flag is given without argument
+			echo &#34;-$OPTARG requires an argument&#34; &gt;&amp;2
+			exit 1
+			;;
+	esac
+done
+
+security find-generic-password -wga &#34;$ssid&#34;
+</code></pre><p>If I run <code>./wifi.sh -n SSID</code> the script will look for a network with the SSID <code>SSID</code> then return its password. If I run <code>./wifi.sh -n</code> I will get the response: <code>-n requires an argument</code>. If I run <code>./wifi.sh -a</code> I will get the response: <code>-a is not a valid option</code>. If I run <code>./wifi.sh</code> I will get the password for the WiFi network I am currently attached to.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

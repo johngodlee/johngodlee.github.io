@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>My workflow, tmux, vim, etc.</h1>
+
+<h2>2017-11-01</h2>
+</div>
+
+<main>
+<p>I thought I should do the sort of post that everyone seems to do and show off my workflow, with all the horrendously try-hard command line utilities, and DIY config files. You can find my dotfiles <a href="https://github.com/johngodlee/dotfiles" target="_blank">here</a>
+.</p>
+<p>I spend most of my time working on my macbook pro, within an <code>iTerm2</code> window running <code>tmux</code>.</p>
+<p>I have a bash script that builds a <code>tmux</code> session and fills it with useful programs. I have <code>vim</code> in one window, then a whole load of small empty shell panes in the next window, and finally <code>cmus</code> in the last window for playing music:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create new session</span>
+</span></span><span style="display:flex;"><span>tmux -2 new -s <span style="color:#4e9a06">&#39;dash&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Start vim</span>
+</span></span><span style="display:flex;"><span>tmux send-keys <span style="color:#4e9a06">&#34;vim&#34;</span> Enter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># New window, split into 4</span>
+</span></span><span style="display:flex;"><span>tmux new-window -n <span style="color:#4e9a06">&#39;bash&#39;</span>
+</span></span><span style="display:flex;"><span>tmux split-window -v
+</span></span><span style="display:flex;"><span>tmux split-window -h
+</span></span><span style="display:flex;"><span>tmux <span style="color:#204a87;font-weight:bold">select</span>-pane -t <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>tmux split-window -h
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Split pane 1 vertically</span>
+</span></span><span style="display:flex;"><span>tmux <span style="color:#204a87;font-weight:bold">select</span>-pane -t <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>tmux split-window -v
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Split pane 5 horizontally</span>
+</span></span><span style="display:flex;"><span>tmux <span style="color:#204a87;font-weight:bold">select</span>-pane -t <span style="color:#0000cf;font-weight:bold">5</span>
+</span></span><span style="display:flex;"><span>tmux split-window -h
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Resize panes</span>
+</span></span><span style="display:flex;"><span>tmux resize-pane -D <span style="color:#0000cf;font-weight:bold">8</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># New window, start cmus</span>
+</span></span><span style="display:flex;"><span>tmux new-window -n <span style="color:#4e9a06">&#39;cmus&#39;</span>
+</span></span><span style="display:flex;"><span>tmux send-keys <span style="color:#4e9a06">&#34;cmus&#34;</span> Enter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Detach and reattach to make it work properly</span>
+</span></span><span style="display:flex;"><span>tmux detach
+</span></span><span style="display:flex;"><span>tmux a -t dash
+</span></span><span style="display:flex;"><span>tmux <span style="color:#204a87;font-weight:bold">select</span>-window -t <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span></code></pre></div><p>I dabbled in using <code>tmux-resurrect</code> and <code>tmux-continuum</code> to save my tmux sessions when I rebooted, but I found that these plugins weren&rsquo;t always reliable. Besides, I don&rsquo;t usually reboot my laptop unless I&rsquo;ve first saved all my files.</p>
+<p>I used to have a lot more things running in <code>tmux</code>. I used <code>alpine</code> to manage email from my gmail account, and I used the <code>calendar.vim</code> plugin with a custom <code>.vimrc</code> to link to my google calendar, but when I started back working full time I found that it actually saved me a bit of time to just use the default macOS <code>Calendar</code> and <code>Mail</code> apps.</p>
+<h1 id="note-taking">Note-taking</h1>
+<p>I use <code>vim</code> to take all my notes. I use markdown to format all my notes. I have a note for each day, or at least each workday. The basic format of my daily note is:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold"># Item 1
+</span></span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold"></span><span style="color:#204a87;font-weight:bold">*</span> Thing to do one
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> Thing to do two
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">*</span> detail 1
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">*</span> detail 2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">hr</span><span style="color:#000;font-weight:bold">&gt;</span>	
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold"># Item 2
+</span></span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold"></span><span style="color:#204a87;font-weight:bold">*</span> Thing to do one
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>==================DONE===================
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">*</span> Thing to do, done
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>==================DONE===================
+</span></span></code></pre></div><p>At the end of the day, I copy that day&rsquo;s note into a new note with tomorrow&rsquo;s date. So in the end I have a folder of notes with names like this:</p>
+<pre tabindex="0"><code>Daily_2017_10_26.md
+Daily_2017_10_27.md
+Daily_2017_10_28.md
+</code></pre><p>I also have this neat way of roughly tracking how productive I&rsquo;ve been. I can count the number of lines within the <code>==================DONE===================</code> tags. Then I can turn that into a csv, then import that into <code>R</code> and plot a graph of how much I&rsquo;ve done over time. It&rsquo;s not that useful, but was a fun project to put together, and a way to learn about <code>grep</code>.</p>
+<p>The bash script:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create csv file of completed items from daily notes by counting lines between #DONE# marks</span>
+</span></span><span style="display:flex;"><span>touch ~/Desktop/word_count.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Using a for loop and multiple sed arguments to amend the file (takes longer)</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">for</span> f in ./*<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#ce5c00;font-weight:bold">{</span> <span style="color:#204a87">printf</span> <span style="color:#4e9a06">&#39;%s &#39;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$f</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">;</span> sed -n <span style="color:#4e9a06">&#39;/DONE/,/DONE/p&#39;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$f</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000;font-weight:bold">|</span> wc -l<span style="color:#000;font-weight:bold">;</span> <span style="color:#ce5c00;font-weight:bold">}</span> &gt;&gt; ~/Desktop/word_count.txt<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Make multiple whitespace into 1 whitespace, to csv</span>
+</span></span><span style="display:flex;"><span>awk <span style="color:#4e9a06">&#39;{$1=$1}1&#39;</span> ~/Desktop/word_count.txt &gt; ~/Desktop/word_count.csv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Replace &#34;md &#34; with &#34;md,&#34;</span>
+</span></span><span style="display:flex;"><span>perl -pi -w -e  <span style="color:#4e9a06">&#39;s/md\s/md,/g;&#39;</span> ~/Desktop/word_count.csv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Add column names</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;date,count\n</span><span style="color:#204a87;font-weight:bold">$(</span>cat ~/Desktop/word_count.csv<span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">&#34;</span> &gt; ~/Desktop/word_count.csv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># delete txt file</span>
+</span></span><span style="display:flex;"><span>rm ~/Desktop/word_count.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Run R script</span>
+</span></span><span style="display:flex;"><span>Rscript ~/Google_Drive/Code/R/done_count.R
+</span></span></code></pre></div><p>The R script:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Personal productivity by #DONE# items in Daily notes</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Packages ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dplyr</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Load data ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">prod</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">read.csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;~/Desktop/word_count.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Clean up ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">prod</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">date</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">prod</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">date</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">gsub</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;./Daily_&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">.)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>  <span style="color:#8f5902;font-style:italic"># Remove leading filename section</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">gsub</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;.md&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">.)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>  <span style="color:#8f5902;font-style:italic"># Remove trailing filename section</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">as.Date</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.,</span> <span style="color:#000">format</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;%Y_%m_%d&#34;</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#8f5902;font-style:italic"># Transform to Date class</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># ggplot line graph ----</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">done_count</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">prod</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">date</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">count</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">geom_line</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">scale_x_date</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">date_labels</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;%b&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">date_breaks</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;1 month&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ggsave</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">filename</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;ggplot_done_count.png&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>			 <span style="color:#000">plot</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">done_count</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>			 <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">20</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">height</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">20</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">units</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;cm&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><h2 id="edit-2017_12_08">Edit 2017_12_08</h2>
+<p>I&rsquo;ve been thinking more about the note-taking philosophy and have noticed a few trends in my own note-taking that make it easier for me to read things back at a later date. This has mostly come about because I am now starting to re-read my notes on academic papers as I start to write my confirmation report.</p>
+<ul>
+<li>Keep notes short - It&rsquo;s much easier to read notes back when they are only on short lines. Only one sentence per line</li>
+<li>Nested bullet points - In line with trying to keep notes short, it follows that nested bullet points are a great way to give some sense of inherent structure to your note taking, and make it easier to memorise things like lists of species. Nested notes also do a good job at maintaining a logical flow to discussions, by allowing you to put a retort to a particular piece of evidence as a nested bullet under the main bullet point.</li>
+<li>Use keywords and repeat yourself - I find it much easier to search through long sets of notes if I have keywords to search for. In this sense, it follows that each bullet point should be its own self-encapsulated bundle of information, which relies little on other bullet points to give it context, this makes it much easier to scan through bullet points for the useful information.</li>
+<li>Use Markdown - This isn&rsquo;t entirely necessary, but I&rsquo;ve found it to be a great way of quickly applying formatting to my notes, as opposed to what I used to do with Microsoft Word and WYSIWYG formatting.</li>
+</ul>
+<h1 id="screens-and-deskspace">Screens and deskspace</h1>
+<p>I do nearly all of my work at my desk in the University. I have a widescreen monitor with a trailing HDMI cable that I can plug into my laptop, then to the right I have a HP all-in-one running Windows that is hooked up to the University network, just in case I need to use some piece of Windows software. For example, when I&rsquo;m testing workshops for undergraduate students.</p>
+<figure><a href="/img_full/terminal/desk.jpg"><img
+          alt="Desk"
+          title="Desk"src="/img/terminal/desk.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

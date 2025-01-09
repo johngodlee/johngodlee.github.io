@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Sort and filter .bib files</h1>
+
+<h2>2020-08-24</h2>
+</div>
+
+<main>
+<p>I have a master <code>.bib</code> file called <code>lib.bib</code>, which contains all the BibTeX citations I&rsquo;ve ever used. I use it as an index for organising which papers I&rsquo;ve read and it means it&rsquo;s easier to reuse references for new manuscripts. When I submit a manuscript to a journal however, I want to include a standalone <code>.bib</code> file which only contains the references for the current manuscript. I wrote a little shell script which leverages <a href="https://github.com/BurntSushi/ripgrep" target="_blank">ripgrep (rg)</a>
+ to create a sorted and filtered <code>.bib</code> file:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/usr/bin/env sh
+
+# $1 = .tex file to find citations 
+# $2 = .bib file to grab entries
+
+match=($(rg -o &#39;\\cite.*?\{.*?\}&#39; $1 | sed -E &#34;s/\\\\cite.*?\{(.*)\}/\1/g&#34; | sed &#39;s/,\s\+/\n/g&#39; | sort | uniq))
+
+for i in &#34;${match[@]}&#34;; do 
+	rg -N --color never --multiline --multiline-dotall &#34;\{$i.*?^\}&#34; $2
+done 
+</code></pre><p>The script takes two arguments, the first is a <code>.tex</code> file which is searched to find all instances or <code>\citep{.*}</code>, <code>\citealt{.*}</code> etc., the second is a <code>.bib</code> file which is used to grab the references found in the <code>.tex</code> file.</p>
+<p>Going line by line, first I create an array variable which contains all the BibTeX reference keys from the <code>.tex</code> file. It sorts these entries alphabetically and removes duplicates to create a tidy list. Next I loop over the array variable and search for each BibTeX entry in the <code>.bib</code> file, which is then printed to <code>stdout</code> so the user can do what they want with it, usually send to a new <code>.bib</code> file.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

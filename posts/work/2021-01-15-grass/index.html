@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Estimating grassy volume from terrestrial LiDAR</h1>
+
+<h2>2021-01-15</h2>
+</div>
+
+<main>
+<p>As part of my PhD research I have been using terrestrial LiDAR to understand woodland tree canopy traits in southern African savannas. One of the measurements I wanted to make was an estimate of the volume of grassy material below the canopy, so I could make inferences about how canopy traits affect the probability of fire. In a previous post I&rsquo;ve already described how I processed the raw point cloud data to produce a <code>.csv</code> with XYZ point coordinates, so I&rsquo;ll skip straight to how I used R to estimate grassy volume. I adapted this method from <a href="https://doi.org/10.3390/rs9060531" target="_blank">Cooper et al. (2017)</a>
+.</p>
+<p>After reading in the file with <code>data.table::fread()</code> the first thing was to assign each point within a cylinder of grass to 2x2 cm 2D bins in the XY plane, then I took the mean height of points within each bin and estimated the volume of the column below that mean height, assuming that the volume below the mean height was completely filled by grass material. That&rsquo;s quite a big assumption to make, but for comparison between samples it seems suitable. I also have Disc Pasture Meter (DPM) measurements and biomass samples on a subset of the sample locations to cross-check the estimates from the terrestrial LiDAR.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Read file</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">dat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">fread</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Bin into x,y cells</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">dat_xy_bin</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">dat</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">mutate</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">bin_x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">cut</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.$X</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">include.lowest</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">labels</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">breaks</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">seq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">floor</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">min</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.$X</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#000">ceiling</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">max</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.$X</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#000">by</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">voxel_dim</span><span style="color:#000;font-weight:bold">)),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">bin_y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">cut</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.$Y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">include.lowest</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">labels</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">breaks</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">seq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">floor</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">min</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.$Y</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#000">ceiling</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">max</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.$Y</span><span style="color:#000;font-weight:bold">)),</span> <span style="color:#000">by</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">voxel_dim</span><span style="color:#000;font-weight:bold">)))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Take mean height of points within a column, then estimate volume</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">summ</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">dat_xy_bin</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">group_by</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bin_x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">bin_y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">summarise</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">volume</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">mean</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Z</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">na.rm</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">voxel_dim^2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Sum of volumes</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">vol</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sum</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">summ</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">volume</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">na.rm</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Shell script to extract colours from macOS Terminal.app themes</h1>
+
+<h2>2022-12-29</h2>
+</div>
+
+<main>
+<p>On macOS, configuration profiles for Terminal.app are stored as <code>plist</code> files with the extension <code>.terminal</code>. These files contain XML or binary data. The profiles contain, among other settings, the colour scheme for the terminal.</p>
+<p>I wrote a shell script to extract the colour scheme information as RGB255 values for each colour scheme value. The function uses a combination of <a href="https://xmlstar.sourceforge.net/" target="_blank">xmlstarlet</a>
+, <a href="https://www.gnu.org/software/gawk/manual/gawk.html" target="_blank">awk</a>
+, and some programs which come with macOS, like <code>tr</code>, <code>base64</code>, and <code>plutil</code>.</p>
+<p>First, I define a function to extract colour values:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">function</span> dict_search<span style="color:#ce5c00;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># If colour code found in file</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> grep -q <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">1</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">2</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		xml sel --net -t -v <span style="color:#4e9a06">&#34;//key[.=\&#34;</span><span style="color:#000">$1</span><span style="color:#4e9a06">\&#34;]/following-sibling::data[1]&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">2</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>			tr -d <span style="color:#4e9a06">&#39;[:space:]&#39;</span> <span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>			base64 --decode <span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>			plutil -convert xml1 - -o - <span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>			xml sel --net -t -v <span style="color:#4e9a06">&#34;//dict/array/dict/key[.=&#39;NSRGB&#39;]/following-sibling::data[1]&#34;</span> <span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>			tr -d <span style="color:#4e9a06">&#39;[:space:]&#39;</span> <span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>			base64 --decode <span style="color:#000;font-weight:bold">|</span>
+</span></span><span style="display:flex;"><span>			awk -v <span style="color:#000">var</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">1</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">&#39;BEGIN{ ORS=&#34; &#34;; print var } 
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">					{ for(i=1;i&lt;=3;i++) { printf &#34;%.0f &#34;, $i*255 }; printf &#34;\n&#34; }&#39;</span> 
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span></code></pre></div><p>Going line by line:</p>
+<ul>
+<li><code>if grep ...</code> will only run the rest of the function if the chosen colour ID is found in the <code>.terminal</code> file.</li>
+<li><code>xml sel ...</code> searches for the <code>key</code> (i.e. the chosen colour ID), then pulls the contents of the <code>data</code> node which comes directly after it.</li>
+<li><code>tr -d ...</code> removes all spaces, including new lines, effectively concatenating the contents of the node.</li>
+<li><code>base64 ...</code> converts the base64 encoded data into text</li>
+<li><code>plutil -convert ...</code> converts that into XML</li>
+<li><code>xml sel ...</code> extracts the RGB values in the XML</li>
+<li><code>tr -d ...</code> as above, removes all spaces and new lines</li>
+<li><code>base64 ...</code> as above, converts base64 encoded data into text</li>
+<li><code>awk ...</code> prints the name of the colour ID, and the three RGB components multiplied by 255 and rounded to convert from a 0-1 decimal to a 0-255 integer.</li>
+</ul>
+<p>Then I create an array containing all the colour IDs of interest:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#000">colArray</span><span style="color:#ce5c00;font-weight:bold">=(</span><span style="color:#4e9a06">&#34;ANSIBlackColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIBlueColor&#34;</span> <span style="color:#4e9a06">&#34;ANSICyanColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIGreenColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIMagentaColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIRedColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIWhiteColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIYellowColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIBrightBlackColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIBrightBlueColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIBrightCyanColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIBrightGreenColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIBrightMagentaColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIBrightRedColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIBrightWhiteColor&#34;</span> <span style="color:#4e9a06">&#34;ANSIBrightYellowColor&#34;</span> <span style="color:#4e9a06">&#34;BackgroundColor&#34;</span> <span style="color:#4e9a06">&#34;CursorColor&#34;</span> <span style="color:#4e9a06">&#34;SelectionColor&#34;</span> <span style="color:#4e9a06">&#34;TextBoldColor&#34;</span> <span style="color:#4e9a06">&#34;TextColor&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span></code></pre></div><p>Finally, to construct the output of the script, firstly printing the filename, then running the function for each colour ID, and only printing the result to stdout if the function output is not empty:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Print filepath of theme</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">printf</span> <span style="color:#4e9a06">&#34;%s\n&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">1</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># For each in array, run function</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">for</span> i in <span style="color:#4e9a06">${</span><span style="color:#000">colArray</span><span style="color:#000;font-weight:bold">[@]</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Run function</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>dict_search <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">i</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">1</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># If output not empty, print </span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -n <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">out</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#204a87">printf</span> <span style="color:#4e9a06">&#34;%s\n&#34;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">out</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">done</span>
+</span></span></code></pre></div><p>This produces, for example for my tweaked version of the <a href="https://color.smyck.org/" target="_blank">Smyck</a>
+ colour scheme, which I use every day:</p>
+<pre tabindex="0"><code>smyck.terminal
+ANSIBlackColor 0 0 0
+ANSIBlueColor 64 125 153
+ANSICyanColor 32 115 131
+ANSIGreenColor 125 169 0
+ANSIMagentaColor 186 138 204
+ANSIRedColor 184 65 49
+ANSIWhiteColor 161 161 161
+ANSIYellowColor 196 165 7
+ANSIBrightBlackColor 75 75 75
+ANSIBrightBlueColor 141 207 240
+ANSIBrightCyanColor 106 217 207
+ANSIBrightGreenColor 196 241 55
+ANSIBrightMagentaColor 247 154 255
+ANSIBrightRedColor 214 131 124
+ANSIBrightWhiteColor 247 247 247
+ANSIBrightYellowColor 254 225 77
+BackgroundColor 18 21 28
+CursorColor 32 115 130
+SelectionColor 32 115 131
+TextBoldColor 247 247 247
+TextColor 247 247 247
+</code></pre><figure><a href="/img_full/terminal_colours/smyck.png"><img
+          alt="Smyck colour scheme."
+          title="Smyck colour scheme."src="/img/terminal_colours/smyck.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/terminal_colours/smyck_term.png"><img
+          alt="Smyck colour scheme in the terminal."
+          title="Smyck colour scheme in the terminal."src="/img/terminal_colours/smyck_term.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

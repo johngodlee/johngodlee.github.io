@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Making a Gopherhole</h1>
+
+<h2>2019-11-20</h2>
+</div>
+
+<main>
+<p>I have heard people on youtube, mostly <a href="https://www.youtube.com/watch?v=lUBhOgK5zQI" target="_blank">DistroTube</a>
+ and <a href="https://www.youtube.com/watch?v=ORgk-AwD7SQ" target="_blank">Hex DSL</a>
+, talking about <a href="https://en.wikipedia.org/wiki/Gopher_%28protocol%29" target="_blank">Gopher</a>
+. I also saw it being discussed on <a href="https://news.ycombinator.com/item?id=13855634" target="_blank">Hacker News</a>
+ once.</p>
+<p>The youtubers and digitial minimalist / linux try-hards have recently begun lauding Gopher as a sane alternative to browsing the internet with HTTP and the World Wide Web, which they say are bloated and beyond redemption since advertisers and data harvesters have taken over.</p>
+<p>Gopher is an internet protocol that was created in 1991. In my mind it sits alongside FTP more than it does HTTP, in that it is merely a way of organising file delivery in a heirarchical fashion. It doesn&rsquo;t have the flexibility of HTTP, providing only plain text formatted by certain conventions and a smattering of links to connect files and pages. Some think this inflexibility is a good thing, Gopher sites are: simple, transparent, text based (good for the visually impaired) and consistent. In Gopher it&rsquo;s hard to implement most of the more destructive mechanisms present on the World Wide Web like user tracking, data harvesting and advertising. Gopher sites are also phenomenally light on resources, providing just plain text. It&rsquo;s not that HTTP can&rsquo;t be fast as well, but there is a tendency to use all the features that the flexibility of HTTP can afford. That being said, I think a lot of people are confusing the World Wide Web with the internet. Gopher is an internet protocol, but it satisfies a different set of needs to HTTP and they shouldn&rsquo;t be compared so readily.</p>
+<p>I set up a Gopher site (aka a Gopherhole) on the <a href="https://sdf.org/" target="_blank">Super Dimension Fortress</a>
+, which provides its registered and validated users with gopherspace running on the <a href="http://www.gophernicus.org/" target="_blank">gophernicus server software</a>
+ for free. It also provides lots of other services run through a shell account that you can SSH into, such as POP3/IMAP mail, and IRC. They are a good community of hobbyists which provides a valuable if computationally limiting service. There are lots of other places to host a Gopherhole and it&rsquo;s also possible to self-host, and there are a few Gopher server softwares out there, the most popular right now being <a href="https://github.com/jgoerzen/pygopherd" target="_blank">pygopherd</a>
+, I think.</p>
+<p>First I created a shell account, logged in, and validated my membership with a $3 USD donation to the SDF by PayPal. My validation came through in about 12 hours, but I imagine this varies a bit. I SSH&rsquo;d into my shell account with:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">ssh username@tty.sdf.org
+</code></pre><p>After entering my password I could then create a gopher with <code>mkgopher</code>, which creates a directory <code>~/gopher</code>. Inside this directory is where I store all my gopher content. <code>mkgopher</code> also allows various site level options to be configured, such as the site <code>title</code> and the site <code>description</code>. It&rsquo;s also important to set file and directory permissions so that other users can read the material in the gopherhole. This can be done automatically within <code>mkgopher</code> with the <code>chmod</code> command, or manually:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">find ~/gopher/ -type f -print0 | xargs -0 chmod 644
+find ~/gopher/ -type d -print0 | xargs -0 chmod 755
+</code></pre><h1 id="gophermaps">Gophermaps</h1>
+<p>At the root of <code>~/gopher</code> there should be a file called <code>gophermap</code>. This file defines the homepage of your gopherhole, with plain text and links to reach other content.</p>
+<p>An example <code>gophermap</code> looks like this:</p>
+<pre tabindex="0"><code class="language-gopher" data-lang="gopher">iWelcome to gopherspace	/
+
+0This is a text file in a link	file.txt
+9This is a pdf file in a link	file.pdf
+1This is a link to a directory	subdir
+
+iSome more text.	/
+
+IAn image	img.gif
+
+0A file on another server	/gopher/relevance.txt	gopher.floodgap.com	70
+hA HTTP link to another server	URL:http://sdf.lonestar.org/
+</code></pre><p>The numbers, and some letters are called itemtypes. They denote what type of information the line holds. There are a bunch of itemtypes, but I think the commonly used itemtypes nowadays are:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Itemtype</th>
+          <th style="text-align: right">Content</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">0</td>
+          <td style="text-align: right">Text file</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1</td>
+          <td style="text-align: right">Directory</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">7</td>
+          <td style="text-align: right">Search query</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">9</td>
+          <td style="text-align: right">Binary file</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">g</td>
+          <td style="text-align: right">GIF image</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">h</td>
+          <td style="text-align: right">HTML URL</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">i</td>
+          <td style="text-align: right">inline text</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">s</td>
+          <td style="text-align: right">Sound file</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">I</td>
+          <td style="text-align: right">Image (not-GIF)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">=</td>
+          <td style="text-align: right">Execute shell command</td>
+      </tr>
+  </tbody>
+</table>
+<p>One extra itemtype that I haven&rsquo;t found documented ANYWHERE is <code>=</code>. This can be used to start a shell command on the server. For example, to show the current date and time:</p>
+<pre tabindex="0"><code class="language-gopher" data-lang="gopher">=echo &#34;`date`&#34;
+</code></pre><p>This could come in really useful if hosting a server on your own machine, where you could point the shell to a script to do basically anything you want. This makes gopher more extensible than I originally thought. Maybe if Gopher had remained popular for a long time, we might have ended up with gopher developers abusing <code>=</code> to gather data on users and subversively advertise to us.</p>
+<p>The full syntax of the whole line is, for a text file for example:</p>
+<pre tabindex="0"><code class="language-gopher" data-lang="gopher">0Description of file&lt;TAB&gt;/path/to/content.md&lt;TAB&gt;domain.org&lt;TAB&gt;port_number
+</code></pre><p>Note that <code>&lt;TAB&gt;</code> must be an ACTUAL tab character, not expanded to multiple spaces as some text editors &lsquo;helpfully&rsquo; adjust it. The <code>0</code> defines the line as pointing to a text file. <code>Description of file</code> will appear in the page as a selectable link. <code>/path/to/content</code> defines the path to the text file to be opened by the link. File paths can be defined relative to the current <code>gophermap</code>, so if <code>file.txt</code> is located in the same directory as <code>gophermap</code> the path can just be <code>file.txt</code>. If the file is located on the same server as <code>gophermap</code>, <code>domain.org</code> and <code>port_number</code> can be omitted. If the file is on a different server, the server domain (<code>domain.org</code>) should be added and the port number, which is usually <code>70</code>. So if the address of the remote file linked is <code>gopher://gopher.floodgap.com/0/gopher/relevance.txt</code>, the domain name is <code>gopher.floodgap.com</code>.</p>
+<p>As a side note, I&rsquo;ve found that in gopher browsers, if you want to visit the rendered version of a gophermap, you can enter the address like this, with a <code>1</code> after the domain:</p>
+<pre tabindex="0"><code class="language-gopher" data-lang="gopher">gopher://gopher.floodgap.com/1/gopher
+</code></pre><p>If you want to view the unrendered version of the gophermap, you can replace the <code>1</code> with a <code>0</code>.</p>
+<p>For a piece of text, the gophermap syntax is similar, but not exactly the same:</p>
+<pre tabindex="0"><code class="language-gopher" data-lang="gopher">iSome text that will appear on its own&lt;TAB&gt;/
+</code></pre><p>A single slash should be included after a single <code>&lt;TAB&gt;</code> following the text to be displayed. An <code>i</code> should be included before the text.</p>
+<p>I&rsquo;ve found that the <code>9</code> itemtype can cover many non-standard filetypes, as it basically just prompts the web browser to download the file.</p>
+<p>Directories can be nested below the top level gopherspace directory. Each of these directories can have their own <code>gophermap</code>, but they don&rsquo;t have to. In the top level <code>gophermap</code> the directory can be called as:</p>
+<pre tabindex="0"><code class="language-gopher" data-lang="gopher">1This is a link to a directory&lt;TAB&gt;subdir
+</code></pre><p>If there is a <code>gophermap</code> in <code>subdir/</code> it will be opened. This <code>subdir/gophermap</code> can contain relative links to files the same as the top level <code>gophermap</code>.</p>
+<p>There isn&rsquo;t a lot more to creating a simple functional gophermap, the rest is just text formatting to design a well formatted page. I like to split the top level gophermap into sections with headers wrapped in <code>==</code> symbols, and to have an ASCII art header at the very top of the top level gophermap. It&rsquo;s also customary to limit the width of a gopher page to 69 characters, but I haven&rsquo;t found any technical reason why this would be the case:</p>
+<pre tabindex="0"><code class="language-gopher" data-lang="gopher">i      _       _            _         _____           _ _           	/
+i     | |     | |          | |       / ____|         | | |          	/
+i     | | ___ | |__  _ __  | |      | |  __  ___   __| | | ___  ___ 	/
+i _   | |/ _ \| &#39;_ \| &#39;_ \ | |      | | |_ |/ _ \ / _` | |/ _ \/ _ \	/
+i| |__| | (_) | | | | | | || |___ _ | |__| | (_) | (_| | |  __/  __/	/
+i \____/ \___/|_| |_|_| |_||_____(_) \_____|\___/ \__,_|_|\___|\___|	/
+                                                                       
+iJohn L. Godlee	/
+
+0Contact details	contact.txt
+0CV	cv.txt
+
+i==== Phlog posts =================================================	/
+
+0Post 1	post_1.txt
+0Post 2	post_2.txt
+
+i==== Recent recipes ==============================================	/
+
+0Mac and cheese	mac_cheese.txt
+0Pizza dough	pizza_dough.txt
+</code></pre><h1 id="browsers">Browsers</h1>
+<p>To browse Gopher pages the <a href="https://lynx.invisible-island.net/" target="_blank">Lynx</a>
+ browser in the terminal is the most common way I think. Otherwise there are plugins for some web browsers, like the <a href="https://gopher.floodgap.com/overbite/" target="_blank">Overbite plugin for Firefox</a>
+. There are also a few different online Gopher to HTML proxy services where you type in the gopher address and the output is rendered in HTML, e.g. <a href="https://gopherproxy.meulie.net/" target="_blank">GopherProxy</a>
+, <a href="https://gopher.floodgap.com/gopher/gw" target="_blank">Floodgap&rsquo;s proxy</a>
+, or <a href="https://gopher.commons.host/" target="_blank">Gopher Commons</a>
+.</p>
+<p>I like to use the <a href="http://w3m.sourceforge.net/" target="_blank"><code>w3m</code> browser</a>
+ which I couldn&rsquo;t get to load gopher pages by default, but I did find an <a href="https://bitbucket.org/iamleot/gopher2html/src" target="_blank">awk script on Bitbucket</a>
+ which converts Gopher to HTML and then serves it through w3m. So far it is working pretty well, but I still found myself loading up Lynx when I was building my page initially to make sure everything was formatted correctly.</p>
+<h1 id="converting-a-github-pages-blog-to-jekyll">Converting a Github-pages blog to Jekyll</h1>
+<p>I created a shell script which generates a gopherhole with a directory tree like this:</p>
+<pre tabindex="0"><code>.
+├── contact.txt
+├── cv.txt
+├── gophermap
+├── posts
+│   ├── 2017-07-20-ranger-rifle-conf-mac.txt
+│   ├── 2017-08-14-bash-prompt.txt
+│   ├── 2019-11-10-beamer.txt
+│   ├── 2019-11-15-gginext.txt
+│   └── gophermap
+└── recipes
+    ├── Apricot_orange_blossom_baklava.txt
+    ├── Baked_pumpkin_with_apple.txt
+    └── gophermap 
+</code></pre><p>It&rsquo;s basically just a load of shell scripts. First I use pandoc to convert the recipes and blog posts to plain text with something like:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">pandoc --from markdown --to plain --reference-links --reference-location=block -o posts/post_1.txt post_1.md
+</code></pre><p>Then I put the title of each blog post as a link into the gophermap using sed in a for loop, with something like this:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">all=(posts/*.txt)
+
+# Reverse order of posts array
+for (( i=${#all[@]}-1; i&gt;=0; i-- )); do 
+	rev_all[${#rev_all[@]}]=${all[i]}
+done
+
+# Get 10 most recent posts
+recent=&#34;${rev_all[@]:0:10}&#34;
+
+# Add recent post links to gophermap
+for i in $recent; do
+	line=$(head -n 1 $i)
+	printf &#34;0$line\t$i\n&#34; &gt;&gt; gophermap
+done
+</code></pre><p>Those were just simplified examples, it&rsquo;s easy to add header material from another file or format the link text differently.</p>
+<h1 id="update-2019_12_25">Update 2019_12_25</h1>
+<p>Note that my gopher hole is now hosted on <a href="http://tilde.club/" target="_blank">tilde.club/</a>
+, at <code>gopher://tilde.club/1/~johngodlee</code> because <code>scp</code> was being problematic on SDF. I&rsquo;ve since shut down my SDF gopherhole.</p>
+<h1 id="update-2020-03-28">Update 2020-03-28</h1>
+<p>Note that my gopher hole is now hosted on <a href="https://republic.circumlunar.space/" target="_blank">republic.circumlunar.space/</a>
+, at <code>gopher://republic.circumlunar.space/1/~johngodlee</code> because <code>tilde.club</code> kept being unavailable. I&rsquo;ll be shutting down my tilde.club gopherhole soon.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

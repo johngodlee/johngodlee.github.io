@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Workflow for writing an academic paper</h1>
+
+<h2>2019-12-20</h2>
+</div>
+
+<main>
+<p>I&rsquo;ve been writing a couple of papers simulateously recently and so I&rsquo;ve had some practice in managing the writing process. I do analyses mostly in R with some small bits of data cleaning on the command line with <code>gdal</code> or text manipulation utilities like <code>sed</code>, <code>grep</code> and <code>awk</code>. I write the paper with LaTeX.</p>
+<p>I was inspired by <a href="https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf" target="_blank">this British Ecological Society guide</a>
+ which came out a couple of years ago.</p>
+<p>I keep a Git repository for each paper I&rsquo;m writing. This repository contains all the data, scripts, and notes for that paper. The basic directory structure looks like this, with some minor changes when a particular project demands it:</p>
+<pre tabindex="0"><code>.
+├── README.md 
+├── build.sh
+├── output.log 
+├── notes/
+├── data/
+├── img/
+├── include/
+├── scripts/
+└── manuscript/
+    ├── img/
+    └── include/
+</code></pre><p>The <code>README.md</code> contains a short description of the project and also a description of the directory structure, with descriptions of data files and the purpose of each script. This skeleton for the <code>README.md</code> can be copied between projects with minor changes.</p>
+<p><code>notes/</code> contains multiple text files with notes on the project, notably a record of what was accomplished during each session in a file called <code>journal.md</code>.</p>
+<p><code>data/</code> contains all the data for the project. Shapefiles are kept in their own folder due to them actually being a collection of multiple files.</p>
+<p><code>img/</code> contains all the images created during analysis. These images are later copied to <code>manuscript/img/</code> for use in the manuscript.</p>
+<p><code>include/</code> contains non-image outputs created during analysis, this might be tables, individual statistics. These files are then copied to <code>manuscript/include/</code> for use in the manuscript.</p>
+<p><code>scripts/</code> contains all the scripts used during analysis, mostly R scripts and shell scripts.</p>
+<p><code>build.sh</code> is an executable shell script which runs all the analysis scripts, copies images and other items to the manuscript directory, and finally compiles the paper. The <code>stdout</code> and <code>stderr</code> of <code>build.sh</code> gets dumped into <code>output.log</code>, which I can then read to determine if everything compiled properly.</p>
+<p>Below is an example of <code>build.sh</code>:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/sh
+
+{
+IMG=&#34;manuscript/img/&#34;
+INC=&#34;manuscript/include/&#34;
+
+# Run data compilation
+Rscript scripts/data_clean.R
+Rscript scripts/analysis.R
+
+# Transfer images to manuscript
+cp img/map.pdf $IMG
+cp img/barplot.pdf $IMG
+
+# Transfer snippets to manuscript
+cp include/n_plots.tex $INC
+cp include/n_outliers.tex $INC
+cp include/hull_cover.tex $INC
+
+# Transfer tables to manuscript
+cp include/model_fit.tex $INC
+
+# Edit tables
+## model_fit.tex
+sed -i &#39;s/\$//g&#39; &#34;${INC}model_fit.tex&#34;
+sed -i &#39;s/caption{}/caption{Model fit statistics for linear regression}/g&#39; &#34;${INC}model_fit.tex&#34; 
+
+# Compile 
+latexmk manuscript/manuscript.tex
+latexmk -C
+
+} &gt; output.log 2&gt;&amp;1
+</code></pre><p>First I define some variables that I reuse when I&rsquo;m moving images and tables, then I run each R script in the right order, then I transfer images, snippets and tables to the manuscript directory and edit some of the snippets and tables if I need to. Finally it compiles the LaTeX document using <code>latexmk</code>. All of the paths in <code>build.sh</code> are defined relative to the root of the project directory, to make the project portable between machines. The commands in the scripts are wrapped in <code>{ ... } &gt; output.log 2&gt;&amp;1</code>. This redirects all the output from the commands (stderr and stdout) to a file called <code>output.log</code>.</p>
+<p>I generate snippets with useful numerical statistics that I can insert into my LaTeX document, so if they change over the course of the analyses the values automatically update. For example, if I want to know the number of plots in my dataset:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">n_plots</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">sum</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rowSums</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">df</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">fileConn</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">file</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;include/stats.tex&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">writeLines</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\\newcommand{\\nplots}{&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">n_plots</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;}&#34;</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">fileConn</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">close</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fileConn</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>This defines a LaTeX variable called <code>\nplots{}</code> which returns the value of <code>n_plots</code> and writes it to a <code>.tex</code> file. In LaTeX I can just include <code>stats.tex</code> with <code>\input{include/stats.tex}</code> and then call the variable in text with <code>we measured \nplots{} plots</code>.</p>
+<p>I generate tables with the <code>{stargazer}</code> package from dataframes in R.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">fileConn</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">file</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;include/model_fit.tex&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">writeLines</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stargazer</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">model_fit_df</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">summary</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;model_fit&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digit.separate</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">rownames</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">fileConn</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">close</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fileConn</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>These tables often need to be adjusted quite a lot, which I do mainly with <code>sed</code> in <code>build.sh</code>. I cna change the column headers, add a caption, adjust digit rounding and adjust the tbale formatting if I need to. Doing all this on the command line is easier than doing it through stargazer with R.</p>
+<p>As a side note I have a simple function to reformat p values from statistical tests so they look sensible for publication:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">p_format</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">p</span><span style="color:#000;font-weight:bold">){</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">case_when</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">p</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0.01</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;p &lt;0.01&#34;</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">p</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0.05</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;p &lt;0.05&#34;</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">TRUE</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#000">paste0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;p = &#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">p</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>As always, the issue I have with this setup is that no matter how thorough I try to be with my explanation of the setup, some people just aren&rsquo;t familiar with the tools used, notably shell scripting and LaTeX. For the LaTeX issue one thing I can do is to convert the document to a word document with something like <code>pandoc</code>, but this has problems. The question has been asked many times and there are loads of options, it&rsquo;s messy:</p>
+<ul>
+<li><a href="https://tex.stackexchange.com/questions/4145/workflow-for-converting-latex-into-open-office-ms-word-format" target="_blank">Workflow for converting LaTeX into Open Office / MS Word Format</a>
+</li>
+<li><a href="https://tex.stackexchange.com/questions/91040/from-tex-to-doc-format-is-it-possible" target="_blank">conversion - From .tex to .doc format. Is it possible?</a>
+</li>
+<li><a href="https://tex.stackexchange.com/questions/323897/is-possible-to-compile-a-tex-document-in-doc-or-docx" target="_blank">compiling - Is possible to compile a .tex document in .doc or .docx? - TeX - LaTeX Stack Exchange</a>
+</li>
+</ul>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

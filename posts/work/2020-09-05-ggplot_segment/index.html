@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Display line segments with given slope in ggplot2</h1>
+
+<h2>2020-09-05</h2>
+</div>
+
+<main>
+<p>A question popped up online, where the user wanted to create a plot identical to this one, in R:</p>
+<figure><a href="/img_full/ggplot_segment/gdp.png"><img
+          alt="Scatter plot of GDP per country"
+          title="Scatter plot of GDP per country"src="/img/ggplot_segment/gdp.png" 
+      /></a></figure>
+
+
+<p>The plot puts GDP per capita against mean life satisfaction, with an added third variable showing to what extent that mean life satisfaction is split equally among high and low income people. Every point has a slope line where the greater the slope, the higher the disparity in life satisfaction between high and low income people.</p>
+<p>ggplot2 can use <code>geom_abline()</code> to calculate lines with slopes, but these lines traverse the entire plot, which isn&rsquo;t what we need here. <code>geom_segment()</code> can be used to calculate line segments, but only takes line end point coordinates as input. I wrote a simple function which calculates these end points from a known midpoint and slope, with some styling to allow for line segments of different lengths:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">dat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">seq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">seq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">),</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">slope</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">seq</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">by</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">length.out</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">endPoints</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">m</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">d</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">k</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">d</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000">sqrt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">m^2</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xmin</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000">k</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xmax</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">k</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">ymin</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">m</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">k</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">ymax</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">m</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">k</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xmin</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ymin</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">xmax</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ymax</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">dat_end</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">endPoints</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dat</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dat</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">dat</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">slope</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.1</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_point</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">dat_end</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;blue&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_segment</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">dat_end</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">xmin</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">xend</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">xmax</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ymin</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">yend</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">ymax</span><span style="color:#000;font-weight:bold">))</span>
+</span></span></code></pre></div><p>The function basically just re-writes the following equation to find x and y:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span>(x <span style="color:#204a87;font-weight:bold">\pm</span> <span style="color:#204a87;font-weight:bold">\frac</span><span style="color:#204a87">{</span>D<span style="color:#204a87">}{</span><span style="color:#204a87;font-weight:bold">\sqrt</span><span style="color:#204a87">{</span>1 + m<span style="color:#204a87">^</span>2<span style="color:#204a87">}}</span>, y <span style="color:#204a87;font-weight:bold">\pm</span> m <span style="color:#204a87;font-weight:bold">\frac</span><span style="color:#204a87">{</span>D<span style="color:#204a87">}{</span><span style="color:#204a87;font-weight:bold">\sqrt</span><span style="color:#204a87">{</span>1 + m<span style="color:#204a87">^</span>2<span style="color:#204a87">}}</span>)
+</span></span></code></pre></div><p>This produces a plot like this:</p>
+<figure><a href="/img_full/ggplot_segment/example.png"><img
+          alt="Example of function output"
+          title="Example of function output"src="/img/ggplot_segment/example.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

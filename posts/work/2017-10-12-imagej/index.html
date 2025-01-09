@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Automating imageJ leaf area processing</h1>
+
+<h2>2017-10-12</h2>
+</div>
+
+<main>
+<p>Last year when I was working at the University of Exeter I was involved in a project that was measuring hydraulic properties of leaves from Amazonian trees that had been droughted or not droughted, as part of the long running DRYFLOR experiment in the Baia de Caxiuana in Brazil.</p>
+<p>I had ~1800 leaves that we scanned to measure their leaf area. The method I&rsquo;ve used in the past uses imageJ to threshold the image, then analyse contiguous blocks of black and white to get the area, so I wanted to continue using the program I was comfortable with. However, I wasn&rsquo;t looking forward to the prospect of measuring the leaf area of that many leaves so I looked into using the macro language for imageJ to automate the process.</p>
+<p>You can find the macro I used saved as a <code>.ijm</code> file <a href="/files/imagej/LeafArea.ijm">here</a>
+, and I have another macro that also counts the number of leaf objects in each image <a href="/files/imagej/LeafArea_Count.ijm">here</a>
+</p>
+<h2 id="tips-for-scanning-leaves-for-use-in-imagej">Tips for scanning leaves for use in imageJ</h2>
+<ul>
+<li>One Scan per sample unit - normally a leaf or a branch of leaves - aids automation</li>
+<li>Decide on a standard DPI for all scans - 300DPI is fine</li>
+<li>Try to get the leaf as close to the middle of the page as possible</li>
+<li>Make sure to add a ruler or something of known size in the scan area, so you can set your scale</li>
+<li>Make sure to clean the scanner glass and cover frequently to stop bits of sap sticking to it</li>
+<li>Name all scans with the sample number and <code>_1</code> <code>_2</code> <code>_3</code> etc. if multiple scans per sampling unit</li>
+<li>Label each scan with a written label on the image just in case the image names go weird</li>
+<li>Once the images are scanned, open them up in paint and manually remove any elements connected to your leaf that you don&rsquo;t want to include in your analysis by painting them white, e.g. petioles, dead leaf areas.</li>
+</ul>
+<h2 id="manual-imagej-leaf-area">Manual imageJ leaf area</h2>
+<ol>
+<li>Open image</li>
+<li>Convert to 8 bit [Image &gt; Type &gt; 8-bit]</li>
+<li>Preserve only the leaf using the Threshold [Image &gt; Adjust &gt; Threshold &gt; Move sliders &gt; Apply]</li>
+<li>Draw a line of known length over the image scale bar then set the scale [Analyze &gt; Set Scale… &gt; Change “Known Distance” and “Unit of length”] Set Global if all images from then on will have the same scale</li>
+<li>Get the area [Analyze &gt; Analyze Particles… &gt; Check Display Results]</li>
+<li>There might be lots of small particles but if the thresholding was done correctly then the leaf should be the largest by far. Can also choose “Show outlines” to get an image with the numbers written on it in red, which correspond to those on the table.</li>
+</ol>
+<h2 id="preparing-images-for-imagej-automated-macro">Preparing images for imageJ automated macro</h2>
+<ul>
+<li>To automate leaf area calculation, all images must have the same resolution. Resolution can be changed in Adobe Photoshop using an <code>Action</code>:</li>
+</ul>
+<ol>
+<li>Open an image in Photoshop</li>
+<li>Select Windows -&gt; Actions</li>
+<li>Select &ldquo;Create New Action&rdquo;</li>
+<li>Give the Action an appropriate name and select &ldquo;Record&rdquo;</li>
+<li>Select Image -&gt; Image Size&hellip;</li>
+<li>Change &ldquo;Resolution&rdquo; to 300</li>
+<li>Select &ldquo;OK&rdquo;</li>
+<li>Select File -&gt; Save As&hellip;</li>
+<li>Select an appropriate location</li>
+<li>Change &ldquo;Format:&rdquo; to JPEG</li>
+<li>Go back to the Actions panel and select the Stop button</li>
+<li>Select File -&gt; Automate -&gt; Batch&hellip;</li>
+<li>Select the recently created Action from the dropdown menu</li>
+<li>Under &ldquo;Source:&rdquo; choose where your images are stored</li>
+<li>Under &ldquo;Destination:&rdquo; choose where your new images will be stored</li>
+<li>Check the box labelled &ldquo;Override Action &ldquo;Save As&rdquo; Commands&rdquo;</li>
+<li>Create an appropriate File Naming system, e.g. &ldquo;document name&rdquo; + &ldquo;extension&rdquo;</li>
+<li>Select &ldquo;OK&rdquo;</li>
+<li>Check that new images are the desired resolution by opening some and selecting Image -&gt; Image Size&hellip;</li>
+</ol>
+<h2 id="analyzing-in-imagej-using-automated-macro">Analyzing in imageJ using automated macro</h2>
+<ol>
+<li>Open ImageJ</li>
+<li>Select Process -&gt; Batch -&gt; Macro…</li>
+<li>Select the appropriate input and output files
+<ul>
+<li>Input should be where your images are</li>
+<li>Output should be where you want any files generated by the macro to go</li>
+</ul>
+</li>
+<li>Insert the following code into the large box, can also be loaded from <code>LeafArea.ijm</code> file:</li>
+</ol>
+<pre tabindex="0"><code>// Calculate area of dark objects (leaves) against white background.
+// 79.7619px/cm a4-200dpi.
+// 120.006px/cm a4-300dpi.
+// Change `size min` to analyse smaller objects, but increase noise
+
+run(&#34;8-bit&#34;);
+setAutoThreshold(&#34;Default&#34;);
+//run(&#34;Threshold...&#34;);
+//setThreshold(0, 146);
+setOption(&#34;BlackBackground&#34;, false);
+run(&#34;Convert to Mask&#34;);
+run(&#34;Set Scale...&#34;, &#34;distance=120.006 known=1 pixel=1 unit=cm global&#34;);
+run(&#34;Analyze Particles...&#34;, &#34;size=0.70-Infinity show=Outlines display add&#34;);
+setOption(“Display Label”, true)
+</code></pre><ol start="5">
+<li>Under &ldquo;Output Format&rdquo; selecgt &ldquo;8 bit TIFF&rdquo; to generate a file for each image containing outlines of all objects analysed. Use these to check that the macro worked properly.</li>
+<li>Select &ldquo;Process&rdquo; and wait for the macro to finish.</li>
+<li>A window should open containing a list of objects, their areas, and the file in which the objects were found. The results in this window can be copied and pasted into an excel file for analysis.</li>
+</ol>
+<h3 id="customising-the-imagej-automated-leaf-area-macro">Customising the ImageJ automated leaf area macro</h3>
+<ul>
+<li>
+<p><code>setThreshold(...</code> is the minimum and maximum grey values to be selected for the image analysis. These values can be generated by doing a manual threshold and moving the sliders until only the leaves are highlighted.</p>
+</li>
+<li>
+<p><code>distance=...</code> is a distance given in pixels used to set the scale of the image. 120 is for 1 cm in a 300dpi a4 image. This value can be generated by manually setting the scale in ImageJ.</p>
+</li>
+<li>
+<p><code>known=...</code> is the real distance that the &ldquo;distance&rdquo; value inhabits in the image.</p>
+</li>
+<li>
+<p><code>size=...-...</code> is the minimum and maximum object size that will be analyzed by ImageJ with units of the scale specified by &ldquo;distance&rdquo; and &ldquo;known&rdquo;.</p>
+</li>
+<li>
+<p><code>circularity=...-...</code> is the minimum and maximum object circularity that will be analyzed, with 0 being a straight line and 1 being a perfect circle, useful for excluding rulers in the analysis. Could also be used to measure features on the leaves such as smut fungi, tar spots etc.</p>
+</li>
+</ul>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>BibLaTeX reference formatting</h1>
+
+<h2>2021-07-15</h2>
+</div>
+
+<main>
+<p>I was preparing references for a paper I submitted to a journal. The journal had some pretty specific reference formatting criteria, and for whatever reason submitting a .bib file wasn&rsquo;t enough for them. I have been using <code>biblatex</code> for quite some time, but have always puzzled over how to customise the citations and reference list. Formatted references are very ambiguous, with innumerable different ways to display the same information. As such, customising the output of BibLaTeX is also quite complex, as it has to deal with the many edge cases that occur in author names, and the many different types of reference.</p>
+<p>After some trial and error I configured BibLaTeX so the references and citations looked sensible. I thought I would go through the customisations I made and explain what effect they have.</p>
+<p>First, here is my basic .tex file, which includes some necessary preamble material and then prints some references:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\documentclass</span><span style="color:#204a87">{</span>article<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span>[natbib,
+</span></span><span style="display:flex;"><span>	backend=biber
+</span></span><span style="display:flex;"><span>	]<span style="color:#204a87">{</span>biblatex<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\addbibresource</span><span style="color:#204a87">{</span>ref.bib<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\begin</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Ref. 1: <span style="color:#204a87;font-weight:bold">\citep</span><span style="color:#204a87">{</span>Jost2007<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Ref. 2: <span style="color:#204a87;font-weight:bold">\citep</span><span style="color:#204a87">{</span>Fick2017<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Ref. 3: <span style="color:#204a87;font-weight:bold">\citep</span><span style="color:#204a87">{</span>Dinerstein2017<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Ref. 4: <span style="color:#204a87;font-weight:bold">\citep</span><span style="color:#204a87">{</span>Adole2018a<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Ref. 5: <span style="color:#204a87;font-weight:bold">\citep</span><span style="color:#204a87">{</span>Adole2018b<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Ref. 6: <span style="color:#204a87;font-weight:bold">\citep</span><span style="color:#204a87">{</span>VIPPHEN<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Ref. 7: <span style="color:#204a87;font-weight:bold">\citep</span><span style="color:#204a87">{</span>Fake2021<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\printbibliography</span><span style="color:#204a87">{}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\end</span><span style="color:#204a87">{</span>document<span style="color:#204a87">}</span>
+</span></span></code></pre></div><p>I&rsquo;m using <code>natbib</code> syntax to write the citations, and <code>biber</code> as a bibliography parsing engine.</p>
+<p><code>ref.bib</code> looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span>&#34; One author article
+</span></span><span style="display:flex;"><span>@article<span style="color:#204a87">{</span>Jost2007,
+</span></span><span style="display:flex;"><span>  author = <span style="color:#204a87">{</span>Jost, L.<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  title = <span style="color:#204a87">{</span>Partitioning diversity into independent alpha and beta components<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  year = 2007,
+</span></span><span style="display:flex;"><span>  journal = <span style="color:#204a87">{</span>Ecology<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  volume = <span style="color:#204a87">{</span>88<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  number = <span style="color:#204a87">{</span>10<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  pages = <span style="color:#204a87">{</span>2427--2439<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  DOI = <span style="color:#204a87">{</span>10.1890/06-1736.1<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&#34; Two author article
+</span></span><span style="display:flex;"><span>@article<span style="color:#204a87">{</span>Fick2017,
+</span></span><span style="display:flex;"><span>  author = <span style="color:#204a87">{</span>Fick, S. E. and Hijmans, R. J.<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  title = <span style="color:#204a87">{</span>WorldClim 2: <span style="color:#204a87">{</span>New<span style="color:#204a87">}</span> 1‐km spatial resolution climate surfaces for global land areas<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  year = 2017,
+</span></span><span style="display:flex;"><span>  journal = <span style="color:#204a87">{</span>International Journal of Climatology<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  volume = <span style="color:#204a87">{</span>37<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  number = <span style="color:#204a87">{</span>12<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  pages = <span style="color:#204a87">{</span>4302--4315<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  DOI = <span style="color:#204a87">{</span>10.1002/joc.5086<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&#34; Two articles with same authors:
+</span></span><span style="display:flex;"><span>&#34; The first
+</span></span><span style="display:flex;"><span>@article<span style="color:#204a87">{</span>Adole2018a,
+</span></span><span style="display:flex;"><span>  doi = <span style="color:#204a87">{</span>10.1111/gcb.14310<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  year = 2018,
+</span></span><span style="display:flex;"><span>  publisher = <span style="color:#204a87">{</span>Wiley<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  volume = <span style="color:#204a87">{</span>24<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  number = <span style="color:#204a87">{</span>9<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  pages = <span style="color:#204a87">{</span>4054--4068<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  author = <span style="color:#204a87">{</span>Adole, T. and Dash, J. and Atkinson, P. M.<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  title = <span style="color:#204a87">{</span>Large-scale prerain vegetation green-up across Africa<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  journal = <span style="color:#204a87">{</span>Global Change Biology<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&#34; The second
+</span></span><span style="display:flex;"><span>@article<span style="color:#204a87">{</span>Adole2018b,
+</span></span><span style="display:flex;"><span>  doi = <span style="color:#204a87">{</span>10.1016/j.apgeog.2017.12.006<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  year = 2018,
+</span></span><span style="display:flex;"><span>  publisher = <span style="color:#204a87">{</span>Elsevier <span style="color:#204a87">{</span>BV<span style="color:#204a87">}}</span>,
+</span></span><span style="display:flex;"><span>  volume = <span style="color:#204a87">{</span>90<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  pages = <span style="color:#204a87">{</span>187--199<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  author = <span style="color:#204a87">{</span>Adole, T. and Dash, J. and Atkinson, P. M.<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  title = <span style="color:#204a87">{</span>Characterising the land surface phenology of Africa using 500~m <span style="color:#204a87">{</span>MODIS<span style="color:#204a87">}</span> <span style="color:#204a87">{</span>EVI<span style="color:#204a87">}}</span>,
+</span></span><span style="display:flex;"><span>  journal = <span style="color:#204a87">{</span>Applied Geography<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&#34; Long author list
+</span></span><span style="display:flex;"><span>@article<span style="color:#204a87">{</span>Dinerstein2017,
+</span></span><span style="display:flex;"><span>  doi = <span style="color:#204a87">{</span>10.1093/biosci/bix014<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  year = 2017,
+</span></span><span style="display:flex;"><span>  publisher = <span style="color:#204a87">{</span>Oxford University Press (<span style="color:#204a87">{</span>OUP<span style="color:#204a87">}</span>)<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  volume = <span style="color:#204a87">{</span>67<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  number = <span style="color:#204a87">{</span>6<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  pages = <span style="color:#204a87">{</span>534--545<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  author = <span style="color:#204a87">{</span>Dinerstein, E. and Olson, D. and Joshi, A. and Vynne, C. and Burgess, N. D. and Wikramanayake, E. and Hahn, N. and Palminteri, S. and Hedao, P. and Noss, R. and Hansen, M. and Locke, H. and Ellis, E. C. and Jones, B. and Barber, C. V. and Hayes, R. and Kormos, C. and Martin, V. and Crist, E. and Sechrest, W. and Price, L. and Baillie, J. E. M. and Weeden, D. and Suckling, K. and Davis, C. and Sizer, N. and Moore, R. and Thau, D. and Birch, T. and Potapov, P. and Turubanova, S. and Tyukavina, A. and de Souza, N. and Pintea, L. and Brito, J. C. and Llewellyn, O. A. and Miller, A. G. and Patzelt, A. and Ghazanfar, S. A. and Timberlake, J. and Kl<span style="color:#204a87;font-weight:bold">\&#34;</span><span style="color:#204a87">{</span>o<span style="color:#204a87">}</span>ser, H. and Shennan-Farp<span style="color:#204a87;font-weight:bold">\&#39;</span><span style="color:#204a87">{</span>o<span style="color:#204a87">}</span>n, Y. and Kindt, R. and Lilles<span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\o</span><span style="color:#204a87">}</span>, J. B. and van Breugel, P. and Graudal, L. and Voge, M. and Al-Shammari, K. F. and Saleem, M.<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  title = <span style="color:#204a87">{</span>An ecoregion-based approach to protecting half the terrestrial realm<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  journal = <span style="color:#204a87">{{</span>BioScience<span style="color:#204a87">}}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&#34; Book
+</span></span><span style="display:flex;"><span>@book<span style="color:#204a87">{</span>Legendre1998,
+</span></span><span style="display:flex;"><span>  author = <span style="color:#204a87">{</span>Pierre Legendre, and Louis Legendre<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  title = <span style="color:#204a87">{</span>Numerical Ecology, 2nd edition<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  year = 1998,
+</span></span><span style="display:flex;"><span>  publisher = <span style="color:#204a87">{</span>Elsevier<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  address = <span style="color:#204a87">{</span>Amsterdam, Netherlands<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&#34; Dataset
+</span></span><span style="display:flex;"><span>@dataset<span style="color:#204a87">{</span>VIPPHEN,
+</span></span><span style="display:flex;"><span>  author = <span style="color:#204a87">{</span>Didan, L. and Barreto, A.<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  title = <span style="color:#204a87">{{</span>NASA MEaSUREs Vegetation Index and Phenology (VIP) Phenology EVI2 Yearly Global 0.05Deg CMG [Data set]<span style="color:#204a87">}}</span>,
+</span></span><span style="display:flex;"><span>  year = <span style="color:#204a87">{</span>2016<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  doi = <span style="color:#204a87">{</span>10.5067/MEaSUREs/VIP/VIPPHEN<span style="color:#204a87">_</span>EVI2.004<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  publisher = <span style="color:#204a87">{</span>NASA EOSDIS Land Processes DAAC<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  urldate = <span style="color:#204a87">{</span>2020-08-05<span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&#34; Hypothetical reference with a lot of non-standard names
+</span></span><span style="display:flex;"><span>@article<span style="color:#204a87">{</span>Fake2021,
+</span></span><span style="display:flex;"><span>  year = 2021,
+</span></span><span style="display:flex;"><span>  volume = <span style="color:#204a87">{</span>656<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  number = <span style="color:#204a87">{</span>2<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  pages = <span style="color:#204a87">{</span>1--5<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  author = <span style="color:#204a87">{</span>Godlee, E. L. G. and de Olson, D. and van den Joshi, A. and der Vynne, C. and Den Burgess, N. D. and MacNail, E. and Shennan-Farp<span style="color:#204a87;font-weight:bold">\&#39;</span><span style="color:#204a87">{</span>o<span style="color:#204a87">}</span>n, Y. and Mute, S.-P.<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  title = <span style="color:#204a87">{</span>This is a fake reference<span style="color:#204a87">}</span>,
+</span></span><span style="display:flex;"><span>  journal = <span style="color:#204a87">{{</span>Nature<span style="color:#204a87">}}</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">}</span>
+</span></span></code></pre></div><p>All these references were chosen to highlight some of the diversity of bibliographic entries I have experienced.</p>
+<p>The basic document produces a file like this:</p>
+<figure><a href="/img_full/biblatex/1_basic.png"><img
+          alt="Basic LaTeX document"
+          title="Basic LaTeX document"src="/img/biblatex/1_basic.png" 
+      /></a></figure>
+
+
+<p>The first thing to change is the basic reference style. Currently the references are numbered, but I prefer the author-year style, so I alter the <code>biblatex</code> options to look like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span>[natbib,
+</span></span><span style="display:flex;"><span>	backend=biber,
+</span></span><span style="display:flex;"><span>	style=authoryear
+</span></span><span style="display:flex;"><span>	]<span style="color:#204a87">{</span>biblatex<span style="color:#204a87">}</span>
+</span></span></code></pre></div><p>which produces this document:</p>
+<figure><a href="/img_full/biblatex/2_authoryear.png"><img
+          alt="Author-year style references"
+          title="Author-year style references"src="/img/biblatex/2_authoryear.png" 
+      /></a></figure>
+
+
+<p>There are a few issues that still need to be solved, so I&rsquo;ll go through them one by one.</p>
+<p>Firstly, the number of names reported in both the citations and the reference list is not how I would like it. For example, Adole et al. (2018a) has three authors in the citation, but I would prefer one author then et al. if there are more than two authors. Also, Dinerstein et al. (2017) only has one author then et al. in the reference list, but I want to list up to 10 authors then et al., so I alter the <code>biblatex</code> options once more:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span>[natbib,
+</span></span><span style="display:flex;"><span>	backend=biber,
+</span></span><span style="display:flex;"><span>	style=authoryear,
+</span></span><span style="display:flex;"><span>	maxcitenames=2, 
+</span></span><span style="display:flex;"><span>	mincitenames=1, 
+</span></span><span style="display:flex;"><span>	minbibnames=10, 
+</span></span><span style="display:flex;"><span>	maxbibnames=10
+</span></span><span style="display:flex;"><span>	]<span style="color:#204a87">{</span>biblatex<span style="color:#204a87">}</span>
+</span></span></code></pre></div><p>This allows up to two names in the citations before et al., and if et al. is used, only the first author name is given. Also a maximum of 10 names is displayed in the reference list, but if there are fewer than 10 then all names are displayed.</p>
+<figure><a href="/img_full/biblatex/3_names.png"><img
+          alt="Changing the number of authors"
+          title="Changing the number of authors"src="/img/biblatex/3_names.png" 
+      /></a></figure>
+
+
+<p>Next, BibLaTeX has decided that if two papers have the same author list, that the second paper can omit the author list in place of a dash. I don&rsquo;t like this, so I change the options again:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span>[natbib,
+</span></span><span style="display:flex;"><span>	backend=biber,
+</span></span><span style="display:flex;"><span>	style=authoryear,
+</span></span><span style="display:flex;"><span>	maxcitenames=2, 
+</span></span><span style="display:flex;"><span>	mincitenames=1, 
+</span></span><span style="display:flex;"><span>	minbibnames=10, 
+</span></span><span style="display:flex;"><span>	maxbibnames=10,
+</span></span><span style="display:flex;"><span>	uniquename=false, 
+</span></span><span style="display:flex;"><span>	uniquelist=false,
+</span></span><span style="display:flex;"><span>	dashed=false
+</span></span><span style="display:flex;"><span>	]<span style="color:#204a87">{</span>biblatex<span style="color:#204a87">}</span>
+</span></span></code></pre></div><p>This prints the full author list for every repeat.</p>
+<figure><a href="/img_full/biblatex/4_unique.png"><img
+          alt="Always printing the full author list, even when repeated"
+          title="Always printing the full author list, even when repeated"src="/img/biblatex/4_unique.png" 
+      /></a></figure>
+
+
+<p>Next, the Legendre and Legendre (1998) reference has provided the full first names for each author in the .bib file. This is valid BibTeX syntax, but BibLaTeX then defaults to printing those first names in the reference rather than the initials, which looks messy when using a mix of initials and full names. So I configure BibLaTeX to always use initials.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\usepackage</span>[natbib,
+</span></span><span style="display:flex;"><span>	backend=biber,
+</span></span><span style="display:flex;"><span>	style=authoryear,
+</span></span><span style="display:flex;"><span>	maxcitenames=2, 
+</span></span><span style="display:flex;"><span>	mincitenames=1, 
+</span></span><span style="display:flex;"><span>	minbibnames=10, 
+</span></span><span style="display:flex;"><span>	maxbibnames=10,
+</span></span><span style="display:flex;"><span>	uniquename=false, 
+</span></span><span style="display:flex;"><span>	uniquelist=false,
+</span></span><span style="display:flex;"><span>	dashed=false,
+</span></span><span style="display:flex;"><span>	giveninits=true
+</span></span><span style="display:flex;"><span>	]<span style="color:#204a87">{</span>biblatex<span style="color:#204a87">}</span>
+</span></span></code></pre></div><figure><a href="/img_full/biblatex/5_inits.png"><img
+          alt="Always use initials, even when full names provided"
+          title="Always use initials, even when full names provided"src="/img/biblatex/5_inits.png" 
+      /></a></figure>
+
+
+<p>Finally, and this might be a bit nit-picky, I would prefer to use an ampersand rather than &ldquo;and&rdquo; when listing the final author name, both in the citations and the reference list, so I add this line to the document preamble:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\renewcommand*\finalnamedelim</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\addspace\&amp;\space</span><span style="color:#204a87">}</span>
+</span></span></code></pre></div><figure><a href="/img_full/biblatex/6_ampers.png"><img
+          alt="Use an ampersand for the final author"
+          title="Use an ampersand for the final author"src="/img/biblatex/6_ampers.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

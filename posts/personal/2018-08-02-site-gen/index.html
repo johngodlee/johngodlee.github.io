@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Generating a static site using pandoc</h1>
+
+<h2>2018-08-02</h2>
+</div>
+
+<main>
+<p>I use <a href="https://jekyllrb.com/" target="_blank">Jekyll</a>
+ to generate my blog and that probably won&rsquo;t change any time soon. There&rsquo;s lots of other options for generating a static site from a folder of files, like <a href="https://gohugo.io/" target="_blank">Hugo</a>
+ or <a href="https://blog.getpelican.com/" target="_blank">Pelican</a>
+, but Jekyll benefits massively from having a lot of support online and a big userbase, so it&rsquo;s always easy to fix any problems I&rsquo;m having.</p>
+<p>That being said, I had heard some people on forums saying things like, &ldquo;Just use pandoc and a makefile to generate your site, it&rsquo;s easy!&rdquo;, and I wanted to give something like that a go, so here is what I came up with. It&rsquo;s important to say at this point that I have no idea how to use a makefile, I might get round to it another time, but I am starting to get familiar with shell scripting, if only in a simplistic way.</p>
+<p>So I have a folder full of markdown files in <code>_posts/</code>, each one of which is a blog post. In the YAML metadata at the top I have the type of page, the title, and the date:</p>
+<pre tabindex="0"><code>---
+layout: post
+title: &#34;Rebuilding a bike&#34;
+date: 2018-07-25
+---
+</code></pre><p>I can use pandoc to convert these markdown files to HTML with a css file to style the HTML. The CSS file can be seen <a href="/files/site_gen/site_gen.css">here</a>
+. To convert a single markdown file I can do this:</p>
+<pre tabindex="0"><code>pandoc -f markdown -t html5 --standalone --css=site_gen.css -H site_gen.css -o site/2018-07-25-bike.html _posts/2018-07-25-bike.md
+</code></pre><p>The output markup looks like this:</p>
+<figure><a href="/img_full/site_gen/page.png"><img
+          alt="Sample page with pandoc"
+          title="Sample page with pandoc"src="/img/site_gen/page.png" 
+      /></a></figure>
+
+
+<p>To do this on a folder of markdown files I have to name some variables and put it in a for loop:</p>
+<pre tabindex="0"><code># Define location of assets
+css=&#34;site_gen.css&#34;
+
+head=&#34;header.html&#34;
+
+# Pandoc md posts to html with css and proper filenames
+for i in _posts/*.md; do
+	name=$(echo ${i##*/})
+	filename=$(echo &#34;$name&#34; | cut -f 1 -d &#39;.&#39;)
+	pandoc -f markdown -t html5 --standalone --css=$css --include-before-body=$head -H $css -o &#34;site/posts/${filename}.html&#34; $i 
+done
+</code></pre><p>Note that in this version I&rsquo;ve chosen to add the contents of <code>header.html</code> to the top of the main body of each generated HTML file using the <code>--include-before-body</code> command. <code>header.html</code> looks like this:</p>
+<pre tabindex="0"><code>&lt;a class=&#39;header&#39; href=&#34;../index.html&#34;&gt;HOME&lt;/a&gt;
+</code></pre><p>This adds a link to <code>index.html</code>, the homepage of the site at the top of each blog post.</p>
+<p>I&rsquo;m also adding the contents of the CSS file to the top of the HTML file as a <code>&lt;style&gt;&lt;/style&gt;</code> block, so each page appears with its styling even if it&rsquo;s taken out of the website and emailed for example, using the <code>-H</code> flag.</p>
+<p>Now I need to generate <code>index.html</code>, which is basically going to be a list of the blog posts:</p>
+<pre tabindex="0"><code># Generate index page
+ls -1 site/posts | sort -r | cat | while read string; do 
+	echo -e &#34;&lt;p&gt;\n &lt;h1 class=&#39;home&#39;&gt;&lt;a href=posts/$string&gt;$string&lt;/a&gt;&lt;/h1&gt;\n&lt;/p&gt;&#34;
+done &gt; site/index.html 
+
+# Prepend css style to index page
+cat $css site/index.html &gt; $$.tmp &amp;&amp; mv $$.tmp site/index.html
+
+# Delete line containing link to index page
+sed -i &#39;&#39; &#39;/index/d&#39; site/index.html
+</code></pre><p>So the whole script (<code>gen.sh</code>) now looks like this:</p>
+<pre tabindex="0"><code>#!/bin/bash
+
+# Generate a very simple website from a collection of markdown files
+
+# Start from scratch
+rm -r &#34;site/&#34;
+
+mkdir &#34;site/&#34;
+
+mkdir &#34;site/posts/&#34;
+
+# Define location of assets
+css=&#34;site_gen.css&#34;
+
+head=&#34;header.html&#34;
+
+# Pandoc md posts to html with css and proper filenames
+for i in _posts/*.md; do
+	name=$(echo ${i##*/})
+	filename=$(echo &#34;$name&#34; | cut -f 1 -d &#39;.&#39;)
+	pandoc -f markdown -t html5 --standalone --css=$css --include-before-body=$head -H $css -o &#34;site/posts/${filename}.html&#34; $i 
+done
+
+# Generate index page
+ls -1 site/posts | sort -r | cat | while read string; do 
+	echo -e &#34;&lt;p&gt;\n &lt;h1 class=&#39;home&#39;&gt;&lt;a href=posts/$string&gt;$string&lt;/a&gt;&lt;/h1&gt;\n&lt;/p&gt;&#34;
+done &gt; site/index.html 
+
+# Prepend css style to index page
+cat $css site/index.html &gt; $$.tmp &amp;&amp; mv $$.tmp site/index.html
+
+# Delete line containing link to index page
+sed -i &#39;&#39; &#39;/index/d&#39; site/index.html
+</code></pre><p>and the directory of files looks like this:</p>
+<pre tabindex="0"><code>.
+├── _posts
+|   ├─ 2018-07-25-bike.md
+|   └─ 2018-08-05-site-gen.md
+├── gen.sh
+├── header.html
+├── site
+|   ├─ index.html   
+|   └─ posts
+|      ├─ 2018-07-25-bike.html
+|      └─ 2018-08-05-site-gen.html
+└── site_gen.css
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

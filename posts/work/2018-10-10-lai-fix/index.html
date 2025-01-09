@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>I made a mistake with cropping fisheye photos to a field of view</h1>
+
+<h2>2018-10-10</h2>
+</div>
+
+<main>
+<p>In a previous post I created an R function to estimate the radius in pixels of a circle with a view angle of given degrees, for a fisheye lens with an equisolid project. I realised afterwards, after doing some testing that this function didn&rsquo;t work. It was close, but some things didn&rsquo;t work quite right. For instance when I changed the focal length of the lens, nothing in the output of the function changed. Here is the new function, which uses the <strong>pixel pitch</strong> of the camera sensor:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">fov.px</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">deg_theta</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">focal_length_mm</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">pixel_pitch_um</span><span style="color:#000;font-weight:bold">){</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">require</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">NISTunits</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Convert degrees of theta to radians</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">rads_theta</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">NISTdegTOradian</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">deg_theta</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Calculate radius of circle drawn by angle of view (rads_theta and max_rads_theta) in mm projected onto the sensor plane</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">R</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span>  <span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">focal_length_mm</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">sin</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rads_theta</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Calculate the px per mm on the sensor, i.e. the pixel pitch</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">sensor_px_per_mm_flat</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">pixel_pitch_um</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">1000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Multiply the mm radius of the desired circle by the number of pixels per mm on the sensor, to get the number of pixels radius of the desired circle</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">pixels_for_theta</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">R</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">sensor_px_per_mm_flat</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Print result</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Radius of circle:&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pixels_for_theta</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#4e9a06">&#34;px&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><ul>
+<li><code>deg_theta</code> = the desired radius to be cropped to, in degrees. e.g. a full 180deg fov = 90</li>
+<li><code>focal_length_mm</code> = focal length of the camera lens combo, e.g. 8</li>
+<li><code>pixel_pitch_um</code> = the pixel pitch, i.e. the number of micrometres per px, e.g. 5.95</li>
+</ul>
+<p>Similarly, I made a function which can calculate the theta (degrees of radius) of a circle of a given proportional circular crop of the original circle:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">fov.theta</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">prop_crop</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">full_circle_radius_px</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">focal_length_mm</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">pixel_pitch_um</span><span style="color:#000;font-weight:bold">){</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">require</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">NISTunits</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Calculate the number of pixels in the radius of the crop</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">px_crop</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">full_circle_radius_px</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">prop_crop</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Calculate the radius of the</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">theta</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">asin</span><span style="color:#000;font-weight:bold">(((</span><span style="color:#000">pixel_pitch_um</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">px_crop</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">focal_length_mm</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#0000cf;font-weight:bold">1000</span><span style="color:#000;font-weight:bold">)))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">deg_theta</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">NISTradianTOdeg</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">theta</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">print</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Angle of view: &#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">round</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">deg_theta</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">digits</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#4e9a06">&#34;°&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sep</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><ul>
+<li><code>prop_crop</code> = proportion of the projected circular image radius that has been cropped, e.g. 0.59</li>
+<li><code>full_circle_radius_px</code> = Radius of the full uncropped circle in pixels, e.g. 1962</li>
+<li><code>focal_length_mm</code> = focal length of the camera lens combo, e.g. 8</li>
+<li><code>pixel_pitch_um</code> = the pixel pitch, i.e. the number of micrometres per px, e.g. 5.95</li>
+</ul>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

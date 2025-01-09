@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Extracting pages with colour from a PDF</h1>
+
+<h2>2021-10-26</h2>
+</div>
+
+<main>
+<p>I wanted to print my PhD thesis so I could have a version to annotate before my viva. The cost at my local copy shop to print a full colour version of the thesis would have been somewhere around £60, while a black and white copy only cost about £15. It wasn&rsquo;t necessary to print the whole document in colour as only pages with figures contained any colour, so I wanted to find a way to automatically extract the pages which did contain colour and create a new document containing only those pages, so I could print those in colour separately.</p>
+<p>I created a shell script that uses <a href="https://ghostscript.com/" target="_blank">ghostscript (gs)</a>
+ to find the colour pages, and <a href="https://github.com/rrthomas/pdfjam" target="_blank">pdfjam</a>
+ to extract those pages and create a new document:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/usr/bin/env sh
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Extract colour pages from a PDF, then create a new PDF containing only those pages. Useful for saving on printing costs.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$#</span><span style="color:#4e9a06">&#34;</span> -ne <span style="color:#0000cf;font-weight:bold">2</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Usage: </span><span style="color:#000">$0</span><span style="color:#4e9a06"> &lt;input.pdf&gt; &lt;output.pdf&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> ! -f <span style="color:#000">$1</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Input file not found&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">pages</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>gs -o - -sDEVICE<span style="color:#ce5c00;font-weight:bold">=</span>inkcov <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">1</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000;font-weight:bold">|</span> tail -n +6 <span style="color:#000;font-weight:bold">|</span> sed <span style="color:#4e9a06">&#39;/^Page*/N;s/\n//&#39;</span> <span style="color:#000;font-weight:bold">|</span> sed -E <span style="color:#4e9a06">&#39;/Page [0-9]+ 0.00000  0.00000  0.00000  / d&#39;</span> <span style="color:#000;font-weight:bold">|</span> grep -Eo <span style="color:#4e9a06">&#39;^Page\s[0-9]+&#39;</span> <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $2}&#39;</span> <span style="color:#000;font-weight:bold">|</span> tr <span style="color:#4e9a06">&#39;\n&#39;</span> <span style="color:#4e9a06">&#39;,&#39;</span> <span style="color:#000;font-weight:bold">|</span> sed <span style="color:#4e9a06">&#39;s/,$//g&#39;</span><span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -z <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">pages</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;File has no colour pages&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">exit</span> <span style="color:#0000cf;font-weight:bold">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pdfjam <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">1</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#4e9a06">${</span><span style="color:#000">pages</span><span style="color:#4e9a06">}</span> -o <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">2</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000;font-weight:bold">&amp;</span>&gt; /dev/null
+</span></span></code></pre></div><p>The first part of the script with the <code>if</code> statements simply checks whether the parameters passed to the script are valid. The script needs to be fed an existing input file, and an output file name.</p>
+<p>The <code>pages</code> variable is created by using the <code>inkcov</code> device provided in <code>gs</code> &gt;v9.05. The <code>inkcov</code> device displays the ink coverage separately for each page, so all that needs to be done is to exclude pages which contain only black, and then format the page numbers in the way that <code>pdfjam</code> expects. If no colour pages are found then the script exits without creating a new PDF. <code>pdfjam</code> then takes the input filename, the page range, and the output filename and creates a new PDF document.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

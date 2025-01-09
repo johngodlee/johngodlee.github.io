@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Converting a bank .csv statement to ledger</h1>
+
+<h2>2018-08-12</h2>
+</div>
+
+<main>
+<p>I use <a href="https://www.ledger-cli.org/" target="_blank">ledger</a>
+ to keep track of my expenses and for a long time I had to manually copy in all my expenses manually from the csv output that my bank provides of my transactions. Then recently I read about <code>ledger convert</code> which can take a csv file and convert it to the ledger journal format.</p>
+<p>y bank&rsquo;s csv format looks like this:</p>
+<pre tabindex="0"><code>
+Date, Type, Description, Value, Balance, Account Name, Account Number
+
+10/08/2018,POS,&#34;&#39;1062 09AUG18 C , TESCO STORES &#34;,-11.68,6355.61,&#34;&#39;STUDENT ACCOUNT&#34;,&#34;&#39;260204-20408582&#34;,
+10/08/2018,POS,&#34;&#39;1062 09AUG18 C , SAINSBURYS S/MKTS , GB&#34;,-3.80,2367.29,&#34;&#39;STUDENT ACCOUNT&#34;,&#34;&#39;260204-20408582&#34;,
+10/08/2018,POS,&#34;&#39;1062 09AUG18 C , WINES , NTMG GB&#34;,-17.00,2371.09,&#34;&#39;STUDENT ACCOUNT&#34;,&#34;&#39;260204-20408582&#34;,
+10/08/2018,POS,&#34;&#39;1062 09AUG18 , MOBILE APP  &#34;,-30.00,2388.09,&#34;&#39;STUDENT ACCOUNT&#34;,&#34;&#39;260204-20408582&#34;,
+</code></pre><p>Notice that there are blank lines above and below the header row, so that is one of the first things to deal with.</p>
+<p>I can fix the file with a few <code>sed</code> commands, noting that I use the macOS version of sed rather than <code>gnused</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#4e9a06">&#39;/^[[:space:]]*$/d&#39;</span> <span style="color:#000">$1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#4e9a06">&#39;/\d{4}\s\d{2}\D{3}\d{2}(\sC\s)?\s?,\s/g&#39;</span> <span style="color:#000">$1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#4e9a06">&#39;1s/.*/date,,payee,amount,,,/&#39;</span> <span style="color:#000">$1</span>
+</span></span></code></pre></div><p>The first command removed any lines that are blank or contain spaces, which gets rid of the empty header lines. The second line removes some useless filler text in the notes column of the csv file, so for instance, <code>,&quot;'1062 09AUG18 C , TESCO STORES &quot;,</code> gets contracted to <code>,&quot;TESCO STORES &quot;,</code>. Finally, the header row is replaced with headers which <code>ledger convert</code> recognises.</p>
+<p><code>ledger convert</code> needs some inputs:</p>
+<ul>
+<li><code>--input-date-format &quot;%d/%m/%Y&quot;</code> tells <code>ledger convert</code> the format of the <code>date</code> column in the csv file.</li>
+<li><code>--account assets:bank:student_acc</code> denotes the bank account the csv file is for.</li>
+<li><code>--rich-data</code> extracts unnamed columns from the csv and adds them as notes to each ledger entry.</li>
+<li><code>-f ~/.ledger.journal</code> denotes the path to the ledger journal file to use for reference.</li>
+<li><code>--invert</code> inverts the sign of the transactions, which I have to do for this style of csv to stop ledger thinking that expenses are incomes and vice versa.</li>
+</ul>
+<p>Then I can wrap all of this into a neat shell script which takes inputs of the input csv and output ledger journal:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>touch <span style="color:#000">$2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#4e9a06">&#39;/^[[:space:]]*$/d&#39;</span> <span style="color:#000">$1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#4e9a06">&#39;/\d{4}\s\d{2}\D{3}\d{2}(\sC\s)?\s?,\s/g&#39;</span> <span style="color:#000">$1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#4e9a06">&#39;1s/.*/date,,payee,amount,,,/&#39;</span> <span style="color:#000">$1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ledger convert <span style="color:#000">$1</span> --input-date-format <span style="color:#4e9a06">&#34;%d/%m/%Y&#34;</span> --account assets:bank:student_acc --invert --rich-data -f ~/.ledger.journal &gt; <span style="color:#000">$2</span>
+</span></span></code></pre></div><p>For now, I&rsquo;ll copy in the compiled journal entries manually, I don&rsquo;t want to accidentally copy over my existing journal file by writing directly to it.</p>
+<p>It&rsquo;s not a perfect system, I still have to manually fill in the type of expense in the ledger journal, but I really don&rsquo;t see any way around that as my expenses don&rsquo;t come from a finite list of sources, so categorising all of them would be impossible.</p>
+<h1 id="update-2019_08_26">Update 2019_08_26</h1>
+<p>I had some problems with CSV files from one of my accounts. It turns out they were being stupid with the CSV formatting and had open double quotes which weren&rsquo;t closed in a description field, meaning that any commas in that field were interpreted as column delimiters. I took it as an excuse to improve the <code>ledger convert</code> bash scripts I&rsquo;d set up previously. I wanted to clean them up and use some shell scripting techniques I&rsquo;ve learned since last year when I wrote the original script.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Make temp. file</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">temp</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>mktemp<span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Format file depending on account</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$2</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;assets:bank:student&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$2</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;assets:bank:isa&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$2</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;assets:bank:res&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Prepare file</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">## Remove blank lines | Replace column headers | Remove single quotes &gt; send to temp</span>
+</span></span><span style="display:flex;"><span>	sed <span style="color:#4e9a06">&#39;/^[[:space:]]*$/d&#39;</span> <span style="color:#000">$1</span> <span style="color:#000;font-weight:bold">|</span> sed <span style="color:#4e9a06">&#39;1s/.*/date,,payee,amount,,,/&#39;</span> <span style="color:#000;font-weight:bold">|</span> sed <span style="color:#4e9a06">&#34;s/&#39;//&#34;</span> &gt; <span style="color:#000">$temp</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">date</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;%d/%m/%Y&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[</span> <span style="color:#4e9a06">&#34;</span><span style="color:#000">$2</span><span style="color:#4e9a06">&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;assets:bank:monzo&#34;</span> <span style="color:#ce5c00;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;TEST&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic"># Prepare file</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8f5902;font-style:italic">## Replace column headers | Change tag | Remove time from date &gt; send to temp</span>
+</span></span><span style="display:flex;"><span>	sed <span style="color:#4e9a06">&#39;1s/.*/transid,date,amount,,,,payee,,,,,/&#39;</span> <span style="color:#000">$1</span> <span style="color:#000;font-weight:bold">|</span> sed <span style="color:#4e9a06">&#39;s/general/misc/g&#39;</span> <span style="color:#000;font-weight:bold">|</span> sed <span style="color:#4e9a06">&#39;s/T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]Z//g&#39;</span> &gt; <span style="color:#000">$temp</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#000">date</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;%Y-%m-%d&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Choose an account&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;	assets:bank:student&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;	assets:bank:isa&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;	assets:bank:res&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;	assets:bank:monzo&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Run ledger</span>
+</span></span><span style="display:flex;"><span>ledger convert <span style="color:#000">$temp</span> --input-date-format <span style="color:#4e9a06">${</span><span style="color:#000">date</span><span style="color:#4e9a06">}</span> --account <span style="color:#000">$2</span> --invert --rich-data --auto-match -f ~/.ledger.journal
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Remove temp</span>
+</span></span><span style="display:flex;"><span>rm <span style="color:#4e9a06">${</span><span style="color:#000">temp</span><span style="color:#4e9a06">}</span>
+</span></span></code></pre></div><p>I combined the scripts I had for my two banks into one, hinging on an if-else statement acting on the account name given as an argument to the script. It first cleans up the csv files and saves them to a <code>$temp</code> file, then runs <code>ledger convert</code> with certain options and sends output to STDOUT.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

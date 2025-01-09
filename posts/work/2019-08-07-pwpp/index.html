@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Customising plots drawn to estimate pairwise marginal means comparisons with emmeans::pwpp()</h1>
+
+<h2>2019-08-07</h2>
+</div>
+
+<main>
+<p>For a paper I&rsquo;ve been writing I was running linear mixed effects models with categorical fixed effects to compare the amount of pine weevil damage present in different forest sites. To evaluate my models, I wanted to run pairwise comparisons between sites in the model to see which sites were significantly different. I decided to run a Tukey&rsquo;s HSD (Honestly Significant Difference) test on Estimated Marginal Means of sites in the model. I&rsquo;m doing my analysis in R, so all the code is R code.</p>
+<p>I used <code>emmeans::emmeans()</code> to calculate the EMMs, which returns a special object of class <code>emmGrid</code>. <code>emmeans::pwpp()</code> is a handy function to create and plot the results from a Tukey&rsquo;s HSD (or other test method) pairwise comparison of the EMMs, with P-value along the x axis and categories along the y axis. Lines connect pairwise categories and are placed along the x axis to denote the significance of their difference.</p>
+<p>The basic plot is fine, and is certainly useful for interpretation, but I want to include the plots in my paper and they look a bit too much like the <code>ggplot()</code> default. The plotting method also makes it difficult to customise the plot. The basic code to produce the plot is below:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">glmmTMB</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">emmeans</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ggplot2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Import data</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">read.csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;~/Desktop/pwpp_data.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Run mixed effects model</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">mod</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">glmmTMB</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">mm2_damage</span> <span style="color:#ce5c00;font-weight:bold">~</span> <span style="color:#000">site_code</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#ce5c00;font-weight:bold">|</span><span style="color:#000">family</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">df</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Estimate Marginal Means</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">tukey</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">emmeans</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">mod</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;site_code&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Run Pairwise compari</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">pwpp_results</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">pwpp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">tukey</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">values</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sort</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Look at basic plot</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">pwpp_results</span>
+</span></span></code></pre></div><p>The plot looks like this:</p>
+<figure><a href="/img_full/pwpp/basic.png"><img
+          alt="Default marginal means plot"
+          title="Default marginal means plot"src="/img/pwpp/basic.png" 
+      /></a></figure>
+
+
+<p>As the object <code>pwpp_results</code> is a glorified <code>ggplot()</code> object, it&rsquo;s possible to extract the data used to make the plot and store it in tidy dataframes:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Extract data from plot object</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">marg_vals</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pwpp_results</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">layers[[3]]</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">data</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">site_code</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pwpp_results</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">layers[[3]]</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">data</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">fmtval</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">p_vals</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pwpp_results</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">data</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">p.value</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">plus</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pwpp_results</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">data</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">plus</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">minus</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pwpp_results</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">data</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">minus</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">midpt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pwpp_results</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">data</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">midpt</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p><code>marg_vals</code> holds data on the marginal values for each category, which appear as labels down the left hand side of the plot. <code>p_vals</code> contains data for drawing the lines.</p>
+<p>I also wanted to create a colour palette for my customised plot, which I made <a href="http://vrl.cs.brown.edu/color" target="_blank">here, at Colorgorical</a>
+:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Create colour palette</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">site_pal</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;#270fe2&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;#75ae0a&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;#b427b7&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;#14e54b&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;#8e4380&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;#0b5313&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;#d992e2&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;#7ba979&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;#fc2c44&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;#1ce0b2&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;#900e08&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;#37bad7&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>I can then create the plot:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">pwpp_ggplot</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_segment</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">p_vals</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">xend</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">plus</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">yend</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">midpt</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">minus</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_point</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">p_vals</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">plus</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">minus</span><span style="color:#000;font-weight:bold">),</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_label</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">marg_vals</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.01</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">label.padding</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">unit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0.15</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;lines&#34;</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">hjust</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;right&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_vline</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xintercept</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.05</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">linetype</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">ylab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Site&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xlab</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Tukey-adjusted P value&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">theme</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">panel.grid.major.y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">element_line</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">colour</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;#E0E0E0&#34;</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">axis.title</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">element_text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">14</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">axis.text</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">element_text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">12</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">axis.text.y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">element_text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">site_pal</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">legend.position</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;none&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">scale_x_continuous</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">breaks</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.05</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">scale_colour_manual</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">values</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">site_pal</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">coord_trans</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;log10&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">clip</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;off&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p><code>geom_segment</code> draws the lines. Each line is actually composed of two line segments which meet at <code>p_vals$midpt</code> and are coloured according to the opposite point.</p>
+<p><code>geom_label</code> plots the marginal values, which are placed at <code>x = 0.01</code> and are right aligned so they are unlikely to overlap a comparison line.</p>
+<p><code>geom_vline</code> denotes the p = 0.05 significance line.</p>
+<p><code>panel.grid.major.y</code> draws lines for each category, which helps when reading the graph and matching line ends with categories.</p>
+<p><code>scale_x_continuous</code> marks breaks for a number of common significance thresholds.</p>
+<p><code>coord_trans</code> log transforms the x axis so that lines near the low end of the P value scale are more spaced out, as they are more important for interpretation, <code>clip = &quot;off&quot;</code> ensures that the full range of P values is shown, so plots are interpretable across models with different categories.</p>
+<p>The final plot looks like this:</p>
+<figure><a href="/img_full/pwpp/full.png"><img
+          alt="ggplot2 marginal means"
+          title="ggplot2 marginal means"src="/img/pwpp/full.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

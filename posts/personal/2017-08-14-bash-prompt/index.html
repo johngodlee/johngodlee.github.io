@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Constructing a Useful Bash Prompt</h1>
+
+<h2>2017-08-14</h2>
+</div>
+
+<main>
+<p>This is what my bash prompt looks like at the moment:</p>
+<figure><a href="/img_full/bash_prompt/prompt_current_crop.png"><img
+          alt="Current bash prompt"
+          title="Current bash prompt"src="/img/bash_prompt/prompt_current_crop.png" 
+      /></a></figure>
+
+
+<p>Here is what the various parts refer to:</p>
+<figure><a href="/img_full/bash_prompt/prompt_current_annot_crop.png"><img
+          alt="Annotated bash prompt"
+          title="Annotated bash prompt"src="/img/bash_prompt/prompt_current_annot_crop.png" 
+      /></a></figure>
+
+
+<p>And here is a link to a <code>.bashrc</code>,</p>
+<h2 id="what-is-a-bash-prompt">What is a bash prompt?</h2>
+<p>The bash prompt is a piece of text placed at start of a command line interface using the bash shell. The primary function of the prompt is to let the user know that the computer is ready for the next command, the secondary function is to provide the user with some information about the status of the current session.</p>
+<p>The default bash prompt looks like this:</p>
+<figure><a href="/img_full/bash_prompt/prompt_default_crop.png"><img
+          alt="Default bash prompt"
+          title="Default bash prompt"src="/img/bash_prompt/prompt_default_crop.png" 
+      /></a></figure>
+
+
+<p>so fire up your terminal of choice and see that your bash prompt looks similar. The default prompt shows the currently logged in username, the hostname (i.e. the name of th computer), the current directory path relative to <code>~</code> and finally a <code>$</code>, which marks the end of the prompt and the start of the area that you can type commands.</p>
+<h2 id="customising-the-bash-prompt">Customising the bash prompt</h2>
+<p>The <code>.bashrc</code>, among other things related to how bash functions, is where you can define a custom bash prompt. <code>.bashrc</code> is normally found in the root (<code>~</code>) directory. Check if you have a <code>~/.bashrc</code> using:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">cat ~/.bashrc
+</code></pre><p>If bash says that there is no such file, create one using:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">touch ~/.bashrc
+</code></pre><p>Finally, start editing <code>.bashrc</code> using your favourite text editor, e.g. <code>vim</code>:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">vim ~/.bashrc
+</code></pre><h3 id="super-basic">Super basic</h3>
+<p>To start with, let&rsquo;s replace the default bash prompt with something really simple like this:</p>
+<figure><a href="/img_full/bash_prompt/prompt_dollar_crop.png"><img
+          alt="Dollar sign minimal prompt"
+          title="Dollar sign minimal prompt"src="/img/bash_prompt/prompt_dollar_crop.png" 
+      /></a></figure>
+
+
+<p>To achieve this, type the following into your <code>.bashrc</code>:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">PS1=&#39;\$&#39;
+</code></pre><p>Then exit the text editor and enter the following into the terminal, which forces bash to reload <code>.bashrc</code>:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">source ~/.bashrc
+</code></pre><p>PS1 refers to only one of five bash prompts, with PS1 being the default prompt that is shown most of the time; <code>PS2</code>,<code>PS3</code>,<code>PS4</code> and <code>PROMPT_COMMAND</code> are used under special conditions. <a href="http://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/" target="_blank">This article</a>
+ has a good description of what they&rsquo;re used for.</p>
+<h3 id="incorporating-variables">Incorporating variables</h3>
+<p>The simplest way to add a variable (i.e. something which changes depending on environment conditions, like the current working directory) is to use one that bash understands by default, <a href="http://www.gnu.org/software/bash/manual/bashref.html#Controlling-the-Prompt" target="_blank">a full list of which can be found here</a>
+.</p>
+<p>Start by adding the time to our simple <code>$</code> prompt:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">PS1=&#39;\T \$&#39;
+</code></pre><figure><a href="/img_full/bash_prompt/prompt_time_crop.png"><img
+          alt="Bash prompt with time"
+          title="Bash prompt with time"src="/img/bash_prompt/prompt_time_crop.png" 
+      /></a></figure>
+
+
+<p>Note the space between <code>\T</code> and <code>\$</code>. Adding spaces between variables can help everything to look neater.</p>
+<p>Read through the list of available variables and add a few to your own prompt.</p>
+<h3 id="colours">Colours</h3>
+<p>To change the colours parts of the bash prompt, wrap the variable in ANSI escape sequences, like so:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">PS1=&#39;\[\e[31m\]\w\[\e[m\] \T \$&#39;
+</code></pre><figure><a href="/img_full/bash_prompt/prompt_col_simple_crop.png"><img
+          alt="bash prompt with colours"
+          title="bash prompt with colours"src="/img/bash_prompt/prompt_col_simple_crop.png" 
+      /></a></figure>
+
+
+<p>This makes the directory path appear in red text. <code>31m</code> is the section of that sequence that actually defines the colour red.</p>
+<p>ANSI escape sequences can also be used to change the background colour of the text, add underlines, make the text bold, or high contrast. I often refer to both <a href="http://en.wikipedia.org/wiki/ANSI_escape_code#colors" target="_blank">this wikipedia page on ANSI colour codes</a>
+ and <a href="http://www.jafrog.com/2013/11/23/colors-in-terminal" target="_blank">this blog post on jafrog.com</a>
+ when choosing colour codes.</p>
+<p>A more elaborate example which makes the current directory light-cyan coloured, with bold font:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">PS1=&#39;\[\e[96;1m\]\w\[\e[m\] \T \$&#39;
+</code></pre><figure><a href="/img_full/bash_prompt/prompt_col_complex_crop.png"><img
+          alt="Bash prompt with complex colours"
+          title="Bash prompt with complex colours"src="/img/bash_prompt/prompt_col_complex_crop.png" 
+      /></a></figure>
+
+
+<p>The <code>;1</code> is the part which makes the text bold. Note how <code>[\e[m\]</code> always needs to be placed at the end of the coloured part of the bash prompt, to return the colours to normal.</p>
+<p>Try colouring the time (<code>\T</code>) so it is underlined and magenta.</p>
+<h3 id="unicode-characters">Unicode characters</h3>
+<p>Another way escape sequences can be used is to add unicode characters to the prompt, whether this is a cool lightning bolt, a tick or a cross, or any of the other 136,000 characters available in Unicode 10.0.</p>
+<p>Wikipedia has an excellent resource for browsing unicode characters</p>
+<p>Browse through the wikipedia page and pick your chosen character, then note down its code, e.g. <code>u2602</code> for the umbrella symol. The syntax for adding this to your bash prompt is as follows:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">PS1=$&#39;\u2602&#39;
+</code></pre><p>Note that inserting unicode can also by accomplished just by copying and pasting the unicode character itself into the <code>.bashrc</code>.</p>
+<figure><a href="/img_full/bash_prompt/prompt_umbrella_crop.png"><img
+          alt="Bash prompt with unicode"
+          title="Bash prompt with unicode"src="/img/bash_prompt/prompt_umbrella_crop.png" 
+      /></a></figure>
+
+
+<p>Note how the <code>$</code> isn&rsquo;t escaped this time, as we don&rsquo;t actually want to see the <code>$</code> in our prompt</p>
+<h3 id="formatting">Formatting</h3>
+<p>Brackets, spaces, hyphens, colons can all be used to great effect in your bash prompt to help separate the different parts. As an example, try setting this in your <code>.bashrc</code> and <code>source ~/.bashrc</code> to see the results:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">PS1=&#39;[\T] {\u:\h} -- \w&#39;
+</code></pre><figure><a href="/img_full/bash_prompt/prompt_formatting_crop.png"><img
+          alt="Bash prompt with brackets for formatting"
+          title="Bash prompt with brackets for formatting"src="/img/bash_prompt/prompt_formatting_crop.png" 
+      /></a></figure>
+
+
+<h3 id="building-ps1-incrementally">Building PS1 incrementally</h3>
+<p>After a while, if your bash prompt becomes long and complicated, your PS1 code may start to look busy and hard to read, but it&rsquo;s easy to restructure the PS1 code to increase readability. In the example below, a long and complicated prompt is rewritten so each part is on a separate line and spaces are given their own lines to make them easier to see. Additionally, this allows each part to have its own comment, further increasing readability:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script"># Messy one liner
+PS1=&#39;┏[\T] \u@\h \[\e[31m\]\w\[\e[m\]\n┗$ &#39;
+
+# Tidy on multiple lines
+PS1=$&#39;\u250F&#39;		# Elbow
+PS1+=&#39;[\T]&#39;	# Time
+PS1+=&#39; &#39;	# Space 
+PS1+=&#39;\u@\h&#39;	# User@hostname
+PS1+=&#39; &#39; 	# Space
+PS1+=&#39;\[\e[31m\]\w\[\e[m\]&#39;	# current dir
+PS1+=&#39;\n&#39;	# New line
+PS1+=$&#39;\u2517&#39;	# Elbow
+PS1+=&#39;\$&#39;	# $
+PS1+=&#39; &#39;	# Space
+</code></pre><figure><a href="/img_full/bash_prompt/prompt_multiline_crop.png"><img
+          alt="Multi-line bash prompt"
+          title="Multi-line bash prompt"src="/img/bash_prompt/prompt_multiline_crop.png" 
+      /></a></figure>
+
+
+<h3 id="conditional-statements-and-functions">Conditional statements and functions</h3>
+<p><strong>From here onwards I am writing about stuff I don&rsquo;t fully understand and have just gathered from other websites and tutorials.</strong></p>
+<p>If you want to expand the number of variables you can use in your bash prompt you can take create functions in your <code>.bashrc</code>, which you then source in your <code>PS1</code> code. The example below (<a href="https://www.reddit.com/r/linux/comments/2uf5uu/this_is_my_bash_prompt_which_is_your_favorite/co7ygus/?utm_content=permalink&amp;utm_medium=front&amp;utm_source=reddit&amp;utm_name=linux" target="_blank">which I adapted from here</a>
+) shows how to present a unicode tick if the previous command was successful, and a unicode cross if it was unsuccessful, add the following to your <code>.bashrc</code>:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">SUCCESS=&#39;[✓]&#39;
+FAIL=&#39;[✗]&#39;
+
+error_test () {
+    if [ $? == 0 ]; then
+        echo -e $SUCCESS
+    else
+        echo -e $FAIL
+    fi
+}
+
+## Bash prompt
+PS1=&#34;\$(error_test)&#34;
+</code></pre><figure><a href="/img_full/bash_prompt/prompt_tick_crop.png"><img
+          alt="Bash prompt with conditional status"
+          title="Bash prompt with conditional status"src="/img/bash_prompt/prompt_tick_crop.png" 
+      /></a></figure>
+
+
+<p>Note the <code>__stat</code>. As far as I know the <code>__</code> aren&rsquo;t necessary, the function could just be called <code>stat</code>, but it seems to be a common convention in bash prompt functions.</p>
+<h3 id="sourcing-external-scripts">Sourcing external scripts</h3>
+<p>I use the <a href="http://www.github.com/git/git/tree/master/contrib/completion/git-prompt.sh" target="_blank"><code>git-prompt.sh</code> shell script</a>
+, which is part of the contributed materials in the git github repo, to get the current git branch displayed in my bash prompt. Download and save the script in the link as  <code>~/.git-prompt.sh</code>. Then add the following to your <code>.bashrc</code>:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">source ~/.git-prompt.sh
+
+PS1=&#39;$(__git_ps1 &#34;[%s]&#34;)&#39;
+</code></pre><figure><a href="/img_full/bash_prompt/prompt_git_crop.png"><img
+          alt="Bash prompt with git repository"
+          title="Bash prompt with git repository"src="/img/bash_prompt/prompt_git_crop.png" 
+      /></a></figure>
+
+
+<p><code>git-prompt.sh</code> also has some variables which can be set from within <code>.bashrc</code>. Details can be found by reading the preamble of the script in a text editor.</p>
+<p><strong>Now that you&rsquo;ve read through the tutorial, try to construct your own bash prompt, adding the bits that you find useful. Refer back to the <a href="https://github.com/johngodlee/bash_prompt_tut/tree/master/files" target="_blank">linked .bashrc</a>
+ for some inspiration.</strong></p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

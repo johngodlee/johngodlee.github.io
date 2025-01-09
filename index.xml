@@ -9,10 +9,10 @@
     <lastBuildDate>2025-05-01T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Comparison of Mo et al. (2024) global wood density with plots in the seasonally dry tropics</title>
-      <link>http://johngodlee.xyz/posts/2024-12-21-mo_wood_density/</link>
+      <link>http://johngodlee.xyz/posts/work/2024-12-21-mo_wood_density/</link>
       <pubDate>2024-12-21T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-12-21-mo_wood_density/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2024-12-21-mo_wood_density/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://doi.org/10.1038/s41559-024-02564-9&#34; target=&#34;_blank&#34;&gt;This paper was recently published&lt;/a&gt;
 :&lt;/p&gt;
 &lt;blockquote&gt;
@@ -52,10 +52,10 @@
     
     <item>
       <title>GPX files for Edinburgh cycle loops</title>
-      <link>http://johngodlee.xyz/posts/2024-10-27-cycle_edinburgh/</link>
+      <link>http://johngodlee.xyz/posts/personal/2024-10-27-cycle_edinburgh/</link>
       <pubDate>2024-10-27T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-10-27-cycle_edinburgh/</guid>
+      <guid>http://johngodlee.xyz/posts/personal/2024-10-27-cycle_edinburgh/</guid>
       <description>&lt;p&gt;Here are some routes that I cycle fairly regularly in Edinburgh. I cycle them predominantly on my &lt;a href=&#34;http://johngodlee.xyz/posts/2018-07-25-bike&#34;&gt;single speed&lt;/a&gt;
 . There are occasional sections where I would prefer something with wider tyres, but nothing that requires a proper mountain bike. Most of the tracks start around Holyrood Park, then head out of the city in different directions.&lt;/p&gt;
 &lt;p&gt;I calculated the length of the GPX files in R:&lt;/p&gt;
@@ -144,10 +144,10 @@
     
     <item>
       <title>Bash script to download audio from Youtube</title>
-      <link>http://johngodlee.xyz/posts/2024-06-26-ytdlp/</link>
+      <link>http://johngodlee.xyz/posts/personal/2024-06-26-ytdlp/</link>
       <pubDate>2024-06-26T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-06-26-ytdlp/</guid>
+      <guid>http://johngodlee.xyz/posts/personal/2024-06-26-ytdlp/</guid>
       <description>&lt;p&gt;This post is actually about a trick I learned that allows bash scripts to accept input either as a string or from &lt;code&gt;stdin&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Here is the code. It first checks whether at least one argument is provided to the script. If an argument is found it creates a variable containing all the arguments. If no arguments are found, then it waits for input from &lt;code&gt;stdin&lt;/code&gt;, which can either come from a pipe or can be typed in after the script is called.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#!/usr/bin/env bash
@@ -205,10 +205,10 @@
     
     <item>
       <title>R function to extract raster data</title>
-      <link>http://johngodlee.xyz/posts/2024-06-20-nearextract/</link>
+      <link>http://johngodlee.xyz/posts/work/2024-06-20-nearextract/</link>
       <pubDate>2024-06-20T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-06-20-nearextract/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2024-06-20-nearextract/</guid>
       <description>&lt;p&gt;I have to extract lots of point estimates from raster layers to use as explanatory variables of biomass dynamics measured in vegetation monitoring plots across tropical savannas and dry forests. Some of these raster layers are quite coarse and some of the plot locations are close to the coast, meaning that occasionally a plot will not coincide with a non-NA pixel in a particular raster layer. Here is an example, showing the raster layer in blue and the plots as black dots.&lt;/p&gt;
 &lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/nearextract/map.png&#34;&gt;&lt;img
           alt=&#34;A map illustrating the coarse pixel issue.&#34;
@@ -313,10 +313,10 @@
     
     <item>
       <title>Processing bike ride data from Fitotrack Android app</title>
-      <link>http://johngodlee.xyz/posts/2024-06-19-fitotrack/</link>
+      <link>http://johngodlee.xyz/posts/personal/2024-06-19-fitotrack/</link>
       <pubDate>2024-06-19T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-06-19-fitotrack/</guid>
+      <guid>http://johngodlee.xyz/posts/personal/2024-06-19-fitotrack/</guid>
       <description>&lt;p&gt;I have been using The &lt;a href=&#34;https://github.com/russok/FitoTrack&#34; target=&#34;_blank&#34;&gt;Fitotrack Android app&lt;/a&gt;
  for a over a year now to track my bike rides. Fitotrack allows you to export the tracking data in XML format. I wrote an R script to process the XML data and create some basic summary plots. I have broken down the R script below:&lt;/p&gt;
 &lt;p&gt;Firstly, load necessary packages and import the compressed XML file, which has the file extension &lt;code&gt;.ftb&lt;/code&gt;. I use &lt;a href=&#34;https://syncthing.net/&#34; target=&#34;_blank&#34;&gt;Syncthing&lt;/a&gt;
@@ -600,10 +600,10 @@
     
     <item>
       <title>Converting stem locations from lat-long to XY coordinates</title>
-      <link>http://johngodlee.xyz/posts/2024-06-12-xy_latlong/</link>
+      <link>http://johngodlee.xyz/posts/work/2024-06-12-xy_latlong/</link>
       <pubDate>2024-06-12T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-06-12-xy_latlong/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2024-06-12-xy_latlong/</guid>
       <description>&lt;p&gt;In 2018 I wrote some code to convert stem locations within square plots from lat-long coordinates into XY grid coordinates. Recently I was asked to do the opposite, to convert XY grid coordinates into lat-long coordinates, so a colleague could combine multiple adjacent plots into one larger plot with a shared coordinate system. I&amp;rsquo;ve pasted the code for this procedure below:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Convert XY grid coordinates to Lat-long coordinates&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# John L. Godlee (johngodlee@gmail.com)&lt;/span&gt;
@@ -802,10 +802,10 @@
     
     <item>
       <title>An email about resprouting in the SEOSAW database</title>
-      <link>http://johngodlee.xyz/posts/2024-04-30-resprouting/</link>
+      <link>http://johngodlee.xyz/posts/work/2024-04-30-resprouting/</link>
       <pubDate>2024-04-30T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-04-30-resprouting/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2024-04-30-resprouting/</guid>
       <description>&lt;p&gt;I help to manage the &lt;a href=&#34;https://seosaw.github.io/&#34; target=&#34;_blank&#34;&gt;SEOSAW database&lt;/a&gt;
 . A database of tree stem measurements from vegetation monitoring plots in African woodlands. We gather data on tree size (stem diameter, height, crown dimensions), floristic composition (species names), growth and mortality dynamics. A colleague of mine is conducting a study into the resprouting behaviour of trees using data from SEOSAW. We got into a long conversation about what constitutes resprouting and how that information is represented within the SEOSAW database. Here is an email I sent to clarify my thinking:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;stem_status&lt;/code&gt; can have four possible values:&lt;/p&gt;
@@ -835,10 +835,10 @@
     
     <item>
       <title>Definitions of drylands</title>
-      <link>http://johngodlee.xyz/posts/2024-03-15-drylands/</link>
+      <link>http://johngodlee.xyz/posts/work/2024-03-15-drylands/</link>
       <pubDate>2024-03-15T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-03-15-drylands/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2024-03-15-drylands/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve read a few papers that refer to &amp;ldquo;drylands&amp;rdquo; and &amp;ldquo;semi-arid&amp;rdquo; ecosystems, and I became interested in the definitions of these terms, so here I&amp;rsquo;ve gathered together some notes on my reading, with the aim of tracing back the definitions through the literature.&lt;/p&gt;
 &lt;p&gt;Ahlstrom et al. (2015) is a DGVM modelling study that looks at the contribution of different regional terrestrial ecosystem types to the temporal trend and temporal variability of the global land carbon sink. They find that &amp;ldquo;semi-arid&amp;rdquo; ecosystems dominate the trend and inter-annual variability of the sink, with these temporal variations being strongly associated with inter-annual variation in precipitation. They define semi-arid ecosystems alongside five other land cover classes: tropical forest, extra-tropical forest, tundra and arctic shrubland, grassland and agriculture, and barren (sparsely vegetated). First they divide into forest, savanna and shrublands, and grasslands and croplands using the MODIS land cover classification (MCD12C1 type 3). They then divide the savanna and shrubland class into two based on latitude. Below 45N they class as semi-arid, and above 45N they class as tundra and arctic shrubland. Below is their map of land cover classes. Tropical forests in light green, extra-tropical forests in dark green, semi-arid in orange, tundra and arctic shrubland in grey, grassland and cops in blue, barren in white.&lt;/p&gt;
 &lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/drylands/ahlstrom_map.png&#34;&gt;&lt;img
@@ -893,10 +893,10 @@
     
     <item>
       <title>Methods to establish square vegetation monitoring plots</title>
-      <link>http://johngodlee.xyz/posts/2024-03-07-square_plots/</link>
+      <link>http://johngodlee.xyz/posts/work/2024-03-07-square_plots/</link>
       <pubDate>2024-03-07T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2024-03-07-square_plots/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2024-03-07-square_plots/</guid>
       <description>&lt;p&gt;Creating perfectly square permanent plots in dense woodland ecosystems can be a challenge. It&amp;rsquo;s very easy to end up with something more like a diamond or a rhombus, unless care is taken to measure the diagonals of the plot.&lt;/p&gt;
 &lt;p&gt;Previously I have set up one hectare permanent woodland tree sampling plots by starting at the SW corner of the plot, then running tapes at 90° going N and E for 100 m to form the W and S edges, respectively. Then to ensure that the edges are actually at 90° you run a tape along the hypotenuse of those edges, which should be 141.42 m long. Then you construct the other two edges (N, E), ensuring that they meet at 100 m, and finally check the length of the other hypotenuse is 141.42 m. The principal drawback of this method is that it requires a tape measure that can cover 141.42 m, or else you have to mess about with two tapes or a long piece of string. Covering a straight distance of 141.42 m is difficult because you often can&amp;rsquo;t see the person standing at the opposite corner. Using 100 m tapes, this method requires a minimum of six tapes. Alternatively you can measure smaller hypotenuse angles at intermediate points along the edges, e.g. at 10 and 25 m, but this means you will have to do many more measurements.&lt;/p&gt;
 &lt;p&gt;Below I present an alternative method that I think overcomes these problems.&lt;/p&gt;
@@ -916,10 +916,10 @@
     
     <item>
       <title>Raspberry Pi home server</title>
-      <link>http://johngodlee.xyz/posts/2023-12-24-rpi_server/</link>
+      <link>http://johngodlee.xyz/posts/personal/2023-12-24-rpi_server/</link>
       <pubDate>2023-12-24T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-12-24-rpi_server/</guid>
+      <guid>http://johngodlee.xyz/posts/personal/2023-12-24-rpi_server/</guid>
       <description>&lt;p&gt;When we lived in London we had an HP Compaq Elite 8300 desktop tower that we used as a home server. The server ran Ubuntu minimal server 18.04. I used the server to back up important documents, and used Samba to connect our laptops to access music, movies etc.&lt;/p&gt;
 &lt;p&gt;The server was very convenient for me, but it was a bit awkward for others to connect to if they weren&amp;rsquo;t familiar with network shares or SSH. Additionally, the server was quite power hungry. I set it up to wake on LAN, but this meant I was the only one in the house who could turn it on.&lt;/p&gt;
 &lt;p&gt;In our new flat I aimed to upgrade the home server setup to reduce power consumption, increase storage capacity, and improve accessibility for less techy people.&lt;/p&gt;
@@ -1022,10 +1022,10 @@ done
     
     <item>
       <title>Scraping plot locations from the ForestPlots.net web map</title>
-      <link>http://johngodlee.xyz/posts/2023-10-05-fp_scrape/</link>
+      <link>http://johngodlee.xyz/posts/work/2023-10-05-fp_scrape/</link>
       <pubDate>2023-10-05T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-10-05-fp_scrape/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2023-10-05-fp_scrape/</guid>
       <description>&lt;p&gt;I was making a presentation about vegetation monitoring networks and wanted a map showing the spatial distribution of vegetation monitoring plots across the tropics. &lt;a href=&#34;https://forestplots.net/&#34; target=&#34;_blank&#34;&gt;ForestPlots.net&lt;/a&gt;
  is a meta-network which holds a database of plot-based tree demographic data. They have a &lt;a href=&#34;https://forestplots.net/en/map&#34; target=&#34;_blank&#34;&gt;web map&lt;/a&gt;
  with useful metadata, but this map doesn&amp;rsquo;t look great and I didn&amp;rsquo;t want to just include a screenshot.&lt;/p&gt;
@@ -1121,10 +1121,10 @@ done
     
     <item>
       <title>tmux grouped sessions</title>
-      <link>http://johngodlee.xyz/posts/2023-09-23-tmux_sessions/</link>
+      <link>http://johngodlee.xyz/posts/personal/2023-09-23-tmux_sessions/</link>
       <pubDate>2023-09-23T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-09-23-tmux_sessions/</guid>
+      <guid>http://johngodlee.xyz/posts/personal/2023-09-23-tmux_sessions/</guid>
       <description>&lt;p&gt;I have two monitors at work. Normally I have a terminal running tmux open full screen on the right-hand monitor, in portrait, and use the left monitor in landscape for everything else. Occasionally however, I want to also have a terminal open on the left monitor, and to move windows easily between terminals. To make it easier to share windows across terminals, I have adjusted my tmux setup to take advantage of the grouped-sessions feature.&lt;/p&gt;
 &lt;p&gt;At the bottom of my &lt;code&gt;.tmux.conf&lt;/code&gt; I have this chunk, which starts a new session called &amp;ldquo;main&amp;rdquo;, as a daemon.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;new-session -s main -d
@@ -1142,10 +1142,10 @@ done
     
     <item>
       <title>SEOSAW growth rates workshop</title>
-      <link>http://johngodlee.xyz/posts/2023-09-13-growth_workshop/</link>
+      <link>http://johngodlee.xyz/posts/work/2023-09-13-growth_workshop/</link>
       <pubDate>2023-09-13T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-09-13-growth_workshop/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2023-09-13-growth_workshop/</guid>
       <description>&lt;p&gt;Recently, with help from colleagues, I ran an online workshop for the &lt;a href=&#34;https://seosaw.github.io/&#34; target=&#34;_blank&#34;&gt;SEOSAW network&lt;/a&gt;
  on estimating tree growth rates, rates of recruitment and mortality, and rates of biomass productivity and loss from repeat measurements of tree stem diameter in fixed area plots.&lt;/p&gt;
 &lt;p&gt;The workshop built on a lot of previously established methods like &lt;a href=&#34;https://doi.org/10.1016/j.foreco.2018.11.010&#34; target=&#34;_blank&#34;&gt;Kohyama et al. (2019)&lt;/a&gt;
@@ -1164,10 +1164,10 @@ done
     
     <item>
       <title>Refurbishing my bike</title>
-      <link>http://johngodlee.xyz/posts/2023-08-12-bike_refurb/</link>
+      <link>http://johngodlee.xyz/posts/personal/2023-08-12-bike_refurb/</link>
       <pubDate>2023-08-12T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-08-12-bike_refurb/</guid>
+      <guid>http://johngodlee.xyz/posts/personal/2023-08-12-bike_refurb/</guid>
       <description>&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/spot_autumn/bike.jpg&#34;&gt;&lt;img
           alt=&#34;Bike&#34;
           title=&#34;Bike&#34;src=&#34;http://johngodlee.xyz/img/spot_autumn/bike.png&#34; 
@@ -1301,10 +1301,10 @@ done
     
     <item>
       <title>Excel Scottish Land Tax calculator</title>
-      <link>http://johngodlee.xyz/posts/2023-06-10-land_tax/</link>
+      <link>http://johngodlee.xyz/posts/personal/2023-06-10-land_tax/</link>
       <pubDate>2023-06-10T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-06-10-land_tax/</guid>
+      <guid>http://johngodlee.xyz/posts/personal/2023-06-10-land_tax/</guid>
       <description>&lt;p&gt;Me and my partner are in the process of buying our first house. In Scotland, property transactions are subject to &lt;a href=&#34;https://www.gov.scot/policies/taxes/land-and-buildings-transaction-tax/&#34; target=&#34;_blank&#34;&gt;Land Tax&lt;/a&gt;
 . Land Tax is calculated based on the property price and is based on tiers. The first 145k is free, then 145-250k is subject to 2% tax, 250-325k is 5% and so on. For first time buyers the tax free amount is raised to 175k.&lt;/p&gt;
 &lt;p&gt;There are a few &lt;a href=&#34;https://revenue.scot/calculate-tax/calculate-property-transactions&#34; target=&#34;_blank&#34;&gt;online Land Tax calculators&lt;/a&gt;
@@ -1319,10 +1319,10 @@ done
     
     <item>
       <title>Geo-referenced Teixeira (1968) Bicuar National Park vegetation map</title>
-      <link>http://johngodlee.xyz/posts/2023-06-01-teixeira_georef/</link>
+      <link>http://johngodlee.xyz/posts/work/2023-06-01-teixeira_georef/</link>
       <pubDate>2023-06-01T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-06-01-teixeira_georef/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2023-06-01-teixeira_georef/</guid>
       <description>&lt;p&gt;In a previous post I mentioned that I had been given a copy of J. B. Teixeira&amp;rsquo;s 1968 vegetation map of Bicuar National Park.&lt;/p&gt;
 &lt;p&gt;I just finished geo-referencing and vectorising the map, so I&amp;rsquo;ve &lt;a href=&#34;http://johngodlee.xyz/files/teixeira_georef/teixeira_1968_bicuar_veg_map.zip&#34;&gt;uploaded it here&lt;/a&gt;
  in case anybody wants to use it.&lt;/p&gt;
@@ -1349,10 +1349,10 @@ done
     
     <item>
       <title>An email about estimating productivity</title>
-      <link>http://johngodlee.xyz/posts/2023-05-24-productivity_email/</link>
+      <link>http://johngodlee.xyz/posts/work/2023-05-24-productivity_email/</link>
       <pubDate>2023-05-24T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-05-24-productivity_email/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2023-05-24-productivity_email/</guid>
       <description>&lt;p&gt;I had a student ask me something along the lines of:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;How do I calculate woody productivity in a woodland plot? I have seen others calculate the difference in standing biomass between censuses as net primary productivity. Is this right?&lt;/p&gt;
@@ -1375,10 +1375,10 @@ done
     
     <item>
       <title>R functions to download data from KoboToolbox</title>
-      <link>http://johngodlee.xyz/posts/2023-05-18-kobo_functions/</link>
+      <link>http://johngodlee.xyz/posts/work/2023-05-18-kobo_functions/</link>
       <pubDate>2023-05-18T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-05-18-kobo_functions/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2023-05-18-kobo_functions/</guid>
       <description>&lt;p&gt;I have created a couple of R functions to download data from a &lt;a href=&#34;&#34;&gt;KoboToolbox&lt;/a&gt;
  server, using their API. The functions sometimes fail with a 502 bad gateway error, so it might be worth wrapping them in a &lt;code&gt;try()&lt;/code&gt; statement to get them to fail nicely.&lt;/p&gt;
 &lt;p&gt;First, a function to list all the form IDs for a given user. This function is used primarily to find the form ID, which can be used in the second function to get the data. The function takes either an access token or a username and password and returns a dataframe:&lt;/p&gt;
@@ -1490,10 +1490,10 @@ done
     
     <item>
       <title>Vegetation map of Bicuar National Park - Teixeira 1968</title>
-      <link>http://johngodlee.xyz/posts/2023-05-15-teixeira_bicuar/</link>
+      <link>http://johngodlee.xyz/posts/work/2023-05-15-teixeira_bicuar/</link>
       <pubDate>2023-05-15T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-05-15-teixeira_bicuar/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2023-05-15-teixeira_bicuar/</guid>
       <description>&lt;p&gt;I&amp;rsquo;ve been searching around for a long time for a copy of a vegetation map of Bicuar National Park, Angola, produced in 1968 by J. B. Teixeira. A number of contemporary publications looking at the ecology of Bicuar reference this map, but I realised I have never seen it. To my knowledge, it remains the only vegetation map of Bicuar National Park. I would like to see if I can geo-reference this map and overlay it on a new vegetation map we are producing, to see how they line up.&lt;/p&gt;
 &lt;p&gt;After lots of emailing I was provided with a scanned copy by a colleague. To make it easier for others to find, I have uploaded a pdf version here:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;Teixeira J. B. (1968). Parque Nacional Do Bicuar. Carta Da Vegetação (1a aproximação) e Memória Descritiva. Instituto de Investigação Agronómica de Angola.&lt;/a&gt;
@@ -1503,10 +1503,10 @@ done
     
     <item>
       <title>Presentations for lectureship interview</title>
-      <link>http://johngodlee.xyz/posts/2023-04-13-job_interview/</link>
+      <link>http://johngodlee.xyz/posts/work/2023-04-13-job_interview/</link>
       <pubDate>2023-04-13T00:00:00+0000</pubDate>
       
-      <guid>http://johngodlee.xyz/posts/2023-04-13-job_interview/</guid>
+      <guid>http://johngodlee.xyz/posts/work/2023-04-13-job_interview/</guid>
       <description>&lt;p&gt;I applied for a junior lectureship position in Ecological Science a few weeks ago. Unfortunately I didn&amp;rsquo;t get the job, but the experience forced me to think about who I am as a researcher, what my strengths are, and also what my goals should be if I want to be successful on the next application.&lt;/p&gt;
 &lt;p&gt;As part of the interview process I had to prepare a 20 minute presentation on:&lt;/p&gt;
 &lt;blockquote&gt;

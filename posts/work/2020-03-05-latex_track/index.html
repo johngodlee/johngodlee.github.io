@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Track changes in LaTeX for reviewer comments</h1>
+
+<h2>2020-03-05</h2>
+</div>
+
+<main>
+<p>I have recently submitted a paper and got reviews back with minor changes before publication, YAY! The journal thankfully supplied a LaTeX template for writing the paper which made me very happy, so I wrote the paper in LaTeX and have been using <code>vimdiff</code> to collaborate with co-authors, for those co-authors who are willing to edit <code>.tex</code> files, and using <code>.pdf</code> comments for those co-authors who are less keen on LaTeX.</p>
+<p>Now I have to reply to the reviewers&rsquo; comments and supply a revised version of the manuscript. They recommend on the website using &ldquo;track changes&rdquo; to make the changes clear in the manuscript, however LaTeX doesn&rsquo;t have this functionality, not being a WYSIWYG editor. If I was being smarmy I would recommend they use a plain-text diff utility, but that&rsquo;s probably not a good way to make friends. So I am now looking for a way to do &ldquo;track changes&rdquo; in LaTeX.</p>
+<p>I have found a few notable options while searching the internet:</p>
+<ul>
+<li><a href="https://ctan.org/pkg/latexdiff" target="_blank">latexdiff</a>
+ - A Perl program which automatically diffs and highlights changes between 2 <code>.tex</code> files, conveniently includes <code>--flatten</code> if document is divided into separate files using <code>\input</code> or <code>\include</code> statements. See also <a href="https://www.ctan.org/tex-archive/support/texdiff/" target="_blank">texdiff</a>
+, a less complex option.</li>
+<li><a href="https://www.ctan.org/tex-archive/macros/latex/contrib/changes" target="_blank">changes</a>
+ - A TeX package which allows manual markup with changes as comments in the gutter. Conveniently supplies the <code>final</code> option to the package declaration, which clears markup.</li>
+<li><a href="https://www.ctan.org/tex-archive/macros/latex/contrib/changebar/" target="_blank">changebar</a>
+ - Adds simple highlighted bars where text has been changed.</li>
+<li><a href="https://github.com/pedromateo/revdiff-LaTeX" target="_blank">revdiff</a>
+ - A LaTeX package which is built specifically with the goal of making the work of reviewers of papers easier by marking changes in the text, adding tags and comments.</li>
+<li>Manually declare highlight options with <code>\newcommand</code>, e.g. <code>\newcommand{\added}[1]{\color{added}{}#1}</code></li>
+</ul>
+<h1 id="latexdiff">LaTeXDiff</h1>
+<p>This tool is handy because it automates most of the diff-ing between two .tex files, providing simple red strikethrough lines when text is removed and blue if text is added. I found that this small utility doesn&rsquo;t handle complex changes well though, and is best suited to smaller edits like spelling and word choice. When whole paragraphs start moving around, a manual commenting system is still required, understandably.</p>
+<p>I had some small issues getting this to run on the Windows machine I am using while working away from home, but I found <a href="https://tex.stackexchange.com/questions/165543/using-latexdiff-in-miktex" target="_blank">this Stack Overflow page very helpful in providing a solution</a>
+. I imagine when I try it on a UNIX machine the process will be considerably more streamlined as perl is already installed.</p>
+<h1 id="changes">Changes</h1>
+<p>A manual change highlighter, which is well developed. I ran into a few conflicts with definition of the <code>\highlight</code> command, which I think came from the <code>listings</code> package, but this was solved by redefining my <code>lstlisting</code> style.</p>
+<p>This package adds:</p>
+<ul>
+<li><code>\added</code> and <code>\deleted</code></li>
+<li><code>\replaced</code></li>
+<li><code>\highlight</code> and <code>\comment</code></li>
+</ul>
+<p>It also provides the <code>\listofchanges</code> command which is similar to the list of figures output.</p>
+<p>It provides options to clear the markup using the <code>final</code> option in the package declaration. There are a bunch of other package options which change what markup is shown in the output <code>.pdf</code>.</p>
+<h1 id="revdiff">RevDiff</h1>
+<p><code>revdiff</code> is another manual change highlighter. I guess the value of manual change highlighters is when a single author is preparing a document to send back to reviewers, so they can see how you have implemented changes. It comes with a few basic functions:</p>
+<ul>
+<li><code>\rnew</code> and <code>\rold</code></li>
+<li><code>\rchange</code></li>
+<li><code>\rcomment</code>, <code>\rtcomment</code>, <code>\renclose</code> and <code>\rtenclose</code></li>
+</ul>
+<p>It provides an option to remove markup and display the new version with <code>\usepackage[clean]{revdiff}</code>.</p>
+<p>The package requires you to download <code>revdiff.sty</code> and keep it somewhere it can be foundby each project, like <code>~/.texmf/</code>.</p>
+<p>It&rsquo;s unfortunate that comments appear inline rather than in the gutter like &ldquo;track changes&rdquo;.</p>
+<h1 id="manual">Manual:</h1>
+<p>If your needs are simple, it&rsquo;s not difficult to create a couple of custom commands which style the enclosed text to show if something has been deleted or added. I&rsquo;ve done this for a long time to add TODO notes for myself, using:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">\newcommand</span><span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\todo</span><span style="color:#204a87">}</span>[1]<span style="color:#204a87">{</span><span style="color:#204a87;font-weight:bold">\textcolor</span><span style="color:#204a87">{</span>red<span style="color:#204a87">}{</span><span style="color:#204a87;font-weight:bold">\textbf</span><span style="color:#204a87">{</span>#1<span style="color:#204a87">}}}</span> 
+</span></span></code></pre></div><h1 id="summary">Summary</h1>
+<p>The only option I found which didn&rsquo;t give me any issues, and the one I ended up using for this project, was <code>revdiff</code>, which contains the minimum of commands I need and produces smart looking <code>.pdf</code> markup.</p>
+<p>For future projects I think I will try and make sure that I will try to incorporate <code>latexdiff</code> into my workflow from the start. If I change my editing technique then <code>latexdiff</code> will be able to handle all of this automatically. Possibly if I have one round of <code>latexdiff</code> and then also use <code>revdiff</code> or <code>changes</code> to provide comments.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

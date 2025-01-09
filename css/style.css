@@ -41,14 +41,18 @@ h6 { font-size: 1em; }
 
 /* lists */
 ul, ol {
-	padding-left: 2em;
+	padding-left: 1em;
 }
 
-
-/* post list */
+/* post lists */
 ul.postlist {
 	list-style-type: none;
 	padding: 0;
+	padding-bottom: 1em;
+}
+
+ul.postlist li {
+	padding-left: 1em;
 }
 
 /* code */

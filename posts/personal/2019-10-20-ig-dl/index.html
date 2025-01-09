@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Scraping instagram without an account</h1>
+
+<h2>2019-10-20</h2>
+</div>
+
+<main>
+<p>There are lots of people I would like to follow on Instagram, mostly woodworkers, bicycle people, and outdoors people. It seems to be a really good method of delivering content. Unfortunately for Instagram, there is absolutely no way I would make an account with them. I fear it would be too much of a time sink, and I&rsquo;m paranoid of giving too much detail of my personal interests to Facebook.</p>
+<p>I found a command line tool called <a href="https://github.com/althonos/InstaLooter" target="_blank">InstaLooter</a>
+ which you can use to scrape public Instagram profiles without an account and save the images on my local machine which I can then read at my leisure, in the spirit of RSS. This is how I implemented the program.</p>
+<p>I created a text file which lives in my <code>$HOME</code> called <code>.ig_subs.txt</code>. The file holds a list of Instagram user IDs for the accounts I want to scrape from:</p>
+<pre tabindex="0"><code>kelsoparadiso
+lloyd.kahn
+exploringalternatives
+barnthespoon
+terrybarentsen
+woodlands.co.uk
+zedoutdoors
+mossy_bottom
+</code></pre><p>Then I made a shell script which lives in my path, called <code>insta_dl</code>:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
+
+# Make directory if it doesn&#39;t exist
+mkdir -p $HOME/Downloads/ig
+
+# make newlines the only separator
+IFS=$&#39;\n&#39; 
+
+# disable globbing
+set -f          
+
+# Loop
+for i in $(cat &lt; &#34;$HOME/.ig_subs.txt&#34;); do
+  instalooter user $i $HOME/Downloads/ig/ -n 1 -N -T {username}.{date}.{id} 
+done
+</code></pre><p><code>instalooter user $i</code> downloads photos from each user <code>i</code>. <code>-n 1</code> only downloads the most recent post, whether that post is one photo or multiple. <code>-N</code> only downloads images which don&rsquo;t already exist in the destination directory (<code>$HOME/Downloads/ig/</code>), based on the filename. <code>-T {username}.{date}.{id}</code> sets the filename of each photo. <code>{id}</code> is unique for each photo on Instagram, so it uniquely identifies each file downloaded for use by <code>-N</code>. The filenames then look something like this:</p>
+<pre tabindex="0"><code>exploringalternatives.2019-09-27.2142383070393557093.jpg
+kelsoparadiso.2019-10-09.2150831532411304437.jpg
+kelsoparadiso.2019-10-09.2150831532419588103.jpg
+kelsoparadiso.2019-10-09.2150831532419839765.jpg
+lloyd.kahn.2019-10-11.2152638264107259024.jpg
+mossy_bottom.2019-10-09.2151026330651686709.jpg
+terrybarentsen.2019-10-03.2146722625883638769.jpg
+terrybarentsen.2019-10-03.2146722625900303797.jpg
+terrybarentsen.2019-10-03.2146722625950630270.jpg
+woodlands.co.uk.2019-10-11.2152273592812162360.jpg
+zedoutdoors.2019-10-02.2145942922787735607.jpg
+</code></pre><p>If I wanted to I guess I could further file each image into its own directory based on username or date, but I don&rsquo;t want that.</p>
+<p>I can now create a cronjob or a LaunchAgents script to automate this to run everyday or every week in the background.</p>
+<h1 id="update---2019_10_31">Update - 2019_10_31</h1>
+<p>I updated the <code>insta_dl</code> shell script so that it also grabs the caption of each instagram post downloaded and stores it in a text file. InstaLooter can download post metadata as a JSON file by adding the <code>-d</code> flag (<code>--dump-json</code>). Then I use <code>jq</code> to parse the JSON file for each post to extract the full name of the account (<code>.owner.full_name</code>), the @username of the account (<code>.owner.username</code>) and the content of the caption of the post (<code>.edge_media_to_caption[][][].text</code>). Then I use sed to put a blank line between each caption to make it easier to read and delete the original JSON files:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">#!/bin/bash
+
+# Make directory if it doesn&#39;t exist
+mkdir -p $HOME/Downloads/ig
+
+DIR=$HOME/Downloads/ig
+
+# make newlines the only separator
+IFS=$&#39;\n&#39; 
+
+# Loop
+for i in $(cat &lt; &#34;$HOME/.ig_subs.txt&#34;); do
+	instalooter user $i $DIR -v -d -n 1 -N -T {username}.{date}.{id} 
+done
+
+for i in $DIR/*json ; do
+	cat $i | jq &#39;(.owner.full_name + &#34; (&#34; + .owner.username + &#34;): &#34; + .edge_media_to_caption[][][].text)&#39;
+done &gt; $DIR/description.txt
+
+sed -i &#39;G&#39; $DIR/description.txt
+
+rm $HOME/Downloads/ig/*.json
+</code></pre>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

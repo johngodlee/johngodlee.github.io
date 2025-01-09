@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Putting a Linux distro on a USB, from a Mac</h1>
+
+<h2>2018-12-29</h2>
+</div>
+
+<main>
+<p>Previously I used <a href="https://unetbootin.github.io" target="_blank">unetbootin</a>
+ and macOS&rsquo; built-in Disk-Utility.app to format USB drives to use for installing Linux distributions on other computers. However, most recently, I found that I couldn&rsquo;t get any of the installers to work, so I was looking for an alternative.</p>
+<p>I found that I could accomplish the same thing on the command line. Here is the process I used.</p>
+<p>First, download a <code>.iso</code> image for a chosen linux distribution, for example, this <a href="http://releases.ubuntu.com/16.04/" target="_blank">Linux Server i386 image</a>
+ that I wanted to use as a minimal installation on a netbook.</p>
+<p>Plug the USB stick into the mac, and open a terminal. Enter:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">diskutil list
+</code></pre><p>To find a list of media volumes connected to the system. This will include both the hard disk for the mac and any connected external drives such as the USB.</p>
+<p>It&rsquo;s normally trivial to identify the USB stick from the list by its size. It will be named something like <code>/dev/disk2</code> and may contain multiple partitions, like <code>/dev/disk2s1</code>. When you are sure that you&rsquo;ve identified the USB stick you want to install the linux distro on, enter:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">diskutil eraseDisk FAT32 UNTITLED MBRformat /dev/disk2
+</code></pre><p>This will format the USB (deleting everything in the process), to a format that should be compatible with any device you plug it into. I think this might have been the stumbling block in my old system, and the USB wasn&rsquo;t formatted correctly.</p>
+<p>Then, unmount the USB drive:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">diskutil unmountDisk /dev/disk2s1
+</code></pre><p>Finally, install the <code>.iso</code> image you downloaded earlier onto the USB:</p>
+<pre tabindex="0"><code class="language-shell-script" data-lang="shell-script">sudo dd if=PATH_TO_ISO.iso of=/dev/rdisk2 bs=1m
+</code></pre><p>Note that it&rsquo;s not a typo putting <code>rdisk2</code> instead of <code>disk2</code>, it seems to make the process run faster, similarly adding <code>bs=1m</code>.</p>
+<p>Then it&rsquo;s just a case of booting from the USB on the new machine and following the installation instructions.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

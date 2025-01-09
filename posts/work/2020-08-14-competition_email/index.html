@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Email about estimating competition with basal area</h1>
+
+<h2>2020-08-14</h2>
+</div>
+
+<main>
+<p>I was thinking about how to estimate competition in a woodland plot, without using geo-referenced tree locations. This email goes through some thoughts I had on why plot-level basal area isn&rsquo;t a good way to estimate competition.</p>
+<blockquote>
+<p>Hi,
+I&rsquo;ve been thinking more about this situation of estimating competition using plot-level basal area. It doesn&rsquo;t sit right with me. It appears to me that two plots could have identical basal areas but different levels of competition between individuals. Below are two examples which I&rsquo;m tentatively putting forward to demonstrate my point. You might disagree with my reasoning, and I&rsquo;m open to being corrected.</p>
+<p>Imagine two plots of identical area, and identical plot-level basal area, 5 m^2 ha^-1, for example. The number of trees varies between plots, however. In order to achieve identical plot-level basal areas the basal areas of individual trees must be different between plots. In plot A there are 50 trees, each with a basal area of 0.1 m^2. In plot B there are 100 trees with basal areas of 0.05 m^2. Despite having identical plot-level basal areas, in plot A competition will be lower than plot B, because the trees are not as close together and therefore crown and root interaction will decrease. Previous work has shown that basal area doesn&rsquo;t have a linear relationship with crown area, it&rsquo;s more like a sigmoid curve or a saturating curve, the key takeaway being that in a small tree, unit increase in basal area will lead to a greater increase in crown area than a unit increase in a large tree. I think including stem density in the model could do a better job of estimating competition than plot-level basal area.</p>
+<p>Next, imagine two other plots, both of which have 100 trees, arranged in an evenly spaced grid pattern. In plot A, all trees have a basal area of 0.05 m^2, while in plot B half the trees have a basal area of 0.01 m^2 and half have a basal area of 0.09 m^2. Both plots have a basal area of 5 m^2, but plot B will have weaker crown competition interactions than plot A. The reason being that the large trees in plot B will not be negatively affected by the presence of the smaller trees. In this scenario, I think including information on the variance of basal area (or should it be area under the distribution of basal area?) within a plot might improve estimates of competition. I would expect a higher variance of basal area would cause lower overall competition, due to diminished plot-level competition interactions, but I&rsquo;m less certain on this.</p>
+<p>Let me know what you think to the above points if you want to take the discussion further. It&rsquo;s a shame we don&rsquo;t have more plots with X-Y coordinates for individual trees. There&rsquo;s a tonne of very convincing research on methods to estimate neighbourhood competition in forestry.</p>
+</blockquote>
+<p>Thinking about it more, it may be useful to weight the competition contribution of individuals based on their basal area. Weight the competitive contribution of large trees vs. small trees. I would expect large trees to exert a greater competitive effect than small trees. Maybe the weighting should be based on pairwise comparisons of basal area among all trees in the plot? A positive competition effect would result between a pair if individual A was larger than individual B, and increase positively the larger individual A was than individual B.</p>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

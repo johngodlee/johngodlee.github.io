@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Comparing forest canopy measurements with a phone lens and an expensive DSLR fisheye</h1>
+
+<h2>2018-09-30</h2>
+</div>
+
+<main>
+<p>On my most recent teaching stint as a demonstrator for a 4th year undergraduate field course, myself and one of the other demonstrators experimented with estimating forest canopy structural metrics like gap fraction and Leaf Area Index (LAI) using two different photographic methods. The first was a conventional full hemipsherical fisheye lens on a DSLR camera, the second was a considerably cheaper fisheye lens converter for a smartphone.</p>
+<p>We took 10 photos with the same orientation at the same height under a stand of Ash-Birch mixed plantation. I cropped the images so each set of paired images captured approximately the same area of canopy.</p>
+<figure><a href="/img_full/lai_phone/hemi_1_camera_thresh.jpg"><img
+          alt="Thresholded photo"
+          title="Thresholded photo"src="/img/lai_phone/hemi_1_camera_thresh.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/lai_phone/hemi_1_camera.jpg"><img
+          alt="Original photo"
+          title="Original photo"src="/img/lai_phone/hemi_1_camera.png" 
+      /></a></figure>
+
+
+<p>One issue was that the phone fisheye converter tended to move around on the body of the phone, leading to the edges of the fisheye frame being distorted or excluded from the phone&rsquo;s frame. This meant that to maintain consistency between the angle of view cpatured by each photo, all photos had to be cropped to approximately (DEGREES) field of view. To see whether this excess cropping affected estimations of LAI or gap fraction, I compared photos from the DSLR camera, cropped to different proportional circular crops:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">phone_px_rad</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">2460</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">camera_px_rad</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#0000cf;font-weight:bold">3925</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">crops</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.9</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.75</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.5</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">0.25</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">phone_px_rad</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">phone_px_rad</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">crops</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">camera_px_rad</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">camera_px_rad</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">crops</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">rads</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">phone_px_rad</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">camera_px_rad</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">phone_camera</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;phone&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">times</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">rep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;camera&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">times</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">5</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">crops_group</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">rep</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">crops</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">times</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">crops_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">crops_group</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">phone_camera</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">rads</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">crops_df</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">crops_group</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rads</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">phone_camera</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">geom_point</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">geom_line</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">scale_x_reverse</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">labs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Proportional crop by diameter of original image&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;Pixel diameter of resultant image&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><figure><a href="/img_full/lai_phone/fov_ggplot.png"><img
+          alt="Plot of field of view by diameter crop"
+          title="Plot of field of view by diameter crop"src="/img/lai_phone/fov_ggplot.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/lai_phone/phone_compare.png"><img
+          alt="Plot of percentage crop by mean gap fraction"
+          title="Plot of percentage crop by mean gap fraction"src="/img/lai_phone/phone_compare.png" 
+      /></a></figure>
+
+
+<figure><a href="/img_full/lai_phone/camera_compare.png"><img
+          alt="Spaghetti plot of comparison between photos by camera or phone"
+          title="Spaghetti plot of comparison between photos by camera or phone"src="/img/lai_phone/camera_compare.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Shiny app to explore climate space of SEOSAW region</h1>
+
+<h2>2022-09-10</h2>
+</div>
+
+<main>
+<p>I made an R Shiny web app to explore the climate space of the SEOSAW region. The app can be found <a href="https://johngodlee.shinyapps.io/climate_space/" target="_blank">here, on shinyapps.io</a>
+.</p>
+<p>A big part of getting the app to run smoothly was to pre-process the data sources so they could be loaded quickly from disk, subsetted quickly, and rendered quickly with <code>ggplot()</code>. I haven&rsquo;t styled the app much to make it look pretty, as it was more a learning experience on how code reactive objects in Shiny.</p>
+<p>I loaded country outlines of Africa and the SEOSAW ecoregion from the <code>{seosawr}</code> R package, and simplified them using <code>{rmapshaper}</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">africa</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">seosawr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">africa</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">seosaw_region</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">seosawr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">seosaw_region</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">seosaw_bbox</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">seosawr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">seosaw_bbox</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">africa_simp</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ms_simplify</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">africa</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">keep</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.01</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">keep_shapes</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">st_intersection</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">.,</span> <span style="color:#000">seosaw_bbox</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">seosaw_region_simp</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ms_simplify</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">seosaw_region</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">keep</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.01</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">keep_shapes</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>I used climate data from <a href="https://www.worldclim.org/" target="_blank">WorldClim</a>
+, which I downloaded at 10 minute spatial resolution using the <code>{raster}</code> package:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">bioclim</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">getData</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;worldclim&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">var</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;bio&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">10</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>which returns a raster stack object. Then I cropped and masked the climate data with the SEOSAW region polygon:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">bioclim_crop</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">mask</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">crop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bioclim</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">seosaw_region_simp</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">seosaw_region_simp</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>and finally, extracted the values and coordinates of each raster cell for each raster layer, resulting in a large matrix, with cells for rows, and bioclim variables or coordinates as columns, which I saved as a <code>.rds</code> file.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">bioclim_val</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">coordinates</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bioclim_crop</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">values</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bioclim_crop</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">bioclim_val_fil</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">bioclim_val[</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">apply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bioclim_val</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;x&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;y&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">))</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}),</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">saveRDS</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">bioclim_val_fil</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;app/data/bioclim_val_fil.rds&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>The app allows you to draw a rectangle around the climate space of interest using two bioclim variables which you can select from a dropdown list. This process uses the <code>brush</code> operator in the Shiny <code>plotOutput()</code> function. I subsetted the raster matrix to the values returned by <code>input$brush</code> using <code>reactive()</code> in the Shiny app.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">rasterMapInput</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">reactive</span><span style="color:#000;font-weight:bold">({</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">val_sel</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">val[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;x&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;y&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">input</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">xvar</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">input</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">yvar</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.null</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">brush</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xmin</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">input</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">brush</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">xmin</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xmax</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">input</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">brush</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">xmax</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">ymin</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">input</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">brush</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">ymin</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">ymax</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">input</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">brush</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">ymax</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">val_sel</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">val_sel[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">val_sel[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">xmin</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">val_sel[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000">xmax</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">val_sel[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">ymin</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#000">val_sel[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000">ymax</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;x&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;y&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span> 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val_sel</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">})</span>
+</span></span></code></pre></div><p>Then I simply used <code>ggplot()</code> with <code>rasterMapInput()</code> as the data input to <code>geom_tile()</code> to map the climate space selected on the map of southern Africa.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Extract values from selected raster layers</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">valInput</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">reactive</span><span style="color:#000;font-weight:bold">({</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">val[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">input</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">xvar</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">input</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">yvar</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">})</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">output</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">plot1</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">renderPlot</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ggplot</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_bin2d</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">valInput</span><span style="color:#000;font-weight:bold">(),</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">mapping</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">aes_string</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">valInput</span><span style="color:#000;font-weight:bold">())</span><span style="color:#000">[1]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">valInput</span><span style="color:#000;font-weight:bold">())</span><span style="color:#000">[2]</span><span style="color:#000;font-weight:bold">),</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">colour</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">bg_col</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">bg_col</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">bins</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">100</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">theme_classic</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">theme</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">legend.position</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;none&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">output</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">plot2</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">renderPlot</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">map_plot</span> <span style="color:#ce5c00;font-weight:bold">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">geom_tile</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">rasterMapInput</span><span style="color:#000;font-weight:bold">(),</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">aes</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">y</span><span style="color:#000;font-weight:bold">),</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fill</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">bg_col</span><span style="color:#000;font-weight:bold">)</span> 
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><figure><a href="/img_full/shiny_climate/scrot.png"><img
+          alt="Screenshot of the app with a dry and wet region selected."
+          title="Screenshot of the app with a dry and wet region selected."src="/img/shiny_climate/scrot.png" 
+      /></a></figure>
+
+
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
