@@ -8,6 +8,20 @@
     <language>en-gb</language>
     <lastBuildDate>2025-05-01T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Leaf trait sampling protocol for SECO</title>
+      <link>http://johngodlee.xyz/posts/work/2025-01-22-seco_leaf_traits/</link>
+      <pubDate>2025-01-22T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/work/2025-01-22-seco_leaf_traits/</guid>
+      <description>&lt;p&gt;At the start of the &lt;a href=&#34;https://blogs.ed.ac.uk/seco-project/&#34; target=&#34;_blank&#34;&gt;SECO project&lt;/a&gt;
+, we had the idea that we would sample leaf traits across our field sites to help constrain models of carbon cycle processes. I wrote a protocol to with a PhD student at the University of Edinburgh, Matt Rees, with guidance on how to collect leaves from a representative sample of trees at each site, with the aim of calculating realistic community-weighted means of the leaf trait values that would be useful to the modelling team.&lt;/p&gt;
+&lt;p&gt;In the end, this protocol was only rolled out at a couple of sites in southern Africa, as the project went in a different direction quite early on.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m going to host the protocol &lt;a href=&#34;files/seco_leaf_traits/seco_leaf_traits.zip&#34;&gt;here&lt;/a&gt;
+ so anybody can use it.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Comparison of Mo et al. (2024) global wood density with plots in the seasonally dry tropics</title>
       <link>http://johngodlee.xyz/posts/work/2024-12-21-mo_wood_density/</link>
       <pubDate>2024-12-21T00:00:00+0000</pubDate>
@@ -1497,36 +1511,6 @@ done
       <description>&lt;p&gt;I&amp;rsquo;ve been searching around for a long time for a copy of a vegetation map of Bicuar National Park, Angola, produced in 1968 by J. B. Teixeira. A number of contemporary publications looking at the ecology of Bicuar reference this map, but I realised I have never seen it. To my knowledge, it remains the only vegetation map of Bicuar National Park. I would like to see if I can geo-reference this map and overlay it on a new vegetation map we are producing, to see how they line up.&lt;/p&gt;
 &lt;p&gt;After lots of emailing I was provided with a scanned copy by a colleague. To make it easier for others to find, I have uploaded a pdf version here:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/teixeira_bicuar/teixeira_1968_bicuar_veg_map.pdf&#34;&gt;Teixeira J. B. (1968). Parque Nacional Do Bicuar. Carta Da Vegetação (1a aproximação) e Memória Descritiva. Instituto de Investigação Agronómica de Angola.&lt;/a&gt;
-&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Presentations for lectureship interview</title>
-      <link>http://johngodlee.xyz/posts/work/2023-04-13-job_interview/</link>
-      <pubDate>2023-04-13T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/work/2023-04-13-job_interview/</guid>
-      <description>&lt;p&gt;I applied for a junior lectureship position in Ecological Science a few weeks ago. Unfortunately I didn&amp;rsquo;t get the job, but the experience forced me to think about who I am as a researcher, what my strengths are, and also what my goals should be if I want to be successful on the next application.&lt;/p&gt;
-&lt;p&gt;As part of the interview process I had to prepare a 20 minute presentation on:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Your research strengths and future ambitions, how your research profile presents opportunities for developing impact and knowledge exchange, and in what ways you foresee yourself contributing to existing research communities in the Institute, School and wider University.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;I also had to prepare a 10 minute presentation followed by a 30 minute discussion on teaching. The brief was (paraphrased):&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;How you would approach designing, delivering and assessing a field-based course for first year undergraduates on core field skills for ecologists.&lt;/p&gt;
-&lt;p&gt;The course would be taught over 10 days in late May-early June with day visits to surrounding habitats. Plan for 65 students on the course.&lt;/p&gt;
-&lt;p&gt;Include an overview with a syllabus, learning outcomes, methods of delivery, formative and summative assessment, and your approach to feedback.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Finally, I did a normal question-based interview.&lt;/p&gt;
-&lt;p&gt;I have decided to make the two presentations available online:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/research_presentation.pdf&#34;&gt;Research presentation&lt;/a&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_presentation.pdf&#34;&gt;Teaching presentation&lt;/a&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_schedule.pdf&#34;&gt;Teaching schedule&lt;/a&gt;
-&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/teaching_statement.pdf&#34;&gt;Teaching statement&lt;/a&gt;
 &lt;/p&gt;
 </description>
     </item>
