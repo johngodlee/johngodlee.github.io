@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Gathering data on plant growth form for a regional species checklist</h1>
+
+<h2>2025-04-26</h2>
+</div>
+
+<main>
+<p>A colleague had a list of plant species names from a regional checklist they have compiled. They wanted to add a description of the growth form to each species, but with over 2000 species it was becoming laborious to look up each species individually online.</p>
+<p>This was my email response:</p>
+<p>There are obviously many different data sources you could use to get information on growth form, but many of them will be incomplete, and they will vary in how easy it is to process the data. Two of the best in terms of coverage and systematic recording of growth form are probably World Flora Online (WFO, <a href="https://www.worldfloraonline.org/" target="_blank">https://www.worldfloraonline.org/</a>
+) and the TRY traits database (<a href="https://www.try-db.org/TryWeb/Home.php%29" target="_blank">https://www.try-db.org/TryWeb/Home.php)</a>
+.</p>
+<p>WFO has growth form information on their website for some species, but I have been unable to find a way to scrape this information. They have an API, but it only returns taxonomic information. If you were to use this method you would have to search for each species individually and copy the data from the table. Realistically it might only take a couple of days, maybe you could enlist the help of some eager Masters students?! It might be possible to scrape the Data table from each of the species, but when I tried this I kept getting 403 denied errors.</p>
+<p>TRY has growth form information for many species. You can Download the &ldquo;Plant Growth Form&rdquo; data (trait ID 42) from their website. You have to submit a data request, but it&rsquo;s fairly quick to do and they are approved automatically after a waiting period of a few hours so long as you only use their public dataset. Alternatively or in addition to this, you could look at their categorical traits table, which is a snapshot from the original 2012 debut of the database.</p>
+<p>One key consideration is aligning the taxonomic names in your species list with those in whatever growth form data source you end up using. I would recommend using the WorldFlora R package to do this. I have attached an R script (below) which shows how to do this.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">dplyr</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">readxl</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">WorldFlora</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Import data</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">read_excel</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;./species.xlsx&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Get first two words</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">x_clean</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_sanit</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unlist</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">strsplit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_clean</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_ws</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34; &#34;</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">na.omit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">y[1</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#000">collapse</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34; &#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Find duplicated species names</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># These species have different authorities but the same name. </span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># For WorldFlora I will only use the species name, without the authority </span>
+</span></span><span style="display:flex;"><span><span style="color:#000">stopifnot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">duplicated</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_clean</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species</span><span style="color:#000;font-weight:bold">)))</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">x_clean</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_sanit</span><span style="color:#000">[duplicated</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_clean</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_sanit</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Extract unique species names</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">x_un</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_clean</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_sanit</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Download WFO (WorldFlora Online) back-bone data</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">WFO.download</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">save.dir</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;./dat&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">WFO.remember</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Load WFO back-bone data from downloaded file</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">WFO.remember</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">WFO.file</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;./dat/wfo/classification.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Run species names through WFO matching function</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">x_wfo</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">WFO.match</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_un</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">WFO.data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">WFO.data</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Fuzzy</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Keep only unique species names</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">x_wfo_clean</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x_wfo</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">species_orig</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">spec.name.ORIG</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">species_wfo</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">scientificName</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">distinct</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">species_wfo</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Import TRY categorical database</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># You can get this file from try-db.org in their categorical datasets page.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># You could supplement this with the data you request from the current database.</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">try_db</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">read_excel</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;./dat/Try2025426112154TRY_Categorical_Traits_Lookup_Table_2012_03_17_TestRelease/TRY_Categorical_Traits_Lookup_Table_2012_03_17_TestRelease.xlsx&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Run TRY species names through WFO matching function</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Warning, this can take a while</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">try_wfo</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">WFO.match</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">try_db</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">AccSpeciesName</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">WFO.data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">WFO.data</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Fuzzy</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Keep only unique species names</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">try_wfo_clean</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">try_wfo</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">species_orig</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">spec.name.ORIG</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">species_wfo</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">scientificName</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">distinct</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Add WFO matched species names to TRY data</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">try_db_wfo</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">left_join</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">try_db</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">try_wfo_clean</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">by</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;AccSpeciesName&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;species_orig&#34;</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">rename</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">species_orig</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">AccSpeciesName</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Filter TRY data to species in Tchamba&#39;s species list</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">try_db_wfo_fil</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">try_db_wfo</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">filter</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">species_wfo</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000">x_wfo_clean</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_wfo</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">species_orig</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">PlantGrowthForm</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">distinct</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Join growth form and taxonomic names back to original data table</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">left_join</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x_clean</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">try_db_wfo_fil</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">by</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;species_sanit&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;species_orig&#34;</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">select</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">species_ws</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">species_sanit</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Write table to CSV</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">write.csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;./out.csv&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">row.names</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
