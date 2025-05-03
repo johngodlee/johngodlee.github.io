@@ -3,10 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2025-04-26T00:00:00+00:00</lastmod>
+    <lastmod>2025-05-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2025-04-26T00:00:00+00:00</lastmod>
+    <lastmod>2025-05-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/personal/</loc>
+    <lastmod>2025-05-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/personal/2025-05-03-dc_bike_routes/</loc>
+    <lastmod>2025-05-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/work/2025-04-26-life_form/</loc>
     <lastmod>2025-04-26T00:00:00+00:00</lastmod>
@@ -24,9 +30,6 @@
     <lastmod>2024-12-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/personal/2024-10-27-cycle_edinburgh/</loc>
-    <lastmod>2024-10-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://johngodlee.xyz/posts/personal/</loc>
     <lastmod>2024-10-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/personal/2024-06-26-ytdlp/</loc>
