@@ -38,19 +38,16 @@
 <p>I need your help with diversity analysis in R for my masters student. Our goal is to detect relations between environmental variables and diversity.</p>
 <p>All variables are numeric, we would like to know what kind of analysis you suggest?</p>
 <p>Ordinations? Regressions? PCA? NMDS?</p>
-<p>Can you guide Us?</p>
-</blockquote>
+<p>Can you guide Us?</p></blockquote>
 <p>They also sent a document with their overall research goal:</p>
 <blockquote>
-<p>Evaluate and relate by statistical analysis the effect of soil, climate and topography on the spatial distribution of diversity (Richness index Shannon index and Simpson index ) of vegetation in <redacted> province.</p>
-</blockquote>
+<p>Evaluate and relate by statistical analysis the effect of soil, climate and topography on the spatial distribution of diversity (Richness index Shannon index and Simpson index ) of vegetation in <redacted> province.</p></blockquote>
 <p>y email response was:</p>
 <blockquote>
 <p>My preference for an ordination technique to analyse variation in species composition is NMDS. This is for two main reasons. The first is that NMDS deals well with instances where there are no shared species between two sites, which I imagine may happen a lot in your very large dataset, across a wide geographical area. Because Principle Co-ordinate Analysis (PCoA) is an eigenvalue analysis and must find a unique solution, when two or more sites share no common data, this unique solution cannot be found. The second reason is that in contrast to Principle Component Analysis (PCA), NMDS can properly represent variation in species abundances because it is not limited to using a euclidean distance method. I would recommend using the Bray-Curtis distance method.</p>
 <p>I don&rsquo;t think it is wise to use all the environmental variables in the NMDS, especially because as you have shown, some of the variables are highly correlated. I think you should choose variables which you think have a valid ecological reason for influencing the species composition.</p>
 <p>In addition to investigating how species composition (species identity and relative abundance) varies with environmental variables, you may wish to investigate how species diversity (species richness and abundance evenness) varies with environmental variables. To do this, I would use a simple general linear model with multiple environmental variables as the predictor variables and the Shannon index as the response variable.</p>
-<p>I don&rsquo;t have your dataset so I have provided in an attached R script the way I would perform this sort of analysis in R, using an example dataset provided in the {vegan} R package which I hope is similar to your data.</p>
-</blockquote>
+<p>I don&rsquo;t have your dataset so I have provided in an attached R script the way I would perform this sort of analysis in R, using an example dataset provided in the {vegan} R package which I hope is similar to your data.</p></blockquote>
 <p>The R script I sent looked like this:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Environmental determinants of diversity </span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># John Godlee (johngodlee@gmail.com)</span>

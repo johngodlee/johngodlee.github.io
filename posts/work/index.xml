@@ -137,8 +137,7 @@
       <description>&lt;p&gt;&lt;a href=&#34;https://doi.org/10.1038/s41559-024-02564-9&#34; target=&#34;_blank&#34;&gt;This paper was recently published&lt;/a&gt;
 :&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Mo, L., Crowther, T.W., Maynard, D.S. et al. The global distribution and drivers of wood density and their impact on forest carbon stocks. Nat Ecol Evol 8, 2195–2212 (2024).&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;Mo, L., Crowther, T.W., Maynard, D.S. et al. The global distribution and drivers of wood density and their impact on forest carbon stocks. Nat Ecol Evol 8, 2195–2212 (2024).&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;In the paper, the authors use plot data from 1.1 million forest plots, and wood density data from 10,703 tree species, to explore global patterns in wood density. They find that water availability, measured in their case by mean annual temperature and soil moisture, is correlated with wood density, globally. They suggest that the mechanism for this is that trees in &amp;ldquo;warm and dry regions are likely to develop denser wood to maintain xylem resistance against implosion and rupture&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;Notably, this study included hardly any plot data from the seasonally dry tropics, including tropical savannas and dry forests. There is a particular lack of data from southern Africa:&lt;/p&gt;
 &lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/mo_wood_density/mo_fig1.png&#34;&gt;&lt;img
@@ -754,8 +753,7 @@
       <guid>http://johngodlee.xyz/posts/work/2023-05-24-productivity_email/</guid>
       <description>&lt;p&gt;I had a student ask me something along the lines of:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;How do I calculate woody productivity in a woodland plot? I have seen others calculate the difference in standing biomass between censuses as net primary productivity. Is this right?&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;How do I calculate woody productivity in a woodland plot? I have seen others calculate the difference in standing biomass between censuses as net primary productivity. Is this right?&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;In our lab group we use a lot of repeat inventory tree growth data, from plots in forests, savannas, and woodlands, to understand rates of biomass dynamics and land-atmosphere carbon exchange. I wrote quite a long email in response, so I thought I would share it here:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;There are lots of subtly different approaches to quantifying woody &amp;ldquo;productivity&amp;rdquo;. The literature is not always totally precise in their definitions of productivity, which can make it all a bit confusing.&lt;/p&gt;
@@ -767,8 +765,7 @@
 ).&lt;/p&gt;
 &lt;p&gt;The next thing to think about then, is whether you actually want to measure NPP (the rate of woody growth in living stems), or NBP (the rate of ecosystem-level woody biomass change, including mortality losses). I will leave you to consider this.&lt;/p&gt;
 &lt;p&gt;I have written R code to estimate both &lt;a href=&#34;https://github.com/johngodlee/ProdVital&#34; target=&#34;_blank&#34;&gt;NPP and calculate NBP&lt;/a&gt;
-, using the methods in Kohyama et al. (2019). Let me know if you would like me to send it over.&lt;/p&gt;
-&lt;/blockquote&gt;
+, using the methods in Kohyama et al. (2019). Let me know if you would like me to send it over.&lt;/p&gt;&lt;/blockquote&gt;
 </description>
     </item>
     
@@ -909,14 +906,12 @@
       <description>&lt;p&gt;I applied for a junior lectureship position in Ecological Science a few weeks ago. Unfortunately I didn&amp;rsquo;t get the job, but the experience forced me to think about who I am as a researcher, what my strengths are, and also what my goals should be if I want to be successful on the next application.&lt;/p&gt;
 &lt;p&gt;As part of the interview process I had to prepare a 20 minute presentation on:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Your research strengths and future ambitions, how your research profile presents opportunities for developing impact and knowledge exchange, and in what ways you foresee yourself contributing to existing research communities in the Institute, School and wider University.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;Your research strengths and future ambitions, how your research profile presents opportunities for developing impact and knowledge exchange, and in what ways you foresee yourself contributing to existing research communities in the Institute, School and wider University.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;I also had to prepare a 10 minute presentation followed by a 30 minute discussion on teaching. The brief was (paraphrased):&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;How you would approach designing, delivering and assessing a field-based course for first year undergraduates on core field skills for ecologists.&lt;/p&gt;
 &lt;p&gt;The course would be taught over 10 days in late May-early June with day visits to surrounding habitats. Plan for 65 students on the course.&lt;/p&gt;
-&lt;p&gt;Include an overview with a syllabus, learning outcomes, methods of delivery, formative and summative assessment, and your approach to feedback.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;Include an overview with a syllabus, learning outcomes, methods of delivery, formative and summative assessment, and your approach to feedback.&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;Finally, I did a normal question-based interview.&lt;/p&gt;
 &lt;p&gt;I have decided to make the two presentations available online:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://johngodlee.xyz/files/job_interview/research_presentation.pdf&#34;&gt;Research presentation&lt;/a&gt;

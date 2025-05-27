@@ -166,15 +166,15 @@ wkhtmltopdf output.html output.pdf
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#204a87;font-weight:bold">&gt;
 </span></span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold"></span><span style="color:#000;font-style:italic">&gt; -- Pliny
 </span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span>
-</span></span><span style="display:flex;"><span>```r
-</span></span><span style="display:flex;"><span>pdf(&#34;Regression_plot.pdf&#34;)
-</span></span><span style="display:flex;"><span>  for (var in unique(Root$Plot_Date_Sample)) {
-</span></span><span style="display:flex;"><span>    print( ggplot(Root[Root$Plot_Date_Sample==var,], 
-</span></span><span style="display:flex;"><span>        aes(x = Time, y = Cum_Root_Mass_g)) +
-</span></span><span style="display:flex;"><span>             geom_point())
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>dev.off()
-</span></span><span style="display:flex;"><span>\`\`\`
+</span></span><span style="display:flex;"><span>``<span style="color:#4e9a06">`r
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">pdf(&#34;Regression_plot.pdf&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  for (var in unique(Root$Plot_Date_Sample)) {
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    print( ggplot(Root[Root$Plot_Date_Sample==var,], 
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">        aes(x = Time, y = Cum_Root_Mass_g)) +
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">             geom_point())
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  }
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">dev.off()
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">\`</span>\`\`
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>![](../test.png)
 </span></span><span style="display:flex;"><span>
