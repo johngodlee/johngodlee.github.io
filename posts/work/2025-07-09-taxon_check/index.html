@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Prototype taxonomic name checking function for SEOSAW</h1>
+
+<h2>2025-07-09</h2>
+</div>
+
+<main>
+<p>We are hoping to move the <a href="https://seosaw.github.io/" target="_blank">SEOSAW</a>
+ database to use <a href="https://www.worldfloraonline.org/" target="_blank">World Flora Online</a>
+ (WFO) as its taxonomic backbone, rather than the <a href="https://africanplantdatabase.ch/" target="_blank">African Plant Database</a>
+ (APD) which we have been using since 2019.</p>
+<p>The <a href="https://cran.r-project.org/web//packages//WorldFlora/index.html" target="_blank">WorldFlora R package</a>
+, developed by Roeland Kindt, provides code for querying a downloaded copy of the WFO database and providing taxonomic information. The key features we want for SEOSAW are: check the validity of taxonomic names in tree inventory data, fuzzy find accepted names to catch spelling errors, and provide accepted names for synonyms.</p>
+<p>I&rsquo;ve written a wrapper function around the code in the WorldFlora R package. Some features:</p>
+<ul>
+<li>Optionally submit a lookup table to replace unmatched names.</li>
+<li>Consolidate consecutive whitespaces in the WFO database to a single space, which can lead to poor matching.</li>
+<li>Use <code>WorldFlora::WFO.prepare()</code> with a default set of replacements to fix common orthographic errors.</li>
+<li>Use <code>WorldFlora::WFO.one()</code> to find the best match where multiple names are fuzzy matched by <code>WorldFlora::WFO.match()</code>.</li>
+<li>Extract subspecies and variety epithets from matched names.</li>
+<li>Optionally return unmatched or multiply-matched names.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; Replace taxonomic names using lookup tables</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param x vector of species names</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param lookup a single dataframe or a list of dataframes containing lookup</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     tables. The first column should contain names in `x` to be changed. The</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     second column should contain the new names.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @return Vector of corrected species names</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; </span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @details Lookup tables are run in order through the list of lookup tables, meaning </span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; names may change incrementally multiple times.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; </span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @export</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; </span>
+</span></span><span style="display:flex;"><span><span style="color:#000">synonymyFix</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lookup</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Make list if not already</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">inherits</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lookup</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;list&#34;</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lookup</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">list</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lookup</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Combine lookup tables into a single dataframe</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">lookup_combi</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">as.data.frame</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fastRbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lookup</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Check no NAs</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">any</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lookup_combi</span><span style="color:#000;font-weight:bold">)))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">stop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Lookup table cannot contain NA entries&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Do substitution</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lookup_combi[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000">]</span><span style="color:#000">[match</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lookup_combi[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">out</span><span style="color:#000">[is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">x</span><span style="color:#000">[is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; Return default pattern substitution for `taxonCheck()`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @return vector of regex patterns for use with `taxonCheck()` in argument</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     `sub.pattern`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; </span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @export</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; </span>
+</span></span><span style="display:flex;"><span><span style="color:#000">WFO.prepare_default</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; indet$&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; sp[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; spp[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; ssp[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; pl[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; indet[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; ind[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; gen[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; g[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; fam[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nov[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; prox[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; cf[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; aff[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; s[.]s[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; s[.]l[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; p[.]p[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; p[.] p[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;[?]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; inc[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; stet[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;nom[.] cons[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;nom[.] dub[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nom[.] err[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nom[.] illeg[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nom[.] inval[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nom[.] nov[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nom[.] nud[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nom[.] obl[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nom[.] prot[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nom[.] rej[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; nom[.] supp[.]&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34; sensu auct[.]&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; Correct and match taxonomic names to the World Flora Taxonomic Backbone</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param x vector of taxonomic names</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param WFO.file optional file name of static copy of World Flora Online</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     Taxonomic Backbone. If not NULL, data will be reloaded from this file</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param WFO.data optional dataset with static copy of World Flora Online</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     Taxonomic backbone. Ignored if `WFO.file` is not NULL</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param lookup optional a single dataframe or a list of dataframes containing</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     lookup tables. The first column should contain names in `x` to be</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     changed. The second column should contain the new names.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param ret_wfo logical, if TRUE the function stops after</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     `WorldFlora::WFO.match()` and returns the raw output from this function.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param ret_unk logical, if TRUE taxa not matched in the World</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     Flora Online are returned to the user as a vector containing</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     the unmatched values. If FALSE these taxa are returned as NA.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param ret_multi logical, if TRUE taxa matching multiple records in the</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     World Flora Online are returned to the user as a list with one element</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     for each original name containing the unmatched values. If FALSE the</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     &#34;best&#34; name is selected by `WorldFlora::WFO.one()`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param sub.pattern vector with regular expressions defining sections of `x`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     to be removed during correction of common orthographic errors by</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     `WorldFlora::WFO.prepare()`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param fuzzy If larger than 0, then attempt fuzzy matching. See `WorldFlora::WFO.match()`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @param ... Additional arguments passed to `WorldFlora::WFO.match()`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @return Dataframe with cleaned taxonomic names and metadata</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @details</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; Taxonomic names are matched against the World Flora Online database using</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; `WorldFlora::WFO.match()`.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; </span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; The search algorithm is as follows:</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     \enumerate{</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;       \item{Optionally replace names with `lookup`}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;       \item{Correct common orthographic errors with `WorldFlora::WFO.prepare()`}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;       \item{Query `WorldFlora::WFO.match()` for accepted</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;             name and taxonomic rank information}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;       \item{Optionally return multiple matches or unsuccessful matches}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;       \item{Consolidate multiple matches with `WorldFlora::WFO.one()`}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;       \item{Return formatted dataframe}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;     }</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; </span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; Names that cannot be matched should be replaced with &#34;Indet indet&#34; in</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; `lookup`. These are replaced with NA_character_ before `WorldFlora::WFO.match()`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @importFrom data.table fread data.table</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @importFrom WorldFlora WFO.prepare WFO.match WFO.one</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39; @export</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">taxonCheck</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">WFO.file</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NULL</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">WFO.data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NULL</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#000">lookup</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NULL</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ret_wfo</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ret_unk</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">ret_multi</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#000">sub.pattern</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">WFO.prepare_default</span><span style="color:#000;font-weight:bold">(),</span> <span style="color:#000">fuzzy</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0.1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">...</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Check WFO data is available</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.null</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">WFO.data</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">is.null</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">WFO.file</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">stop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Either WFO.data or WFO.file must be provided&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.null</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">WFO.data</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">message</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Reading WFO data&#34;</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">file.exists</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">WFO.file</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">stop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;If WFO.data is NULL, a valid WFO.file must be provided. See WorldFlora::WFO.download()&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">WFO.data</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.table</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">fread</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">WFO.file</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">encoding</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;UTF-8&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">WFO.data</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.table</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">data.table</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">WFO.data</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">WFO.data</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">scientificName</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">gsub</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\\s+&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34; &#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">WFO.data</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">scientificName</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Get unique taxonomic names</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xu</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Substitute names with lookup table</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.null</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lookup</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">message</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Substituting names with `lookup`&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">xf</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">synonymyFix</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xu</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lookup</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lookup</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">xf</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">xu</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Prepare taxonomic names for WFO query</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xs</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">WorldFlora</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">WFO.prepare</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xf</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">sub.pattern</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">sub.pattern</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">spec.name</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Replace Indet genera with &#34;&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xi</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">xs</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">xi[xi</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;Indet&#34;</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Run WFO matching </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">message</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Querying World Flora Online&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">WorldFlora</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">WFO.match</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xi</span><span style="color:#000;font-weight:bold">),</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">WFO.data</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">WFO.data</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">Fuzzy</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">fuzzy</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">...</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Optionally return raw WFO output  </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">ret_wfo</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Add original names</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">wfo_all</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">bind_rows</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">seq_along</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xu</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">orig</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">xu[i]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;taxon_name_orig&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">orig</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo[wfo</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">spec.name.ORIG</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">xi[i]</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Check all original names are matched back </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">stopifnot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo_all</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_orig</span><span style="color:#000;font-weight:bold">)))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo_all</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Consolidate to single best name per taxon</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_one</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">WorldFlora</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">WFO.one</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">verbose</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">FALSE</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Add original names</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_one_all</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">dplyr</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">bind_rows</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">seq_along</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xu</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">orig</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">xu[i]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">cbind</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;taxon_name_orig&#34;</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">orig</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo_one[wfo_one</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">spec.name.ORIG</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">xi[i]</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Check all original names are matched back </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">stopifnot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo_one_all</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_orig</span><span style="color:#000;font-weight:bold">)))</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">wfo_one_all[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_name_orig&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;spec.name.ORIG&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_name_sanit</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;Old.name&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_name_syn</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;Old.ID&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_wfo_syn</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;scientificName&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_name_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxonID&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_wfo_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;scientificNameAuthorship&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_auth_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxonRank&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_rank_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;parentNameUsageID&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_wfo_parent</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;specificEpithet&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_epithet_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;genus&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_genus_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;family&#34;</span>  <span style="color:#8f5902;font-style:italic"># taxon_family_acc</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo_sel</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># All submitted names should be included in WFO output</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">stopifnot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">sort</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">spec.name.ORIG</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">sort</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">unique</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">xi</span><span style="color:#000;font-weight:bold">))))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Consolidate genus and species</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">trimws</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">paste</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">genus</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">specificEpithet</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ifelse</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxonRank</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;species&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;subspecies&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;variety&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;subvariety&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#4e9a06">&#34;form&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;subform&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;prole&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;unranked&#34;</span><span style="color:#000;font-weight:bold">),</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">NA_character_</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Extract subsp. and var. epithets from accepted names</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_subspecies_acc</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">gsub</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;.*subsp\\.\\s&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">scientificName</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_subspecies_acc[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\\ssubsp\\.\\s&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">scientificName</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA_character_</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_variety_acc</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">gsub</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;.*var\\.\\s&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">scientificName</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_variety_acc[</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">grepl</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\\svar\\.\\s&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">scientificName</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA_character_</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Fill wfo ID of synonyms</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">Old.ID</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ifelse</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">Old.ID</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxonID</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">Old.ID</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">Old.name</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">ifelse</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">Old.name</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">scientificName</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">Old.name</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Add date of processing</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">wfo_sel</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_wfo_date</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">Sys.Date</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Create output dataframe</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">wfo_sel[</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_name_orig&#34;</span><span style="color:#000;font-weight:bold">,</span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;spec.name.ORIG&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_name_sanit</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;Old.name&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_name_syn</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;Old.ID&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_wfo_syn</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;scientificName&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_name_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxonID&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_wfo_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;scientificNameAuthorship&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_auth_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxonRank&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_rank_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;parentNameUsageID&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_wfo_parent</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_variety_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_subspecies_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;specificEpithet&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_epithet_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;species&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_species_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;genus&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_genus_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;family&#34;</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic"># taxon_family_acc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_wfo_date&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_name_orig&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_name_sanit&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_name_syn&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_wfo_syn&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_name_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_wfo_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_auth_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_rank_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_wfo_parent&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_variety_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_subspecies_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_epithet_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_species_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_genus_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_family_acc&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;taxon_wfo_date&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Optionally return unmatched names</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">ret_unk</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">any</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_sanit</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_syn</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">na.rm</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">unmatched</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_orig</span><span style="color:#000">[
+</span></span></span><span style="display:flex;"><span><span style="color:#000">      </span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_sanit</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_syn</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_syn</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_sanit</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">warning</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Some taxonomic names not matched by WFO.match, returning original names&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">unmatched</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Optionally return names with multiple matches</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">ret_multi</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">any</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">duplicated</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_orig</span><span style="color:#000;font-weight:bold">)))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">multis</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">wfo</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_orig</span><span style="color:#000">[duplicated</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">wfo</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_orig</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">multis_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">wfo[wfo</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_orig</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000">multis</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">multis_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">split</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">multis_df</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">multis_df</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">taxon_name_orig</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">warning</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Some taxonomic names matched to multiple names by WFO.match, returning options&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">multis_list</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Change &#34;&#34; to NA in all columns</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">out[]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.character</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">x[x</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000">]</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA_character_</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">x</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">})</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># All original names should be filled</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">stopifnot</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species[out</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">species_sanit</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#4e9a06">&#34;Indet indet&#34;</span><span style="color:#000">]</span><span style="color:#000;font-weight:bold">)))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Return</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div>
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
