@@ -6,7 +6,32 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2025-09-06T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2025-10-19T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bike tag</title>
+      <link>http://johngodlee.xyz/posts/personal/2025-10-19_bike_tag/</link>
+      <pubDate>2025-10-19T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/personal/2025-10-19_bike_tag/</guid>
+      <description>&lt;p&gt;I have discovered a game called Bike Tag. Players photograph their bike at a mystery location and post it online. Others aim to find the spot, take a photo of their own bike as proof, then post a photo of their bike at a new mystery location to keep the game going.&lt;/p&gt;
+&lt;p&gt;I have seen this game played on regional biking subreddits, e.g. &lt;a href=&#34;https://www.reddit.com/r/bikedc&#34; target=&#34;_blank&#34;&gt;/r/BikeDC&lt;/a&gt;
+. I also found &lt;a href=&#34;https://www.biketag.org&#34; target=&#34;_blank&#34;&gt;biketag.org&lt;/a&gt;
+, which aims to collect different Bike Tag games around the world and provide a common interface, but the project is still being slowly developed and has some issues. From the map on biketag.org, most of the existing games are in the USA, but this might be biased by the nature of the platform. I searched around on Google and &lt;a href=&#34;https://geminiprotocol.net/&#34; target=&#34;_blank&#34;&gt;Gemini&lt;/a&gt;
+, but couldn&amp;rsquo;t find any other general resources.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;d be interested to play this in Edinburgh when I move back, so I set about trying to find any existing games. Edinburgh doesn&amp;rsquo;t have a dedicated cycling subreddit, and there was nothing on the main &lt;a href=&#34;https://www.reddit.com/r/edinburgh&#34; target=&#34;_blank&#34;&gt;Edinburgh subreddit&lt;/a&gt;
+; there&amp;rsquo;s not much other cycling content on there. There is a &lt;a href=&#34;https://scotland.biketag.org/play&#34; target=&#34;_blank&#34;&gt;Scotland Bike Tag game on biketag.org&lt;/a&gt;
+, but it doesn&amp;rsquo;t look like anybody is playing it. I looked around on the &lt;a href=&#34;http://citycyclingedinburgh.info/bbpress/&#34; target=&#34;_blank&#34;&gt;City Cycling Edinburgh Forum&lt;/a&gt;
+ but couldn&amp;rsquo;t find any evidence of an existing Bike Tag game, which surprised me, I would have thought that the tight knit community over there would be into Bike Tag. I did find a thread on the &lt;a href=&#34;https://www.lfgss.com/conversations/353455/?offset=500&#34; target=&#34;_blank&#34;&gt;London Fixed Gear and Single Speed (LFGSS) forum&lt;/a&gt;
+ however, where the most recent post was only a week ago, and it&amp;rsquo;s been running for over five years! So maybe I&amp;rsquo;ll play on there.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_tag/bike_tag_dc.jpg&#34;&gt;&lt;img
+          alt=&#34;My contribution to bike tag in Washington DC&#34;
+          title=&#34;My contribution to bike tag in Washington DC&#34;src=&#34;http://johngodlee.xyz/img/bike_tag/bike_tag_dc.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
     <item>
       <title>Filling gaps in plot coverage across a landscape based on forest structure</title>
       <link>http://johngodlee.xyz/posts/work/2025-09-06-plot_representivity/</link>
@@ -2542,27 +2567,6 @@ done
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
-</description>
-    </item>
-    
-    <item>
-      <title>tmux grouped sessions</title>
-      <link>http://johngodlee.xyz/posts/personal/2023-09-23-tmux_sessions/</link>
-      <pubDate>2023-09-23T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/personal/2023-09-23-tmux_sessions/</guid>
-      <description>&lt;p&gt;I have two monitors at work. Normally I have a terminal running tmux open full screen on the right-hand monitor, in portrait, and use the left monitor in landscape for everything else. Occasionally however, I want to also have a terminal open on the left monitor, and to move windows easily between terminals. To make it easier to share windows across terminals, I have adjusted my tmux setup to take advantage of the grouped-sessions feature.&lt;/p&gt;
-&lt;p&gt;At the bottom of my &lt;code&gt;.tmux.conf&lt;/code&gt; I have this chunk, which starts a new session called &amp;ldquo;main&amp;rdquo;, as a daemon.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;new-session -s main -d
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then, at the bottom of my &lt;code&gt;.bashrc&lt;/code&gt; I have this chunk. First it checks if tmux is already running (&lt;code&gt;if [ -z &amp;quot;$TMUX&amp;quot; ]&lt;/code&gt;). Then if tmux isn&amp;rsquo;t running, it creates a new session within the same group as session &amp;ldquo;main&amp;rdquo; (&lt;code&gt;new-session -t main&lt;/code&gt;). It then sets the option &lt;code&gt;destroy-unnattached&lt;/code&gt;, which removes clients when you detach from them, ensuring that the automatically created sessions don&amp;rsquo;t pile up when they are detached from.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; -z &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$TMUX&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    /usr/local/bin/tmux new-session -t main &lt;span style=&#34;color:#4e9a06&#34;&gt;\;&lt;/span&gt; set-option destroy-unattached
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The result is that when I open a terminal, tmux checks if the &amp;ldquo;main&amp;rdquo; session exists, creates it if it doesn&amp;rsquo;t and attaches a client to that session.&lt;/p&gt;
-&lt;p&gt;All sessions in the same group share the same set of windows, but you can move freely between windows in each session.&lt;/p&gt;
-&lt;video controls&gt;
-    &lt;source src=&#34;http://johngodlee.xyz/vid/tmux_sessions/tmux_sessions.mp4&#34; type=&#34;video/webm&#34;&gt;
-&lt;/video&gt;
 </description>
     </item>
     

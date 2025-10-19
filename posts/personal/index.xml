@@ -6,7 +6,32 @@
     <description>Recent content in Personal on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2025-07-27T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/personal/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2025-10-19T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/personal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bike tag</title>
+      <link>http://johngodlee.xyz/posts/personal/2025-10-19_bike_tag/</link>
+      <pubDate>2025-10-19T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/personal/2025-10-19_bike_tag/</guid>
+      <description>&lt;p&gt;I have discovered a game called Bike Tag. Players photograph their bike at a mystery location and post it online. Others aim to find the spot, take a photo of their own bike as proof, then post a photo of their bike at a new mystery location to keep the game going.&lt;/p&gt;
+&lt;p&gt;I have seen this game played on regional biking subreddits, e.g. &lt;a href=&#34;https://www.reddit.com/r/bikedc&#34; target=&#34;_blank&#34;&gt;/r/BikeDC&lt;/a&gt;
+. I also found &lt;a href=&#34;https://www.biketag.org&#34; target=&#34;_blank&#34;&gt;biketag.org&lt;/a&gt;
+, which aims to collect different Bike Tag games around the world and provide a common interface, but the project is still being slowly developed and has some issues. From the map on biketag.org, most of the existing games are in the USA, but this might be biased by the nature of the platform. I searched around on Google and &lt;a href=&#34;https://geminiprotocol.net/&#34; target=&#34;_blank&#34;&gt;Gemini&lt;/a&gt;
+, but couldn&amp;rsquo;t find any other general resources.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;d be interested to play this in Edinburgh when I move back, so I set about trying to find any existing games. Edinburgh doesn&amp;rsquo;t have a dedicated cycling subreddit, and there was nothing on the main &lt;a href=&#34;https://www.reddit.com/r/edinburgh&#34; target=&#34;_blank&#34;&gt;Edinburgh subreddit&lt;/a&gt;
+; there&amp;rsquo;s not much other cycling content on there. There is a &lt;a href=&#34;https://scotland.biketag.org/play&#34; target=&#34;_blank&#34;&gt;Scotland Bike Tag game on biketag.org&lt;/a&gt;
+, but it doesn&amp;rsquo;t look like anybody is playing it. I looked around on the &lt;a href=&#34;http://citycyclingedinburgh.info/bbpress/&#34; target=&#34;_blank&#34;&gt;City Cycling Edinburgh Forum&lt;/a&gt;
+ but couldn&amp;rsquo;t find any evidence of an existing Bike Tag game, which surprised me, I would have thought that the tight knit community over there would be into Bike Tag. I did find a thread on the &lt;a href=&#34;https://www.lfgss.com/conversations/353455/?offset=500&#34; target=&#34;_blank&#34;&gt;London Fixed Gear and Single Speed (LFGSS) forum&lt;/a&gt;
+ however, where the most recent post was only a week ago, and it&amp;rsquo;s been running for over five years! So maybe I&amp;rsquo;ll play on there.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/bike_tag/bike_tag_dc.jpg&#34;&gt;&lt;img
+          alt=&#34;My contribution to bike tag in Washington DC&#34;
+          title=&#34;My contribution to bike tag in Washington DC&#34;src=&#34;http://johngodlee.xyz/img/bike_tag/bike_tag_dc.png&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
     <item>
       <title>Toggle nvim-cmp keybinding</title>
       <link>http://johngodlee.xyz/posts/personal/2025-07-27_nvim_cmp_toggle/</link>
@@ -1967,43 +1992,6 @@ TextColor 247 247 247
 &lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/coppice_census/alive_map.png&#34;&gt;&lt;img
           alt=&#34;Map of tree mortality in the coppice block.&#34;
           title=&#34;Map of tree mortality in the coppice block.&#34;src=&#34;http://johngodlee.xyz/img/coppice_census/alive_map.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-</description>
-    </item>
-    
-    <item>
-      <title>Omajowa mushrooms</title>
-      <link>http://johngodlee.xyz/posts/personal/2022-02-18-omajowa/</link>
-      <pubDate>2022-02-18T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/personal/2022-02-18-omajowa/</guid>
-      <description>&lt;p&gt;While driving from Windhoek to Etosha National Park, in Namibia, there were lots of vendors at the side of the road holding up mushrooms for sale. Specifically, they were selling the Omajowa mushroom, pronounced omayova, &lt;em&gt;Termitomyces schimperi&lt;/em&gt;. In Afrikaans and German they are also referred to as Termitenpilz. They are in the family Agaricales.&lt;/p&gt;
-&lt;p&gt;Omajowa grows on termite mounds of the species &lt;em&gt;Macrotermes michaelseni&lt;/em&gt;. These mushrooms grow across southern Africa, but I think are particularly common in northern Namibia. The mushroom was first described in Ethiopia by Patouillard in 1891.&lt;/p&gt;
-&lt;p&gt;The mushrooms are very large. The ones I saw were up to 30 cm diameter when fully opened.&lt;/p&gt;
-&lt;p&gt;They need to be picked quickly once they have emerged, otherwise they get infested by insects and get sand blown into the gills.&lt;/p&gt;
-&lt;p&gt;[van der Westhuizen and Eicker (1991)](&lt;a href=&#34;https://doi.org/10.1016/S0254-6299%2816%2930986-3%29&#34; target=&#34;_blank&#34;&gt;https://doi.org/10.1016/S0254-6299(16%2930986-3)&lt;/a&gt;
- describe the mushroom as having a firm and fleshy pileus, expanding to convex-applanate, with crowded free gills creamy white to pinkish. The spore print is brownish-pink. The emerging mushroom is about the size of a fist. The fully emerged mushroom can be up to 50 cm tall.&lt;/p&gt;
-&lt;p&gt;The mushrooms emerge after heavy rains, mostly between January and March. The mushrooms are very common around Otjiwarongo and Okahandja.&lt;/p&gt;
-&lt;p&gt;The name Omajowa is used by both the Herero and Ovambo people.&lt;/p&gt;
-&lt;p&gt;People from Windhoek often pick up these mushrooms from vendors on the road between Windhoek and Okahandja. The mushrooms have a fleshy texture and a strong nutty taste. The mushrooms can be barbecued as steaks, like portobello mushrooms, or chopped up and fried with lots of butter, salt and pepper then eaten on toast.&lt;/p&gt;
-&lt;p&gt;The large mushroom in the picture below was being sold for 20 namibian dollars, or about £1.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/omajowa/open.jpg&#34;&gt;&lt;img
-          alt=&#34;Fully open mushroom&#34;
-          title=&#34;Fully open mushroom&#34;src=&#34;http://johngodlee.xyz/img/omajowa/open.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/omajowa/closed.jpg&#34;&gt;&lt;img
-          alt=&#34;Closed mushroom&#34;
-          title=&#34;Closed mushroom&#34;src=&#34;http://johngodlee.xyz/img/omajowa/closed.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/omajowa/omajowa.jpg&#34;&gt;&lt;img
-          alt=&#34;More omajowa mushrooms&#34;
-          title=&#34;More omajowa mushrooms&#34;src=&#34;http://johngodlee.xyz/img/omajowa/omajowa.png&#34; 
       /&gt;&lt;/a&gt;&lt;/figure&gt;
 
 
