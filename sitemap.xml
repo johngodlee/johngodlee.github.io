@@ -3,15 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2025-10-19T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2025-10-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://johngodlee.xyz/posts/personal/2025-10-19_bike_tag/</loc>
-    <lastmod>2025-10-19T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/personal/</loc>
+    <lastmod>2025-10-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/personal/2025-10-26-bed_side/</loc>
+    <lastmod>2025-10-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/personal/2025-10-19-bike_tag/</loc>
     <lastmod>2025-10-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/work/2025-09-06-plot_representivity/</loc>
@@ -20,7 +23,7 @@
     <loc>http://johngodlee.xyz/posts/work/</loc>
     <lastmod>2025-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://johngodlee.xyz/posts/personal/2025-07-27_nvim_cmp_toggle/</loc>
+    <loc>http://johngodlee.xyz/posts/personal/2025-07-27-nvim_cmp_toggle/</loc>
     <lastmod>2025-07-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/work/2025-07-09-taxon_check/</loc>
