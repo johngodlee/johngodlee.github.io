@@ -6,7 +6,190 @@
     <description>Recent content on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2025-10-26T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2025-11-03T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>R package to access the World Flora Online GraphQL API</title>
+      <link>http://johngodlee.xyz/posts/work/2025-11-03-wfo_api/</link>
+      <pubDate>2025-11-03T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/work/2025-11-03-wfo_api/</guid>
+      <description>&lt;p&gt;I &lt;a href=&#34;http://johngodlee.xyz/posts/work/2025-07-09-taxon_check.html&#34;&gt;have been working&lt;/a&gt;
+ on integrating the &lt;a href=&#34;https://cran.r-universe.dev/WorldFlora/doc/manual.html&#34; target=&#34;_blank&#34;&gt;WorldFlora R package&lt;/a&gt;
+ into &lt;a href=&#34;https://seosaw.github.io&#34; target=&#34;_blank&#34;&gt;SEOSAW&lt;/a&gt;
+ so we can use the &lt;a href=&#34;https://www.worldfloraonline.org/&#34; target=&#34;_blank&#34;&gt;World Flora Online&lt;/a&gt;
+ taxonomic backbone to match taxonomic names in our tree inventory data. In doing this work I have learned that: a) the WorldFlora R package has some drawbacks, namely that it requires a large download of a static version of the WFO database, which also then needs to be read into memory in R, and b) that the WFO has a &lt;a href=&#34;https://wfo-about.rbge.info/gql_index.php&#34; target=&#34;_blank&#34;&gt;GraphQL API&lt;/a&gt;
+ to access their database remotely without downloading the entire thing.&lt;/p&gt;
+&lt;p&gt;I have since developed a prototype R package which uses the API to return information from the WFO database, and contains functions for matching taxonomic names.&lt;/p&gt;
+&lt;p&gt;The package can be found here: &lt;a href=&#34;https://github.com/johngodlee/wfoAPI&#34; target=&#34;_blank&#34;&gt;https://github.com/johngodlee/wfoAPI&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;The top-level function is &lt;code&gt;matchNames()&lt;/code&gt;, which takes a vector of taxonomic names and queries the WFO database for each name. Notable features of the function are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Leverages the fuzzy matching algorithm which is implemented server-side by WFO, and you can tweak parameters to control the behaviour of the algorithm.&lt;/li&gt;
+&lt;li&gt;When multiple possible names are matched, the user can optionally enter an interactive selection mode to pick a specific name.&lt;/li&gt;
+&lt;li&gt;When a matched name has a synonym, the function returns the accepted name as well.&lt;/li&gt;
+&lt;li&gt;Previous API calls are cached locally, to reduce the number of API calls, and to prevent entering interactive mode multiple times for the same name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;callAPI()&lt;/code&gt; is the base-level function which constructs the API query and uses the &lt;code&gt;httr2&lt;/code&gt; package to send the query and unpack the returns.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;matchName()&lt;/code&gt; calls &lt;code&gt;callAPI()&lt;/code&gt; and is responsible for handling a single name query. &lt;code&gt;matchName()&lt;/code&gt; optionally uses cached data from previous API calls if it exists. If multiple candidate names are matched, the user can optionally enter an interactive selection mode, which is handled by &lt;code&gt;pickName()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;matchNames()&lt;/code&gt; calls &lt;code&gt;matchName()&lt;/code&gt; for each name in the vector of taxonomic names, performs various quality-of-life checks like exiting gracefully if the WFO API is not reachable, and formats the results as a pretty dataframe with one row for each name in the original vector.&lt;/p&gt;
+&lt;p&gt;These are the arguments available for &lt;code&gt;matchNames()&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt; - vector of taxonomic names&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fallbackToGenus&lt;/code&gt; - logical, if TRUE genus-level matches will be returned if no species-level match is available&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;checkRank&lt;/code&gt; - logical, if TRUE consider matches to be ambiguous if it is possible to estimate taxonomic rank from the search string and the rank does not match that in the name record&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;checkHomonyms&lt;/code&gt; - logical, if TRUE consider matches to be ambiguous if there are other names with the same words but different author strings&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzzyNameParts&lt;/code&gt; - integer value of 0 (default) or greater. The maximum Levenshtein distance used for fuzzy matching words in &lt;code&gt;x&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;interactive&lt;/code&gt; - logical, if TRUE (default) user will be prompted to pick names from a list where multiple ambiguous matches are found, otherwise names with multiple ambiguous matches will be skipped&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;useCache&lt;/code&gt; - logical, if TRUE use cached values in &lt;code&gt;options(&amp;quot;wfo.api_uri&amp;quot;)&lt;/code&gt; preferentially, to reduce the number of API calls&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;useAPI&lt;/code&gt; - logical, if TRUE (default) allow API calls&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;raw&lt;/code&gt; - logical, if TRUE raw a nested list is returned, otherwise a dataframe&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;fallbackToGenus&lt;/code&gt;, &lt;code&gt;checkRank&lt;/code&gt;, &lt;code&gt;checkHomonyms&lt;/code&gt; and &lt;code&gt;fuzzyNameParts&lt;/code&gt; are all variables passed directly to the WFO GraphQL API.&lt;/p&gt;
+&lt;p&gt;Here is a basic example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Burkea africana&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Julbernardia paniculata&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Fabaceae&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Indet indet&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Brachystegia&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Philenoptera sp.&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;matchNames&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The console output:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;1 of 6: Brachystegia
+2 of 6: Burkea africana
+3 of 6: Fabaceae
+4 of 6: Indet indet
+No candidates, skipping: Indet indet
+5 of 6: Julbernardia paniculata
+6 of 6: Philenoptera sp.
+
+
+--- Pick a name ---
+Matching string:        Philenoptera sp.
+1   wfo-4000029211      Philenoptera Hochst. ex A.Rich. accepted        Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Papilionoideae/Philenoptera
+
+[ins] Enter a number to pick a row from the list, a valid WFO ID, &amp;#39;N&amp;#39; for the next page, &amp;#39;P&amp;#39; for the previous page, &amp;#39;S&amp;#39; to skip this name:
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The dataframe returned:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;taxon_name_subm&lt;/th&gt;
+          &lt;th&gt;method&lt;/th&gt;
+          &lt;th&gt;fallbackToGenus&lt;/th&gt;
+          &lt;th&gt;checkRank&lt;/th&gt;
+          &lt;th&gt;checkHomonyms&lt;/th&gt;
+          &lt;th&gt;fuzzyNameParts&lt;/th&gt;
+          &lt;th&gt;taxon_wfo_syn&lt;/th&gt;
+          &lt;th&gt;taxon_name_syn&lt;/th&gt;
+          &lt;th&gt;taxon_auth_syn&lt;/th&gt;
+          &lt;th&gt;taxon_stat_syn&lt;/th&gt;
+          &lt;th&gt;taxon_role_syn&lt;/th&gt;
+          &lt;th&gt;taxon_rank_syn&lt;/th&gt;
+          &lt;th&gt;taxon_path_syn&lt;/th&gt;
+          &lt;th&gt;taxon_wfo_acc&lt;/th&gt;
+          &lt;th&gt;taxon_name_acc&lt;/th&gt;
+          &lt;th&gt;taxon_auth_acc&lt;/th&gt;
+          &lt;th&gt;taxon_stat_acc&lt;/th&gt;
+          &lt;th&gt;taxon_role_acc&lt;/th&gt;
+          &lt;th&gt;taxon_rank_acc&lt;/th&gt;
+          &lt;th&gt;taxon_path_acc&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Burkea africana&lt;/td&gt;
+          &lt;td&gt;AUTO&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;wfo-0000214110&lt;/td&gt;
+          &lt;td&gt;Burkea africana&lt;/td&gt;
+          &lt;td&gt;Hook.&lt;/td&gt;
+          &lt;td&gt;valid&lt;/td&gt;
+          &lt;td&gt;accepted&lt;/td&gt;
+          &lt;td&gt;species&lt;/td&gt;
+          &lt;td&gt;Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Caesalpinioideae/Burkea/africana&lt;/td&gt;
+          &lt;td&gt;wfo-0000214110&lt;/td&gt;
+          &lt;td&gt;Burkea africana&lt;/td&gt;
+          &lt;td&gt;Hook.&lt;/td&gt;
+          &lt;td&gt;valid&lt;/td&gt;
+          &lt;td&gt;accepted&lt;/td&gt;
+          &lt;td&gt;species&lt;/td&gt;
+          &lt;td&gt;Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Caesalpinioideae/Burkea/africana&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Julbernardia paniculata&lt;/td&gt;
+          &lt;td&gt;AUTO&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;wfo-0000169220&lt;/td&gt;
+          &lt;td&gt;Julbernardia paniculata&lt;/td&gt;
+          &lt;td&gt;(Benth.) Troupin&lt;/td&gt;
+          &lt;td&gt;valid&lt;/td&gt;
+          &lt;td&gt;accepted&lt;/td&gt;
+          &lt;td&gt;species&lt;/td&gt;
+          &lt;td&gt;Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Detarioideae/Julbernardia/paniculata&lt;/td&gt;
+          &lt;td&gt;wfo-0000169220&lt;/td&gt;
+          &lt;td&gt;Julbernardia paniculata&lt;/td&gt;
+          &lt;td&gt;(Benth.) Troupin&lt;/td&gt;
+          &lt;td&gt;valid&lt;/td&gt;
+          &lt;td&gt;accepted&lt;/td&gt;
+          &lt;td&gt;species&lt;/td&gt;
+          &lt;td&gt;Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Detarioideae/Julbernardia/paniculata&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Fabaceae&lt;/td&gt;
+          &lt;td&gt;AUTO&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;wfo-7000000323&lt;/td&gt;
+          &lt;td&gt;Fabaceae&lt;/td&gt;
+          &lt;td&gt;Lindl.&lt;/td&gt;
+          &lt;td&gt;conserved&lt;/td&gt;
+          &lt;td&gt;accepted&lt;/td&gt;
+          &lt;td&gt;family&lt;/td&gt;
+          &lt;td&gt;Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae&lt;/td&gt;
+          &lt;td&gt;wfo-7000000323&lt;/td&gt;
+          &lt;td&gt;Fabaceae&lt;/td&gt;
+          &lt;td&gt;Lindl.&lt;/td&gt;
+          &lt;td&gt;conserved&lt;/td&gt;
+          &lt;td&gt;accepted&lt;/td&gt;
+          &lt;td&gt;family&lt;/td&gt;
+          &lt;td&gt;Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Indet indet&lt;/td&gt;
+          &lt;td&gt;EMPTY&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;FALSE&lt;/td&gt;
+          &lt;td&gt;0&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;NA&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+    </item>
+    
     <item>
       <title>What determines which side of the bed I sleep on?</title>
       <link>http://johngodlee.xyz/posts/personal/2025-10-26-bed_side/</link>
@@ -2538,112 +2721,6 @@ bed touching wall Left Right
 
 &lt;p&gt;If you did want to stick with the method where you start at the SW corner but wanted to avoid the problem of running a tape 141.42 m along the hypotenuse of the entire plot, you could do hypotenuse measurements at intermediate points, e.g. 25 m (35.36 m) and 50 m (70.71 m). This eliminates the need for tapes longer than 100 m, but does require four or more measures of the hypotenuse, one for each pair of edges.&lt;/p&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Raspberry Pi home server</title>
-      <link>http://johngodlee.xyz/posts/personal/2023-12-24-rpi_server/</link>
-      <pubDate>2023-12-24T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/personal/2023-12-24-rpi_server/</guid>
-      <description>&lt;p&gt;When we lived in London we had an HP Compaq Elite 8300 desktop tower that we used as a home server. The server ran Ubuntu minimal server 18.04. I used the server to back up important documents, and used Samba to connect our laptops to access music, movies etc.&lt;/p&gt;
-&lt;p&gt;The server was very convenient for me, but it was a bit awkward for others to connect to if they weren&amp;rsquo;t familiar with network shares or SSH. Additionally, the server was quite power hungry. I set it up to wake on LAN, but this meant I was the only one in the house who could turn it on.&lt;/p&gt;
-&lt;p&gt;In our new flat I aimed to upgrade the home server setup to reduce power consumption, increase storage capacity, and improve accessibility for less techy people.&lt;/p&gt;
-&lt;h2 id=&#34;hardware&#34;&gt;Hardware&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.raspberrypi.com/products/raspberry-pi-4-model-b/&#34; target=&#34;_blank&#34;&gt;Raspberry Pi 4 Model B 8 GB&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.integralmemory.com/product/slimxpress-portable-ssd/&#34; target=&#34;_blank&#34;&gt;Integral SlimXpress 1TB USB External SSD&lt;/a&gt;
- - 1050 MB/s Read, 1000 MB/s Write&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.gl-inet.com/products/gl-a1300/&#34; target=&#34;_blank&#34;&gt;GL.iNet GL-A1300&lt;/a&gt;
- (Slate Plus) Wireless Travel Router&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The RPi is connected to the router via a short ethernet cable, and to the SSD via USB. The RPi boots from a 64 GB Micro SD.&lt;/p&gt;
-&lt;p&gt;I used zipties to mount the three bits of hardware onto a section from a plastic crate, the kind used to hold fruits and vegetables. I then hung the &amp;ldquo;rack&amp;rdquo; under a gateleg table using screw-in hooks.&lt;/p&gt;
-&lt;p&gt;To play music in the living room the RPi is connected to a Yamaha CRX-M170 micro Hi-Fi system via a 3.5 mm to phono cable. Unfortunately, the 3.5 mm jack in the RPi 4 is terrible. The sound comes through very tinny with lots of interference. To get decent audio quality I had to buy an &lt;a href=&#34;https://thepihut.com/products/iqaudio-dac-pro&#34; target=&#34;_blank&#34;&gt;IQaudIO DAC Pro hat&lt;/a&gt;
- for the RPi. The DAC Pro connects via the GPIO pins to the RPi.&lt;/p&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/rpi_server/server.jpg&#34;&gt;&lt;img
-          alt=&#34;Server setup mounted to plastic tray &amp;#39;rack&amp;#39;.&#34;
-          title=&#34;Server setup mounted to plastic tray &amp;#39;rack&amp;#39;.&#34;src=&#34;http://johngodlee.xyz/img/rpi_server/server.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-&lt;h2 id=&#34;software&#34;&gt;Software&lt;/h2&gt;
-&lt;p&gt;We don&amp;rsquo;t have internet in our new flat, instead we just use our mobile phones. The GL-A1300 router has a USB port that can connect an Android phone to use it for USB tethering. On the rare occasion that we need to connect the home LAN network to the internet we can tether a phone, but mostly we can remain offline.&lt;/p&gt;
-&lt;p&gt;The RPi runs &lt;a href=&#34;https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-32-bit&#34; target=&#34;_blank&#34;&gt;Raspberry Pi OS Lite&lt;/a&gt;
- version 2023-12-05. This version of the OS doesn&amp;rsquo;t include a desktop environment and works well as a server.&lt;/p&gt;
-&lt;p&gt;I installed &lt;a href=&#34;https://jellyfin.org/&#34; target=&#34;_blank&#34;&gt;Jellyfin&lt;/a&gt;
- to serve video and audio from the RPi to all our devices. Jellyfin has an app for Android that works quite well, and a web app that is accessible over the local network that works well on laptops. Jellyfin can cast directly to a TV using DLNA.&lt;/p&gt;
-&lt;p&gt;I installed &lt;a href=&#34;https://mopidy.com/&#34; target=&#34;_blank&#34;&gt;Mopidy&lt;/a&gt;
- to play audio on the Hi-Fi from the RPi. I installed the &lt;a href=&#34;https://mopidy.com/ext/mpd/&#34; target=&#34;_blank&#34;&gt;Mopidy MPD extension&lt;/a&gt;
-, which allows MPD clients like &lt;a href=&#34;https://f-droid.org/en/packages/org.gateshipone.malp/&#34; target=&#34;_blank&#34;&gt;M.A.L.P.&lt;/a&gt;
- to connect to the Mopidy instance. I installed the &lt;a href=&#34;https://mopidy.com/ext/musicbox-webclient/&#34; target=&#34;_blank&#34;&gt;Mopidy MusicBox extension&lt;/a&gt;
- to provide a web client music player. I ran into a problem where Raspberry Pi OS wouldn&amp;rsquo;t let me install any python packages via pip, including the Mopidy Jellyfin extension. All I had to do to fix the issue was to delete this file:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;sudo rm -rf /usr/lib/python3.11/EXTERNALLY-MANAGED
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It took me some time to figure out how to get Mopidy and Jellyfin to both access &lt;code&gt;.m3u8&lt;/code&gt; playlists. Playlists are stored in &lt;code&gt;/var/lib/jellyfin/data/playlists/&lt;/code&gt;. Playlists are created in Jellyfin and stored as &lt;code&gt;.xml&lt;/code&gt; files, which Mopidy can read with the &lt;a href=&#34;https://mopidy.com/ext/jellyfin/&#34; target=&#34;_blank&#34;&gt;Mopidy Jellyfin extension&lt;/a&gt;
-. Mopidy doesn&amp;rsquo;t have the ability to create playlists, and Jellyfin will happily add songs to an existing &lt;code&gt;.m3u8&lt;/code&gt; playlist; clearly this feature isn&amp;rsquo;t fully matured in either mopidy or Jellyfin. It seems others have had problems understanding the Jellyfin-mopidy playlist situation, judging by &lt;a href=&#34;https://github.com/jellyfin/mopidy-jellyfin/issues/104&#34; target=&#34;_blank&#34;&gt;various&lt;/a&gt;
- &lt;a href=&#34;https://github.com/jellyfin/mopidy-jellyfin/issues/133&#34; target=&#34;_blank&#34;&gt;Github&lt;/a&gt;
- &lt;a href=&#34;https://github.com/jellyfin/mopidy-jellyfin/issues/111&#34; target=&#34;_blank&#34;&gt;issues&lt;/a&gt;
-.&lt;/p&gt;
-&lt;p&gt;I installed &lt;a href=&#34;https://www.samba.org/&#34; target=&#34;_blank&#34;&gt;Samba&lt;/a&gt;
- to make it easier for others to add media from their devices, and I installed &lt;a href=&#34;https://www.qbittorrent.org/&#34; target=&#34;_blank&#34;&gt;qBittorrent&lt;/a&gt;
- (&lt;code&gt;-nox&lt;/code&gt; variant with no X-server) to download media directly onto the server when it&amp;rsquo;s connected to the internet.&lt;/p&gt;
-&lt;p&gt;To create backups I have an additional 1TB SSD which is synced using &lt;a href=&#34;https://github.com/WayneD/rsync&#34; target=&#34;_blank&#34;&gt;rsync&lt;/a&gt;
- once a week. I have a third SSD that is synced every month, which I keep at work.&lt;/p&gt;
-&lt;p&gt;I installed &lt;a href=&#34;https://calibre-ebook.com/&#34; target=&#34;_blank&#34;&gt;Calibre&lt;/a&gt;
- to manage ebooks on the server. I run Calibre as a server using systemd. It would be wonderful if Jellyfin had a Calibre plugin, something that could read the Calibre database and serve it within the Jellyfin app, but I haven&amp;rsquo;t found anything yet. For now, I have placed the Calibre database in the Jellyfin directory structure, in &lt;code&gt;/mnt/media/Books/Books/&lt;/code&gt;. Mostly this system works fine. I use Calibre to download book metadata. Annoyingly, Calibre uses &lt;code&gt;cover.jpg&lt;/code&gt; as the filename for book cover images, while Jellyfin uses &lt;code&gt;folder.jpg&lt;/code&gt;. I wrote a bash script to run periodically that copies missing cover image files and renames them:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell-script&#34; data-lang=&#34;shell-script&#34;&gt;#!/usr/bin/env bash
-
-# Define directory to search for PNG files
-search_dir=&amp;#34;/Users/johngodlee/Desktop/test&amp;#34;
-
-# Find PNG files recursively
-find &amp;#34;$search_dir&amp;#34; -type f -name &amp;#34;*.png&amp;#34; | while read -r png_file ; do
-    # Get directory and filename without extension
-    dir_path=&amp;#34;${png_file%/*}&amp;#34;
-    base_name=&amp;#34;${png_file##*/}&amp;#34;
-    base_name_without_ext=&amp;#34;${base_name%.png}&amp;#34;
-    
-    # Define path for converted JPG 
-    jpg_file=&amp;#34;$dir_path/$base_name_without_ext.jpg&amp;#34;
-    
-    # Convert PNG to JPG using ImageMagick
-    convert &amp;#34;$png_file&amp;#34; &amp;#34;$jpg_file&amp;#34; 
-
-    # Remove original PNG 
-    rm &amp;#34;$png_file&amp;#34;
-done
-
-# Find cover.jpg files recursively
-find &amp;#34;$search_dir&amp;#34; -type f -name &amp;#34;cover.jpg&amp;#34; | while read -r cover_file; do
-    # Get directory of cover.jpg 
-    dir_path=$(dirname &amp;#34;$cover_file&amp;#34;)
-    
-    # Check if folder.jpg exists in same directory
-    if [ ! -f &amp;#34;$dir_path/folder.jpg&amp;#34; ]; then
-        # Rename cover.jpg to folder.jpg
-        cp &amp;#34;$cover_file&amp;#34; &amp;#34;$dir_path/folder.jpg&amp;#34;
-        echo &amp;#34;Copied $cover_file to folder.jpg&amp;#34;
-    else
-        echo &amp;#34;folder.jpg already exists in $dir_path, skipping $cover_file&amp;#34;
-    fi
-done
-
-# Find folder.jpg files recursively
-find &amp;#34;$search_dir&amp;#34; -type f -name &amp;#34;folder.jpg&amp;#34; | while read -r folder_file; do
-    # Get directory of folder.jpg
-    dir_path=$(dirname &amp;#34;$folder_file&amp;#34;)
-    
-    # Check if cover.jpg exists in same directory
-    if [ ! -f &amp;#34;$dir_path/cover.jpg&amp;#34; ]; then
-        # Rename folder.jpg to cover.jpg
-        cp &amp;#34;$folder_file&amp;#34; &amp;#34;$dir_path/cover.jpg&amp;#34;
-        echo &amp;#34;Copied $folder_file to cover.jpg&amp;#34;
-    else
-        echo &amp;#34;cover.jpg already exists in $dir_path, skipping $folder_file&amp;#34;
-    fi
-done
-&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>

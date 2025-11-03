@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>R package to access the World Flora Online GraphQL API</h1>
+
+<h2>2025-11-03</h2>
+</div>
+
+<main>
+<p>I <a href="/posts/work/2025-07-09-taxon_check.html">have been working</a>
+ on integrating the <a href="https://cran.r-universe.dev/WorldFlora/doc/manual.html" target="_blank">WorldFlora R package</a>
+ into <a href="https://seosaw.github.io" target="_blank">SEOSAW</a>
+ so we can use the <a href="https://www.worldfloraonline.org/" target="_blank">World Flora Online</a>
+ taxonomic backbone to match taxonomic names in our tree inventory data. In doing this work I have learned that: a) the WorldFlora R package has some drawbacks, namely that it requires a large download of a static version of the WFO database, which also then needs to be read into memory in R, and b) that the WFO has a <a href="https://wfo-about.rbge.info/gql_index.php" target="_blank">GraphQL API</a>
+ to access their database remotely without downloading the entire thing.</p>
+<p>I have since developed a prototype R package which uses the API to return information from the WFO database, and contains functions for matching taxonomic names.</p>
+<p>The package can be found here: <a href="https://github.com/johngodlee/wfoAPI" target="_blank">https://github.com/johngodlee/wfoAPI</a>
+</p>
+<p>The top-level function is <code>matchNames()</code>, which takes a vector of taxonomic names and queries the WFO database for each name. Notable features of the function are:</p>
+<ul>
+<li>Leverages the fuzzy matching algorithm which is implemented server-side by WFO, and you can tweak parameters to control the behaviour of the algorithm.</li>
+<li>When multiple possible names are matched, the user can optionally enter an interactive selection mode to pick a specific name.</li>
+<li>When a matched name has a synonym, the function returns the accepted name as well.</li>
+<li>Previous API calls are cached locally, to reduce the number of API calls, and to prevent entering interactive mode multiple times for the same name.</li>
+</ul>
+<p><code>callAPI()</code> is the base-level function which constructs the API query and uses the <code>httr2</code> package to send the query and unpack the returns.</p>
+<p><code>matchName()</code> calls <code>callAPI()</code> and is responsible for handling a single name query. <code>matchName()</code> optionally uses cached data from previous API calls if it exists. If multiple candidate names are matched, the user can optionally enter an interactive selection mode, which is handled by <code>pickName()</code>.</p>
+<p><code>matchNames()</code> calls <code>matchName()</code> for each name in the vector of taxonomic names, performs various quality-of-life checks like exiting gracefully if the WFO API is not reachable, and formats the results as a pretty dataframe with one row for each name in the original vector.</p>
+<p>These are the arguments available for <code>matchNames()</code>:</p>
+<ul>
+<li><code>x</code> - vector of taxonomic names</li>
+<li><code>fallbackToGenus</code> - logical, if TRUE genus-level matches will be returned if no species-level match is available</li>
+<li><code>checkRank</code> - logical, if TRUE consider matches to be ambiguous if it is possible to estimate taxonomic rank from the search string and the rank does not match that in the name record</li>
+<li><code>checkHomonyms</code> - logical, if TRUE consider matches to be ambiguous if there are other names with the same words but different author strings</li>
+<li><code>fuzzyNameParts</code> - integer value of 0 (default) or greater. The maximum Levenshtein distance used for fuzzy matching words in <code>x</code></li>
+<li><code>interactive</code> - logical, if TRUE (default) user will be prompted to pick names from a list where multiple ambiguous matches are found, otherwise names with multiple ambiguous matches will be skipped</li>
+<li><code>useCache</code> - logical, if TRUE use cached values in <code>options(&quot;wfo.api_uri&quot;)</code> preferentially, to reduce the number of API calls</li>
+<li><code>useAPI</code> - logical, if TRUE (default) allow API calls</li>
+<li><code>raw</code> - logical, if TRUE raw a nested list is returned, otherwise a dataframe</li>
+</ul>
+<p><code>fallbackToGenus</code>, <code>checkRank</code>, <code>checkHomonyms</code> and <code>fuzzyNameParts</code> are all variables passed directly to the WFO GraphQL API.</p>
+<p>Here is a basic example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;Burkea africana&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;Julbernardia paniculata&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;Fabaceae&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;Indet indet&#34;</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;Brachystegia&#34;</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;Philenoptera sp.&#34;</span><span style="color:#000;font-weight:bold">)</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">matchNames</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>The console output:</p>
+<pre tabindex="0"><code>1 of 6: Brachystegia
+2 of 6: Burkea africana
+3 of 6: Fabaceae
+4 of 6: Indet indet
+No candidates, skipping: Indet indet
+5 of 6: Julbernardia paniculata
+6 of 6: Philenoptera sp.
+
+
+--- Pick a name ---
+Matching string:        Philenoptera sp.
+1   wfo-4000029211      Philenoptera Hochst. ex A.Rich. accepted        Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Papilionoideae/Philenoptera
+
+[ins] Enter a number to pick a row from the list, a valid WFO ID, &#39;N&#39; for the next page, &#39;P&#39; for the previous page, &#39;S&#39; to skip this name:
+</code></pre><p>The dataframe returned:</p>
+<table>
+  <thead>
+      <tr>
+          <th>taxon_name_subm</th>
+          <th>method</th>
+          <th>fallbackToGenus</th>
+          <th>checkRank</th>
+          <th>checkHomonyms</th>
+          <th>fuzzyNameParts</th>
+          <th>taxon_wfo_syn</th>
+          <th>taxon_name_syn</th>
+          <th>taxon_auth_syn</th>
+          <th>taxon_stat_syn</th>
+          <th>taxon_role_syn</th>
+          <th>taxon_rank_syn</th>
+          <th>taxon_path_syn</th>
+          <th>taxon_wfo_acc</th>
+          <th>taxon_name_acc</th>
+          <th>taxon_auth_acc</th>
+          <th>taxon_stat_acc</th>
+          <th>taxon_role_acc</th>
+          <th>taxon_rank_acc</th>
+          <th>taxon_path_acc</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Burkea africana</td>
+          <td>AUTO</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>0</td>
+          <td>wfo-0000214110</td>
+          <td>Burkea africana</td>
+          <td>Hook.</td>
+          <td>valid</td>
+          <td>accepted</td>
+          <td>species</td>
+          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Caesalpinioideae/Burkea/africana</td>
+          <td>wfo-0000214110</td>
+          <td>Burkea africana</td>
+          <td>Hook.</td>
+          <td>valid</td>
+          <td>accepted</td>
+          <td>species</td>
+          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Caesalpinioideae/Burkea/africana</td>
+      </tr>
+      <tr>
+          <td>Julbernardia paniculata</td>
+          <td>AUTO</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>0</td>
+          <td>wfo-0000169220</td>
+          <td>Julbernardia paniculata</td>
+          <td>(Benth.) Troupin</td>
+          <td>valid</td>
+          <td>accepted</td>
+          <td>species</td>
+          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Detarioideae/Julbernardia/paniculata</td>
+          <td>wfo-0000169220</td>
+          <td>Julbernardia paniculata</td>
+          <td>(Benth.) Troupin</td>
+          <td>valid</td>
+          <td>accepted</td>
+          <td>species</td>
+          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Detarioideae/Julbernardia/paniculata</td>
+      </tr>
+      <tr>
+          <td>Fabaceae</td>
+          <td>AUTO</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>0</td>
+          <td>wfo-7000000323</td>
+          <td>Fabaceae</td>
+          <td>Lindl.</td>
+          <td>conserved</td>
+          <td>accepted</td>
+          <td>family</td>
+          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae</td>
+          <td>wfo-7000000323</td>
+          <td>Fabaceae</td>
+          <td>Lindl.</td>
+          <td>conserved</td>
+          <td>accepted</td>
+          <td>family</td>
+          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae</td>
+      </tr>
+      <tr>
+          <td>Indet indet</td>
+          <td>EMPTY</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>FALSE</td>
+          <td>0</td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+          <td><NA></td>
+      </tr>
+  </tbody>
+</table>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
