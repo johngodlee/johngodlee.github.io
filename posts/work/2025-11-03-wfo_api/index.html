@@ -88,123 +88,84 @@ Matching string:        Philenoptera sp.
 1   wfo-4000029211      Philenoptera Hochst. ex A.Rich. accepted        Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Papilionoideae/Philenoptera
 
 [ins] Enter a number to pick a row from the list, a valid WFO ID, &#39;N&#39; for the next page, &#39;P&#39; for the previous page, &#39;S&#39; to skip this name:
-</code></pre><p>The dataframe returned:</p>
-<table>
-  <thead>
-      <tr>
-          <th>taxon_name_subm</th>
-          <th>method</th>
-          <th>fallbackToGenus</th>
-          <th>checkRank</th>
-          <th>checkHomonyms</th>
-          <th>fuzzyNameParts</th>
-          <th>taxon_wfo_syn</th>
-          <th>taxon_name_syn</th>
-          <th>taxon_auth_syn</th>
-          <th>taxon_stat_syn</th>
-          <th>taxon_role_syn</th>
-          <th>taxon_rank_syn</th>
-          <th>taxon_path_syn</th>
-          <th>taxon_wfo_acc</th>
-          <th>taxon_name_acc</th>
-          <th>taxon_auth_acc</th>
-          <th>taxon_stat_acc</th>
-          <th>taxon_role_acc</th>
-          <th>taxon_rank_acc</th>
-          <th>taxon_path_acc</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Burkea africana</td>
-          <td>AUTO</td>
-          <td>FALSE</td>
-          <td>FALSE</td>
-          <td>FALSE</td>
-          <td>0</td>
-          <td>wfo-0000214110</td>
-          <td>Burkea africana</td>
-          <td>Hook.</td>
-          <td>valid</td>
-          <td>accepted</td>
-          <td>species</td>
-          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Caesalpinioideae/Burkea/africana</td>
-          <td>wfo-0000214110</td>
-          <td>Burkea africana</td>
-          <td>Hook.</td>
-          <td>valid</td>
-          <td>accepted</td>
-          <td>species</td>
-          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Caesalpinioideae/Burkea/africana</td>
-      </tr>
-      <tr>
-          <td>Julbernardia paniculata</td>
-          <td>AUTO</td>
-          <td>FALSE</td>
-          <td>FALSE</td>
-          <td>FALSE</td>
-          <td>0</td>
-          <td>wfo-0000169220</td>
-          <td>Julbernardia paniculata</td>
-          <td>(Benth.) Troupin</td>
-          <td>valid</td>
-          <td>accepted</td>
-          <td>species</td>
-          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Detarioideae/Julbernardia/paniculata</td>
-          <td>wfo-0000169220</td>
-          <td>Julbernardia paniculata</td>
-          <td>(Benth.) Troupin</td>
-          <td>valid</td>
-          <td>accepted</td>
-          <td>species</td>
-          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Detarioideae/Julbernardia/paniculata</td>
-      </tr>
-      <tr>
-          <td>Fabaceae</td>
-          <td>AUTO</td>
-          <td>FALSE</td>
-          <td>FALSE</td>
-          <td>FALSE</td>
-          <td>0</td>
-          <td>wfo-7000000323</td>
-          <td>Fabaceae</td>
-          <td>Lindl.</td>
-          <td>conserved</td>
-          <td>accepted</td>
-          <td>family</td>
-          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae</td>
-          <td>wfo-7000000323</td>
-          <td>Fabaceae</td>
-          <td>Lindl.</td>
-          <td>conserved</td>
-          <td>accepted</td>
-          <td>family</td>
-          <td>Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae</td>
-      </tr>
-      <tr>
-          <td>Indet indet</td>
-          <td>EMPTY</td>
-          <td>FALSE</td>
-          <td>FALSE</td>
-          <td>FALSE</td>
-          <td>0</td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-          <td><NA></td>
-      </tr>
-  </tbody>
-</table>
+</code></pre><p>The dataframe returned, formatted as a nested list for readability:</p>
+<ul>
+<li>
+<p>Row 1</p>
+<ul>
+<li><code>taxon_name_subm</code>: Burkea africana</li>
+<li><code>method</code>: AUTO</li>
+<li><code>fallbackToGenus</code>: FALSE</li>
+<li><code>checkRank</code>: FALSE</li>
+<li><code>checkHomonyms</code>: FALSE</li>
+<li><code>fuzzyNameParts</code>: 0</li>
+<li><code>taxon_wfo_syn</code>: wfo-0000214110</li>
+<li><code>taxon_name_syn</code>: Burkea africana</li>
+<li><code>taxon_auth_syn</code>: Hook.</li>
+<li><code>taxon_stat_syn</code>: valid</li>
+<li><code>taxon_role_syn</code>: accepted</li>
+<li><code>taxon_rank_syn</code>: species</li>
+<li><code>taxon_path_syn</code>: Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Caesalpinioideae/Burkea/africana</li>
+<li><code>taxon_wfo_acc</code>: wfo-0000214110</li>
+<li><code>taxon_name_acc</code>: Burkea africana</li>
+<li><code>taxon_auth_acc</code>: Hook.</li>
+<li><code>taxon_stat_acc</code>: valid</li>
+<li><code>taxon_role_acc</code>: accepted</li>
+<li><code>taxon_rank_acc</code>: species</li>
+<li><code>taxon_path_acc</code>: Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Caesalpinioideae/Burkea/africana</li>
+</ul>
+</li>
+<li>
+<p>Row 2</p>
+<ul>
+<li><code>taxon_name_subm</code>: Julbernardia paniculata</li>
+<li><code>method</code>: AUTO</li>
+<li><code>fallbackToGenus</code>: FALSE</li>
+<li><code>checkRank</code>: FALSE</li>
+<li><code>checkHomonyms</code>: FALSE</li>
+<li><code>fuzzyNameParts</code>: 0</li>
+<li><code>taxon_wfo_syn</code>: wfo-0000169220</li>
+<li><code>taxon_name_syn</code>: Julbernardia paniculata</li>
+<li><code>taxon_auth_syn</code>: (Benth.) Troupin</li>
+<li><code>taxon_stat_syn</code>: valid</li>
+<li><code>taxon_role_syn</code>: accepted</li>
+<li><code>taxon_rank_syn</code>: species</li>
+<li><code>taxon_path_syn</code>: Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Detarioideae/Julbernardia/paniculata</li>
+<li><code>taxon_wfo_acc</code>: wfo-0000169220</li>
+<li><code>taxon_name_acc</code>: Julbernardia paniculata</li>
+<li><code>taxon_auth_acc</code>: (Benth.) Troupin</li>
+<li><code>taxon_stat_acc</code>: valid</li>
+<li><code>taxon_role_acc</code>: accepted</li>
+<li><code>taxon_rank_acc</code>: species</li>
+<li><code>taxon_path_acc</code>: Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae/Detarioideae/Julbernardia/paniculata</li>
+</ul>
+</li>
+<li>
+<p>Row 3</p>
+<ul>
+<li><code>taxon_name_subm</code>: Fabaceae</li>
+<li><code>method</code>: AUTO</li>
+<li><code>fallbackToGenus</code>: FALSE</li>
+<li><code>checkRank</code>: FALSE</li>
+<li><code>checkHomonyms</code>: FALSE</li>
+<li><code>fuzzyNameParts</code>: 0</li>
+<li><code>taxon_wfo_syn</code>: wfo-7000000323</li>
+<li><code>taxon_name_syn</code>: Fabaceae</li>
+<li><code>taxon_auth_syn</code>: Lindl.</li>
+<li><code>taxon_stat_syn</code>: conserved</li>
+<li><code>taxon_role_syn</code>: accepted</li>
+<li><code>taxon_rank_syn</code>: family</li>
+<li><code>taxon_path_syn</code>: Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae</li>
+<li><code>taxon_wfo_acc</code>: wfo-7000000323</li>
+<li><code>taxon_name_acc</code>: Fabaceae</li>
+<li><code>taxon_auth_acc</code>: Lindl.</li>
+<li><code>taxon_stat_acc</code>: conserved</li>
+<li><code>taxon_role_acc</code>: accepted</li>
+<li><code>taxon_rank_acc</code>: family</li>
+<li><code>taxon_path_acc</code>: Code/Plantae/Pteridobiotina/Angiosperms/Fabales/Fabaceae</li>
+</ul>
+</li>
+</ul>
 
 </main>
 
