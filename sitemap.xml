@@ -3,10 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2025-12-16T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2025-12-16T00:00:00+00:00</lastmod>
+    <lastmod>2026-01-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/personal/</loc>
+    <lastmod>2026-01-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/personal/2026-01-31-typst_template/</loc>
+    <lastmod>2026-01-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/work/2025-12-16-bes_2025/</loc>
     <lastmod>2025-12-16T00:00:00+00:00</lastmod>
@@ -22,9 +28,6 @@
   </url><url>
     <loc>http://johngodlee.xyz/posts/work/2025-11-03-wfo_api/</loc>
     <lastmod>2025-11-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://johngodlee.xyz/posts/personal/</loc>
-    <lastmod>2025-10-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/personal/2025-10-26-bed_side/</loc>
     <lastmod>2025-10-26T00:00:00+00:00</lastmod>
