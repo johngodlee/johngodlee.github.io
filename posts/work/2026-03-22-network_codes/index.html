@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Comparison of tree inventory codes/flags across networks</h1>
+
+<h2>2026-03-22</h2>
+</div>
+
+<main>
+<p>Forest plot networks generally record meta-data alongside tree stem diameter measurements relating to stem condition, mortality status, and the way the measurement was taken.</p>
+<p>These codes can be useful both in future data collection, and for interpretation in down-stream analysis. For instance, if a stem is recorded as fallen in a previous census, it is unlikely the stem will be found during the next census. If a stem is broken above breast height, the height measurement should not be used to fit a height:diameter allometry.</p>
+<p>Major plot networks (e.g. SEOSAW, ForestGEO, ForestPlots.net (RAINFOR), TERN) have all developed their own tree inventory coding schemas to record these meta-data using short codes that are quick to write in the field. Each protocol reflects different research priorities within the networks.</p>
+<h2 id="all-codes">All codes</h2>
+<p>First, here is a list of all the codes copied from the field manual documents of each of these networks.</p>
+<h3 id="seosaw">SEOSAW</h3>
+<p><a href="https://bitbucket.org/miombo/seosaw/raw/master/doc/manuals/field_manual/versions/seosaw_field_manual_latest_en.pdf" target="_blank">SEOSAW Field Manual v4.1</a>
+</p>
+<p>Status:</p>
+<ul>
+<li>a - alive</li>
+<li>r - resprouting shoots are growing from the stem. Only if the shoots are smaller than the minimum diameter threshold, otherwise measure as a separate stem.</li>
+<li>d - dead</li>
+</ul>
+<p>Mode:</p>
+<ul>
+<li>b - broken (material above break is detached)</li>
+<li>c - has climbing or strangling plants in canopy</li>
+<li>e - buttressed</li>
+<li>f - fallen</li>
+<li>g - fluted</li>
+<li>h - hollow</li>
+<li>j - bark peeling or lost</li>
+<li>k - stem has bracket fungi</li>
+<li>l - leaning (&gt;15deg)</li>
+<li>m - on a termite mound</li>
+<li>n - a new recruit</li>
+<li>p - snapped (material above break is attached)</li>
+<li>q - the stem location is unknown and was not found (contrast with v)</li>
+<li>s - standing</li>
+<li>t - stump (broken below POM)</li>
+<li>u - uprooted</li>
+<li>v - vanished (location of tree found but stem missing)</li>
+<li>w - stem is a liana</li>
+<li>x - rotten wood</li>
+<li>y - wounded</li>
+<li>z - sick (i.e. lost most leaves, discoloured foliage, drooping branches)</li>
+</ul>
+<p>Damage:</p>
+<ul>
+<li>a - damage: animals (not elephants, not insects)</li>
+<li>e - damage: elephants</li>
+<li>f - damage: fire</li>
+<li>h - damage: humans (.e.g. cut, ringbarked, broken or beehive)</li>
+<li>i - damage: frost</li>
+<li>l - damage: lightning</li>
+<li>m - damage: termites</li>
+<li>n - damage: neighbouring tree</li>
+<li>o - damage: other (describe in damage_cause_notes)</li>
+<li>q - damage: unknown</li>
+<li>w - damage: wind</li>
+</ul>
+<h3 id="forestgeo">ForestGEO</h3>
+<p><a href="https://forestgeo.si.edu/sites/default/files/condit_1998_censusplotsmethodsbook.pdf" target="_blank">Condit 1998 - Tropical Forest Census Plots</a>
+</p>
+<ul>
+<li>B - Large buttress, requiring ladder to measure</li>
+<li>M - Multiple stems</li>
+<li>P - Any problem requiring further attention</li>
+<li>A - POM at alternative height, not breast height (1.3 m)</li>
+<li>I - Stem irregular where measured</li>
+<li>X - Stem broken below breast height</li>
+<li>L - Stem leaning</li>
+<li>Y - Stem prostrate</li>
+<li>Q - Stem broken above breast height</li>
+<li>C - POM changed since prior census, usually used in conjunction with &ldquo;R&rdquo;, &ldquo;A&rdquo;, or &ldquo;I&rdquo;</li>
+<li>R - Resprout (main stem broken in prior census, but stem is alive)</li>
+<li>DS - Dead, stem standing, no diameter recorded</li>
+<li>DC - Dead, stem fallen, no diameter recorded</li>
+<li>DT - Dead, only tag found, no diameter recorded</li>
+<li>DN - Presumed dead, no tag or stem, no diameter recorded</li>
+</ul>
+<h3 id="forestplotsnet-rainfor">ForestPlots.net (RAINFOR)</h3>
+<p><a href="https://rainfor.org/wp-content/uploads/sites/129/2022/06/RAINFOR_field_manual_EN.pdf" target="_blank">RAINFOR Field Manual v2021.1</a>
+</p>
+<p>Flag 1, alive status. If dead enter &ldquo;0&rdquo;:</p>
+<ul>
+<li>a - Alive normal, should be used by itself unless a tree is a recruit or a multiple stemmed individual</li>
+<li>b - Alive, broken stem/top &amp; resprouting, or at least live phloem/xylem. Write in the comments column at what height the stem is broken.</li>
+<li>c - Alive, leaning by ≥10%. The leaning code cannot be used with the fallen code &rsquo;d'</li>
+<li>d - Alive, fallen (e.g. on ground)</li>
+<li>e - Alive, tree fluted or/fenestrated</li>
+<li>f - Alive, hollow</li>
+<li>g - Alive, rotten and or presence of bracket fungus</li>
+<li>h - Multiple stemmed individual. Each stem &gt;99mm gets a number. Always use with another code - e.g. if a tree is broken and with multiple stems use &lsquo;bh&rsquo;.</li>
+<li>i - Alive, no leaves, few leaves</li>
+<li>j - Alive, burnt</li>
+<li>k - Alive, snapped &lt; 1.3m (therefore the diameter at 1.3m is 0mm)</li>
+<li>l - Alive, has liana ≥10cm diameter on stem or in canopy</li>
+<li>m - Alive, covered by lianas. Use where canopy is at least 50% covered by lianas, even if no individual liana reaches 10cm diameter.</li>
+<li>n - New recruit. Always use with another code- e.g. if a tree is normal and new then use the code &lsquo;an&rsquo;, if a tree is broken and a new recruit the code is &lsquo;bn&rsquo;.</li>
+<li>o - Alive, lightning damage</li>
+<li>p - Alive, cut</li>
+<li>q - Alive, peeling bark (bark loose/flaking)</li>
+<li>s - Alive, has a strangler</li>
+<li>w - Alive, has wound and/or cambium exposed</li>
+<li>x - Alive, elephant damage</li>
+<li>y - Alive, termite damage</li>
+<li>z - Alive, declining productivity (nearing death)</li>
+</ul>
+<p>Flag 2, mode of death. If alive enter &ldquo;1&rdquo;:</p>
+<ul>
+<li>a - Standing</li>
+<li>b - Broken (snapped trunk)</li>
+<li>c - Uprooted (root tip-up)</li>
+<li>d - Standing or broken, probably standing (not uprooted)</li>
+<li>e - Standing or broken, probably broken (not uprooted)</li>
+<li>f - Standing or broken (not uprooted)</li>
+<li>g - Broken or uprooted, probably uprooted</li>
+<li>h - Broken or uprooted, probably broken</li>
+<li>i - Broken or uprooted (not standing)</li>
+<li>k - Vanished (found location, tree looked for but not found)</li>
+<li>l - Presumed dead (location of tree not found e.g. problems, poor maps, etc.</li>
+<li>m - Physical mechanism of mortality unknown</li>
+<li>p - Died alone</li>
+<li>q - One of multiple deaths</li>
+<li>r - Number of trees in mortality event Unknown</li>
+<li>j - Killed by anthropogenic</li>
+<li>n - Killed by burnt</li>
+<li>o - Killed by lightning</li>
+<li>s - Unknown whether killed or killed</li>
+<li>t - Killer of at least one other tree &gt;10cm DBH</li>
+<li>u - Killed, no more information</li>
+<li>v - Killed by tree that died broken</li>
+<li>w - Killed by another tree that uprooted</li>
+<li>x - Killed by branches from dead standing tree</li>
+<li>y - Killed by branches fallen from living tree</li>
+<li>z - Killed by strangler</li>
+<li>2 - Killed by liana</li>
+<li>3 - Killed by strangler / liana weight [tree died broken or fallen]</li>
+<li>4 - Killed by strangler / liana competition [tree died standing]</li>
+<li>5 - Killed by elephant</li>
+<li>6 - Killed by termites</li>
+<li>7 - Killed by wind</li>
+</ul>
+<h3 id="tern">TERN</h3>
+<p><a href="https://www.tern.org.au/wp-content/uploads/SuperSites_Vegetation_Monitoring_Protocols_Ver1.21.pdf" target="_blank">TERN SuperSite Vegetation Monitoring Protocols v1.21</a>
+</p>
+<ul>
+<li>L - leaning &gt; 45°</li>
+<li>S - snapped above POM</li>
+<li>N - near dead or sick</li>
+<li>R - rough hollow or dead side at POM</li>
+<li>M - multi-stemmed</li>
+<li>E - estimated DBH</li>
+<li>C - callipers used for DBH</li>
+</ul>
+<h2 id="cross-network-comparison">Cross-network comparison</h2>
+<p>The table below lists all of the codes from each network and places them in groups based on their meaning. From this, it&rsquo;s easy to see what each network records. Some of the missing values, for example causes of damage in ForestGEO might be provided as notes elsewhere, this table only shows that they don&rsquo;t have a dedicated code for easy look-up.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Phenomenon / Condition</th>
+          <th>SEOSAW</th>
+          <th>ForestGEO</th>
+          <th>RAINFOR (ForestPlots.net)</th>
+          <th>TERN</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Alive</td>
+          <td>status:a</td>
+          <td>(Implicit)</td>
+          <td>1:a</td>
+          <td>Presume recorded, not mentioned</td>
+      </tr>
+      <tr>
+          <td>Dead</td>
+          <td>status:d</td>
+          <td>DS, DC, DT, DN</td>
+          <td>1:0</td>
+          <td>Presume recorded, not mentioned</td>
+      </tr>
+      <tr>
+          <td>Missing / Vanished</td>
+          <td>mode:v, mode:q</td>
+          <td>DT, DN</td>
+          <td>2:k, 2:l</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>New Recruit</td>
+          <td>mode:n</td>
+          <td>(Implicit)</td>
+          <td>1:n</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Resprouting</td>
+          <td>status:r</td>
+          <td>R (only if broken)</td>
+          <td>1:b (broken and resprouting)</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Declining / Sick / Leafless</td>
+          <td>mode:z</td>
+          <td></td>
+          <td>1:i, 1:z</td>
+          <td>N</td>
+      </tr>
+      <tr>
+          <td>Standing</td>
+          <td>mode:s</td>
+          <td>Implicit, DS</td>
+          <td>(Implicit) 2:a</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Fallen / Prostrate</td>
+          <td>mode:f</td>
+          <td>Y, DC</td>
+          <td>1:d, 2:i</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Leaning</td>
+          <td>mode:l (&gt;15°)</td>
+          <td>L</td>
+          <td>1:c (≥10%)</td>
+          <td>L (&gt;45°)</td>
+      </tr>
+      <tr>
+          <td>Uprooted</td>
+          <td>mode:u</td>
+          <td>Not measured</td>
+          <td>2:c, 2:g, 2:i</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Broken/Snapped &lt; POM/1.3m</td>
+          <td>mode:t</td>
+          <td>X</td>
+          <td>1:k</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Broken/Snapped &gt; POM/1.3m</td>
+          <td>mode:b, p</td>
+          <td>Q</td>
+          <td>1:b, 2:b, 2:d, 2:e, 2:f, 2:h, 2:i</td>
+          <td>S</td>
+      </tr>
+      <tr>
+          <td>Multi-stemmed</td>
+          <td></td>
+          <td>M</td>
+          <td>1:h</td>
+          <td>M</td>
+      </tr>
+      <tr>
+          <td>Buttressed</td>
+          <td>mode:e</td>
+          <td>B</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Fluted / Irregular</td>
+          <td>mode:g</td>
+          <td>I</td>
+          <td>1:e</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Hollow / Rotten</td>
+          <td>mode:h, x</td>
+          <td></td>
+          <td>1:f, 1:g</td>
+          <td>R</td>
+      </tr>
+      <tr>
+          <td>Lianas / Climbers / Stranglers</td>
+          <td>mode:c</td>
+          <td></td>
+          <td>1:l, 1:m, 1:s, 2:z, 2:2, 2:3, 2:4</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Stem is a liana</td>
+          <td>mode:w</td>
+          <td></td>
+          <td>Separate liana protocol</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Fungi</td>
+          <td>mode:k</td>
+          <td></td>
+          <td>1:g</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Termites</td>
+          <td>damage:m</td>
+          <td></td>
+          <td>1:y, 2:6</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>On a termite mound</td>
+          <td>mode:m</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Elephant damage</td>
+          <td>damage:e</td>
+          <td></td>
+          <td>1:x, 2:5</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Animal damage</td>
+          <td>damage:a</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Bark Peeling</td>
+          <td>mode:j</td>
+          <td></td>
+          <td>1:q</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Wounded</td>
+          <td>mode:y</td>
+          <td></td>
+          <td>1:w</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Fire damage</td>
+          <td>damage:f</td>
+          <td></td>
+          <td>1:j, 2:n</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Frost damage</td>
+          <td>damage:i</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Lightning damage</td>
+          <td>damage:l</td>
+          <td></td>
+          <td>1:o, 2:o</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Wind damage</td>
+          <td>damage:w</td>
+          <td></td>
+          <td>2:7</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Human / Cut</td>
+          <td>damage:h</td>
+          <td></td>
+          <td>1:p, 2:j</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Unknown cause of damage</td>
+          <td>damage:q</td>
+          <td></td>
+          <td>2:m, 2:s, 2:u</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Neighbor Tree Fall / Branches</td>
+          <td>damage:n</td>
+          <td></td>
+          <td>2:v, 2:w, 2:x, 2:y</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Group of dead stems or alone</td>
+          <td></td>
+          <td></td>
+          <td>2:p, 2:q, 2:r, 2:s, 2:t</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Alternative / altered POM</td>
+          <td></td>
+          <td>A, C</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Diameter estimated</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>E</td>
+      </tr>
+      <tr>
+          <td>Diameter measured with caliper</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>C</td>
+      </tr>
+      <tr>
+          <td>Measurement problem</td>
+          <td></td>
+          <td>P</td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>A few observations based on this:</p>
+<ul>
+<li>ForestGEO doesn&rsquo;t have dedicated codes for causes of damage.</li>
+<li>Only ForestGEO has a dedicated code for when the POM changes. I&rsquo;m not sure how useful this code is, as the difference will be evident from the values in the POM column, which all networks record (barring TERN, possibly).</li>
+<li>SEOSAW doesn&rsquo;t have a code for multi-stemmed trees, but this is because SEOSAW requires that all stems on multi-stemmed trees are measured and the tree ID is recorded for each stem.</li>
+<li>RAINFOR has lots of codes for recording when a tree kills another tree due to a tree-fall event. None of the other networks record this information.</li>
+<li>TERN doesn&rsquo;t have a specific code for alive vs. dead, but I have to assume that they record this information elsewhere, because they say they do record dead stems.</li>
+<li>The threshold for classifying a stem as leaning iis different for every network.</li>
+<li>Surprisingly, RAINFOR doesn&rsquo;t have a code to indicate buttressing, though they do have an extensive section in their field manual on how to measure buttressed trees.</li>
+<li>SEOSAW, ForestGEO and RAINFOR all discriminate between finding the location of a missing stem and not finding the location. I expect the ForestGEO Condit book is the source for this.</li>
+<li>SEOSAW pays a lot of attention to damage compased to other networks.</li>
+<li>Compared to the other protocols, TERN is missing a lot of codes. I searched and couldn&rsquo;t find any mention of what to do with uprooted or fallen-rooted trees  .</li>
+<li>All protocols are missing the distinction between a stem that is resprouting (i.e. the original crown material is dead and new shoots are growing either from the base or epicormically along the stem) and a stem that is itself a resprout (e.g. a new shoot that has grown large enough to be measured with other stems. For SEOSAW, I tentatively suggest &ldquo;mode:o&rdquo; to code the resprout that has grown large enough to be measured.</li>
+<li>There are nuanced issues that none of the protocols deal with. At a recent workshop we spoke about how to record the condition where a tree has fallen, new shoots have grown up along the length of the fallen trunk, then the original trunk has rotted away leaving multiple independently rooted individuals. A new unified protocol should probably think about these issues and come up with guidance.</li>
+</ul>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
