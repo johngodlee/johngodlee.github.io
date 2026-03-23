@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sourdough Schedule</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --warm: #e8ddc8;
+    --brown: #6b4f35;
+    --dark: #2c1f14;
+    --amber: #c8852a;
+    --rust: #a0522d;
+    --muted: #8a7560;
+    --grain: #d4c4a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--dark);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    padding: 2rem 1rem 4rem;
+  }
+
+  .container { max-width: 680px; margin: 0 auto; }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--grain);
+  }
+
+  .eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+  }
+  h1 em { font-style: italic; color: var(--amber); }
+
+  .subtitle { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  .input-card {
+    background: var(--warm);
+    border: 1px solid var(--grain);
+    border-radius: 2px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .input-card::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 6px; right: -6px; bottom: -6px;
+    background: var(--grain);
+    border-radius: 2px;
+    z-index: -1;
+  }
+
+  .input-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+  }
+
+  .input-group { flex: 1; min-width: 160px; position: relative; }
+
+  input[type="date"] {
+    width: 100%;
+    background: var(--cream);
+    border: 1px solid var(--grain);
+    border-radius: 2px;
+    padding: 0.65rem 0.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--dark);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="date"]:focus { border-color: var(--amber); }
+
+  .hint { font-size: 0.65rem; color: var(--muted); margin-top: 0.4rem; }
+
+  /* ── Mode toggle ── */
+  .mode-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.1rem;
+    border-top: 1px dashed var(--grain);
+    flex-wrap: wrap;
+  }
+
+  .mode-row .input-label { margin-bottom: 0; white-space: nowrap; }
+
+  .mode-toggle {
+    display: flex;
+    gap: 0.3rem;
+  }
+
+  .mode-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--grain);
+    border-radius: 1px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .mode-btn.active { background: var(--brown); color: var(--cream); border-color: var(--brown); }
+
+  /* ── Time display trigger ── */
+  .time-display {
+    width: 100%;
+    background: var(--cream);
+    border: 1px solid var(--grain);
+    border-radius: 2px;
+    padding: 0.65rem 0.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--dark);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    transition: border-color 0.2s;
+  }
+  .time-display:hover,
+  .time-display.open { border-color: var(--amber); }
+  .time-icon { opacity: 0.35; font-size: 1rem; }
+
+  /* ── Clock popup ── */
+  .clock-popup {
+    display: none;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    z-index: 300;
+    background: var(--cream);
+    border: 1px solid var(--grain);
+    border-radius: 2px;
+    box-shadow: 5px 5px 0 var(--grain);
+    padding: 1.1rem;
+    width: 224px;
+  }
+  .clock-popup.open { display: block; animation: fadeUp 0.15s ease both; }
+
+  .clock-tabs {
+    display: flex;
+    gap: 0.3rem;
+    margin-bottom: 0.9rem;
+  }
+  .clock-tab {
+    flex: 1;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.25rem 0;
+    border: 1px solid var(--grain);
+    border-radius: 1px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .clock-tab.active { background: var(--brown); color: var(--cream); border-color: var(--brown); }
+
+  .clock-readout {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    color: var(--dark);
+    margin-bottom: 0.9rem;
+    line-height: 1;
+  }
+  .clock-readout .sep { color: var(--amber); }
+  .clock-readout .seg { cursor: pointer; padding: 0 2px; border-radius: 2px; }
+  .clock-readout .seg.active { color: var(--amber); background: rgba(200,133,42,0.1); }
+  .clock-readout .seg.inactive { color: var(--muted); }
+  .clock-readout .ampm-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-left: 0.3rem;
+    vertical-align: middle;
+  }
+
+  .clock-face-wrap { display: flex; justify-content: center; margin-bottom: 0.9rem; }
+
+  .clock-face {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: var(--warm);
+    border: 1px solid var(--grain);
+    cursor: crosshair;
+    flex-shrink: 0;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .clock-center {
+    position: absolute;
+    width: 7px; height: 7px;
+    background: var(--amber);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .clock-hand {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform-origin: bottom center;
+    border-radius: 3px 3px 0 0;
+    z-index: 2;
+    pointer-events: none;
+    transition: transform 0.12s cubic-bezier(.4,0,.2,1);
+  }
+  .hand-hour   { width: 3px; height: 42px; margin-left: -1.5px; background: var(--brown); }
+  .hand-minute { width: 2px; height: 58px; margin-left: -1px;   background: var(--amber); }
+
+  .clock-label {
+    position: absolute;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--muted);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    line-height: 1;
+  }
+  .clock-label.major { font-size: 0.65rem; color: var(--dark); font-weight: 500; }
+
+  .clock-dot {
+    position: absolute;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--amber);
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    pointer-events: none;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.18);
+    transition: left 0.12s cubic-bezier(.4,0,.2,1), top 0.12s cubic-bezier(.4,0,.2,1);
+  }
+
+  .ampm-row { display: flex; gap: 0.4rem; }
+  .ampm-btn {
+    flex: 1;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem;
+    border: 1px solid var(--grain);
+    border-radius: 1px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ampm-btn.active { background: var(--brown); color: var(--cream); border-color: var(--brown); }
+
+  /* ── Generate ── */
+  .gen-btn {
+    background: var(--brown);
+    color: var(--cream);
+    border: none;
+    border-radius: 2px;
+    padding: 0.7rem 1.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+    align-self: flex-end;
+  }
+  .gen-btn:hover { background: var(--rust); }
+  .gen-btn:active { transform: translateY(1px); }
+
+  /* ── Schedule ── */
+  #schedule { display: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .day-block { margin-bottom: 2rem; animation: fadeUp 0.4s ease both; }
+
+  .day-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--brown);
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--grain);
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+  .day-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 0.5rem 1.2rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px dashed var(--grain);
+    align-items: start;
+    animation: fadeUp 0.4s ease both;
+  }
+  .step:last-child { border-bottom: none; }
+
+  .step-time { font-size: 0.8rem; font-weight: 500; color: var(--amber); padding-top: 0.1rem; text-align: right; white-space: nowrap; }
+  .step-title { font-size: 0.8rem; font-weight: 500; color: var(--dark); margin-bottom: 0.2rem; }
+  .step-desc  { font-size: 0.72rem; color: var(--muted); line-height: 1.6; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.4rem;
+    border-radius: 1px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+  .tag-optional { background: var(--grain); color: var(--muted); }
+  .tag-key      { background: var(--amber); color: white; }
+
+  .note-box {
+    margin-top: 2.5rem;
+    padding: 1rem 1.2rem;
+    border: 1px dashed var(--grain);
+    border-radius: 2px;
+  }
+  .note-box p { font-size: 0.68rem; color: var(--muted); line-height: 1.7; }
+  .note-box strong { color: var(--brown); font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <p class="eyebrow">Weekly Routine</p>
+    <h1>Sourdough<br><em>Scheduler</em></h1>
+    <p class="subtitle">Plan your bake forward from the first feed, or backward from when you want the bread ready</p>
+  </header>
+
+  <div class="input-card">
+    <div class="input-row">
+
+      <!-- Date -->
+      <div class="input-group">
+        <label class="input-label" id="dateLabel" for="startDate">First feed — date</label>
+        <input type="date" id="startDate">
+        <p class="hint" id="dateHint">Usually a Friday</p>
+      </div>
+
+      <!-- Time (custom clock) -->
+      <div class="input-group" id="timeGroup">
+        <label class="input-label" id="timeLabel">First feed — time</label>
+        <div class="time-display" id="timeDisplay" onclick="toggleClock(event)">
+          <span id="timeText">08:00 AM</span>
+          <span class="time-icon">◷</span>
+        </div>
+        <p class="hint" id="timeHint">Tap to pick a time</p>
+
+        <div class="clock-popup" id="clockPopup">
+          <div class="clock-tabs">
+            <button class="clock-tab active" id="tabHour" onclick="setMode('hour')">Hour</button>
+            <button class="clock-tab"        id="tabMin"  onclick="setMode('minute')">Minute</button>
+          </div>
+          <div class="clock-readout" id="clockReadout"></div>
+          <div class="clock-face-wrap">
+            <div class="clock-face" id="clockFace">
+              <div class="clock-hand hand-hour"   id="handHour"></div>
+              <div class="clock-hand hand-minute"  id="handMinute"></div>
+              <div class="clock-center"></div>
+              <div class="clock-dot" id="clockDot"></div>
+            </div>
+          </div>
+          <div class="ampm-row">
+            <button class="ampm-btn active" id="btnAM" onclick="setAmPm('AM')">AM</button>
+            <button class="ampm-btn"        id="btnPM" onclick="setAmPm('PM')">PM</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="gen-btn" onclick="generate()">Generate</button>
+    </div>
+
+    <!-- Mode toggle -->
+    <div class="mode-row">
+      <span class="input-label" style="margin-bottom:0;flex-shrink:0">Schedule from</span>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="modeFirst" onclick="setRefMode('first')">First feed</button>
+        <button class="mode-btn"        id="modeDone"  onclick="setRefMode('done')">Bread ready</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="schedule"></div>
+</div>
+
+<script>
+// ─── Reference mode ─────────────────────────────────────────────────────────
+let refMode = 'first'; // 'first' | 'done'
+
+function setRefMode(mode) {
+  refMode = mode;
+  document.getElementById('modeFirst').classList.toggle('active', mode === 'first');
+  document.getElementById('modeDone') .classList.toggle('active', mode === 'done');
+
+  if (mode === 'first') {
+    document.getElementById('dateLabel').textContent = 'First feed — date';
+    document.getElementById('timeLabel').textContent = 'First feed — time';
+    document.getElementById('dateHint') .textContent = 'Usually a Friday';
+    document.getElementById('timeHint') .textContent = 'Tap to pick a time';
+    // Default to next Friday
+    const today = new Date();
+    const diff = (5 - today.getDay() + 7) % 7 || 7;
+    const fri = new Date(today);
+    fri.setDate(today.getDate() + diff);
+    document.getElementById('startDate').value = fri.toISOString().split('T')[0];
+  } else {
+    document.getElementById('dateLabel').textContent = 'Bread ready — date';
+    document.getElementById('timeLabel').textContent = 'Bread ready — time';
+    document.getElementById('dateHint') .textContent = 'Usually a Sunday';
+    document.getElementById('timeHint') .textContent = 'Tap to pick a time';
+    // Default to next Sunday, 12:00 PM
+    const today = new Date();
+    const diff = (7 - today.getDay()) % 7 || 7;
+    const sun = new Date(today);
+    sun.setDate(today.getDate() + diff);
+    document.getElementById('startDate').value = sun.toISOString().split('T')[0];
+    // Set clock to noon
+    ckHour = 12; ckMin = 0; ckAmPm = 'PM';
+    refreshClock();
+  }
+}
+
+// ─── Clock state ────────────────────────────────────────────────────────────
+let ckHour = 8;
+let ckMin  = 0;
+let ckAmPm = 'AM';
+let ckMode = 'hour';
+
+// ─── Default date (first feed mode → next Friday) ───────────────────────────
+(function() {
+  const today = new Date();
+  const dow = today.getDay();
+  const diff = (5 - dow + 7) % 7 || 7;
+  const fri = new Date(today);
+  fri.setDate(today.getDate() + diff);
+  document.getElementById('startDate').value = fri.toISOString().split('T')[0];
+})();
+
+// ─── Clock helpers ───────────────────────────────────────────────────────────
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+function updateDisplay() {
+  document.getElementById('timeText').textContent =
+    `${pad2(ckHour)}:${pad2(ckMin)} ${ckAmPm}`;
+}
+
+function updateReadout() {
+  const ro = document.getElementById('clockReadout');
+  const hC = ckMode === 'hour'   ? 'seg active' : 'seg inactive';
+  const mC = ckMode === 'minute' ? 'seg active' : 'seg inactive';
+  ro.innerHTML =
+    `<span class="${hC}" onclick="setMode('hour')">${pad2(ckHour)}</span>` +
+    `<span class="sep">:</span>` +
+    `<span class="${mC}" onclick="setMode('minute')">${pad2(ckMin)}</span>` +
+    `<span class="ampm-label">${ckAmPm}</span>`;
+}
+
+function updateHands() {
+  const hDeg = ((ckHour % 12) / 12) * 360 + (ckMin / 60) * 30;
+  const mDeg = (ckMin / 60) * 360;
+  document.getElementById('handHour').style.transform   = `translateX(-50%) rotate(${hDeg}deg)`;
+  document.getElementById('handMinute').style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
+}
+
+function angle2pos(angleDeg, r) {
+  const rad = (angleDeg - 90) * Math.PI / 180;
+  return { x: 80 + r * Math.cos(rad), y: 80 + r * Math.sin(rad) };
+}
+
+function placeDot() {
+  const dot = document.getElementById('clockDot');
+  const deg = ckMode === 'hour'
+    ? ((ckHour % 12) / 12) * 360
+    : (ckMin / 60) * 360;
+  const pos = angle2pos(deg, 58);
+  dot.style.left = pos.x + 'px';
+  dot.style.top  = pos.y + 'px';
+}
+
+function placeLabels() {
+  const face = document.getElementById('clockFace');
+  face.querySelectorAll('.clock-label').forEach(e => e.remove());
+  if (ckMode === 'hour') {
+    for (let h = 1; h <= 12; h++) {
+      const pos = angle2pos((h / 12) * 360, 58);
+      const el = document.createElement('span');
+      el.className = 'clock-label major';
+      el.textContent = h;
+      el.style.left = pos.x + 'px';
+      el.style.top  = pos.y + 'px';
+      face.appendChild(el);
+    }
+  } else {
+    [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].forEach(m => {
+      const pos = angle2pos((m / 60) * 360, 58);
+      const el = document.createElement('span');
+      el.className = 'clock-label' + (m % 15 === 0 ? ' major' : '');
+      el.textContent = pad2(m);
+      el.style.left = pos.x + 'px';
+      el.style.top  = pos.y + 'px';
+      face.appendChild(el);
+    });
+  }
+}
+
+function refreshClock() {
+  updateReadout();
+  updateHands();
+  placeDot();
+  updateDisplay();
+}
+
+function setMode(mode) {
+  ckMode = mode;
+  document.getElementById('tabHour').classList.toggle('active', mode === 'hour');
+  document.getElementById('tabMin') .classList.toggle('active', mode === 'minute');
+  placeLabels();
+  refreshClock();
+}
+
+function setAmPm(val) {
+  ckAmPm = val;
+  document.getElementById('btnAM').classList.toggle('active', val === 'AM');
+  document.getElementById('btnPM').classList.toggle('active', val === 'PM');
+  updateDisplay();
+  updateReadout();
+}
+
+function toggleClock(e) {
+  e.stopPropagation();
+  const popup = document.getElementById('clockPopup');
+  const disp  = document.getElementById('timeDisplay');
+  const opening = !popup.classList.contains('open');
+  popup.classList.toggle('open', opening);
+  disp .classList.toggle('open', opening);
+  if (opening) { placeLabels(); refreshClock(); }
+}
+
+document.addEventListener('click', e => {
+  if (!document.getElementById('timeGroup').contains(e.target)) {
+    document.getElementById('clockPopup') .classList.remove('open');
+    document.getElementById('timeDisplay').classList.remove('open');
+  }
+});
+
+function getAngleFromEvent(e) {
+  const face = document.getElementById('clockFace');
+  const rect = face.getBoundingClientRect();
+  const cx = rect.left + rect.width  / 2;
+  const cy = rect.top  + rect.height / 2;
+  const px = e.touches ? e.touches[0].clientX : e.clientX;
+  const py = e.touches ? e.touches[0].clientY : e.clientY;
+  let a = Math.atan2(py - cy, px - cx) * 180 / Math.PI + 90;
+  if (a < 0) a += 360;
+  return a;
+}
+
+function applyAngle(a) {
+  if (ckMode === 'hour') {
+    let h = Math.round(a / 30);
+    if (h === 0) h = 12;
+    ckHour = h;
+  } else {
+    let m = Math.round(a / 6);
+    m = Math.round(m / 5) * 5;
+    if (m >= 60) m = 0;
+    ckMin = m;
+  }
+  refreshClock();
+}
+
+let dragging = false;
+const face = document.getElementById('clockFace');
+face.addEventListener('mousedown', e => {
+  dragging = true;
+  applyAngle(getAngleFromEvent(e));
+});
+document.addEventListener('mousemove', e => {
+  if (dragging) applyAngle(getAngleFromEvent(e));
+});
+document.addEventListener('mouseup', e => {
+  if (dragging) {
+    dragging = false;
+    if (ckMode === 'hour') setTimeout(() => setMode('minute'), 150);
+  }
+});
+face.addEventListener('touchstart', e => { e.preventDefault(); applyAngle(getAngleFromEvent(e)); }, { passive: false });
+face.addEventListener('touchmove',  e => { e.preventDefault(); applyAngle(getAngleFromEvent(e)); }, { passive: false });
+face.addEventListener('touchend',   e => {
+  if (ckMode === 'hour') setTimeout(() => setMode('minute'), 150);
+});
+
+// ─── Schedule generation ─────────────────────────────────────────────────────
+function getHour24() {
+  let h = ckHour % 12;
+  if (ckAmPm === 'PM') h += 12;
+  return h;
+}
+
+function fmt(d)      { return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
+function fmtShort(d) { return d.toLocaleDateString([], { month: 'short', day: 'numeric' }); }
+function fmtDay(d)   { return d.toLocaleDateString([], { weekday: 'long' }); }
+function addH(d, h)  { return new Date(d.getTime() + h * 3600000); }
+function subH(d, h)  { return new Date(d.getTime() - h * 3600000); }
+function addM(d, m)  { return new Date(d.getTime() + m * 60000); }
+function subM(d, m)  { return new Date(d.getTime() - m * 60000); }
+
+/*
+  Fixed offsets (forward from first feed):
+    day1Feed1  → t0
+    day1Feed2  → t0 + 10h   (optional)
+    day2Feed   → t0 + 24h   (snapped to same clock-minute, hour 8)
+    day2Split  → day2Feed + 2h
+    day2Mix    → day2Split + 1h
+    day2F1     → day2Mix + 30min
+    day2F2     → day2Mix + 60min
+    day2F3     → day2Mix + 90min
+    day2Shape  → day2Mix + 4h
+    day3Pre    → day3 date, 08:00
+    day3Shape  → day3Pre + 30min
+    day3Bake   → day3Pre + 1h
+    day3Done   → day3Bake + 40min   ← "bread ready"
+
+  Working backwards from day3Done:
+    day3Bake   = day3Done - 40min
+    day3Shape  = day3Done - 40min - 30min  = day3Done - 70min
+    day3Pre    = day3Done - 40min - 30min - 30min = day3Done - 100min  (preheat = bake start)
+
+  day3 = day3Pre's date, so day2 = day3 - 1 day, day1 = day3 - 2 days.
+  day2Shape  = day2Mix + 4h
+  day2Mix    = day2Shape - 4h
+  day2Split  = day2Mix - 1h
+  day2Feed   = day2Split - 2h  → snapped to 8:xx
+  day1Feed1  = (day2 date - 1 day), time = same minute as day2Feed or user-chosen morning
+*/
+
+function buildSchedule(t0) {
+  // Forward from first feed
+  const day1Feed1 = t0;
+  const day1Feed2 = addH(t0, 10);
+
+  const day2date = new Date(t0);
+  day2date.setDate(day2date.getDate() + 1);
+  let d2h = 8;
+  const guess = addH(t0, 24);
+  if (guess.getHours() >= 6 && guess.getHours() <= 10) d2h = guess.getHours();
+  const day2Feed = new Date(day2date);
+  day2Feed.setHours(d2h, t0.getMinutes(), 0, 0);
+
+  const day2Split = addH(day2Feed, 2);
+  const day2Mix   = addH(day2Split, 1);
+  const day2F1    = addM(day2Mix, 30);
+  const day2F2    = addM(day2Mix, 60);
+  const day2F3    = addM(day2Mix, 90);
+  const day2Shape = addH(day2Mix, 4);
+
+  const day3date = new Date(day2date);
+  day3date.setDate(day3date.getDate() + 1);
+  const day3Pre   = new Date(day3date); day3Pre.setHours(8, 0, 0, 0);
+  const day3Shape = addM(day3Pre, 30);
+  const day3Bake  = addH(day3Pre, 1);
+  const day3Done  = addM(day3Bake, 40);
+
+  return { day1Feed1, day1Feed2, day2Feed, day2Split, day2Mix, day2F1, day2F2, day2F3, day2Shape, day3Pre, day3Shape, day3Bake, day3Done };
+}
+
+function t0FromDone(done) {
+  // Reverse: done → bake → preheat → day3 date → day2 → day1
+  const day3Bake  = subM(done, 40);
+  const day3Pre   = subM(day3Bake, 30);      // score takes ~30min before baking
+  // day3Pre is 08:00 on day3; infer day3 date from the done datetime
+  const day3date  = new Date(done);
+  // day2Shape is the evening before: day3Pre - overnight. We fix day3Pre at 08:00 on day3.
+  // So day2 = day3 - 1 day; day1 = day3 - 2 days.
+  const day2date  = new Date(day3date); day2date.setDate(day2date.getDate() - 1);
+  const day1date  = new Date(day3date); day1date.setDate(day1date.getDate() - 2);
+
+  // day2Shape → day2Mix: shape = mix + 4h → mix = shape - 4h
+  // We want day3Pre (08:00 day3) to be fixed, but day2Shape is flexible (evening of day2).
+  // Instead of deriving shape from done, set day2Mix to give shape at a sensible evening time.
+  // We work back: day2Feed at 08:00 day2, then mix = feed + 3h, shape = mix + 4h.
+  const day2Feed  = new Date(day2date); day2Feed.setHours(8, 0, 0, 0);
+  const day2Split = addH(day2Feed, 2);
+  const day2Mix   = addH(day2Split, 1);
+  const day2F1    = addM(day2Mix, 30);
+  const day2F2    = addM(day2Mix, 60);
+  const day2F3    = addM(day2Mix, 90);
+  const day2Shape = addH(day2Mix, 4);
+
+  // day1 first feed: same time of day as day2Feed (08:00), day before
+  const day1Feed1 = new Date(day1date); day1Feed1.setHours(8, 0, 0, 0);
+  const day1Feed2 = addH(day1Feed1, 10);
+
+  // Use provided done time for day3
+  const day3PreFixed  = new Date(day3date); day3PreFixed.setHours(8, 0, 0, 0);
+  const day3ShapeFixed = addM(day3PreFixed, 30);
+  const day3BakeFixed  = addH(day3PreFixed, 1);
+
+  return { day1Feed1, day1Feed2, day2Feed, day2Split, day2Mix, day2F1, day2F2, day2F3, day2Shape, day3Pre: day3PreFixed, day3Shape: day3ShapeFixed, day3Bake: day3BakeFixed, day3Done: done };
+}
+
+function generate() {
+  const dateVal = document.getElementById('startDate').value;
+  if (!dateVal) { alert('Please enter a date.'); return; }
+
+  const h24 = getHour24();
+  const refTime = new Date(`${dateVal}T${pad2(h24)}:${pad2(ckMin)}:00`);
+
+  let s;
+  if (refMode === 'first') {
+    s = buildSchedule(refTime);
+  } else {
+    s = t0FromDone(refTime);
+  }
+
+  const out = document.getElementById('schedule');
+  out.style.display = 'block';
+  out.innerHTML = `
+    ${block(fmtDay(s.day1Feed1), fmtShort(s.day1Feed1), [
+      { t: fmt(s.day1Feed1), title: 'First Feed',            tag: 'key',      desc: 'Remove starter from fridge. Feed with 1:1:1 ratio — 50g starter, 50g flour, 50g water. Leave on counter.' },
+      { t: fmt(s.day1Feed2), title: 'Optional Evening Feed', tag: 'optional', desc: 'If the starter looks active but hungry, do another 1:1:1 feed before bed.' },
+    ])}
+    ${block(fmtDay(s.day2Feed), fmtShort(s.day2Feed), [
+      { t: fmt(s.day2Feed),  title: 'Morning Feed',        tag: 'key', desc: 'Feed starter again with 1:1:1 ratio — 50g starter, 50g flour, 50g water.' },
+      { t: fmt(s.day2Split), title: 'Split the Starter',   tag: '',    desc: 'After 2 hours the starter should be lively. Split in half — put one half back in the fridge for next week.' },
+      { t: fmt(s.day2Mix),   title: 'Mix the Dough',       tag: 'key', desc: 'Combine the remaining starter with 500g flour, 350g water, and 10g salt. Mix until incorporated.' },
+      { t: fmt(s.day2F1),    title: 'Fold #1',             tag: '',    desc: 'Lightly stretch and fold the dough. Cover and rest.' },
+      { t: fmt(s.day2F2),    title: 'Fold #2',             tag: '',    desc: 'Second set of stretch-and-folds. The dough should be getting smoother.' },
+      { t: fmt(s.day2F3),    title: 'Fold #3',             tag: '',    desc: 'Final fold. Leave covered to finish bulk fermentation.' },
+      { t: fmt(s.day2Shape), title: 'Shape & Refrigerate', tag: 'key', desc: 'Shape the dough, place in a banneton or lined bowl, cover and put in the fridge overnight.' },
+    ])}
+    ${block(fmtDay(s.day3Pre), fmtShort(s.day3Pre), [
+      { t: fmt(s.day3Pre),   title: 'Preheat Oven',        tag: 'key', desc: 'Heat oven (with Dutch oven inside if using) to 220°C / 430°F.' },
+      { t: fmt(s.day3Shape), title: 'Final Shape & Score', tag: '',    desc: 'Remove dough from fridge. Do any final shaping, then score the top with a sharp blade.' },
+      { t: fmt(s.day3Bake),  title: 'Bake',                tag: 'key', desc: 'Place dough in hot Dutch oven (or on baking stone). Bake for ~40 minutes until deep golden brown.' },
+      { t: fmt(s.day3Done),  title: 'Done!',               tag: '',    desc: 'Remove from oven. Cool on a wire rack for at least 1 hour before slicing — the crust needs time to set.' },
+    ])}
+    <div class="note-box">
+      <p><strong>Note on timing:</strong> The middle-day afternoon window is flexible — bulk fermentation can run 3–5 hours depending on your kitchen temperature. Warmer kitchens ferment faster. ${refMode === 'done' ? 'The oven and baking times are fixed; the earlier steps have been worked backwards from your target ready time.' : 'Watch the dough, not the clock.'}</p>
+    </div>
+  `;
+
+  out.querySelectorAll('.day-block, .step').forEach((el, i) => {
+    el.style.animationDelay = `${i * 0.06}s`;
+  });
+  out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function block(dayName, dateStr, steps) {
+  return `
+    <div class="day-block">
+      <div class="day-label">${dayName}<span class="day-date">${dateStr}</span></div>
+      ${steps.map(s => `
+        <div class="step">
+          <div class="step-time">${s.t}</div>
+          <div class="step-content">
+            <div class="step-title">
+              ${s.title}
+              ${s.tag === 'key'      ? '<span class="tag tag-key">Key</span>'           : ''}
+              ${s.tag === 'optional' ? '<span class="tag tag-optional">Optional</span>' : ''}
+            </div>
+            <div class="step-desc">${s.desc}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>`;
+}
+
+// Init
+updateDisplay();
+</script>
+</body>
+</html>
