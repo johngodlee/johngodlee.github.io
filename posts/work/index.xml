@@ -13,7 +13,7 @@
       <pubDate>2026-04-03T00:00:00+0000</pubDate>
       
       <guid>http://johngodlee.xyz/posts/work/2026-04-03-plot_polygon_fit/</guid>
-      <description>&lt;p&gt;In a &lt;a href=&#34;&#34;&gt;previous post&lt;/a&gt;
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://johngodlee.xyz/posts/work/2026-03-10-check_plot_coord.html&#34;&gt;A previous post&lt;/a&gt;
  I showed some of the work I&amp;rsquo;ve done to extend the functionality of the &lt;code&gt;check_plot_coord()&lt;/code&gt; function in the &lt;a href=&#34;https://github.com/umr-amap/BIOMASS&#34; target=&#34;_blank&#34;&gt;BIOMASS R package&lt;/a&gt;
 . Since then I have extended the function even more to account for cases where one or more of the plot corners is un-measured, and also cases where the plot is not rectangular (more than four corners). I have also added more checks and messages with feedback for the user. I have renamed the function to &lt;code&gt;plotPolygonFit()&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Firstly, here is how the function performs with various different test datasets:&lt;/p&gt;
