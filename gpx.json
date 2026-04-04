@@ -1,0 +1,116 @@
+{
+	"routes": [
+		{ 
+			"file": "mount_vernon_trail.gpx", 
+			"name": "Mount Vernon Trail",
+			"tags": [ "DC", "Bike path" ]
+		},
+		{ 
+			"file": "nmnh_hains_point.gpx",  
+			"name": "NMNH - Hains Point Loop",
+			"tags": [ "DC" ]
+
+		},
+		{ 
+			"file": "barcs_parks.gpx",  
+			"name": "Barks 'n' Parks",
+			"note": "<a href=\"https://www.twowheelsnotsix.com/barcs-n-parks/\" target=\"_blank\">https://www.twowheelsnotsix.com/barcs-n-parks/</a>"
+		},
+		{ 
+			"file": "mills_ferns.gpx",  
+			"name": "Mills 'n' Ferns",
+			"note": "<a href=\"https://www.twowheelsnotsix.com/mills-ferns/\" target=\"_blank\">https://www.twowheelsnotsix.com/mills-ferns/</a>",
+			"tags": [ "DC", "Off-road" ]
+		},
+		{ 
+			"file": "navy_yard_anacostia_river_trail_capitol_hill.gpx",  
+			"name": "Navy yard, Anacostia River Trail, Capitol Hill",
+			"tags": [ "DC" ]
+		},
+		{ 
+			"file": "anacostia_city_loop.gpx",  
+			"name": "Anacostia City Loop",
+			"tags": [ "DC" ]
+		},
+		{ 
+			"file": "alexandria_potomac_loop.gpx",  
+			"name": "Alexandria, Potomac Loop",
+			"tags": [ "DC" ]
+		},
+		{ 
+			"file": "all_bike_dc_loop.gpx",  
+			"name": "All-bike DC Loop",
+			"tags": [ "DC" ]
+		},
+		{ 
+			"file": "arlington_loop.gpx",  
+			"name": "Arlington Loop",
+			"tags": [ "DC" ]
+		},
+		{ 
+			"file": "buna_ride.gpx",  
+			"name": "Buna Ride",
+			"tags": [ "DC" ]
+		},
+		{ 
+			"file": "dc_anacostia_river_trail_college_park_sligo_creek_rock_creek_park.gpx",  
+			"name": "Anacostia, College Park, Sligo Creek, Rock Creek Park",
+			"tags": [ "DC" ]
+		},
+		{ 
+			"file": "bethesda_potomac_loop.gpx",  
+			"name": "Bethesda, Potomac Loop",
+			"tags": [ "DC" ]
+		},
+		{ 
+			"file": "georgetown_great_falls_co_canal.gpx",  
+			"name": "C&O Canal, Georgetown to Great Falls",
+			"tags": [ "DC", "Off-road" ]
+		},
+		{ 
+			"file": "great_allegheny_passage.gpx",  
+			"name": "Great Allegheny Passage",
+			"tags": [ "Tour" ]
+		},
+		{ 
+			"file": "washington_bealesville.gpx",  
+			"name": "Washington DC to Bealesville",
+			"tags": [ "DC" ]
+		},
+		{ 
+			"file": "edinburgh_inverkeithing.gpx",  
+			"name": "Edinburgh to Inverkeithing",
+			"tags": [ "Edinburgh" ]
+		},
+		{ 
+			"file": "musselburgh_dalkeith_roslin.gpx",  
+			"name": "Musselburgh, Dalkeith, Roslin",
+			"tags": [ "Edinburgh" ]
+		},
+		{ 
+			"file": "slateford_balerno_path.gpx",  
+			"name": "Slateford to Balerno Railway",
+			"tags": [ "Edinburgh" ]
+		},
+		{ 
+			"file": "edinburgh_newhaven_musselburgh.gpx",  
+			"name": "Newhaven, Mussleburgh Loop",
+			"tags": [ "Edinburgh" ]
+		},
+		{ 
+			"file": "edinburgh_pentlands_braid_hills_loop.gpx",  
+			"name": "Edinburgh, Pentland Hills, Braid Hills Loop",
+			"tags": [ "Edinburgh", "Off-road" ]
+		},
+		{ 
+			"file": "edinburgh_west_linton_moor_road.gpx",  
+			"name": "Edinburgh, West Linton on Moor Road",
+			"tags": [ "Edinburgh" ]
+		},
+		{ 
+			"file": "portobello_roseburn_path.gpx",  
+			"name": "Portobello, Roseburn Path Loop",
+			"tags": [ "Edinburgh" ]
+		}
+	]
+}

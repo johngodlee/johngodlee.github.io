@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPX Trail Atlas</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f5f0e8;
+    --paper-dark: #ede7d5;
+    --accent: #c45c26;
+    --accent-light: #e8a07a;
+    --muted: #7a7060;
+    --sidebar-w: 320px;
+    --border: 1px solid rgba(26,26,26,0.12);
+    --shadow: 4px 4px 0px rgba(26,26,26,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--paper);
+    color: var(--ink);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 2px solid var(--ink);
+    background: var(--paper);
+    z-index: 1000;
+    flex-shrink: 0;
+  }
+
+  .logo { display: flex; align-items: baseline; gap: 10px; }
+  .logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .logo span {
+    font-size: 0.65rem;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .status-pill {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--muted);
+    transition: background 0.3s;
+  }
+  .status-dot.loading { background: #e8a02a; animation: pulse 1s infinite; }
+  .status-dot.ready   { background: #4a9a5c; }
+  .status-dot.error   { background: #c43a26; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .app-body { display: flex; flex: 1; overflow: hidden; }
+
+  .sidebar {
+    width: var(--sidebar-w);
+    border-right: 2px solid var(--ink);
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .sidebar-header {
+    padding: 14px 16px;
+    border-bottom: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar-header h2 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .route-count {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.6rem;
+    padding: 2px 7px;
+    letter-spacing: 0.05em;
+  }
+
+  .route-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .route-list::-webkit-scrollbar { width: 4px; }
+  .route-list::-webkit-scrollbar-thumb { background: var(--muted); }
+
+  .route-item {
+    border: var(--border);
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    background: var(--paper);
+    position: relative;
+  }
+  .route-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.12s;
+  }
+  .route-item:hover { background: var(--paper-dark); transform: translateX(2px); }
+  .route-item:hover::before { background: var(--accent-light); }
+  .route-item.active { background: var(--paper-dark); border-color: var(--accent); box-shadow: 3px 3px 0 rgba(196,92,38,0.15); }
+  .route-item.active::before { background: var(--accent); }
+  .route-item.loading-item { opacity: 0.45; cursor: default; animation: shimmer 1.2s infinite; }
+  @keyframes shimmer { 0%,100%{opacity:0.45} 50%{opacity:0.2} }
+
+  .route-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .route-meta { display: flex; gap: 12px; font-size: 0.62rem; color: var(--muted); font-weight: 300; }
+  .color-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--muted);
+    padding: 20px;
+    text-align: center;
+  }
+  .empty-state p { font-size: 0.72rem; letter-spacing: 0.06em; line-height: 1.8; }
+  .empty-state code { background: var(--paper-dark); padding: 1px 5px; font-size: 0.68rem; }
+
+  .detail-panel {
+    border-top: 2px solid var(--ink);
+    padding: 14px 16px;
+    background: var(--paper-dark);
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .detail-panel.visible { display: flex; }
+  .detail-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; line-height: 1.2; }
+  .detail-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .stat-box { background: var(--paper); border: var(--border); padding: 8px 10px; }
+  .stat-label { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 2px; }
+  .stat-value { font-size: 0.9rem; font-weight: 500; }
+
+  .download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 3px 3px 0 rgba(196,92,38,0.3);
+    width: 100%;
+  }
+  .download-btn:hover { background: #a84d1f; transform: translate(-1px,-1px); box-shadow: 4px 4px 0 rgba(196,92,38,0.4); }
+  .download-btn svg { width: 14px; height: 14px; }
+
+  #map { flex: 1; background: var(--paper-dark); }
+
+  .leaflet-popup-content-wrapper {
+    background: var(--paper) !important;
+    border: 2px solid var(--ink) !important;
+    border-radius: 0 !important;
+    box-shadow: 4px 4px 0 rgba(26,26,26,0.2) !important;
+    font-family: 'DM Mono', monospace !important;
+    padding: 0 !important;
+  }
+  .leaflet-popup-content { margin: 0 !important; }
+  .leaflet-popup-tip { display: none !important; }
+  .leaflet-popup-close-button { color: var(--ink) !important; font-size: 14px !important; padding: 6px 8px !important; }
+
+  .popup-content { padding: 12px 14px; min-width: 180px; }
+  .popup-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+  .popup-meta { font-size: 0.62rem; color: var(--muted); margin-bottom: 10px; line-height: 1.7; }
+  .popup-actions { display: flex; gap: 6px; }
+  .popup-btn {
+    flex: 1; padding: 6px 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: var(--border);
+    cursor: pointer;
+    background: var(--paper-dark);
+    color: var(--ink);
+  }
+  .popup-btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+  .popup-btn:hover { opacity: 0.8; }
+
+  .toast {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    z-index: 9999;
+    animation: toastIn 0.2s ease, toastOut 0.3s ease 2.2s forwards;
+    box-shadow: var(--shadow);
+  }
+  @keyframes toastIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes toastOut { to{opacity:0;transform:translateY(10px)} }
+  .leaflet-control-attribution { font-size: 9px !important; }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border: var(--border);
+    color: var(--muted);
+    background: var(--paper);
+  }
+  .detail-tags, .popup-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  /* Note */
+  .detail-note {
+    font-size: 0.72rem;
+    color: var(--ink);
+    line-height: 1.6;
+    font-style: italic;
+    border-left: 2px solid var(--accent-light);
+    padding-left: 8px;
+  }
+  .popup-note {
+    font-size: 0.65rem;
+    color: var(--muted);
+    line-height: 1.6;
+    font-style: italic;
+    border-left: 2px solid var(--accent-light);
+    padding-left: 7px;
+    margin-bottom: 4px;
+  }
+
+  /* Tag filter bar */
+  .tag-filter {
+    padding: 8px;
+    border-bottom: var(--border);
+    display: none;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .tag-filter.visible { display: flex; }
+  .filter-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: var(--border);
+    color: var(--muted);
+    background: var(--paper);
+    cursor: pointer;
+    transition: all 0.12s;
+    user-select: none;
+  }
+  .filter-tag:hover { background: var(--paper-dark); color: var(--ink); }
+  .filter-tag.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .route-item.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>GPX Trail Atlas</h1>
+    <span>Route Visualiser</span>
+  </div>
+  <div class="status-pill">
+    <div class="status-dot loading" id="statusDot"></div>
+    <span id="statusText">Loading routes…</span>
+  </div>
+</header>
+
+<div class="app-body">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Routes</h2>
+      <span class="route-count" id="routeCount">—</span>
+    </div>
+    <div class="tag-filter" id="tagFilter"></div>
+    <div class="route-list" id="routeList">
+      <div class="empty-state" id="emptyState">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.3">
+          <path d="M3 7l6-4 6 4 6-4v14l-6 4-6-4-6 4V7z"/>
+          <path d="M9 3v14M15 7v14"/>
+        </svg>
+        <p>Loading routes…</p>
+      </div>
+    </div>
+    <div class="detail-panel" id="detailPanel">
+      <div class="detail-title" id="detailTitle"></div>
+      <div id="detailMeta"></div>
+      <div class="detail-stats" id="detailStats"></div>
+      <button class="download-btn" id="downloadBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7,10 12,15 17,10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download GPX
+      </button>
+    </div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// CONFIGURATION
+// GPX files must be listed in /data/gpx.json
+// (Hugo generates this from data/gpx.yaml)
+// ─────────────────────────────────────────────
+const MANIFEST_URL = '/gpx.json';
+const GPX_BASE     = '/gpx/';
+
+const COLORS = [
+  '#c45c26','#2d6a9f','#3a8a5c','#8b4a8b',
+  '#c4a226','#26a4c4','#8a3a3a','#3a5a8a',
+  '#6a8a3a','#8a6a3a','#3a8a8a','#8a3a6a'
+];
+
+const routes = [];
+let selectedIndex = null;
+let map;
+
+// ── MAP ──────────────────────────────────────
+function initMap() {
+  map = L.map('map').setView([40, 0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
+    maxZoom: 19
+  }).addTo(map);
+}
+
+// ── GPX PARSING ──────────────────────────────
+function parseGPX(text) {
+  const doc = new DOMParser().parseFromString(text, 'text/xml');
+  const points = [];
+  doc.querySelectorAll('trkpt').forEach(pt => {
+    const eleEl = pt.querySelector('ele'), timeEl = pt.querySelector('time');
+    points.push({
+      lat:  parseFloat(pt.getAttribute('lat')),
+      lon:  parseFloat(pt.getAttribute('lon')),
+      ele:  eleEl  ? parseFloat(eleEl.textContent)   : null,
+      time: timeEl ? new Date(timeEl.textContent)     : null
+    });
+  });
+  if (!points.length) {
+    doc.querySelectorAll('rtept').forEach(pt =>
+      points.push({ lat: parseFloat(pt.getAttribute('lat')), lon: parseFloat(pt.getAttribute('lon')), ele: null, time: null })
+    );
+  }
+  const nameEl = doc.querySelector('trk > name') || doc.querySelector('name');
+  return { points, gpxName: nameEl ? nameEl.textContent.trim() : null };
+}
+
+function haversineKm(a, b) {
+  const R = 6371, dLat=(b.lat-a.lat)*Math.PI/180, dLon=(b.lon-a.lon)*Math.PI/180;
+  const s = Math.sin(dLat/2)**2 + Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1-s));
+}
+
+function computeStats(points) {
+  let distKm=0, gainM=0, lossM=0, minEle=Infinity, maxEle=-Infinity;
+  for (let i=1; i<points.length; i++) {
+    distKm += haversineKm(points[i-1], points[i]);
+    if (points[i].ele !== null && points[i-1].ele !== null) {
+      const d = points[i].ele - points[i-1].ele;
+      if (d > 0) gainM += d; else lossM += Math.abs(d);
+      minEle = Math.min(minEle, points[i].ele, points[i-1].ele);
+      maxEle = Math.max(maxEle, points[i].ele, points[i-1].ele);
+    }
+  }
+  const first = points.find(p=>p.time), last=[...points].reverse().find(p=>p.time);
+  let duration = null;
+  if (first && last) {
+    const m = Math.round((last.time-first.time)/60000);
+    duration = m < 60 ? `${m} min` : `${Math.floor(m/60)}h ${m%60}m`;
+  }
+  return {
+    distKm: distKm.toFixed(2), distMi: (distKm*0.621371).toFixed(2),
+    gainM: gainM<1 ? null : Math.round(gainM),
+    lossM: lossM<1 ? null : Math.round(lossM),
+    minEle: minEle===Infinity ? null : Math.round(minEle),
+    maxEle: maxEle===-Infinity ? null : Math.round(maxEle),
+    pointCount: points.length, duration
+  };
+}
+
+// ── BOOT ─────────────────────────────────────
+async function loadAllRoutes() {
+  setStatus('loading', 'Loading routes…');
+
+  // Hugo serves data files as JSON at /data/<filename>.json
+  let manifest;
+  try {
+    const res = await fetch(MANIFEST_URL);
+    if (!res.ok) throw new Error(res.status);
+    manifest = await res.json();
+  } catch (e) {
+    setStatus('error', 'Manifest not found');
+    showError(
+      `Could not fetch <code>${MANIFEST_URL}</code>.<br><br>` +
+      `Make sure <code>data/gpx.yaml</code> exists in your Hugo project.`
+    );
+    return;
+  }
+
+  const list = manifest.routes || manifest;
+  if (!list.length) {
+    setStatus('error', 'No routes listed');
+    showError('Add entries to <code>data/gpx.yaml</code>.');
+    return;
+  }
+
+  document.getElementById('emptyState')?.remove();
+  list.forEach((entry, i) => addSkeletonItem(i, entry.name || entry.file));
+
+  const results = await Promise.allSettled(list.map(entry => fetchRoute(entry)));
+
+  let loaded = 0;
+  results.forEach((result, i) => {
+    const skeleton = document.getElementById(`skeleton-${i}`);
+    if (result.status === 'fulfilled') {
+      skeleton?.remove();
+      addRouteToMap(result.value);
+      loaded++;
+    } else {
+      if (skeleton) {
+        skeleton.innerHTML = `<div class="route-name" style="color:var(--accent);opacity:0.6">⚠ ${list[i].file}</div><div class="route-meta">Failed to load</div>`;
+        skeleton.classList.remove('loading-item');
+      }
+    }
+  });
+
+  document.getElementById('routeCount').textContent = loaded;
+  if (!loaded) { setStatus('error', 'No routes loaded'); return; }
+
+  setStatus('ready', `${loaded} route${loaded!==1?'s':''} loaded`);
+
+  const allBounds = L.featureGroup(routes.map(r => r.polyline)).getBounds();
+  map.fitBounds(allBounds, { padding: [40,40] });
+  buildTagFilter();
+  if (loaded === 1) selectRoute(0);
+}
+
+async function fetchRoute(entry) {
+  const url = GPX_BASE + entry.file;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${res.status} ${url}`);
+  const text = await res.text();
+  const { points, gpxName } = parseGPX(text);
+  if (points.length < 2) throw new Error('Too few points');
+  return {
+    file:  entry.file,
+    name:  entry.name  || gpxName || entry.file.replace(/\.gpx$/i, ''),
+    note:  entry.note  || null,
+    tags:  entry.tags  || [],
+    url:   entry.url   || null,   // optional external link
+    points, text
+  };
+}
+
+function addRouteToMap(data) {
+  const color = COLORS[routes.length % COLORS.length];
+  const stats  = computeStats(data.points);
+  const latlngs = data.points.map(p => [p.lat, p.lon]);
+  const polyline = L.polyline(latlngs, { color, weight: 3, opacity: 0.85, smoothFactor: 1.5 }).addTo(map);
+  const idx = routes.length;
+  polyline.on('click',     () => selectRoute(idx));
+  polyline.on('mouseover', () => { if (selectedIndex!==idx) polyline.setStyle({weight:5,opacity:1}); });
+  polyline.on('mouseout',  () => { if (selectedIndex!==idx) polyline.setStyle({weight:3,opacity:0.85}); });
+  routes.push({ ...data, color, polyline, latlngs, stats });
+  addRouteItem(routes.length - 1);
+}
+
+// ── SIDEBAR ───────────────────────────────────
+function addSkeletonItem(i, name) {
+  const el = document.createElement('div');
+  el.className = 'route-item loading-item';
+  el.id = `skeleton-${i}`;
+  el.innerHTML = `<div class="route-name">${name}</div><div class="route-meta">Fetching…</div>`;
+  document.getElementById('routeList').appendChild(el);
+}
+
+function addRouteItem(idx) {
+  const r = routes[idx];
+  const el = document.createElement('div');
+  el.className = 'route-item';
+  el.id = `route-item-${idx}`;
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:4px">
+      <span class="color-dot" style="background:${r.color}"></span>
+      <div class="route-name">${r.name}</div>
+    </div>
+    <div class="route-meta">
+      <span>⬡ ${r.stats.distKm} km</span>
+      ${r.stats.gainM ? `<span>↑ ${r.stats.gainM}m</span>` : ''}
+      <span>· ${r.stats.pointCount.toLocaleString()} pts</span>
+    </div>`;
+  el.onclick = () => selectRoute(idx);
+  document.getElementById('routeList').appendChild(el);
+}
+
+// ── SELECTION ─────────────────────────────────
+function selectRoute(idx) {
+  if (selectedIndex !== null) {
+    routes[selectedIndex].polyline.setStyle({weight:3,opacity:0.85});
+    document.getElementById(`route-item-${selectedIndex}`)?.classList.remove('active');
+  }
+  selectedIndex = idx;
+  const r = routes[idx];
+  r.polyline.setStyle({weight:5,opacity:1});
+  document.getElementById(`route-item-${idx}`)?.classList.add('active');
+  document.getElementById(`route-item-${idx}`)?.scrollIntoView({behavior:'smooth',block:'nearest'});
+
+  document.getElementById('detailPanel').classList.add('visible');
+  document.getElementById('detailTitle').textContent = r.name;
+  const s = r.stats;
+
+  // Tags row
+  const tagsHtml = r.tags.length
+    ? `<div class="detail-tags">${r.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+    : '';
+
+  // Note
+  const noteHtml = r.note
+    ? `<div class="detail-note">${r.note}</div>`
+    : '';
+
+  document.getElementById('detailMeta').innerHTML = tagsHtml + noteHtml;
+
+  const statDefs = [
+    { label:'Distance',     value:`${s.distKm} km` },
+    { label:'Distance',     value:`${s.distMi} mi` },
+    s.gainM    ? { label:'Elev. Gain', value:`${s.gainM} m`  } : null,
+    s.lossM    ? { label:'Elev. Loss', value:`${s.lossM} m`  } : null,
+    s.minEle   ? { label:'Min Elev.',  value:`${s.minEle} m` } : null,
+    s.maxEle   ? { label:'Max Elev.',  value:`${s.maxEle} m` } : null,
+    s.duration ? { label:'Duration',   value:s.duration       } : null,
+    { label:'Track Points', value:s.pointCount.toLocaleString() },
+  ].filter(Boolean).slice(0,6);
+
+  document.getElementById('detailStats').innerHTML = statDefs.map(d =>
+    `<div class="stat-box"><div class="stat-label">${d.label}</div><div class="stat-value">${d.value}</div></div>`
+  ).join('');
+
+  document.getElementById('downloadBtn').onclick = () => downloadRoute(idx);
+  map.flyToBounds(r.polyline.getBounds(), {padding:[60,60],duration:0.8});
+
+  const mid = r.latlngs[Math.floor(r.latlngs.length/2)];
+  L.popup({closeButton:true,offset:[0,-4]})
+    .setLatLng(mid)
+    .setContent(`
+      <div class="popup-content">
+        <div class="popup-name">${r.name}</div>
+        ${r.tags.length ? `<div class="popup-tags">${r.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>` : ''}
+        <div class="popup-meta">
+          ${s.distKm} km &nbsp;·&nbsp; ${s.distMi} mi
+          ${s.gainM ? `&nbsp;·&nbsp; ↑ ${s.gainM}m` : ''}
+          ${s.duration ? `&nbsp;·&nbsp; ${s.duration}` : ''}
+        </div>
+        ${r.note ? `<div class="popup-note">${r.note}</div>` : ''}
+        <div class="popup-actions">
+          <button class="popup-btn" onclick="map.closePopup()">Close</button>
+          ${r.url ? `<a class="popup-btn" href="${r.url}" target="_blank" rel="noopener">↗ Info</a>` : ''}
+          <button class="popup-btn primary" onclick="downloadRoute(${idx})">↓ Download</button>
+        </div>
+      </div>`)
+    .openOn(map);
+}
+
+
+// ── DOWNLOAD ──────────────────────────────────
+function downloadRoute(idx) {
+  const r = routes[idx];
+  const a = document.createElement('a');
+  a.href = GPX_BASE + r.file;
+  a.download = r.file;
+  a.click();
+  showToast(`Downloading ${r.file}`);
+}
+
+// ── HELPERS ───────────────────────────────────
+function setStatus(state, text) {
+  document.getElementById('statusDot').className = 'status-dot ' + state;
+  document.getElementById('statusText').textContent = text;
+}
+
+function showError(html) {
+  document.getElementById('emptyState')?.remove();
+  const el = document.createElement('div');
+  el.className = 'empty-state';
+  el.innerHTML = `
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c45c26" stroke-width="1.5" style="opacity:0.6">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <p style="color:var(--accent)">${html}</p>`;
+  document.getElementById('routeList').appendChild(el);
+}
+
+function showToast(msg) {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2600);
+}
+
+// ── TAG FILTER ────────────────────────────────
+let activeTags = new Set();
+
+function buildTagFilter() {
+  const allTags = [...new Set(routes.flatMap(r => r.tags))].sort();
+  const bar = document.getElementById('tagFilter');
+  if (!allTags.length) { bar.classList.remove('visible'); return; }
+  bar.classList.add('visible');
+  bar.innerHTML = allTags.map(t =>
+    `<span class="filter-tag" data-tag="${t}" onclick="toggleTag('${t}')">${t}</span>`
+  ).join('');
+}
+
+function toggleTag(tag) {
+  if (activeTags.has(tag)) {
+    activeTags.delete(tag);
+  } else {
+    activeTags.add(tag);
+  }
+  // Update pill appearance
+  document.querySelectorAll('.filter-tag').forEach(el => {
+    el.classList.toggle('active', activeTags.has(el.dataset.tag));
+  });
+  applyFilter();
+}
+
+function applyFilter() {
+  routes.forEach((r, idx) => {
+    const el = document.getElementById(`route-item-${idx}`);
+    if (!el) return;
+    const visible = activeTags.size === 0 || (r.tags.length > 0 && [...activeTags].every(t => r.tags.includes(t)));
+    el.classList.toggle('hidden', !visible);
+    // Dim/show polyline on map too
+    if (visible) {
+      r.polyline.setStyle({ opacity: selectedIndex === idx ? 1 : 0.85, weight: selectedIndex === idx ? 5 : 3 });
+    } else {
+      r.polyline.setStyle({ opacity: 0.08, weight: 2 });
+      // Deselect if the selected route is now filtered out
+      if (selectedIndex === idx) {
+        selectedIndex = null;
+        document.getElementById('detailPanel').classList.remove('visible');
+        map.closePopup();
+      }
+    }
+  });
+  // Update count
+  const visible = routes.filter((r, idx) => !document.getElementById(`route-item-${idx}`)?.classList.contains('hidden')).length;
+  document.getElementById('routeCount').textContent = activeTags.size ? `${visible}/${routes.length}` : routes.length;
+}
+
+initMap();
+loadAllRoutes();
+</script>
+</body>
+</html>
