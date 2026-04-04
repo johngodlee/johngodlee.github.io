@@ -388,10 +388,17 @@ let map;
 // ── MAP ──────────────────────────────────────
 function initMap() {
   map = L.map('map').setView([40, 0], 2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a> © <a href="https://carto.com">CARTO</a>',
+    subdomains: 'abcd',
     maxZoom: 19
   }).addTo(map);
+  // Deselect only on explicit user clicks on the map background (not on routes)
+  map.on('click', (e) => {
+    if (e.originalEvent._fromRoute) return; // click originated on a polyline
+    deselect();
+    map.closePopup();
+  });
 }
 
 // ── GPX PARSING ──────────────────────────────
@@ -529,9 +536,12 @@ function addRouteToMap(data) {
   const latlngs = data.points.map(p => [p.lat, p.lon]);
   const polyline = L.polyline(latlngs, { color, weight: 3, opacity: 0.85, smoothFactor: 1.5 }).addTo(map);
   const idx = routes.length;
-  polyline.on('click',     () => selectRoute(idx));
-  polyline.on('mouseover', () => { if (selectedIndex!==idx) polyline.setStyle({weight:5,opacity:1}); });
-  polyline.on('mouseout',  () => { if (selectedIndex!==idx) polyline.setStyle({weight:3,opacity:0.85}); });
+  polyline.on('click', (e) => {
+    e.originalEvent._fromRoute = true;
+    selectRoute(idx);
+  });
+  polyline.on('mouseover', () => { if (selectedIndex !== idx) polyline.setStyle({weight: 2.5, opacity: 0.7}); });
+  polyline.on('mouseout',  () => { if (selectedIndex !== idx) applySelectionStyles(); });
   routes.push({ ...data, color, polyline, latlngs, stats });
   addRouteItem(routes.length - 1);
 }
@@ -565,14 +575,29 @@ function addRouteItem(idx) {
 }
 
 // ── SELECTION ─────────────────────────────────
+function applySelectionStyles() {
+  routes.forEach((r, i) => {
+    if (i === selectedIndex) {
+      r.polyline.setStyle({weight: 5, opacity: 1});
+    } else {
+      r.polyline.setStyle({weight: selectedIndex !== null ? 1.5 : 3,
+                           opacity: selectedIndex !== null ? 0.35 : 0.85});
+    }
+  });
+}
+
+function deselect() {
+  selectedIndex = null;
+  document.querySelectorAll('.route-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('detailPanel').classList.remove('visible');
+  applySelectionStyles();
+}
+
 function selectRoute(idx) {
-  if (selectedIndex !== null) {
-    routes[selectedIndex].polyline.setStyle({weight:3,opacity:0.85});
-    document.getElementById(`route-item-${selectedIndex}`)?.classList.remove('active');
-  }
+  document.getElementById(`route-item-${selectedIndex}`)?.classList.remove('active');
   selectedIndex = idx;
   const r = routes[idx];
-  r.polyline.setStyle({weight:5,opacity:1});
+  applySelectionStyles();
   document.getElementById(`route-item-${idx}`)?.classList.add('active');
   document.getElementById(`route-item-${idx}`)?.scrollIntoView({behavior:'smooth',block:'nearest'});
 
@@ -624,7 +649,6 @@ function selectRoute(idx) {
         </div>
         ${r.note ? `<div class="popup-note">${r.note}</div>` : ''}
         <div class="popup-actions">
-          <button class="popup-btn" onclick="map.closePopup()">Close</button>
           ${r.url ? `<a class="popup-btn" href="${r.url}" target="_blank" rel="noopener">↗ Info</a>` : ''}
           <button class="popup-btn primary" onclick="downloadRoute(${idx})">↓ Download</button>
         </div>
