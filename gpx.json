@@ -3,114 +3,161 @@
 		{ 
 			"file": "mount_vernon_trail.gpx", 
 			"name": "Mount Vernon Trail",
-			"tags": [ "DC", "Bike path" ]
+			"tags": [ "DC", "Bike path", "Ridden", "USA" ]
 		},
 		{ 
 			"file": "nmnh_hains_point.gpx",  
 			"name": "NMNH - Hains Point Loop",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "Ridden", "USA" ]
 
 		},
 		{ 
 			"file": "barcs_parks.gpx",  
 			"name": "Barks 'n' Parks",
-			"note": "<a href=\"https://www.twowheelsnotsix.com/barcs-n-parks/\" target=\"_blank\">https://www.twowheelsnotsix.com/barcs-n-parks/</a>"
+			"note": "<a href=\"https://www.twowheelsnotsix.com/barcs-n-parks/\" target=\"_blank\">https://www.twowheelsnotsix.com/barcs-n-parks/</a>",
+			"tags": [ "DC", "Ridden", "USA" ]
 		},
 		{ 
 			"file": "mills_ferns.gpx",  
 			"name": "Mills 'n' Ferns",
 			"note": "<a href=\"https://www.twowheelsnotsix.com/mills-ferns/\" target=\"_blank\">https://www.twowheelsnotsix.com/mills-ferns/</a>",
-			"tags": [ "DC", "Off-road" ]
+			"tags": [ "DC", "Off-road", "Ridden", "USA" ]
 		},
 		{ 
 			"file": "navy_yard_anacostia_river_trail_capitol_hill.gpx",  
 			"name": "Navy yard, Anacostia River Trail, Capitol Hill",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "Bike path", "Ridden", "USA" ]
 		},
 		{ 
 			"file": "anacostia_city_loop.gpx",  
 			"name": "Anacostia City Loop",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "Bike path", "Ridden", "USA" ]
 		},
 		{ 
 			"file": "alexandria_potomac_loop.gpx",  
 			"name": "Alexandria, Potomac Loop",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "USA" ]
 		},
 		{ 
 			"file": "all_bike_dc_loop.gpx",  
 			"name": "All-bike DC Loop",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "USA" ]
 		},
 		{ 
 			"file": "arlington_loop.gpx",  
 			"name": "Arlington Loop",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "Bike path", "Ridden", "USA" ]
 		},
 		{ 
 			"file": "buna_ride.gpx",  
 			"name": "Buna Ride",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "Bike path", "USA" ]
 		},
 		{ 
 			"file": "dc_anacostia_river_trail_college_park_sligo_creek_rock_creek_park.gpx",  
 			"name": "Anacostia, College Park, Sligo Creek, Rock Creek Park",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "Bike path", "Ridden", "USA" ]
 		},
 		{ 
 			"file": "bethesda_potomac_loop.gpx",  
 			"name": "Bethesda, Potomac Loop",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "USA" ]
 		},
 		{ 
 			"file": "georgetown_great_falls_co_canal.gpx",  
 			"name": "C&O Canal, Georgetown to Great Falls",
-			"tags": [ "DC", "Off-road" ]
+			"tags": [ "DC", "Off-road", "Bike path", "USA" ]
 		},
 		{ 
 			"file": "great_allegheny_passage.gpx",  
 			"name": "Great Allegheny Passage",
-			"tags": [ "Tour" ]
+			"tags": [ "Tour", "USA" ]
 		},
 		{ 
 			"file": "washington_bealesville.gpx",  
 			"name": "Washington DC to Bealesville",
-			"tags": [ "DC" ]
+			"tags": [ "DC", "USA" ]
 		},
 		{ 
 			"file": "edinburgh_inverkeithing.gpx",  
 			"name": "Edinburgh to Inverkeithing",
-			"tags": [ "Edinburgh" ]
+			"tags": [ "Edinburgh", "Ridden", "UK" ]
 		},
 		{ 
 			"file": "musselburgh_dalkeith_roslin.gpx",  
 			"name": "Musselburgh, Dalkeith, Roslin",
-			"tags": [ "Edinburgh" ]
+			"tags": [ "Edinburgh", "Bike path", "Ridden", "UK" ]
 		},
 		{ 
 			"file": "slateford_balerno_path.gpx",  
 			"name": "Slateford to Balerno Railway",
-			"tags": [ "Edinburgh" ]
+			"tags": [ "Edinburgh", "Bike path", "Ridden", "UK" ]
 		},
 		{ 
 			"file": "edinburgh_newhaven_musselburgh.gpx",  
 			"name": "Newhaven, Mussleburgh Loop",
-			"tags": [ "Edinburgh" ]
+			"tags": [ "Edinburgh", "Ridden", "UK" ]
 		},
 		{ 
 			"file": "edinburgh_pentlands_braid_hills_loop.gpx",  
 			"name": "Edinburgh, Pentland Hills, Braid Hills Loop",
-			"tags": [ "Edinburgh", "Off-road" ]
+			"tags": [ "Edinburgh", "Off-road", "Ridden", "UK" ]
 		},
 		{ 
 			"file": "edinburgh_west_linton_moor_road.gpx",  
 			"name": "Edinburgh, West Linton on Moor Road",
-			"tags": [ "Edinburgh" ]
+			"tags": [ "Edinburgh", "UK" ]
 		},
 		{ 
 			"file": "portobello_roseburn_path.gpx",  
 			"name": "Portobello, Roseburn Path Loop",
-			"tags": [ "Edinburgh" ]
+			"tags": [ "Edinburgh", "Bike path", "Ridden", "UK" ]
+		},
+		{ 
+			"file": "caledonia_way.gpx",  
+			"name": "Caledonian Way",
+			"tags": [ "Tour", "UK" ]
+		},
+		{ 
+			"file": "edinburgh_inverness.gpx",  
+			"name": "Edinburgh to Inverness",
+			"tags": [ "Tour", "UK" ]
+		},
+		{ 
+			"file": "five_ferries.gpx",  
+			"name": "Five Ferries Loop",
+			"tags": [ "Tour", "UK" ]
+		},
+		{ 
+			"file": "forth_clyde_canal_edinburgh_glasgow_ncn754.gpx",  
+			"name": "Forth-Clyde Canal Edinburgh to Glasgow NCN754",
+			"tags": [ "Tour", "Bike path", "UK", "NCN" ]
+		},
+		{ 
+			"file": "hebridean_way.gpx",  
+			"name": "Hebridean Way",
+			"tags": [ "Tour", "UK" ]
+		},
+		{ 
+			"file": "john_muir_way.gpx",  
+			"name": "John Muir Way",
+			"tags": [ "Tour", "UK" ]
+		},
+		{ 
+			"file": "north_coast_500.gpx",  
+			"name": "North Coast 500",
+			"tags": [ "Tour", "UK" ]
+		},
+		{ 
+			"file": "route_75_greenock_edinburgh.gpx",  
+			"name": "Greenock to Edinburgh NCN75",
+			"tags": [ "Tour", "UK", "NCN" ]
+		},
+		{ 
+			"file": "edinburgh_langthorne.gpx",  
+			"name": "Edinburgh to Langthorne",
+			"note": "NCN: 76, 1, 65",
+			"tags": [ "Tour", "UK", "NCN", "Ridden" ]
 		}
 	]
 }
