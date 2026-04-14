@@ -54,8 +54,13 @@
 			"tags": [ "DC", "Bike path", "USA" ]
 		},
 		{ 
-			"file": "dc_anacostia_river_trail_college_park_sligo_creek_rock_creek_park.gpx",  
+			"file": "anacostia_river_trail_college_park_sligo_creek_rock_creek_park.gpx",  
 			"name": "Anacostia, College Park, Sligo Creek, Rock Creek Park",
+			"tags": [ "DC", "Bike path", "Ridden", "USA" ]
+		},
+		{ 
+			"file": "anacostia_river_trail_college_park_sligo_creek_mbt.gpx",  
+			"name": "Anacostia, College Park, Sligo Creek, MBT",
 			"tags": [ "DC", "Bike path", "Ridden", "USA" ]
 		},
 		{ 
