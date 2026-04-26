@@ -3,13 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2026-04-04T00:00:00+00:00</lastmod>
+    <lastmod>2026-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2026-04-04T00:00:00+00:00</lastmod>
+    <lastmod>2026-04-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/personal/2026-04-26-google_takeout_maps/</loc>
+    <lastmod>2026-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/personal/</loc>
-    <lastmod>2026-04-04T00:00:00+00:00</lastmod>
+    <lastmod>2026-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/personal/2026-04-04-gpx_app/</loc>
     <lastmod>2026-04-04T00:00:00+00:00</lastmod>
@@ -1018,8 +1021,6 @@
   </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/</loc>
   </url><url>
-    <loc>http://johngodlee.xyz/recipes/bread/meloui_bread/</loc>
-  </url><url>
     <loc>http://johngodlee.xyz/recipes/dessert/quick_sponge/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/misc/</loc>
@@ -1064,7 +1065,7 @@
   </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/refried_beans/</loc>
   </url><url>
-    <loc>http://johngodlee.xyz/recipes/dessert/savoury_scones/</loc>
+    <loc>http://johngodlee.xyz/recipes/bread/savoury_scones/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/mains/pork_carnitas/</loc>
   </url><url>

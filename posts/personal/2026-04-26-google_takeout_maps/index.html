@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John L. Godlee</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">John L. Godlee</a></li>
+      
+      <li><a href="/files/cv/john_l_godlee_cv.pdf">CV</a></li>
+      
+      <li><a href="/works">Works</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+
+<div>
+<h1>Lat-lon coordinates from Google Takeout for Saved Places</h1>
+
+<h2>2026-04-26</h2>
+</div>
+
+<main>
+<p>I have lots of custom lists on Google Maps to journal places I&rsquo;ve visited. I wanted to create an offline backup of these lists, just in case my Google account ever gets lost. <a href="">Google Takeout</a>
+ allows you to export these lists, but inconveniently these exports don&rsquo;t include the lat-lon coordinates of the saved places, just a URL and the name of the place.</p>
+<p>There are a few websites like <a href="https://exportgooglemaps.com/" target="_blank">Export Google Maps</a>
+ and <a href="https://www.takeout-tools.com/" target="_blank">Takeout Tools</a>
+ that can process Google Maps URLs, but they both have their drawbacks. Export Google Maps has an extremely slow processing time based on a queue system; I was quoted 18 days to process one file. Takeout Tools is a paid service, and this isn&rsquo;t something I care about enough to pay for.</p>
+<p>In the end I wrote an R script using the <a href="https://symbolixau.github.io/googleway/" target="_blank">googleway</a>
+ package hooked up to the <a href="https://developers.google.com/maps/documentation/geocoding/guides-v3/overview" target="_blank">Google Geocoding API</a>
+. The <code>geocode_url()</code> function in the script first tests whether a URL can be reached, extracts the place name from the Google Maps URL, uses <code>googleway::google_geocode()</code> to query the place name, and finally extracts additional information from the API query including the lat-lon coordinates, place name, address, and Plus Code. I&rsquo;m using <a href="https://www.passwordstore.org/" target="_blank">pass-cli</a>
+ to manage my API key, but this part of the script could be replaced to have the API key hard-coded as a variable.</p>
+<p>This is the form of the URLs returned by Google Takeout:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Place name</th>
+          <th>URL</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>The Phillips Collection</td>
+          <td><a href="https://www.google.com/maps/place/The&#43;Phillips&#43;Collection/data=!4m2!3m1!1s0x89b7b7c8c18d1011:0x5ebf642c05a560f7" target="_blank">https://www.google.com/maps/place/The+Phillips+Collection/data=!4m2!3m1!1s0x89b7b7c8c18d1011:0x5ebf642c05a560f7</a>
+</td>
+      </tr>
+      <tr>
+          <td>National Building Museum</td>
+          <td><a href="https://www.google.com/maps/place/National&#43;Building&#43;Museum/data=!4m2!3m1!1s0x89b7b78ee8345b73:0x48233bd191725f45" target="_blank">https://www.google.com/maps/place/National+Building+Museum/data=!4m2!3m1!1s0x89b7b78ee8345b73:0x48233bd191725f45</a>
+</td>
+      </tr>
+      <tr>
+          <td>The Yards</td>
+          <td><a href="https://www.google.com/maps/place/The&#43;Yards/data=!4m2!3m1!1s0x89b7b9d7207fab4f:0x4ea43e59870c19cc" target="_blank">https://www.google.com/maps/place/The+Yards/data=!4m2!3m1!1s0x89b7b9d7207fab4f:0x4ea43e59870c19cc</a>
+</td>
+      </tr>
+      <tr>
+          <td>Rock Creek Park</td>
+          <td><a href="https://www.google.com/maps/place/Rock&#43;Creek&#43;Park/data=!4m2!3m1!1s0x89b7c8f06a225943:0x601267b7d15c622d" target="_blank">https://www.google.com/maps/place/Rock+Creek+Park/data=!4m2!3m1!1s0x89b7c8f06a225943:0x601267b7d15c622d</a>
+</td>
+      </tr>
+  </tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Extract lat-lon coordinates from Google Maps URL</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># John L. Godlee (johngodlee@gmail.com)</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Last updated: 2026-04-26</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">httr2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">googleway</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Call &#39;pass&#39; to get API key</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">api_key</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">trimws</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">system2</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;pass&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">args</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">c</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;show&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;google_geocoding_api_key&#34;</span><span style="color:#000;font-weight:bold">),</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#000">stdout</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">TRUE</span><span style="color:#000;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Check if key retrieved successfully </span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">api_key</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#000">api_key</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">stop</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Failed to retrieve API key from pass.&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Set API key</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">set_key</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">api_key</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Define function</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">geocode_url</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">url</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Expand URL </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">resp</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">tryCatch</span><span style="color:#000;font-weight:bold">({</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">req</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">request</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">url</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">req_perform</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">req</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">},</span> <span style="color:#000">error</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">e</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">message</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Failed to resolve URL (Dead link/Timeout): &#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">url</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">NULL</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">})</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Standardise failure output </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">fail_out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">url</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">url</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">name</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">address</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">plus_code</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lat</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lng</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">NA</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">is.null</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">resp</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fail_out</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Extract URL from response</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">full_url</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">resp_url</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">resp</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># Extract place name from URL</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">regex_pattern</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#4e9a06">&#34;/place/([^/]+)/&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">match_info</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">regexec</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">regex_pattern</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">full_url</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">place_match</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">regmatches</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">full_url</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">match_info</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8f5902;font-style:italic"># If place name matched</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">place_match</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">place_match[[1]]</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&gt;=</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#000">raw_place_name</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">place_match[[1]][2]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">place_name</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">gsub</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\\+&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34; &#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">raw_place_name</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">place_name</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">URLdecode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">place_name</span><span style="color:#000;font-weight:bold">)</span> 
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Query Google Geocoding API</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">api_result</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">google_geocode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">address</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">place_name</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic"># Extract coordinates and other information</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">api_result</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">status</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#4e9a06">&#34;OK&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#000">coords</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">access_result</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">api_result</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;coordinates&#34;</span><span style="color:#000;font-weight:bold">)</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#000">address</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">access_result</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">api_result</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;address&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#000">plus_code</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#204a87;font-weight:bold">NA</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;plus_code&#34;</span> <span style="color:#ce5c00;font-weight:bold">%in%</span> <span style="color:#000">names</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">api_result</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">results</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">plus_code</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">api_result</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">results</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">plus_code[1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;global_code&#34;</span><span style="color:#000">]</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#000">out</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">data.frame</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">url</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">url</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">name</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">place_name</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#000">address</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">address</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#000">plus_code</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">plus_code</span><span style="color:#000;font-weight:bold">,</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#000">coords</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">[1</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">]</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#000">message</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;API returned status &#39;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">api_result</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">status</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;&#39; for: &#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">place_name</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fail_out</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">message</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Could not extract place name from resolved URL: &#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">full_url</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fail_out</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Import URLs</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">google_takeout</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">read.csv</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;./Takeout/Saved/Edinburgh food.csv&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">urls</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">google_takeout</span><span style="color:#ce5c00;font-weight:bold">$</span><span style="color:#000">URL</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">urls</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">urls[urls</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">is.na</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">urls</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">]</span> <span style="color:#8f5902;font-style:italic"># Also filter out NAs just in case</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Run function on URLs</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">result_list</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">lapply</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">urls</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">geocode_url</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">result_df</span> <span style="color:#ce5c00;font-weight:bold">&lt;-</span> <span style="color:#000">do.call</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">rbind</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">result_list</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">result_df</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">url</th>
+          <th style="text-align: left">name</th>
+          <th style="text-align: left">address</th>
+          <th style="text-align: left">plus_code</th>
+          <th style="text-align: right">lat</th>
+          <th style="text-align: right">lng</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><a href="https://www.google.com/maps/place/The&#43;Phillips&#43;Collection/data=!4m2!3m1!1s0x89b7b7c8c18d1011:0x5ebf642c05a560f7" target="_blank">https://www.google.com/maps/place/The+Phillips+Collection/data=!4m2!3m1!1s0x89b7b7c8c18d1011:0x5ebf642c05a560f7</a>
+</td>
+          <td style="text-align: left">The Phillips Collection</td>
+          <td style="text-align: left">1600 21st St NW, Washington, DC 20009, USA</td>
+          <td style="text-align: left">87C4WX63+P6</td>
+          <td style="text-align: right">38.91</td>
+          <td style="text-align: right">-77.05</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://www.google.com/maps/place/National&#43;Building&#43;Museum/data=!4m2!3m1!1s0x89b7b78ee8345b73:0x48233bd191725f45" target="_blank">https://www.google.com/maps/place/National+Building+Museum/data=!4m2!3m1!1s0x89b7b78ee8345b73:0x48233bd191725f45</a>
+</td>
+          <td style="text-align: left">National Building Museum</td>
+          <td style="text-align: left">401 F St NW, Washington, DC 20001, USA</td>
+          <td style="text-align: left">87C4VXXJ+4X</td>
+          <td style="text-align: right">38.90</td>
+          <td style="text-align: right">-77.02</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://www.google.com/maps/place/The&#43;Yards/data=!4m2!3m1!1s0x89b7b9d7207fab4f:0x4ea43e59870c19cc" target="_blank">https://www.google.com/maps/place/The+Yards/data=!4m2!3m1!1s0x89b7b9d7207fab4f:0x4ea43e59870c19cc</a>
+</td>
+          <td style="text-align: left">The Yards</td>
+          <td style="text-align: left">254 Alta Mar Dr, Ponte Vedra Beach, FL 32082, USA</td>
+          <td style="text-align: left">862W6J75+XW</td>
+          <td style="text-align: right">30.21</td>
+          <td style="text-align: right">-81.39</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><a href="https://www.google.com/maps/place/Rock&#43;Creek&#43;Park/data=!4m2!3m1!1s0x89b7c8f06a225943:0x601267b7d15c622d" target="_blank">https://www.google.com/maps/place/Rock+Creek+Park/data=!4m2!3m1!1s0x89b7c8f06a225943:0x601267b7d15c622d</a>
+</td>
+          <td style="text-align: left">Rock Creek Park</td>
+          <td style="text-align: left">Rock Creek Park, Washington, DC, USA</td>
+          <td style="text-align: left">87C4XX83+XW</td>
+          <td style="text-align: right">38.97</td>
+          <td style="text-align: right">-77.05</td>
+      </tr>
+  </tbody>
+</table>
+
+</main>
+
+  <footer>
+  <hr/>
+  John L. Godlee | 
+  <a href="mailto:johngodlee@gmail.com">johngodlee@gmail.com</a> |
+  <a href="http://johngodlee.xyz//index.xml">RSS</a>
+
+  </footer>
+  </body>
+</html>
+
