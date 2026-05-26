@@ -163,6 +163,22 @@
 			"name": "Edinburgh to Langthorne",
 			"note": "NCN: 76, 1, 65",
 			"tags": [ "Tour", "UK", "NCN", "Ridden" ]
+		},
+		{ 
+			"file": "bedale_ripon_loop.gpx",  
+			"name": "Bedale Ripon Loop",
+			"tags": [ "UK", "North Yorkshire" ]
+		},
+		{ 
+			"file": "crakehall_hunton_constable_burton_thornton_steward_thornton_watlass.gpx",  
+			"name": "Crakehall, Hunton, Constable Burton, Thornton Watlass",
+			"tags": [ "UK", "North Yorkshire", "Ridden" ]
+		},
+		{ 
+			"file": "crakehall_newton_spennithorne_masham.gpx",  
+			"name": "Crakehall, Newton Le Willows, Spennithorne, Masham",
+			"tags": [ "UK", "North Yorkshire", "Ridden" ]
 		}
 	]
 }
+
