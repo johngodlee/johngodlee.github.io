@@ -84,6 +84,11 @@
 			"tags": [ "DC", "USA" ]
 		},
 		{ 
+			"file": "dc_baltimore_trailmaxxed.gpx",  
+			"name": "Washington DC to Baltimore - Trailmaxxed",
+			"tags": [ "DC", "USA", "Bike path" ]
+		},
+		{ 
 			"file": "edinburgh_inverkeithing.gpx",  
 			"name": "Edinburgh to Inverkeithing",
 			"tags": [ "Edinburgh", "Ridden", "UK" ]
