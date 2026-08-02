@@ -6,7 +6,52 @@
     <description>Recent content in Personal on John L. Godlee</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>2026-04-26T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/personal/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>2026-08-01T00:00:00+0000</lastBuildDate><atom:link href="http://johngodlee.xyz/posts/personal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Removing tree guards</title>
+      <link>http://johngodlee.xyz/posts/personal/2026-08-01-tree_guards/</link>
+      <pubDate>2026-08-01T00:00:00+0000</pubDate>
+      
+      <guid>http://johngodlee.xyz/posts/personal/2026-08-01-tree_guards/</guid>
+      <description>&lt;p&gt;We started to remove some of the tree guards from the trees we planted in February 2021.&lt;/p&gt;
+&lt;p&gt;We selectively removed guards where the stems had grown to the size of the tree guard. The majority of the guards we removed were from silver birch and cherry trees. Occassionally we removed guards from the oak trees.&lt;/p&gt;
+&lt;p&gt;Overall I think we removed guards from about a third to a half of the trees, but it depended a lot on location, because some species were planted at higher densities in some parts of the woodland.&lt;/p&gt;
+&lt;p&gt;Next year we will do another round of removals, to remove all the remaining guards.&lt;/p&gt;
+&lt;p&gt;We haven&amp;rsquo;t yet got to the patch of alder trees in the SW corner in the wet area. I will be interested to see their growth.&lt;/p&gt;
+&lt;p&gt;The weather was very hot during the time we were removing the guards, around the 10th July. We opted to get up early in the morning, around 05:30, to do a couple of hours before breakfast.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tree_guards/cherry.jpg&#34;&gt;&lt;img
+          alt=&#34;A large cherry tree bursting out of its tree guard.&#34;
+          title=&#34;A large cherry tree bursting out of its tree guard.&#34;src=&#34;http://johngodlee.xyz/img/tree_guards/cherry.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tree_guards/many_trees.jpg&#34;&gt;&lt;img
+          alt=&#34;An area with many large trees where we removed all the guards.&#34;
+          title=&#34;An area with many large trees where we removed all the guards.&#34;src=&#34;http://johngodlee.xyz/img/tree_guards/many_trees.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tree_guards/ride.jpg&#34;&gt;&lt;img
+          alt=&#34;View of the planted trees across from a mowed ride.&#34;
+          title=&#34;View of the planted trees across from a mowed ride.&#34;src=&#34;http://johngodlee.xyz/img/tree_guards/ride.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tree_guards/guard.jpg&#34;&gt;&lt;img
+          alt=&#34;A tree guard on the ground.&#34;
+          title=&#34;A tree guard on the ground.&#34;src=&#34;http://johngodlee.xyz/img/tree_guards/guard.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/tree_guards/field.jpg&#34;&gt;&lt;img
+          alt=&#34;A hay field after cutting.&#34;
+          title=&#34;A hay field after cutting.&#34;src=&#34;http://johngodlee.xyz/img/tree_guards/field.jpg&#34; 
+      /&gt;&lt;/a&gt;&lt;/figure&gt;
+
+
+</description>
+    </item>
+    
     <item>
       <title>Lat-lon coordinates from Google Takeout for Saved Places</title>
       <link>http://johngodlee.xyz/posts/personal/2026-04-26-google_takeout_maps/</link>
@@ -2077,52 +2122,6 @@ TextColor 247 247 247
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}))&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>CMUS colour scheme and persistent settings</title>
-      <link>http://johngodlee.xyz/posts/personal/2022-12-08-cmus_colours/</link>
-      <pubDate>2022-12-08T00:00:00+0000</pubDate>
-      
-      <guid>http://johngodlee.xyz/posts/personal/2022-12-08-cmus_colours/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://cmus.github.io/&#34; target=&#34;_blank&#34;&gt;cmus&lt;/a&gt;
- uses a file called &lt;code&gt;autosave&lt;/code&gt; (&lt;code&gt;~/.config/cmus/autosave&lt;/code&gt;) to store configuration settings. This file is loaded every time cmus is launched. Settings changed during a session will be written to &lt;code&gt;autosave&lt;/code&gt; on exit. This can make changing settings a bit finicky. A few times I&amp;rsquo;ve accidentally changed a setting by pressing the wrong hotkey, and then not been able to change it back. There is another file called &lt;code&gt;rc&lt;/code&gt; (&lt;code&gt;~/.config/cmus/rc&lt;/code&gt;) which can store persistent settings. These settings are loaded after &lt;code&gt;autosave&lt;/code&gt; and will not be overwritten on exit.&lt;/p&gt;
-&lt;p&gt;In my cmus &lt;code&gt;rc&lt;/code&gt; I only have a few settings:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;set aaa_mode=all&lt;/code&gt; - play all tracks, alternatively &lt;code&gt;artist&lt;/code&gt; or &lt;code&gt;album&lt;/code&gt; for all songs in the current artist or album.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set stop_after_queue=true&lt;/code&gt; - after the play queue has finished, stop playing&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set continue=true&lt;/code&gt; - Play the next song automatically&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;bind -f common q quit&lt;/code&gt; - rebind &lt;code&gt;q&lt;/code&gt; to not ask for confirmation on exit&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;unbind -f common C &lt;/code&gt; - unbind &lt;code&gt;C&lt;/code&gt;, which normally toggles playing the next song automatically. I never want to disable continuous mode.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;All settings can be found in the &lt;a href=&#34;https://github.com/cmus/cmus/blob/master/Doc/cmus.txt&#34; target=&#34;_blank&#34;&gt;cmus manual&lt;/a&gt;
-.&lt;/p&gt;
-&lt;p&gt;The rest is colour settings:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;set color_separator=white&lt;/code&gt; - separator colour between artist and track view in tree view&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_statusline_bg=gray&lt;/code&gt; - statusline background&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_statusline_fg=black&lt;/code&gt; - statusline foreground&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_title_bg=gray&lt;/code&gt; - background of window title&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_title_fg=black&lt;/code&gt; - foreground of window title&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_titleline_bg=default&lt;/code&gt; - background of currently playing track&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_titleline_fg=white&lt;/code&gt; - foreground of currently playing track&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_sel_bg=gray&lt;/code&gt; - background of selected row when not currently playing&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_sel_fg=black&lt;/code&gt; - foreground of selected row when not currently playing&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_inactive_sel_bg=darkgray&lt;/code&gt; - background of selected row when not in that window and not currently playing&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_inactive_sel_fg=black&lt;/code&gt; - foreground of selected row when not in that window and not currently playing&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_cur_sel_bg=gray&lt;/code&gt; - background of currently playing track when selected&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_cur_sel_fg=black&lt;/code&gt; - foreground of currently playing track when selected&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_inactive_cur_sel_bg=darkgray&lt;/code&gt; - background of currently playing track when row selected but not in that window&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_inactive_cur_sel_fg=black&lt;/code&gt; - foreground of currently playing track when row selected but not in that window&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set color_win_cur=green&lt;/code&gt; - text colour of currently playing track when not selected&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure&gt;&lt;a href=&#34;http://johngodlee.xyz/img_full/cmus_colours/scrot.png&#34;&gt;&lt;img
-          alt=&#34;Annotated screenshot of cmus showing colour settings&#34;
-          title=&#34;Annotated screenshot of cmus showing colour settings&#34;src=&#34;http://johngodlee.xyz/img/cmus_colours/scrot.png&#34; 
-      /&gt;&lt;/a&gt;&lt;/figure&gt;
-
-
-</description>
     </item>
     
   </channel>

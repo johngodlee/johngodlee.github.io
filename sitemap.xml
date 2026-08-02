@@ -3,15 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://johngodlee.xyz/</loc>
-    <lastmod>2026-04-26T00:00:00+00:00</lastmod>
+    <lastmod>2026-08-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/</loc>
-    <lastmod>2026-04-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://johngodlee.xyz/posts/personal/2026-04-26-google_takeout_maps/</loc>
-    <lastmod>2026-04-26T00:00:00+00:00</lastmod>
+    <lastmod>2026-08-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/personal/</loc>
+    <lastmod>2026-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/personal/2026-08-01-tree_guards/</loc>
+    <lastmod>2026-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://johngodlee.xyz/posts/personal/2026-04-26-google_takeout_maps/</loc>
     <lastmod>2026-04-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://johngodlee.xyz/posts/personal/2026-04-04-gpx_app/</loc>
@@ -1034,6 +1037,8 @@
     <loc>http://johngodlee.xyz/recipes/bread/olive_rosemary_foccacia/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/breakfast/overnight_oats/</loc>
+  </url><url>
+    <loc>http://johngodlee.xyz/recipes/bread/pan_pizza/</loc>
   </url><url>
     <loc>http://johngodlee.xyz/recipes/breakfast/pancakes/</loc>
   </url><url>
