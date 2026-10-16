@@ -183,6 +183,11 @@
 			"file": "crakehall_newton_spennithorne_masham.gpx",  
 			"name": "Crakehall, Newton Le Willows, Spennithorne, Masham",
 			"tags": [ "UK", "North Yorkshire", "Ridden" ]
+		},
+		{ 
+			"file": "badger_divide.gpx",
+			"name": "The Badger Divide",
+			"tags": [ "UK", "Tour", "Off-road" ]
 		}
 	]
 }
